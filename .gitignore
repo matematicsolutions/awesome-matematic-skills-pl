@@ -19,7 +19,7 @@ __pycache__/
 venv/
 
 # Wewnetrzne notatki MateMatic - nie do publikacji
-AGENTS.md
+# AGENTS.md - WYJATEK - ten plik JEST publiczny (standard Linux Foundation, czytany przez 20+ AI tools)
 CLAUDE.md
 DESIGN.md
 NOTES.md

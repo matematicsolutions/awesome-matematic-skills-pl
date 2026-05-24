@@ -1,0 +1,89 @@
+NOTICE
+======
+
+awesome-matematic-skills-pl - polski hub kuratorski Agent Skills dla prawa
+
+Copyright (c) 2026 Wieslaw Mazur / MateMatic Solutions
+https://matematic.co
+
+Licencja kuratorska repo (README, taksonomia, marketplace.json, AGENTS.md,
+CONTRIBUTING.md, CHANGELOG.md, SECURITY.md, scripts/, examples/, ten NOTICE):
+MIT - patrz LICENSE.
+
+----------------------------------------------------------------------
+
+Per-skill licenses
+==================
+
+Kazdy skill w `./skills/<name>/` zachowuje wlasna licencje deklarowana w
+`SKILL.md` frontmatter i `.claude-plugin/marketplace.json`. Ponizej zestaw
+licencji per-skill na 2026-05-24:
+
+Apache-2.0:
+- legal-request-router-pl
+- intake-sufficiency-pl
+- citation-grounding-pl
+- adversarial-legal-review-pl
+- deliverable-fidelity-pl
+- legal-ai-audit-bundle
+- saos-orzecznictwo
+- szukaj-orzeczen-v2
+- eu-sparql-search
+- legal-data-hunter-pl
+- opendataloader-pdf
+
+MIT:
+- redline-docx-pl
+- humanizer-pl
+- markitdown
+
+----------------------------------------------------------------------
+
+Third-party inspirations (kanon cherry-pick MateMatic)
+======================================================
+
+Wybrane skille czerpia pattern z otwartych projektow trzecich. Atrybucja
+peelna w `THIRD_PARTY_INSPIRATIONS.md` na poziomie repo i `THIRD_PARTY*`
+w katalogu konkretnego skilla jezeli istnieje. Sumarycznie:
+
+- AnttiHero/lavern (Apache 2.0) - pattern walidacji 3-warstwowej i
+  audit-bundle. Wykorzystany w: citation-grounding-pl, adversarial-legal-review-pl,
+  deliverable-fidelity-pl, intake-sufficiency-pl, legal-request-router-pl,
+  legal-ai-audit-bundle. Kod i prompty napisane od zera pod polskie realia.
+
+- Dealfluence Oy / adeu (MIT) - silnik redline DOCX z natywnymi Word
+  Track Changes. Wykorzystany w: redline-docx-pl jako CLI dependency
+  (uvx adeu). Nie kopiowano kodu adeu - wolane przez wrapper.
+
+- blader/humanizer (MIT) - lista wzorcow AI-slop. Wykorzystany w:
+  humanizer-pl. Polska adaptacja 29 wzorcow, odwrocony wzorzec
+  cudzyslowow, dodany wzorzec kalk anglicyzmow.
+
+- Microsoft / MarkItDown (MIT) - konwerter dokumentow. Wykorzystany w:
+  markitdown jako CLI dependency (pip install markitdown).
+
+- worldwidelaw/legal-sources (AGPL-3.0) - katalog 960+ kolektorow
+  publicznych zrodel prawnych. Wykorzystany w: legal-data-hunter-pl
+  jako CLI dependency (wolane osobno, nie linkowane statycznie -
+  patrz argumentacja licencji w SKILL.md).
+
+- Publications Office of the EU / EUR-Lex SPARQL endpoint (otwarty
+  publiczny endpoint) - dla eu-sparql-search.
+
+- Fundacja ePanstwo / SAOS REST API (CC0 / public domain dane) - dla
+  saos-orzecznictwo, szukaj-orzeczen-v2.
+
+----------------------------------------------------------------------
+
+Co MIT pozwala
+==============
+
+Licencja kuratorska MIT pozwala na uzycie komercyjne, modyfikacje i
+redystrybucje przy zachowaniu noty o prawach autorskich i tekstu licencji.
+
+Skille zalaczane w `./skills/<name>/` zachowuja wlasne licencje (Apache-2.0,
+MIT) - patrz SKILL.md frontmatter i odpowiednie pliki LICENSE jezeli
+istnieja w katalogu skilla.
+
+Apache-2.0 nakazuje zachowanie pliku NOTICE jezeli istnieje. Ten plik NOTICE
+spelnia ten warunek dla skilli Apache-2.0 zawartych w `./skills/`.
