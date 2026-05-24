@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
+  "name": "matematic-skills-pl",
+  "version": "2026.05.24",
+  "description": "Polski hub umiejetnosci AI dla prawa - walidacja outputu LLM, orzecznictwo PL/UE, RODO, redline, AI Act audit-bundle. Vendor-agnostic, RODO-safe by default.",
+  "owner": {
+    "name": "Wieslaw Mazur / MateMatic Solutions",
+    "email": "wieslaw@matematic.co",
+    "url": "https://matematic.co"
+  },
+  "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
+  "language": "pl",
+  "plugins": [
+    {
+      "name": "legal-request-router-pl",
+      "description": "Klasyfikator zadania prawnego - decyduje czy uruchomic zwykla odpowiedz, citation-grounding-pl, adversarial-legal-review-pl czy legal-ai-audit-bundle. Warstwa NAD walidacja.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/legal-request-router-pl"
+    },
+    {
+      "name": "intake-sufficiency-pl",
+      "description": "Ocena czy zlecenie/brief MA dosc kontekstu, by zaczac prace. Generuje pytania uzupelniajace do klienta. Lustro routera - router patrzy na output, ten na wejscie.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/intake-sufficiency-pl"
+    },
+    {
+      "name": "citation-grounding-pl",
+      "description": "Mechaniczny weryfikator cytatu dla tekstow prawnych po polsku - sprawdza string-matchem, czy cytat z orzeczenia/ustawy/umowy/pisma istnieje w zrodle. Anti-halucynacja, RODO-safe (lokalnie).",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/citation-grounding-pl"
+    },
+    {
+      "name": "adversarial-legal-review-pl",
+      "description": "Czerwony zespol dla pisma prawnego high-stakes - builder/attacker/synthesizer/verifier. Wylapuje slabosc ZANIM zrobi to przeciwnik, sad lub klient. Z bramka kosztu.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/adversarial-legal-review-pl"
+    },
+    {
+      "name": "deliverable-fidelity-pl",
+      "description": "Weryfikator wiernosci dokumentu finalnego do analizy - czy zadna flaga RED nie wypadla z podsumowania. Trzecia warstwa walidacji obok grounding i adversarial.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/deliverable-fidelity-pl"
+    },
+    {
+      "name": "legal-ai-audit-bundle",
+      "description": "Pakuje output AI prawny w artefakt audytowy zgodny z AI Act art. 12 - deliverable + slad rozumowania + log kosztu + metadane + manifest SHA256.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/legal-ai-audit-bundle"
+    },
+    {
+      "name": "redline-docx-pl",
+      "description": "Redlining polskich umow .docx z natywnymi Word Track Changes - bez niszczenia formatowania OOXML. Sanitize metadanych autora (RODO przy wysylce). Silnik adeu (MIT).",
+      "version": "2026.05.22",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "MIT",
+      "source": "./skills/redline-docx-pl"
+    },
+    {
+      "name": "saos-orzecznictwo",
+      "description": "Polish case law search via SAOS REST API (Fundacja ePanstwo) - sady powszechne, SN, TK, KIO. Search by sygnatura/date/court/keyword, fetch full text, bulk-download.",
+      "version": "2026.05.24",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/saos-orzecznictwo"
+    },
+    {
+      "name": "szukaj-orzeczen-v2",
+      "description": "Wyszukiwanie orzeczen PL przez SAOS API + opcjonalne grupowanie tematyczne (klastrowanie, text mining, raport DOCX). Komenda /szukaj-orzeczen \"fraza\".",
+      "version": "2.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/szukaj-orzeczen-v2"
+    },
+    {
+      "name": "eu-sparql-search",
+      "description": "Search EU legislation / CJEU case law via Publications Office SPARQL (EUR-Lex / Cellar). CELEX, ELI URI, multi-language acts. Companion to saos-orzecznictwo (PL).",
+      "version": "2026.05.24",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/eu-sparql-search"
+    },
+    {
+      "name": "legal-data-hunter-pl",
+      "description": "Catalog + bulk-harvest layer dla polskich zrodel prawnych: UODO, UOKiK, KNF, UKE, URE, KIO, NSA, TK, SN, Dziennik Urzedowy, Sejm ELI. Lokalny RODO-safe korpus prawa PL.",
+      "version": "2026.05.22",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/legal-data-hunter-pl"
+    },
+    {
+      "name": "humanizer-pl",
+      "description": "Usuwa wzorce AI-slop z polskiego tekstu (inflacja znaczeniowa, em-dash, regula trojki, hedging, kalki anglicyzmow). Polska adaptacja blader/humanizer.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "MIT",
+      "source": "./skills/humanizer-pl"
+    },
+    {
+      "name": "markitdown",
+      "description": "Konwersja PDF/Word/Excel/PowerPoint/HTML/EPUB/audio/obrazy/YouTube na Markdown dla LLM. Microsoft MarkItDown. Zachowuje strukture (headings, listy, tabele).",
+      "version": "2026.04.21",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "MIT",
+      "source": "./skills/markitdown"
+    },
+    {
+      "name": "opendataloader-pdf",
+      "description": "Wysokiej jakosci konwerter PDF -> JSON/Markdown dla AI - zachowuje reading order, strukture tabel, headings. Krytyczne dla audytow LegalTech (KRS, postanowienia, finansowe).",
+      "version": "2026.04.21",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/opendataloader-pdf"
+    }
+  ],
+  "tags": [
+    "polish-law",
+    "legal-ai",
+    "rodo-safe",
+    "ai-act-art-12",
+    "agent-skills",
+    "claude-code",
+    "claude-cowork",
+    "legaltech",
+    "vendor-agnostic"
+  ]
+}
