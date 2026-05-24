@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-szukaj_orzeczen.py — Przeszukiwanie orzeczeń SAOS API (Search endpoint).
+szukaj_orzeczen.py - Przeszukiwanie orzeczeń SAOS API (Search endpoint).
 Generuje JSON z metadanymi i DOCX z listą wyników.
 
 Użycie:

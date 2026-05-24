@@ -132,7 +132,7 @@ Struktura kazdego zrodla `sources/PL/<Nazwa>/`:
    -> uzyj kolektora. Nie ma / zablokowane -> luka, patrz tabela luk wyzej.
 2. **Hurtowy zaciag** - `runner.py sample` na probe, potem pelny `fetch_all()`;
    zapis do lokalnego korpusu (SQLite + vector store, patrz
-   `[[knowledge-graph-law-firms]]`).
+   wewnetrzne KGLF MateMatic).
 3. **Synchronizacja** - kolektory legislacyjne robia upsert (akty sie zmieniaja),
    case-law append-only z dedup. Cyklicznie `fetch_updates()`.
 4. **Zapytanie na zywo** - NIE przez LDH; uzyj `saos-orzecznictwo` lub innego

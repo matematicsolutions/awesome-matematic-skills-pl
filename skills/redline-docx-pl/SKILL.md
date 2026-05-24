@@ -77,16 +77,18 @@ uvx adeu diff v1.docx v2.docx          # wizualny diff dwoch wersji
 uvx adeu apply --live edits.json       # edycja zywego dokumentu w Word (Windows + MS Word)
 ```
 
-## Integracja z let-it-be (PII PL)
+## Integracja z anonimizacja PII
 
 `sanitize` czysci **metadane** Worda, ale NIE tresc. Do anonimizacji tresci (PESEL,
-NIP, nazwiska w fleksji) najpierw przepusc tekst przez [[let-it-be]], potem redline:
+NIP, nazwiska w fleksji) najpierw przepusc tekst przez silnik anonimizacji PII
+(np. [matematic-anonimizacja-pl](https://github.com/matematicsolutions/matematic-anonimizacja-pl)),
+potem redline:
 
-1. `let-it-be` -> pseudonimizuj tresc pisma (PII -> tokeny)
+1. anonimizator PII -> pseudonimizuj tresc pisma (PII -> tokeny)
 2. praca/redline na zpseudonimizowanej wersji
 3. `adeu sanitize` -> domkniecie metadanych przed wyslaniem
 
-let-it-be = tresc (RODO art. 4 dane osobowe w tekscie); adeu sanitize = metadane pliku.
+anonimizator PII = tresc (RODO art. 4 dane osobowe w tekscie); adeu sanitize = metadane pliku.
 Dwie rozne warstwy wycieku, obie trzeba domknac.
 
 ## Ograniczenia

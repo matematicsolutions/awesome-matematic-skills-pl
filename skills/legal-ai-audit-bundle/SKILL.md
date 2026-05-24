@@ -161,7 +161,7 @@ Status: roadmap, do zaplanowania w osobnym sprintcie. Nie blokuje obecnego użyc
 
 **Komplementarne do Merkle, nie zamienne**. Merkle daje **integralność lańcucha audytu** (audytor wie, że log nie był modyfikowany). Proof receipt daje **dowód konkretnej pojedynczej decyzji** (audytor wie, że "decyzja X z 2026-09-12 14:23 została zaakceptowana zgodnie z polityką wersji Y").
 
-Cherry-pick wzorca z [ICME Preflight](https://docs.icme.io) (cloud-only, NIE wpinamy jako zależność z powodu Art. 1 lokalności danych - patrz [[ADR-0031 PATRON]]). Wzorzec lokalny:
+Cherry-pick wzorca z [ICME Preflight](https://docs.icme.io) (cloud-only, NIE wpinamy jako zależność z powodu Art. 1 lokalności danych - patrz [ADR-0031 PATRON](https://github.com/matematicsolutions/patron/blob/main/governance/adr/0031-deterministyczna-walidacja-z-lokalnym-proof-receipt.md)). Wzorzec lokalny:
 
 1. Każda paczka audytowa (`OPINIA-2026-018`) opcjonalnie zawiera plik `policy-verdict.json`:
    ```json
@@ -196,5 +196,5 @@ Pattern per-decision proof receipt (sekcja Roadmap 2) zainspirowany przez
 snapshot 2026-05-24) - patrz [hshadab/preflight-mike](https://github.com/hshadab/preflight-mike) (MIT)
 oraz [ICME-Lab/icme-preflight-guardrail](https://github.com/ICME-Lab/icme-preflight-guardrail) (MIT).
 NIE wpinamy ICME jako zależność (cloud-only narusza Art. 1 lokalności danych Patrona) -
-cherry-pick wzorca tylko, lokalny offline solver + verifier napisany od zera. Patrz [[ADR-0031 PATRON]]
+cherry-pick wzorca tylko, lokalny offline solver + verifier napisany od zera. Patrz [ADR-0031 PATRON](https://github.com/matematicsolutions/patron/blob/main/governance/adr/0031-deterministyczna-walidacja-z-lokalnym-proof-receipt.md)
 dla pełnych granic decyzji architektonicznej.

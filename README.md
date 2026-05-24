@@ -16,7 +16,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w `./skills/` zachowuja wlasne licenc
 
 ## Co tu znajdziesz
 
-1. **Pakiet 14 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
+1. **Pakiet 17 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
 2. **Awesome list** - linki do 14 pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -56,7 +56,7 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 14 umiejetnosci w `./skills/`
+## Pakiet - 17 umiejetnosci w `./skills/`
 
 ### Walidacja outputu LLM (6 warstw)
 
@@ -96,6 +96,19 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
 | [humanizer-pl](./skills/humanizer-pl) | Usuwa wzorce AI-slop z polskiego tekstu - 29 zdefiniowanych wzorcow obejmujacych slownictwo, gramatyke, typografie, kalki anglicyzmow. | MIT | 1.0.0 |
+
+### Produkty MateMatic (sprzedazowe)
+
+| Skill | Opis | Licencja | Wersja |
+|---|---|---|---|
+| [matematic-konstytucja-ai](./skills/matematic-konstytucja-ai) | Generuje "Konstytucje AI" - dokument governance dla kancelarii (6 sekcji + AI Implementation Playbook 6-8 tygodni). Cherry-pick patternu github/spec-kit. | Apache-2.0 | 1.0.0 |
+| [matematic-expert-panel](./skills/matematic-expert-panel) | Generuje 90-min warsztat multi-perspective dla zarzadu kancelarii - 7 person (compliance / IT security / etyk / partner / junior / klient / regulator). | Apache-2.0 | 1.0.0 |
+
+### Metodologia wewnetrzna (dev pipeline)
+
+| Skill | Opis | Licencja | Wersja |
+|---|---|---|---|
+| [matematic-spec-driven](./skills/matematic-spec-driven) | Spec-Driven Development dla wewnetrznych projektow MateMatic - 4 fazy (Konstytucja / Specyfikacja / Plan / Zadania) + Constitution Check GATE. | Apache-2.0 | 0.1.0 |
 
 ---
 

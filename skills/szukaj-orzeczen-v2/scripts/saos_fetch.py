@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-saos_fetch.py — Pobieranie pelnych tresci orzeczen z SAOS Browse API.
+saos_fetch.py - Pobieranie pelnych tresci orzeczen z SAOS Browse API.
 Wejscie: plik JSON z szukaj_orzeczen.py lub lista ID.
 Wyjscie: JSON + DOCX z pelnymi tresciami.
 

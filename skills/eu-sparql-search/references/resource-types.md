@@ -1,4 +1,4 @@
-# Resource Types — EU Publications Office
+# Resource Types - EU Publications Office
 
 Full URI base: `http://publications.europa.eu/resource/authority/resource-type/`
 

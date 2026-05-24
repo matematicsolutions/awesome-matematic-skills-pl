@@ -122,6 +122,30 @@
       "author": { "name": "Wieslaw Mazur / MateMatic" },
       "license": "Apache-2.0",
       "source": "./skills/opendataloader-pdf"
+    },
+    {
+      "name": "matematic-konstytucja-ai",
+      "description": "Generuje 'Konstytucje AI' dla kancelarii prawnej - dokument governance definiujacy zasady uzycia AI w organizacji. 6 sekcji (mission, principles do 9 articles, boundaries, governance, audit, evolution). Cherry-pick patternu github/spec-kit (MIT). Output: dokument PDF/MD 10-25 stron + AI Implementation Playbook 6-8 tygodni.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/matematic-konstytucja-ai"
+    },
+    {
+      "name": "matematic-expert-panel",
+      "description": "Generuje 90-min warsztat decyzyjny 'MateMatic Expert Panel' - multi-perspective analiza casu kancelarii przez 7 person (compliance officer, IT security, etyk AI, partner zarzadzajacy, junior prawnik, perspektywa klienta, regulator). Cherry-pick z SuperClaude Business Panel mode (MIT).",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/matematic-expert-panel"
+    },
+    {
+      "name": "matematic-spec-driven",
+      "description": "Spec-Driven Development dla wewnetrznych projektow MateMatic. Cherry-pick patternu github/spec-kit (MIT): 4 fazy (Konstytucja -> Specyfikacja -> Plan -> Zadania) + Constitution Check GATE z 4 bramkami MateMatic. Marker [P] dla zadan parallel-safe. Companion do matematic-konstytucja-ai (nie myl - tamten produktowy dla kancelarii, ten internal pipeline).",
+      "version": "0.1.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/matematic-spec-driven"
     }
   ],
   "tags": [

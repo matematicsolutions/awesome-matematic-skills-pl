@@ -3,9 +3,9 @@ name: markitdown
 description: Konwersja dowolnego dokumentu (PDF, Word, Excel, PowerPoint, HTML, EPUB, audio, obrazy, YouTube) na Markdown dla LLM. Użyj gdy użytkownik mówi "konwertuj PDF", "przerób Word na markdown", "zamień PPT na MD", "markdown z Excela", "wyciągnij tekst z PDF", albo daje plik Office/PDF do analizy. Microsoft MarkItDown (pip) + MCP server.
 ---
 
-# MarkItDown — konwerter dokumentów do Markdown (PL)
+# MarkItDown - konwerter dokumentów do Markdown (PL)
 
-Lightweight utility Microsoftu — zachowuje strukturę (nagłówki, listy, tabele, linki), nie wygląd. Pod LLM, nie pod human.
+Lightweight utility Microsoftu - zachowuje strukturę (nagłówki, listy, tabele, linki), nie wygląd. Pod LLM, nie pod human.
 
 ## Instalacja (zrobione 2026-04-21)
 
@@ -17,7 +17,7 @@ Python 3.14, `C:\Users\hp\AppData\Local\Python\pythoncore-3.14-64\`. CLI: `pytho
 
 ## Wspierane formaty
 
-- **PDF** (preferuj dla krótkich, standardowych PDF; dla złożonych/tabel — OpenDataLoader PDF)
+- **PDF** (preferuj dla krótkich, standardowych PDF; dla złożonych/tabel - OpenDataLoader PDF)
 - **Office**: Word (.docx), Excel (.xlsx), PowerPoint (.pptx)
 - **HTML, EPUB, CSV, JSON, XML**
 - **Obrazy** (EXIF + OCR jeśli zainstalowane `[all]`)
@@ -49,7 +49,7 @@ print(result.text_content)
 ```
 
 ### MCP server
-Opcjonalnie — jeśli chcesz udostępnić Claude Code jako MCP tool:
+Opcjonalnie - jeśli chcesz udostępnić Claude Code jako MCP tool:
 ```bash
 markitdown-mcp
 ```
@@ -70,6 +70,6 @@ Output docelowo → `Konwerter/` (folder w vault dla source-pdf → MD). Frontma
 
 ## Gotcha
 
-- `markitdown[all]` na Python 3.14/3.15 failuje (onnxruntime, youtube-transcript-api konflikt) — użyj zainstalowanego `markitdown` bez extras
-- Dla OCR obrazów / pełnego YouTube — Docker albo starszy Python (3.11/3.12)
-- Nie używaj dla high-fidelity conversion dla human reading — tylko pod LLM
+- `markitdown[all]` na Python 3.14/3.15 failuje (onnxruntime, youtube-transcript-api konflikt) - użyj zainstalowanego `markitdown` bez extras
+- Dla OCR obrazów / pełnego YouTube - Docker albo starszy Python (3.11/3.12)
+- Nie używaj dla high-fidelity conversion dla human reading - tylko pod LLM

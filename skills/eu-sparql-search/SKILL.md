@@ -11,7 +11,7 @@ description: >
   ontology, EUR-Lex, EU publications, or SPARQL + EU/legislation.
 ---
 
-# EU SPARQL Search — Cellar / EUR-Lex
+# EU SPARQL Search - Cellar / EUR-Lex
 
 ## Endpoint
 
@@ -20,9 +20,9 @@ https://publications.europa.eu/webapi/rdf/sparql
 ```
 
 Accepts HTTP GET and POST. Key parameters:
-- `query` — SPARQL query string (URL-encoded)
-- `format` — output format (see below)
-- `timeout` — milliseconds (use ~30000 for safety)
+- `query` - SPARQL query string (URL-encoded)
+- `format` - output format (see below)
+- `timeout` - milliseconds (use ~30000 for safety)
 
 ## CDM Data Model
 
@@ -56,8 +56,8 @@ PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 | `cdm:resource_legal_id_celex` | CELEX number | `"32016R0679"` |
 | `cdm:work_date_document` | Document date | `"2016-04-27"^^xsd:date` |
 | `cdm:resource_legal_in-force` | Currently in force | `"true"^^xsd:boolean` |
-| `cdm:expression_uses_language` | Language resource | join with `dc:identifier` — use ISO 639-3 (`POL`, `ENG`...) |
-| `cdm:manifestation_type` | File format | `"pdfa2a"`, `"fmx4"`, `"xhtml"` — always match with `FILTER(STR(?fmt) = "pdfa2a")` |
+| `cdm:expression_uses_language` | Language resource | join with `dc:identifier` - use ISO 639-3 (`POL`, `ENG`...) |
+| `cdm:manifestation_type` | File format | `"pdfa2a"`, `"fmx4"`, `"xhtml"` - always match with `FILTER(STR(?fmt) = "pdfa2a")` |
 | `cdm:do_not_index` | Hidden doc flag | always filter NOT EXISTS |
 | `cdm:expression_belongs_to_work` | Expression → Work link (inverse of `work_has_expression`) | join predicate |
 | `cdm:manifestation_manifests_expression` | Manifestation → Expression link (inverse of `expression_manifested_by_manifestation`) | join predicate |
@@ -115,7 +115,7 @@ Filter pattern:
 
 | format param value | Description |
 |---|---|
-| `application/sparql-results+json` | JSON — best for programmatic use |
+| `application/sparql-results+json` | JSON - best for programmatic use |
 | `text/csv` | CSV |
 | `application/sparql-results+xml` | XML |
 | `text/turtle` | Turtle RDF |
@@ -152,7 +152,7 @@ PREFIX dc:  <http://purl.org/dc/elements/1.1/>
 SELECT DISTINCT ?work ?celex ?title
 WHERE {
   ?work cdm:resource_legal_id_celex ?celex .
-  FILTER(STR(?celex) = "32016R0679")  # ⚠️ always use FILTER(STR()) — direct literal matching fails
+  FILTER(STR(?celex) = "32016R0679")  # ⚠️ always use FILTER(STR()) - direct literal matching fails
   OPTIONAL {
     ?expr cdm:expression_belongs_to_work ?work ;
           cdm:expression_uses_language ?lang .
@@ -190,7 +190,7 @@ PREFIX dc:  <http://purl.org/dc/elements/1.1/>
 SELECT DISTINCT ?celex ?fmt ?item
 WHERE {
   ?work cdm:resource_legal_id_celex ?celex .
-  FILTER(STR(?celex) IN ("32016R0679", "32018R1725"))  # ⚠️ always use STR() — direct IN fails
+  FILTER(STR(?celex) IN ("32016R0679", "32018R1725"))  # ⚠️ always use STR() - direct IN fails
   ?expr cdm:expression_belongs_to_work ?work ;
         cdm:expression_uses_language ?lang .
   ?lang dc:identifier "POL" .
@@ -240,7 +240,7 @@ WHERE {
   ?lang dc:identifier "POL" .
   ?manif cdm:manifestation_manifests_expression ?expr ;
          cdm:manifestation_type ?fmt .
-  FILTER(STR(?fmt) = "pdfa2a")  # ⚠️ use STR() — direct literal fails; "pdfa1a" does not exist
+  FILTER(STR(?fmt) = "pdfa2a")  # ⚠️ use STR() - direct literal fails; "pdfa1a" does not exist
   ?item cdm:item_belongs_to_manifestation ?manif .
 }
 ORDER BY DESC(?date)
@@ -249,7 +249,7 @@ LIMIT 20
 
 ### 7. Search by EuroVoc subject (thematic search)
 
-EuroVoc is a multilingual thesaurus maintained by the Publications Office — this is the correct way to search by topic (e.g. "personal data", "environment"), since the endpoint does NOT support full-text search.
+EuroVoc is a multilingual thesaurus maintained by the Publications Office - this is the correct way to search by topic (e.g. "personal data", "environment"), since the endpoint does NOT support full-text search.
 
 EuroVoc URI base: `http://eurovoc.europa.eu/`
 
@@ -276,7 +276,7 @@ SELECT DISTINCT ?work ?celex ?date
 WHERE {
   ?work cdm:work_has_resource-type
         <http://publications.europa.eu/resource/authority/resource-type/REG> .
-  # ⚠️ JUDG (case law) does NOT have EuroVoc tags — use REG, DIR, DEC or leave type open
+  # ⚠️ JUDG (case law) does NOT have EuroVoc tags - use REG, DIR, DEC or leave type open
   ?work cdm:work_date_document ?date .
   OPTIONAL { ?work cdm:resource_legal_id_celex ?celex }
   ?work cdm:work_is_about_concept_eurovoc ?subject .
@@ -377,7 +377,7 @@ print('\n'.join(p.text)[:20000])
 "
 ```
 
-> ⚠️ **Do NOT use `web_fetch` for Cellar URLs returned by SPARQL** — `web_fetch` in Claude.ai only accepts URLs that were provided directly by the user or appeared in `web_search` results. Cellar item URLs from `bash_tool` SPARQL queries will always be rejected. Use `curl` in `bash_tool` instead.
+> ⚠️ **Do NOT use `web_fetch` for Cellar URLs returned by SPARQL** - `web_fetch` in Claude.ai only accepts URLs that were provided directly by the user or appeared in `web_search` results. Cellar item URLs from `bash_tool` SPARQL queries will always be rejected. Use `curl` in `bash_tool` instead.
 
 ### JSON response structure
 
@@ -395,23 +395,23 @@ print('\n'.join(p.text)[:20000])
 }
 ```
 
-Access results: `data["results"]["bindings"]` — list of dicts, each key maps to `{type, value}`.
+Access results: `data["results"]["bindings"]` - list of dicts, each key maps to `{type, value}`.
 
 ---
 
 ## Workflow
 
-1. **Identify intent** — what type of document, which filters (date, language, CELEX, format, in-force)?
+1. **Identify intent** - what type of document, which filters (date, language, CELEX, format, in-force)?
 2. **Choose query pattern** from the patterns above, or combine them
-3. **Execute via bash_tool** — run SPARQL with Python/urllib, parse JSON bindings
-4. **Parse and present** — extract bindings, display as readable table with CELEX numbers and dates
-5. **Fetch document content if needed** — use `curl` in `bash_tool` with the item URL from SPARQL
-6. **Always cite sources** — provide clickable links so the user can verify (see Citations section)
-7. **Offer next steps** — get file download URLs, filter by language, expand date range, etc.
+3. **Execute via bash_tool** - run SPARQL with Python/urllib, parse JSON bindings
+4. **Parse and present** - extract bindings, display as readable table with CELEX numbers and dates
+5. **Fetch document content if needed** - use `curl` in `bash_tool` with the item URL from SPARQL
+6. **Always cite sources** - provide clickable links so the user can verify (see Citations section)
+7. **Offer next steps** - get file download URLs, filter by language, expand date range, etc.
 
 ---
 
-## Citations — always provide verifiable links
+## Citations - always provide verifiable links
 
 **Every answer based on fetched document content MUST include clickable source links.** This lets the user verify that the answer is based on real document text, not hallucinated.
 
@@ -419,18 +419,18 @@ Access results: `data["results"]["bindings"]` — list of dicts, each key maps t
 
 Whenever you answer a question based on a fetched document, always include at the end:
 
-1. **EUR-Lex link** — canonical, stable, human-readable URL for the document:
+1. **EUR-Lex link** - canonical, stable, human-readable URL for the document:
    ```
    https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=celex:{CELEX}
    ```
    e.g. `https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=celex:32022R2554`
 
-2. **Direct Cellar download link** — the item URL returned by SPARQL (use for one-click access to the actual file):
+2. **Direct Cellar download link** - the item URL returned by SPARQL (use for one-click access to the actual file):
    ```
    http://publications.europa.eu/resource/cellar/{uuid}.{lang_code}.{fmt_code}/DOC_1
    ```
 
-3. **Article anchor on EUR-Lex** — when citing a specific article, append the anchor to the EUR-Lex URL:
+3. **Article anchor on EUR-Lex** - when citing a specific article, append the anchor to the EUR-Lex URL:
    ```
    https://eur-lex.europa.eu/legal-content/PL/TXT/HTML/?uri=celex:32022R2554#d1e3456-1-1
    ```
@@ -441,7 +441,7 @@ Whenever you answer a question based on a fetched document, always include at th
 After providing an answer based on document content, always end with a source block:
 
 ```
-**Źródło:** DORA — Rozporządzenie (UE) 2022/2554
+**Źródło:** DORA - Rozporządzenie (UE) 2022/2554
 - EUR-Lex (PL): https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=celex:32022R2554
 - Pobierz plik (PL, xhtml): http://publications.europa.eu/resource/cellar/0caf473a-85bd-11ed-9887-01aa75ed71a1.0018.03/DOC_1
 ```
@@ -468,21 +468,21 @@ Then present both EUR-Lex and Cellar links to the user.
 
 ## Rules
 
-- Always use `SELECT DISTINCT` — avoids duplicate triples
-- Always add `LIMIT` — start with 20, offer to increase; unbound queries time out
-- Always add `FILTER NOT EXISTS { ?work cdm:do_not_index "true"^^xsd:boolean }` — hides internal docs
+- Always use `SELECT DISTINCT` - avoids duplicate triples
+- Always add `LIMIT` - start with 20, offer to increase; unbound queries time out
+- Always add `FILTER NOT EXISTS { ?work cdm:do_not_index "true"^^xsd:boolean }` - hides internal docs
 - Endpoint is **public, no authentication required**
-- This endpoint covers **metadata only** — for full-text search use EUR-Lex search UI
-- CELEX format: `3YYYYTNNNN` for legislative acts (R=regulation, L=directive, D=decision); preparatory acts use `5YYYYPC...` — see CELEX prefix table in Resource Types
-- **Language codes are ISO 639-3 (3 letters): POL, ENG, DEU — NOT PL, EN, DE**
-- For thematic search, always use EuroVoc concept URIs — there is no keyword/full-text search
-- ⚠️ **NEVER use `COM_PROP`, `COM_PROP_REG`, `COM_PROP_DIR`** as resource-type URIs — they do not exist. Use `PROP_REG`, `PROP_DIR`, `PROP_DEC` instead
+- This endpoint covers **metadata only** - for full-text search use EUR-Lex search UI
+- CELEX format: `3YYYYTNNNN` for legislative acts (R=regulation, L=directive, D=decision); preparatory acts use `5YYYYPC...` - see CELEX prefix table in Resource Types
+- **Language codes are ISO 639-3 (3 letters): POL, ENG, DEU - NOT PL, EN, DE**
+- For thematic search, always use EuroVoc concept URIs - there is no keyword/full-text search
+- ⚠️ **NEVER use `COM_PROP`, `COM_PROP_REG`, `COM_PROP_DIR`** as resource-type URIs - they do not exist. Use `PROP_REG`, `PROP_DIR`, `PROP_DEC` instead
 - ⚠️ **Literal matching**: Cellar stores strings as typed `xsd:string` literals. Direct object matching (e.g. `?work cdm:resource_legal_id_celex "32016R0679"`) silently returns 0 results. Always use `FILTER(STR(?var) = "value")` for CELEX numbers and manifestation types; for multi-value use `FILTER(STR(?celex) IN ("...", "..."))`
-- ⚠️ **File format `pdfa1a` does not exist** — use `pdfa2a`, `fmx4`, or `xhtml`; always bind to variable and filter with `FILTER(STR(?fmt) = "pdfa2a")`
-- ⚠️ **EuroVoc tags are NOT assigned to JUDG (case law)** — for thematic document search use REG, DIR, DEC, or omit type filter
-- ⚠️ **OPTIONAL + FILTER scoping**: never put date in `OPTIONAL` then filter it in the same WHERE — it creates 0 results. Keep `?work cdm:work_date_document ?date` as a required triple when filtering by date
+- ⚠️ **File format `pdfa1a` does not exist** - use `pdfa2a`, `fmx4`, or `xhtml`; always bind to variable and filter with `FILTER(STR(?fmt) = "pdfa2a")`
+- ⚠️ **EuroVoc tags are NOT assigned to JUDG (case law)** - for thematic document search use REG, DIR, DEC, or omit type filter
+- ⚠️ **OPTIONAL + FILTER scoping**: never put date in `OPTIONAL` then filter it in the same WHERE - it creates 0 results. Keep `?work cdm:work_date_document ?date` as a required triple when filtering by date
 
-## REST API — Direct File Download
+## REST API - Direct File Download
 
 Cellar also provides a simpler REST interface to download files directly, without SPARQL:
 
@@ -495,10 +495,10 @@ Examples:
 - With language: `...?language=POL`
 - With format: `...?language=POL&format=pdfa2a`
 
-The Cellar ID (UUID) comes from the `?work` URI returned by SPARQL queries — extract the UUID from the URI and use it in the REST call.
+The Cellar ID (UUID) comes from the `?work` URI returned by SPARQL queries - extract the UUID from the URI and use it in the REST call.
 
 ## Other Cellar APIs
 
-- **RSS/Atom feeds**: `https://op.europa.eu/en/web/cellar/cellar-data/rss-and-atom-feeds` — subscribe to new publications by collection
+- **RSS/Atom feeds**: `https://op.europa.eu/en/web/cellar/cellar-data/rss-and-atom-feeds` - subscribe to new publications by collection
 - **Metadata notices**: RESTful XML/RDF metadata for a specific work, richer than SPARQL results
-- **Linked Data wizard**: `https://op.europa.eu/en/linked-data` — GUI query builder, no SPARQL needed
+- **Linked Data wizard**: `https://op.europa.eu/en/linked-data` - GUI query builder, no SPARQL needed
