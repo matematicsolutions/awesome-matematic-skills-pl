@@ -5,6 +5,27 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [0.4.0] - 2026-05-25
+
+Iteracja 3 - dodanie 2 skilli metodologicznych (kanon MCP + PR review LegalTech). Cherry-pick z dograh-hq/dograh v1.31.0 (BSD-2).
+
+### Dodano
+
+- `matematic-mcp-fastmcp-instructions-pl` v1.0.0 - kanon dla MCP serverow MateMatic. 5 elementow (instructions w Server constructor, drift test, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id per-tenant, ToolAnnotations dla read-only). Walidowany na dograh-hq/dograh v1.31.0 i 6 wlasnych MCP MateMatic (mcp-eu-compliance v0.2.0 + mcp-saos/mcp-eu-sparql/mcp-isap/mcp-nsa/mcp-krs v1.1.0). Examples Python (server.py + instructions.py + auth.py + test_instructions_drift.py) jako template.
+- `matematic-patron-pr-review-pl` v1.0.0 - recenzent PR/diffow dla LegalTech AI agentow. 14 sekcji (12 z dograh review-pr + 2 MateMatic-specific: PII/audit_log AI Act + drift konstytucji). Format findings `file:line -> problem -> correct pattern`, 3 buckets Blocker/Should-fix/Nit.
+
+### Zmieniono
+
+- Bundle 17 -> 19 skilli
+- README badge counter + sekcja "Pakiet 19 umiejetnosci" + 2 wpisy w "Metodologia wewnetrzna"
+- `.claude-plugin/marketplace.json` v2026.05.24 -> v2026.05.25, +2 wpisy plugins[]
+
+### Sanitization (audyt prywatnosci 2026-05-25)
+
+- 18 wiki-links `[[X]]` w 2 nowych skillach zamienione na publiczne markdown linki lub opisowy tekst (zgodnie z polityka anty-wiki-link dla publicznych repo).
+- Linki do prywatnych memory MateMatic zamienione na opisowy tekst.
+- Linki do innych skilli w hubie -> relative markdown links (`../<skill>`).
+
 ## [0.3.0] - 2026-05-24
 
 Iteracja 2 - dodanie 3 skilli produktowych / metodologicznych + audyt prywatnosci.
