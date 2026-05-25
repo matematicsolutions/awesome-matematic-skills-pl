@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-19-blue.svg)](#pakiet---19-umiejetnosci-w-skills)
+[![Skills](https://img.shields.io/badge/skills-18-blue.svg)](#pakiet---18-umiejetnosci-w-skills)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
 [![Polish law](https://img.shields.io/badge/jurysdykcja-PL%20%2B%20UE-red.svg)](#dlaczego-polski-hub)
@@ -16,7 +16,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w `./skills/` zachowuja wlasne licenc
 
 ## Co tu znajdziesz
 
-1. **Pakiet 19 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
+1. **Pakiet 18 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
 2. **Awesome list** - linki do 14 pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -56,7 +56,7 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 19 umiejetnosci w `./skills/`
+## Pakiet - 18 umiejetnosci w `./skills/`
 
 ### Walidacja outputu LLM (6 warstw)
 
@@ -90,12 +90,6 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 |---|---|---|---|
 | [<img src="./assets/badge-markitdown.svg" alt="MarkItDown" width="200" height="60">](./skills/markitdown) | Microsoft MarkItDown - PDF/Word/Excel/PPT/HTML/EPUB/audio/obrazy/YouTube -> Markdown. | MIT | 2026.04.21 |
 | [<img src="./assets/badge-opendataloader-pdf.svg" alt="OpenDataLoader PDF" width="200" height="60">](./skills/opendataloader-pdf) | Wysokiej jakosci PDF -> JSON/MD: reading order, tabele, headings. Krytyczne dla KRS i postanowien. | Apache-2.0 | 2026.04.21 |
-
-### Higiena treści
-
-| Skill | Opis | Licencja | Wersja |
-|---|---|---|---|
-| [<img src="./assets/badge-humanizer-pl.svg" alt="Humanizer PL" width="200" height="60">](./skills/humanizer-pl) | Usuwa wzorce AI-slop z polskiego tekstu - 29 zdefiniowanych wzorcow obejmujacych slownictwo, gramatyke, typografie, kalki anglicyzmow. | MIT | 1.0.0 |
 
 ### Produkty MateMatic (sprzedazowe)
 
@@ -183,7 +177,7 @@ ln -s "$(pwd)/skills/citation-grounding-pl" ~/.claude/skills/citation-grounding-
 1. **Polskie organy maja wlasna semantyke.** UODO nie jest tylko ICO/CNIL. KIO ma wlasny tryb 23-dniowy. NSA orzeka kasacyjnie inaczej niz Bundesverwaltungsgericht. Globalny „GDPR + NDA review" tego nie pokrywa.
 2. **Tajemnica zawodowa.** Art. 6 PrAdw + art. 3 RadcPrU + tajemnica notarialna + tajemnica komornicza. Wysylka cloud do US bez SCC = naruszenie. Wszystkie nasze skille sa **RODO-safe by default** (lokalna inference albo izolacja).
 3. **AI Act art. 12 + art. 13.** Obowiazek prowadzenia rejestru zdarzen (art. 12) i transparency duty (art. 13). [legal-ai-audit-bundle](./skills/legal-ai-audit-bundle) pakuje to natywnie. Zachodnie huby dopiero o tym dyskutuja.
-4. **Polski jezyk.** Modele LLM popelniaja inne bledy w polszczyznie (kalki anglicyzmow, naduzycie em-dash, hedging). [humanizer-pl](./skills/humanizer-pl) usuwa to mechanicznie.
+4. **Polski jezyk.** Modele LLM popelniaja inne bledy w polszczyznie (kalki anglicyzmow, naduzycie em-dash, hedging). Hub zawiera narzedzia do wykrywania i poprawy tych wzorcow przed publikacja.
 
 ---
 

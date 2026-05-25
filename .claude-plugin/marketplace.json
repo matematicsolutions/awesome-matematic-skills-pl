@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
   "name": "matematic-skills-pl",
-  "version": "2026.05.25",
+  "version": "2026.05.25-2",
   "description": "Polski hub umiejetnosci AI dla prawa - walidacja outputu LLM, orzecznictwo PL/UE, RODO, redline, AI Act audit-bundle. Vendor-agnostic, RODO-safe by default.",
   "owner": {
     "name": "Wieslaw Mazur / MateMatic Solutions",
@@ -98,14 +98,6 @@
       "author": { "name": "Wieslaw Mazur / MateMatic" },
       "license": "Apache-2.0",
       "source": "./skills/legal-data-hunter-pl"
-    },
-    {
-      "name": "humanizer-pl",
-      "description": "Usuwa wzorce AI-slop z polskiego tekstu (inflacja znaczeniowa, em-dash, regula trojki, hedging, kalki anglicyzmow). Polska adaptacja blader/humanizer.",
-      "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
-      "license": "MIT",
-      "source": "./skills/humanizer-pl"
     },
     {
       "name": "markitdown",

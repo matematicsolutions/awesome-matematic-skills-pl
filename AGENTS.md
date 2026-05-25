@@ -76,7 +76,7 @@ Brak kompilacji.
 - **Polskie cudzyslowy** „..." nie proste angielskie "...".
 
 ### Walidacja
-- **humanizer-pl + marko-pl-content ZAWSZE** przed commitem zmian w plikach PL (README, CONTRIBUTING, SKILL.md, CHANGELOG, NOTICE). Reguła z [matematicsolutions/.github AGENTS.md](https://github.com/matematicsolutions/.github/blob/main/AGENTS.md) + kardynalna regula MateMatic.
+- **Wewnetrzny pipeline QA dla tekstow PL** ZAWSZE przed commitem zmian w plikach PL (README, CONTRIBUTING, SKILL.md, CHANGELOG, NOTICE). Maintainerzy MateMatic uzywaja wlasnych narzedzi QA przed publikacja - kontrybutorzy zewnetrzni odpowiadaja za czytelnosc i poprawnosc tekstu PL.
 
 ## Czego NIE robic (twarde reguly)
 

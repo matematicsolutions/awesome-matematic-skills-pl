@@ -69,7 +69,7 @@ Struktura:
 
 ## Governance (kto decyduje)
 - Owner: Wieslaw Mazur
-- Reviewers: [marko-pl dla content, security-review dla kodu, etc.]
+- Reviewers: [wewnetrzny senior review dla content, security-review dla kodu, etc.]
 - Amendment process: [jak zmieniac konstytucje]
 
 ## Compliance Map (mapowanie na zewnetrzne wymogi)
@@ -231,7 +231,7 @@ Format: `[ID] [P?] [Story] Description`
 ## Phase N - Polish
 - [ ] TXXX [P] Dokumentacja / README
 - [ ] TXXX Performance tuning
-- [ ] TXXX Marko-pl review (jesli tresc tekstowa)
+- [ ] TXXX Wewnetrzny senior review (jesli tresc tekstowa)
 - [ ] TXXX [P] Security review
 
 ## Parallel Opportunities
@@ -318,7 +318,7 @@ Plus changelog `## Amendments` w samej konstytucji (audyt-friendly per AI Act ar
 | `matematic-konstytucja-ai` | Brat-blizniak (produkt klient vs dev nasz). Wspolny rdzen, inny target audience. |
 | matematic video pipeline (internal) | `tasks.md` -> graf questow orchestratora. `[P]` markery -> fan-out subagentow. |
 | `matematic-video-governance` | 4 fazy validation (pre-compose / render / post / distribution) wbudowane w `/mspec-analyze` dla projektow video-pipeline. |
-| `marko-pl-content` | Auto-dorzucany jako reviewer w `## Governance` konstytucji projektow tresciowych. |
+| wewnetrzny senior review MateMatic | Auto-dorzucany jako reviewer w `## Governance` konstytucji projektow tresciowych. |
 | `anthropic-skills:matematic-reviewer` | Auto-dorzucany dla projektow kodowych (PATRON / KGLF / POAS). |
 | KGLF (Knowledge Graph for Law Firms) | KGLF jako Reference Implementation - juz ma ADR-y, jest dobrym kandydatem na pierwszy projekt z `.matematic/konstytucja.md` (rozszerzajacy ADR-y SEMVER konstytucja). |
 

@@ -16,8 +16,8 @@ abstract: >
   porzadkuje szesc warstw weryfikacji outputu LLM dla pisma prawnego w jeden
   lancuch (intake, router, grounding, adversarial, fidelity, audit-bundle),
   dokleda redline DOCX z natywnymi Word Track Changes, orzecznictwo PL/UE
-  (SAOS, EUR-Lex SPARQL), konwersje dokumentow (MarkItDown, OpenDataLoader PDF)
-  i humanizer-pl (29 wzorcow AI-slop w polszczyznie). RODO-safe by default,
+  (SAOS, EUR-Lex SPARQL) i konwersje dokumentow (MarkItDown, OpenDataLoader PDF).
+  RODO-safe by default,
   vendor-agnostic (Claude Code/Cowork/Code, OpenAI Codex CLI, Gemini CLI,
   Manus, Mistral Vibe). Format zgodny z AI Act art. 12 (rejestry zdarzen)
   i art. 13 (transparency duty).

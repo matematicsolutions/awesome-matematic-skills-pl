@@ -8,7 +8,7 @@ description: Recenzent PR/diffow dla PATRONa - polski LegalTech AI agent dla kan
 Recenzent PR/diffow PATRON - polskiego LegalTech AI agenta dla kancelarii. Cherry-pick struktury z [dograh v1.31.0 review-pr](https://github.com/dograh-hq/dograh/blob/main/.agents/skills/review-pr/SKILL.md) (BSD-2, 286 linii), zaadaptowane pod kontekst MateMatic.
 
 **Komplementarny do:**
-- `marko-pl-content` (skill MateMatic) - ocena tresci (artykuly, copy LI, BW). Ten ocenia **diff kodu**.
+- Wewnetrzny pipeline QA MateMatic dla tresci PL (artykuly, copy LI, BW) - ocena czytelnosci i poprawnosci. Ten skill ocenia **diff kodu**.
 - [matematic-konstytucja-ai](../matematic-konstytucja-ai) (w tym hubie) - dokument governance dla klienta. Ten chroni kod produktu.
 - Self-review pre-commit (6 zasad MateMatic) - poprzedza ten skill, sprawdza ogolne, ten skill nad nimi sprawdza repo-specific risks.
 
@@ -260,7 +260,7 @@ Checks:
 - Operacja decyzyjna (klasyfikacja dokumentu, rekomendacja, generowanie pisma, anonimizacja) MUSI zapisac do `audit_log` (ADR-0033). Brak entry = finding (AI Act art. 12 record-keeping).
 - PII detection / anonimizacja inline PRZED storage uzytkowych logow ([matematic-anonimizacja-pl](https://github.com/matematicsolutions/matematic-anonimizacja-pl) jako pre-storage filter). Bypass = finding.
 - Cytat z orzeczenia / ustawy w odpowiedzi LLM musi przejsc [citation-grounding-pl](../citation-grounding-pl) (mechaniczna weryfikacja string-match). Jesli kod generuje odpowiedz LLM bez tego layera = finding.
-- Pisma procesowe MUSZA przejsc [humanizer-pl](../humanizer-pl) + zewnetrzny senior review (marko-pl-content) min 2 rundy przed docx (wewnetrzny pipeline kancelaryjny MateMatic). Kod generujacy .docx bez tej walidacji = finding.
+- Pisma procesowe MUSZA przejsc wewnetrzny pipeline QA MateMatic (anti-slop PL + senior review min 2 rundy) przed docx. Kod generujacy .docx bez tej walidacji = finding.
 - Dane z prawdziwych akt klienta (kwoty, sygnatury, inicjaly) w README/aktualnosci/post LI = czerwona linia tajemnicy adwokackiej (art. 6 ust. 1 PrAdw) / radcowskiej (art. 3 ust. 3 RadcPrU). Grep przed push.
 - Nowy retention policy: dane klienta kancelarii max 90 dni in-memory / 7 lat archive (RODO + KPK + KC).
 - ADR rezerwacja: kazdy duza zmiana decyzyjna potrzebuje ADR proposed przed implementacja (NIE post-hoc).
@@ -297,7 +297,7 @@ Findings w 3 buckets:
 - UI bypassuje generated SDK dla internal API calls (sekcja 9)
 - Secrets/PII klienta logowane (sekcja 10, 13)
 - Operacja decyzyjna BEZ audit_log entry (sekcja 13)
-- Generowanie LLM bez citation-grounding lub pisma docx bez marko-pl-content (sekcja 13)
+- Generowanie LLM bez citation-grounding lub pisma docx bez wewnetrznego pipeline QA (sekcja 13)
 - Dane z realnych akt w public artefactach (sekcja 13)
 
 **Should-fix** (mocno polecane):
@@ -333,7 +333,6 @@ Cytuj `plik:linia` dla kazdego finding. Pomin to co formatter/linter/IDE i tak z
 
 - [matematic-mcp-fastmcp-instructions-pl](../matematic-mcp-fastmcp-instructions-pl) - kanon MCP (sekcja 7)
 - [citation-grounding-pl](../citation-grounding-pl) - anti-halucynacja cytatu (sekcja 13)
-- [humanizer-pl](../humanizer-pl) - higiena tekstu PL (sekcja 13, pre-docx)
 - [legal-ai-audit-bundle](../legal-ai-audit-bundle) - audit AI Act art. 12 (sekcja 13)
 - [matematic-anonimizacja-pl](https://github.com/matematicsolutions/matematic-anonimizacja-pl) - PII anonimizacja (sekcja 13)
 - [dograh-hq/dograh](https://github.com/dograh-hq/dograh) - source pattern (BSD-2)

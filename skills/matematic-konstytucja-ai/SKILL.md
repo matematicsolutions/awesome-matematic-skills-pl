@@ -506,7 +506,6 @@ Jak opisane wyzej.
 
 ## Powiazane memories
 
-- `feedback_review_process.md` - marko-pl review obowiazkowy przed dostarczeniem
 - `feedback_typografia_myslnik.md` - "-" zawsze w dokumencie
 - `reference_narzedzia_oceny_2026-05-14.md` - pozycja #5 spec-kit (source pattern)
 

@@ -1,4 +1,4 @@
-# Generuje 19 SVG badges per skill do assets/badge-<slug>.svg
+# Generuje 18 SVG badges per skill do assets/badge-<slug>.svg
 # Format: 200x60, lewy pasek kategorii (6px), tytul + krotki opis
 # Kolory z DESIGN.md (Midnight Gold)
 
@@ -33,7 +33,6 @@ $skills = @(
   @{ slug='legal-data-hunter-pl';        kat='orzecznictwo'; title='Legal Data Hunter';      sub='katalog zrodel prawa PL' },
   @{ slug='markitdown';                  kat='narzedzia';    title='MarkItDown';             sub='dokument -> Markdown dla LLM' },
   @{ slug='opendataloader-pdf';          kat='narzedzia';    title='OpenDataLoader PDF';     sub='reading order + tabele' },
-  @{ slug='humanizer-pl';                kat='higiena';      title='Humanizer PL';           sub='usuwa AI-slop z tekstu PL' },
   @{ slug='matematic-konstytucja-ai';    kat='produkty';     title='Konstytucja AI';         sub='produkt 15-40k PLN dla kancelarii' },
   @{ slug='matematic-expert-panel';      kat='produkty';     title='Expert Panel';           sub='produkt 5-15k PLN review' },
   @{ slug='matematic-spec-driven';       kat='metodologia';  title='Spec-Driven';            sub='4 fazy + Constitution Check' },

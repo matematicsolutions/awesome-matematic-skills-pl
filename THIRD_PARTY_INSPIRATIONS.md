@@ -109,15 +109,6 @@ MarkItDown z poziomu Claude Code. Instalacja przez `pip install markitdown marki
 **Relacja**: ZALEZNOSC CLI. `opendataloader-pdf` skill to wrapper na ten konwerter
 PDF -> JSON/MD wysokiej jakosci (reading order, tabele, headings).
 
-### blader / humanizer (MIT)
-
-**Repo**: https://github.com/blader/humanizer
-**Licencja**: MIT
-**Relacja**: PATTERN + lista wzorcow. `humanizer-pl` to polska adaptacja 29
-wzorcow AI-slop z dodatkowym wzorcem kalk anglicyzmow i odwroconym wzorcem
-cudzyslowow (poprawnosc polska: „..." nie "..."). Lista wzorcow przepisana
-od zera pod polski jezyk.
-
 ### Lum1104 / Understand-Anything (MIT)
 
 **Repo**: https://github.com/Lum1104/Understand-Anything

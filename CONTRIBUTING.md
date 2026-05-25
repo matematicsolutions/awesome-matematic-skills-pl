@@ -47,9 +47,8 @@ metadata:
 Zanim zglosisz PR uruchom u siebie:
 
 1. **citation-grounding-pl** na wszystkich cytatach prawnych w SKILL.md (Art. X, sygnatury, ELI URI).
-2. **humanizer-pl** zeby usunac AI-slop (em-dash, regula trojki, vague attributions).
-3. **marko-pl-content** (opcjonalnie) - zrzedliwy reviewer tresci.
-4. **Test trigger phrases** - czy skill aktywuje sie na frazach z `description`.
+2. **Korekta tekstu PL** - czy tekst czyta sie naturalnie, bez naduzywania em-dash, hedging, kalek anglicyzmow, oczywistej reguly trojki.
+3. **Test trigger phrases** - czy skill aktywuje sie na frazach z `description`.
 
 ## Jak zglosic
 

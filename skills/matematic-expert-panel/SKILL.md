@@ -272,13 +272,11 @@ Standardowy 90-min warsztat + raport. Single case. Default 7 person.
 - `anthropic-skills:matematic-company` - voice firmowy MateMatic
 - `anthropic-skills:matematic-ppt` - prezentacja slides na warsztat
 - `legal-ai-plugin-governance` - input dla persona IT Security
-- `marko-pl-content` - review raportu pozegnal
 - `anthropic-skills:pdf` - generacja raportu pozegnal PDF
 
 ## Powiazane memories
 
 - `reference_narzedzia_oceny_2026-05-14.md` - pozycja #6 SuperClaude (source pattern)
-- `feedback_review_process.md` - marko-pl review raportu obowiazkowy
 - `reference_memo_ejaj_brand.md` - jezeli warsztat sluzy jako content do MEMO
 
 ## Source attribution

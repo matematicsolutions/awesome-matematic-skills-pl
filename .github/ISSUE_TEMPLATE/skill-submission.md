@@ -30,8 +30,7 @@ W jednym akapicie - co robi, dla kogo, kiedy uruchomic. Trzymaj sie konkretu, be
 ## Walidacja PRZED PR
 
 - [ ] `citation-grounding-pl` na cytatach prawnych w SKILL.md (jezeli sa)
-- [ ] `humanizer-pl` na tekscie PL
-- [ ] `marko-pl-content` (opcjonalnie)
+- [ ] Tekst PL przeszedl korekte / review pod katem czytelnosci i poprawnosci
 
 ## Powiazane skille
 

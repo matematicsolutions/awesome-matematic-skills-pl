@@ -34,7 +34,6 @@ Apache-2.0:
 
 MIT:
 - redline-docx-pl
-- humanizer-pl
 - markitdown
 
 ----------------------------------------------------------------------
@@ -54,10 +53,6 @@ w katalogu konkretnego skilla jezeli istnieje. Sumarycznie:
 - Dealfluence Oy / adeu (MIT) - silnik redline DOCX z natywnymi Word
   Track Changes. Wykorzystany w: redline-docx-pl jako CLI dependency
   (uvx adeu). Nie kopiowano kodu adeu - wolane przez wrapper.
-
-- blader/humanizer (MIT) - lista wzorcow AI-slop. Wykorzystany w:
-  humanizer-pl. Polska adaptacja 29 wzorcow, odwrocony wzorzec
-  cudzyslowow, dodany wzorzec kalk anglicyzmow.
 
 - Microsoft / MarkItDown (MIT) - konwerter dokumentow. Wykorzystany w:
   markitdown jako CLI dependency (pip install markitdown).

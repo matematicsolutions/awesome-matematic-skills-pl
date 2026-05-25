@@ -5,6 +5,25 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [0.5.0] - 2026-05-25
+
+Sanityzacja - wycofanie wewnetrznego skilla z bundle. Hub pozostaje pelnowartosciowy: 18 skilli zewnetrznych otwartego LegalTech.
+
+### Removed
+
+- Skill anti-slop dla polszczyzny wycofany z bundle (folder + badge SVG + wpis marketplace.json + wszystkie referencje w README, AGENTS.md, CONTRIBUTING.md, NOTICE, CITATION.cff, THIRD_PARTY_INSPIRATIONS.md, generate-badges.ps1, ISSUE_TEMPLATE).
+- Skill pozostaje internal-only narzedziem QA maintainerow MateMatic; konwencja MateMatic dla wewnetrznych narzedzi (anti-slop + senior review) jest opisana ogolnie jako "wewnetrzny pipeline QA" bez nazw konkretnych skilli.
+
+### Changed
+
+- Bundle 19 -> 18 skilli (badge counter README, sekcja "Pakiet 18 umiejetnosci", marketplace.json)
+- Sekcja "Higiena tresci" w README usunieta (po wycofaniu jedynego skilla w kategorii)
+- Sciezki walidacji w CONTRIBUTING.md / ISSUE_TEMPLATE.md / AGENTS.md - "wewnetrzny pipeline QA" zamiast nazw skilli
+
+### Background
+
+Konwencja MateMatic: wewnetrzne narzedzia QA dla tekstow polskich (anti-slop + senior review) sa **internal-only** i NIE pojawiaja sie w publicznych artefaktach organizacji - nie w bundle, nie w README, nie w marketplace. Maintainerzy uzywaja ich przed publikacja, ale slug/persona/wzorce pozostaja prywatne.
+
 ## [0.4.0] - 2026-05-25
 
 Iteracja 3 - dodanie 2 skilli metodologicznych (kanon MCP + PR review LegalTech). Cherry-pick z dograh-hq/dograh v1.31.0 (BSD-2).
@@ -43,7 +62,7 @@ Iteracja 2 - dodanie 3 skilli produktowych / metodologicznych + audyt prywatnosc
 
 ### Sanitization (audyt prywatnosci 2026-05-24 wieczor)
 
-- 108 typograficznych em-dash (`—`) zastapiono ASCII lacznikiem (`-`) w 7 plikach (eu-sparql-search SKILL i references, opendataloader-pdf SKILL, markitdown SKILL, szukaj-orzeczen-v2 SKILL + 2 scripts). 5 didactic / regex em-dash zachowano (humanizer-pl wzorce + regex normalizatorow w citation-grounding-pl i deliverable-fidelity-pl skrypts).
+- 108 typograficznych em-dash (`—`) zastapiono ASCII lacznikiem (`-`) w 7 plikach (eu-sparql-search SKILL i references, opendataloader-pdf SKILL, markitdown SKILL, szukaj-orzeczen-v2 SKILL + 2 scripts). 5 didactic / regex em-dash zachowano (regex normalizatorow w citation-grounding-pl i deliverable-fidelity-pl skrypts).
 - 11 wiki-links `[[X]]` w matematic-spec-driven/SKILL.md zamienione na markdown inline code lub opisowy tekst.
 - 6 wiki-links `[[X]]` w 5 plikach (legal-ai-audit-bundle, legal-data-hunter-pl, matematic-konstytucja-ai, redline-docx-pl + 2 powiazane) zamienione: 3x `[[ADR-0031 PATRON]]` -> markdown link do publicznego ADR-0031, 1x `[[citation-grounding-pl]]` -> backtick, 3x `[[let-it-be]]` -> link do `matematic-anonimizacja-pl`, 1x `[[knowledge-graph-law-firms]]` -> opisowo.
 - W AGENTS.md:84 pozostaje cytat wzorca `[[wiki-links]]` jako inline code w instrukcji "nie wpinaj `[[wiki-links]]` do prywatnych memory" - nie wiki-link, tylko cytowany przyklad.
@@ -89,14 +108,11 @@ Pierwsze wydanie publiczne. Hub kuratorski 14 umiejetnosci Agent Skills dla pols
 - **Warstwa konwersji dokumentow (2 skille)**:
   - `markitdown` v2026.04.21 - Microsoft MarkItDown
   - `opendataloader-pdf` v2026.04.21 - PDF -> JSON/MD dla AI z reading order, tabele, headings
-- **Warstwa higieny tresci (1 skill)**:
-  - `humanizer-pl` v1.0.0 - 29 wzorcow AI-slop w polszczyznie
-
 ### Infrastruktura
 
 - `.claude-plugin/marketplace.json` - manifest plugin marketplace dla Claude Code
-- README z taksonomia PL i linkami do 14 pokrewnych repo MateMatic
-- CONTRIBUTING.md z formatem SKILL.md + walidacja PRZED PR (citation-grounding-pl, humanizer-pl, marko-pl-content)
+- README z taksonomia PL i linkami do pokrewnych repo MateMatic
+- CONTRIBUTING.md z formatem SKILL.md + walidacja PRZED PR (citation-grounding-pl + korekta PL)
 - LICENSE MIT (kuratorska)
 - AGENTS.md (Linux Foundation standard)
 - SECURITY.md - polityka security report
