@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-17-blue.svg)](#pakiet---17-umiejetnosci-w-skills)
+[![Skills](https://img.shields.io/badge/skills-19-blue.svg)](#pakiet---19-umiejetnosci-w-skills)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
 [![Polish law](https://img.shields.io/badge/jurysdykcja-PL%20%2B%20UE-red.svg)](#dlaczego-polski-hub)
@@ -16,7 +16,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w `./skills/` zachowuja wlasne licenc
 
 ## Co tu znajdziesz
 
-1. **Pakiet 17 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
+1. **Pakiet 19 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
 2. **Awesome list** - linki do 14 pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -56,7 +56,7 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 17 umiejetnosci w `./skills/`
+## Pakiet - 19 umiejetnosci w `./skills/`
 
 ### Walidacja outputu LLM (6 warstw)
 
@@ -109,6 +109,8 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
 | [<img src="./assets/badge-matematic-spec-driven.svg" alt="Spec-Driven" width="200" height="60">](./skills/matematic-spec-driven) | Spec-Driven Development dla wewnetrznych projektow MateMatic - 4 fazy (Konstytucja / Specyfikacja / Plan / Zadania) + Constitution Check GATE. | Apache-2.0 | 0.1.0 |
+| [<img src="./assets/badge-matematic-mcp-fastmcp-instructions-pl.svg" alt="MCP FastMCP Instructions" width="200" height="60">](./skills/matematic-mcp-fastmcp-instructions-pl) | Kanon dla MCP serverow MateMatic - FastMCP/Server(instructions=) + drift test + dwukanalowy auth + OTel org_id + ToolAnnotations. Walidowany na dograh v1.31.0 (BSD-2), zaadoptowany w 6 MCP MateMatic 2026-05-25. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-patron-pr-review-pl.svg" alt="PATRON PR Review" width="200" height="60">](./skills/matematic-patron-pr-review-pl) | Recenzent PR/diffow dla LegalTech AI agentow - org scoping multi-tenant, audit_log AI Act art. 12, citation grounding, PII w logach. 14 sekcji, 3 buckets Blocker/Should-fix/Nit. Cherry-pick z dograh review-pr (BSD-2) + 3 sekcje MateMatic-specific. | Apache-2.0 | 1.0.0 |
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
   "name": "matematic-skills-pl",
-  "version": "2026.05.24",
+  "version": "2026.05.25",
   "description": "Polski hub umiejetnosci AI dla prawa - walidacja outputu LLM, orzecznictwo PL/UE, RODO, redline, AI Act audit-bundle. Vendor-agnostic, RODO-safe by default.",
   "owner": {
     "name": "Wieslaw Mazur / MateMatic Solutions",
@@ -146,6 +146,22 @@
       "author": { "name": "Wieslaw Mazur / MateMatic" },
       "license": "Apache-2.0",
       "source": "./skills/matematic-spec-driven"
+    },
+    {
+      "name": "matematic-mcp-fastmcp-instructions-pl",
+      "description": "Buduj nowy MCP server z 5 elementami kanonu walidowanymi na dograh v1.31.0 (BSD-2): FastMCP/Server(instructions=) z procedural orchestration, drift test instructions vs TOOLS vs ErrorCode, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id dla per-tenant routing, ToolAnnotations dla read-only tools. Adoptowany w 6 MCP MateMatic 2026-05-25.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/matematic-mcp-fastmcp-instructions-pl"
+    },
+    {
+      "name": "matematic-patron-pr-review-pl",
+      "description": "Recenzent PR/diffow dla LegalTech AI agentow (przyklad: PATRON, KGLF). Wylapuje regresje specyficzne dla repo legaltech ktorych nie zlapie generyczny lint - org scoping multi-tenant, authless routes, brak audit_log (AI Act art. 12), brak grounding cytatow, PII w logach. Format findings file:line -> problem -> correct pattern, 3 buckets Blocker/Should-fix/Nit. Cherry-pick z dograh v1.31.0 review-pr (BSD-2, 286 linii) + 3 sekcje MateMatic-specific (PII/audit_log/citation grounding/AI Act).",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/matematic-patron-pr-review-pl"
     }
   ],
   "tags": [
