@@ -17,12 +17,12 @@ Licencja kuratorska: **MIT** (umiejetnosci w `./skills/` zachowuja wlasne licenc
 ## Co tu znajdziesz
 
 1. **Pakiet 18 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
-2. **Awesome list** - linki do 14 pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
+2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Lancuch walidacji outputu LLM
 
-W odroznieniu od zachodnich hubow (np. lawve.ai), ktore wystawiaja atomowe klocki, ten hub porzadkuje szesc warstw weryfikacji outputu LLM dla pisma prawnego w jeden lancuch: intake na wejsciu, router decyzyjny, mechaniczny grounding cytatu, kontradyktoryjny adversarial, fidelity koncowy i audit-bundle archiwizacyjny.
+W odroznieniu od zachodnich hubow (np. lawve.ai), ktore wystawiaja pojedyncze klocki bez kontraktu miedzy nimi, ten hub porzadkuje szesc warstw weryfikacji outputu LLM dla pisma prawnego w jeden lancuch: intake na wejsciu, router decyzyjny, mechaniczny grounding cytatu, kontradyktoryjny adversarial, fidelity koncowy i audit-bundle archiwizacyjny.
 
 ```
 zlecenie / brief
