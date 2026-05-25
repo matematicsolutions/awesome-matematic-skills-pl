@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-14-blue.svg)](#pakiet---14-umiejetnosci-w-skills)
+[![Skills](https://img.shields.io/badge/skills-17-blue.svg)](#pakiet---17-umiejetnosci-w-skills)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
 [![Polish law](https://img.shields.io/badge/jurysdykcja-PL%20%2B%20UE-red.svg)](#dlaczego-polski-hub)
@@ -62,53 +62,53 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [legal-request-router-pl](./skills/legal-request-router-pl) | Klasyfikator zadania - decyduje, ktora sciezka weryfikacji uruchomic. Warstwa NAD walidacja. | Apache-2.0 | 1.0.0 |
-| [intake-sufficiency-pl](./skills/intake-sufficiency-pl) | Ocena czy zlecenie/brief MA dosc kontekstu, by zaczac. Generuje pytania do klienta. | Apache-2.0 | 1.0.0 |
-| [citation-grounding-pl](./skills/citation-grounding-pl) | Mechaniczny weryfikator cytatu - string-match cytatu prawnego w zrodle. Anti-halucynacja. | Apache-2.0 | 1.0.0 |
-| [adversarial-legal-review-pl](./skills/adversarial-legal-review-pl) | Czerwony zespol dla pisma wysokiej stawki - builder/attacker/synthesizer/verifier. | Apache-2.0 | 1.0.0 |
-| [deliverable-fidelity-pl](./skills/deliverable-fidelity-pl) | Czy zadna flaga RED nie wypadla z podsumowania - sprawdza wiernosc finalnego pisma do analizy. | Apache-2.0 | 1.0.0 |
-| [legal-ai-audit-bundle](./skills/legal-ai-audit-bundle) | Artefakt audytowy AI Act art. 12 - deliverable + slad + log kosztu + manifest SHA256. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-legal-request-router-pl.svg" alt="Legal Request Router" width="200" height="60">](./skills/legal-request-router-pl) | Klasyfikator zadania - decyduje, ktora sciezka weryfikacji uruchomic. Warstwa NAD walidacja. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-intake-sufficiency-pl.svg" alt="Intake Sufficiency" width="200" height="60">](./skills/intake-sufficiency-pl) | Ocena czy zlecenie/brief MA dosc kontekstu, by zaczac. Generuje pytania do klienta. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-citation-grounding-pl.svg" alt="Citation Grounding" width="200" height="60">](./skills/citation-grounding-pl) | Mechaniczny weryfikator cytatu - string-match cytatu prawnego w zrodle. Anti-halucynacja. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-adversarial-legal-review-pl.svg" alt="Adversarial Review" width="200" height="60">](./skills/adversarial-legal-review-pl) | Czerwony zespol dla pisma wysokiej stawki - builder/attacker/synthesizer/verifier. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-deliverable-fidelity-pl.svg" alt="Deliverable Fidelity" width="200" height="60">](./skills/deliverable-fidelity-pl) | Czy zadna flaga RED nie wypadla z podsumowania - sprawdza wiernosc finalnego pisma do analizy. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-legal-ai-audit-bundle.svg" alt="AI Audit Bundle" width="200" height="60">](./skills/legal-ai-audit-bundle) | Artefakt audytowy AI Act art. 12 - deliverable + slad + log kosztu + manifest SHA256. | Apache-2.0 | 1.0.0 |
 
 ### Umowy / Redline
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [redline-docx-pl](./skills/redline-docx-pl) | Natywne Word Track Changes w polskich .docx + sanitize metadanych autora (RODO przy wysylce). | MIT | 2026.05.22 |
+| [<img src="./assets/badge-redline-docx-pl.svg" alt="Redline DOCX PL" width="200" height="60">](./skills/redline-docx-pl) | Natywne Word Track Changes w polskich .docx + sanitize metadanych autora (RODO przy wysylce). | MIT | 2026.05.22 |
 
 ### Orzecznictwo PL / UE
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [saos-orzecznictwo](./skills/saos-orzecznictwo) | Polish case law search via SAOS REST API - sady powszechne, SN, TK, KIO. | Apache-2.0 | 2026.05.24 |
-| [szukaj-orzeczen-v2](./skills/szukaj-orzeczen-v2) | Wyszukiwanie orzeczen PL + opcjonalne grupowanie tematyczne (klastrowanie, raport DOCX). | Apache-2.0 | 2.0.0 |
-| [eu-sparql-search](./skills/eu-sparql-search) | EUR-Lex / Cellar SPARQL - akty UE i orzecznictwo TSUE, CELEX, ELI URI. | Apache-2.0 | 2026.05.24 |
-| [legal-data-hunter-pl](./skills/legal-data-hunter-pl) | Catalog + bulk-harvest dla 11 polskich zrodel prawnych (UODO, UOKiK, KNF, KIO, NSA, TK, SN, Sejm ELI). | Apache-2.0 | 2026.05.22 |
+| [<img src="./assets/badge-saos-orzecznictwo.svg" alt="SAOS Orzecznictwo" width="200" height="60">](./skills/saos-orzecznictwo) | Polish case law search via SAOS REST API - sady powszechne, SN, TK, KIO. | Apache-2.0 | 2026.05.24 |
+| [<img src="./assets/badge-szukaj-orzeczen-v2.svg" alt="Szukaj Orzeczen v2" width="200" height="60">](./skills/szukaj-orzeczen-v2) | Wyszukiwanie orzeczen PL + opcjonalne grupowanie tematyczne (klastrowanie, raport DOCX). | Apache-2.0 | 2.0.0 |
+| [<img src="./assets/badge-eu-sparql-search.svg" alt="EU SPARQL Search" width="200" height="60">](./skills/eu-sparql-search) | EUR-Lex / Cellar SPARQL - akty UE i orzecznictwo TSUE, CELEX, ELI URI. | Apache-2.0 | 2026.05.24 |
+| [<img src="./assets/badge-legal-data-hunter-pl.svg" alt="Legal Data Hunter" width="200" height="60">](./skills/legal-data-hunter-pl) | Catalog + bulk-harvest dla 11 polskich zrodel prawnych (UODO, UOKiK, KNF, KIO, NSA, TK, SN, Sejm ELI). | Apache-2.0 | 2026.05.22 |
 
 ### Narzedzia - konwersja dokumentow
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [markitdown](./skills/markitdown) | Microsoft MarkItDown - PDF/Word/Excel/PPT/HTML/EPUB/audio/obrazy/YouTube -> Markdown. | MIT | 2026.04.21 |
-| [opendataloader-pdf](./skills/opendataloader-pdf) | Wysokiej jakosci PDF -> JSON/MD: reading order, tabele, headings. Krytyczne dla KRS i postanowien. | Apache-2.0 | 2026.04.21 |
+| [<img src="./assets/badge-markitdown.svg" alt="MarkItDown" width="200" height="60">](./skills/markitdown) | Microsoft MarkItDown - PDF/Word/Excel/PPT/HTML/EPUB/audio/obrazy/YouTube -> Markdown. | MIT | 2026.04.21 |
+| [<img src="./assets/badge-opendataloader-pdf.svg" alt="OpenDataLoader PDF" width="200" height="60">](./skills/opendataloader-pdf) | Wysokiej jakosci PDF -> JSON/MD: reading order, tabele, headings. Krytyczne dla KRS i postanowien. | Apache-2.0 | 2026.04.21 |
 
 ### Higiena treści
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [humanizer-pl](./skills/humanizer-pl) | Usuwa wzorce AI-slop z polskiego tekstu - 29 zdefiniowanych wzorcow obejmujacych slownictwo, gramatyke, typografie, kalki anglicyzmow. | MIT | 1.0.0 |
+| [<img src="./assets/badge-humanizer-pl.svg" alt="Humanizer PL" width="200" height="60">](./skills/humanizer-pl) | Usuwa wzorce AI-slop z polskiego tekstu - 29 zdefiniowanych wzorcow obejmujacych slownictwo, gramatyke, typografie, kalki anglicyzmow. | MIT | 1.0.0 |
 
 ### Produkty MateMatic (sprzedazowe)
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [matematic-konstytucja-ai](./skills/matematic-konstytucja-ai) | Generuje "Konstytucje AI" - dokument governance dla kancelarii (6 sekcji + AI Implementation Playbook 6-8 tygodni). Cherry-pick patternu github/spec-kit. | Apache-2.0 | 1.0.0 |
-| [matematic-expert-panel](./skills/matematic-expert-panel) | Generuje 90-min warsztat multi-perspective dla zarzadu kancelarii - 7 person (compliance / IT security / etyk / partner / junior / klient / regulator). | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-konstytucja-ai.svg" alt="Konstytucja AI" width="200" height="60">](./skills/matematic-konstytucja-ai) | Generuje "Konstytucje AI" - dokument governance dla kancelarii (6 sekcji + AI Implementation Playbook 6-8 tygodni). Cherry-pick patternu github/spec-kit. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-expert-panel.svg" alt="Expert Panel" width="200" height="60">](./skills/matematic-expert-panel) | Generuje 90-min warsztat multi-perspective dla zarzadu kancelarii - 7 person (compliance / IT security / etyk / partner / junior / klient / regulator). | Apache-2.0 | 1.0.0 |
 
 ### Metodologia wewnetrzna (dev pipeline)
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [matematic-spec-driven](./skills/matematic-spec-driven) | Spec-Driven Development dla wewnetrznych projektow MateMatic - 4 fazy (Konstytucja / Specyfikacja / Plan / Zadania) + Constitution Check GATE. | Apache-2.0 | 0.1.0 |
+| [<img src="./assets/badge-matematic-spec-driven.svg" alt="Spec-Driven" width="200" height="60">](./skills/matematic-spec-driven) | Spec-Driven Development dla wewnetrznych projektow MateMatic - 4 fazy (Konstytucja / Specyfikacja / Plan / Zadania) + Constitution Check GATE. | Apache-2.0 | 0.1.0 |
 
 ---
 

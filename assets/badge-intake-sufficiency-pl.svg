@@ -1,0 +1,11 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60" role="img" aria-label="Intake Sufficiency - ocena wystarczalnosci briefu">
+  <title>Intake Sufficiency</title>
+  <desc>ocena wystarczalnosci briefu</desc>
+  <rect width="200" height="60" rx="6" fill="#0a1420"/>
+  <rect width="200" height="60" rx="6" fill="none" stroke="#1a2433" stroke-width="1"/>
+  <rect x="0" y="0" width="6" height="60" fill="#e3c373"/>
+  <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="500" fill="#e3c373" letter-spacing="1.2">WALIDACJA OUTPUTU</text>
+  <text x="16" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#dae3f5">Intake Sufficiency</text>
+  <text x="16" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9" fill="#7c8a9f">ocena wystarczalnosci briefu</text>
+  <text x="184" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="500" fill="#e3c373" text-anchor="end" letter-spacing="1.0">PL</text>
+</svg>

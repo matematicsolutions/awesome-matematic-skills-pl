@@ -1,0 +1,11 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60" role="img" aria-label="SAOS Orzecznictwo - API systemu SAOS">
+  <title>SAOS Orzecznictwo</title>
+  <desc>API systemu SAOS</desc>
+  <rect width="200" height="60" rx="6" fill="#0a1420"/>
+  <rect width="200" height="60" rx="6" fill="none" stroke="#1a2433" stroke-width="1"/>
+  <rect x="0" y="0" width="6" height="60" fill="#bac3fd"/>
+  <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="500" fill="#bac3fd" letter-spacing="1.2">ORZECZNICTWO</text>
+  <text x="16" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#dae3f5">SAOS Orzecznictwo</text>
+  <text x="16" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9" fill="#7c8a9f">API systemu SAOS</text>
+  <text x="184" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="500" fill="#e3c373" text-anchor="end" letter-spacing="1.0">PL</text>
+</svg>
