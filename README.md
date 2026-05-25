@@ -12,7 +12,7 @@ Polski hub umiejetnosci AI dla prawa - kuratorska lista i pakiet umiejetnosci ag
 Maintainer: [Wieslaw Mazur](https://www.linkedin.com/in/wieslawmazur/) / [MateMatic Solutions](https://matematic.co).
 Licencja kuratorska: **MIT** (umiejetnosci w `./skills/` zachowuja wlasne licencje deklarowane w SKILL.md).
 
-> **Po co kolejny hub?** Bo prawo polskie ma wlasna jurysdykcje, wlasne organy (UODO, UOKiK, KNF, KIO, NSA, SN, TK), wlasne procedury (KPC, KPK, KSH, KP) i wlasna konstrukcje obowiazku tajemnicy zawodowej. Globalne huby zostaja na poziomie „GDPR + NDA" - tu schodzimy do przepisow KPC/KPK, sygnatur KIO, ELI URI dziennika ustaw i hash-chain audit-bundle dla AI Act art. 12.
+> **Po co kolejny hub?** Bo prawo polskie ma wlasna jurysdykcje, wlasne organy (UODO, UOKiK, KNF, KIO, NSA, SN, TK), wlasne procedury (KPC, KPK, KSH, KP) i wlasna konstrukcje obowiazku tajemnicy zawodowej. Globalne huby zostaja na poziomie „GDPR + NDA” - tu schodzimy do przepisow KPC/KPK, sygnatur KIO, ELI URI dziennika ustaw i hash-chain audit-bundle dla AI Act art. 12.
 
 ## Co tu znajdziesz
 
@@ -52,7 +52,7 @@ zlecenie / brief
                           deliverable + audit
 ```
 
-Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolutions/matematic-legal-verify-pl) pakuje cztery z szesciu warstw (router + grounding + adversarial + audit-bundle) w jeden install dla kancelarii.
+Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolutions/matematic-legal-verify-pl) pakuje 4 z 6 warstw w jeden install dla kancelarii: router, grounding, adversarial i audit-bundle. Pozostale dwie - intake (na wejsciu) i weryfikacja wiernosci finalnego pisma - sa dostepne osobno w `./skills/` tego huba; kancelarie z dojrzalym workflow dopinaja je modularnie.
 
 ---
 
