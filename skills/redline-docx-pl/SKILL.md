@@ -5,8 +5,9 @@ description: Redlining polskich umow i pism w .docx z natywnymi Word Track Chang
 
 # Redline DOCX po polsku
 
-Wrapper nad **adeu** (MIT, Dealfluence Oy) - dwukierunkowy translator `.docx <-> LLM`.
-Robi to, czego `python-docx` NIE potrafi: wstrzykuje **natywne Word Track Changes**
+Wrapper nad **adeu** (MIT, Dealfluence Oy) - dwukierunkowy konwerter miedzy `.docx`
+a Markdown (CriticMarkup), z aplikacja zmian z powrotem do `.docx`. Robi to,
+czego `python-docx` NIE potrafi: wstrzykuje **natywne Word Track Changes**
 (`w:ins`/`w:del`) i komentarze, zachowujac formatowanie, fonty i marginesy.
 
 Cala praca lokalnie (uvx, brak chmury). Silnik testowany na polskim .docx 2026-05-22
@@ -15,6 +16,18 @@ Cala praca lokalnie (uvx, brak chmury). Silnik testowany na polskim .docx 2026-0
 ## Wymagania
 
 `uv` (jezeli brak: `pip install uv`). adeu pobiera sie samo przez `uvx adeu` przy pierwszym uzyciu (wersja sprawdzona: 1.7.5).
+
+## Safety Tiers (KRYTYCZNE)
+
+Przed wykonaniem każdej operacji ustal tier i zastosuj regułę:
+
+| Tier | Operacje | Reguła |
+|------|----------|--------|
+| **R - Read-only** | `extract` (czytanie .docx) | Bez potwierdzenia. Wykonaj od razu. |
+| **M - Mutating** | `apply`, `diff`, `apply --live` | Pokaż użytkownikowi proponowane zmiany. Czekaj na potwierdzenie słowne. |
+| **D - Destructive** | `sanitize --accept-all` (akceptuje wszystkie zmiany nieodwracalnie) | Użytkownik musi wpisać dosłownie: **"potwierdzam"** zanim wykonasz. |
+
+---
 
 ## Workflow (4 kroki)
 
@@ -25,7 +38,8 @@ uvx adeu extract umowa.docx -o umowa.md
 ```
 
 Zwraca czysty Markdown (+ opcjonalny Semantic Appendix: defined terms, cross-references,
-typos). LLM pracuje na semantyce, nie na surowym OOXML. Tani kontekstowo.
+typos). LLM pracuje na semantyce, nie na surowym OOXML - kilkukrotnie mniej tokenow
+niz wrzucenie pliku w postaci binarnej.
 
 ### 2. Przygotuj liste zmian - edits.json
 
@@ -77,18 +91,16 @@ uvx adeu diff v1.docx v2.docx          # wizualny diff dwoch wersji
 uvx adeu apply --live edits.json       # edycja zywego dokumentu w Word (Windows + MS Word)
 ```
 
-## Integracja z anonimizacja PII
+## Integracja z let-it-be (PII PL)
 
 `sanitize` czysci **metadane** Worda, ale NIE tresc. Do anonimizacji tresci (PESEL,
-NIP, nazwiska w fleksji) najpierw przepusc tekst przez silnik anonimizacji PII
-(np. [matematic-anonimizacja-pl](https://github.com/matematicsolutions/matematic-anonimizacja-pl)),
-potem redline:
+NIP, nazwiska w fleksji) najpierw przepusc tekst przez [`let-it-be`](../let-it-be), potem redline:
 
-1. anonimizator PII -> pseudonimizuj tresc pisma (PII -> tokeny)
+1. `let-it-be` -> pseudonimizuj tresc pisma (PII -> tokeny)
 2. praca/redline na zpseudonimizowanej wersji
 3. `adeu sanitize` -> domkniecie metadanych przed wyslaniem
 
-anonimizator PII = tresc (RODO art. 4 dane osobowe w tekscie); adeu sanitize = metadane pliku.
+let-it-be = tresc (RODO art. 4 dane osobowe w tekscie); adeu sanitize = metadane pliku.
 Dwie rozne warstwy wycieku, obie trzeba domknac.
 
 ## Ograniczenia

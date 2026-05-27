@@ -504,10 +504,10 @@ Jak opisane wyzej.
 - `matematic-pricing` - wycena 15-40k / 60-150k PLN
 - `matematic-expert-panel` - alternatywny format warsztatu
 
-## Powiazane memories
+## Konwencje wewnetrzne
 
-- `feedback_typografia_myslnik.md` - "-" zawsze w dokumencie
-- `reference_narzedzia_oceny_2026-05-14.md` - pozycja #5 spec-kit (source pattern)
+- Typografia: ASCII lacznik "-" zawsze w dokumencie (zero em-dash/en-dash).
+- Cherry-pick: methodology adapted from github/spec-kit (source pattern).
 
 ## Source attribution
 

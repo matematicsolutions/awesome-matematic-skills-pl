@@ -13,7 +13,7 @@ Lightweight utility Microsoftu - zachowuje strukturę (nagłówki, listy, tabele
 python -m pip install --user markitdown markitdown-mcp
 ```
 
-Python 3.14, `C:\Users\hp\AppData\Local\Python\pythoncore-3.14-64\`. CLI: `python -m markitdown`.
+Wymaga Python 3.10+ (testowane na 3.14). CLI: `python -m markitdown`.
 
 ## Wspierane formaty
 

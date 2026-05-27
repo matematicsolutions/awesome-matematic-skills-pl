@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
   "name": "matematic-skills-pl",
-  "version": "2026.05.25-2",
+  "version": "2026.05.27",
   "description": "Polski hub umiejetnosci AI dla prawa - walidacja outputu LLM, orzecznictwo PL/UE, RODO, redline, AI Act audit-bundle. Vendor-agnostic, RODO-safe by default.",
   "owner": {
     "name": "Wieslaw Mazur / MateMatic Solutions",
@@ -61,24 +61,24 @@
     },
     {
       "name": "redline-docx-pl",
-      "description": "Redlining polskich umow .docx z natywnymi Word Track Changes - bez niszczenia formatowania OOXML. Sanitize metadanych autora (RODO przy wysylce). Silnik adeu (MIT).",
-      "version": "2026.05.22",
+      "description": "Redlining polskich umow .docx z natywnymi Word Track Changes - bez niszczenia formatowania OOXML. Sanitize metadanych autora (RODO przy wysylce). Safety Tiers R/M/D. Silnik adeu (MIT).",
+      "version": "2026.05.27",
       "author": { "name": "Wieslaw Mazur / MateMatic" },
       "license": "MIT",
       "source": "./skills/redline-docx-pl"
     },
     {
       "name": "saos-orzecznictwo",
-      "description": "Polish case law search via SAOS REST API (Fundacja ePanstwo) - sady powszechne, SN, TK, KIO. Search by sygnatura/date/court/keyword, fetch full text, bulk-download.",
-      "version": "2026.05.24",
+      "description": "Polish case law search via SAOS REST API (Fundacja ePanstwo) - sady powszechne, SN, TK, KIO. Search by sygnatura/date/court/keyword, fetch full text, bulk-download. Refaktor 2026-05-27: SKILL.md 252->125 linii + Python inline -> references/api.md.",
+      "version": "2026.05.27",
       "author": { "name": "Wieslaw Mazur / MateMatic" },
       "license": "Apache-2.0",
       "source": "./skills/saos-orzecznictwo"
     },
     {
       "name": "szukaj-orzeczen-v2",
-      "description": "Wyszukiwanie orzeczen PL przez SAOS API + opcjonalne grupowanie tematyczne (klastrowanie, text mining, raport DOCX). Komenda /szukaj-orzeczen \"fraza\".",
-      "version": "2.0.0",
+      "description": "Wyszukiwanie orzeczen PL przez SAOS API + opcjonalne grupowanie tematyczne (klastrowanie, text mining, raport DOCX). Komenda /szukaj-orzeczen \"fraza\". v2.1.0: refaktor SKILL.md 460->60 linii + 4 pliki references/.",
+      "version": "2.1.0",
       "author": { "name": "Wieslaw Mazur / MateMatic" },
       "license": "Apache-2.0",
       "source": "./skills/szukaj-orzeczen-v2"
@@ -154,6 +154,38 @@
       "author": { "name": "Wieslaw Mazur / MateMatic" },
       "license": "Apache-2.0",
       "source": "./skills/matematic-patron-pr-review-pl"
+    },
+    {
+      "name": "let-it-be",
+      "description": "Silnik anonimizacji i pseudonimizacji polskich danych osobowych (PESEL, NIP, REGON, KRS, IBAN, dowod osobisty, telefon, e-mail, imiona, firmy, adres) w tekscie - RODO-safe, offline, deterministycznie. Zero zaleznosci, Node >=20. Tryby anonimize (token) i pseudonymize (mapping). Detekcja checksumowa (PESEL/NIP/REGON/KRS/IBAN) + heurystyczna (imiona gazetteer ~120 + firmy z forma prawna).",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/let-it-be"
+    },
+    {
+      "name": "matematic-marketplace-installer",
+      "description": "Generuje skrypt instalacyjny MateMatic Marketplace dla prawnikow (Windows .bat, bez Git/npm). Pomaga rozpowszechniac skille MateMatic do docelowych uzytkownikow (kancelarie) bez wiedzy technicznej. Komenda /marketplace install. Safety Tiers R/M/D.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/matematic-marketplace-installer"
+    },
+    {
+      "name": "matematic-workspace-backup",
+      "description": "Konfiguracja szyfrowanego backupu Google Workspace dla kancelarii prawnych przez gogcli + age (X25519) + prywatne repo Git. Adresuje RODO art. 32 (ciaglosc i odpornosc), ryzyko lockoutu Google i ransomware na Workspace. Pozycjonowanie edukator (nie odsprzedajemy gogcli, uczymy klienta z niego korzystac). Safety Tiers R/M/D.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/matematic-workspace-backup"
+    },
+    {
+      "name": "webwright-legal-pl",
+      "description": "Pobiera orzeczenia i akty prawne z polskich serwisow sadowych niedostepnych przez MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) uzywajac Webwright (Playwright Firefox, code-as-action). Wrapper kierunkowany pod polskie domeny prawne. Trzy tryby - pobierz po sygnaturze, szukaj po slowie kluczowym, pobierz akt prawny EU/PL po CELEX/ELI.",
+      "version": "1.0.0",
+      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "license": "Apache-2.0",
+      "source": "./skills/webwright-legal-pl"
     }
   ],
   "tags": [

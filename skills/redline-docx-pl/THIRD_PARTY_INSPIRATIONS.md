@@ -47,5 +47,5 @@ Worda (istotne RODO przy wysylce pisma).
 
 ## Powiazania
 
-- [matematic-anonimizacja-pl](https://github.com/matematicsolutions/matematic-anonimizacja-pl) - anonimizacja TRESCI (PII PL); adeu sanitize czysci METADANE pliku.
-  Dwie rozne warstwy, lancuch: anonimizator tresci -> redline -> adeu sanitize metadane.
+- [`let-it-be`](../let-it-be) - anonimizacja TRESCI (PII PL); adeu sanitize czysci METADANE pliku.
+  Dwie rozne warstwy, lancuch: let-it-be tresc -> redline -> adeu sanitize metadane.

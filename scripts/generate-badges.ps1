@@ -1,4 +1,4 @@
-# Generuje 18 SVG badges per skill do assets/badge-<slug>.svg
+# Generuje 22 SVG badges per skill do assets/badge-<slug>.svg
 # Format: 200x60, lewy pasek kategorii (6px), tytul + krotki opis
 # Kolory z DESIGN.md (Midnight Gold)
 
@@ -18,7 +18,7 @@ $cat = @{
   metodologia  = @{ color = '#ffb4ab'; label = 'METODOLOGIA' }
 }
 
-# 17 skilli: slug, kategoria, tytul, podtytul
+# 22 skille: slug, kategoria, tytul, podtytul
 $skills = @(
   @{ slug='legal-request-router-pl';     kat='walidacja';    title='Legal Request Router';   sub='triage zadania prawnego' },
   @{ slug='intake-sufficiency-pl';       kat='walidacja';    title='Intake Sufficiency';     sub='ocena wystarczalnosci briefu' },
@@ -31,13 +31,17 @@ $skills = @(
   @{ slug='szukaj-orzeczen-v2';          kat='orzecznictwo'; title='Szukaj Orzeczen v2';     sub='wyszukiwanie + raport tematyczny' },
   @{ slug='eu-sparql-search';            kat='orzecznictwo'; title='EU SPARQL Search';       sub='EUR-Lex + Cellar + CJEU' },
   @{ slug='legal-data-hunter-pl';        kat='orzecznictwo'; title='Legal Data Hunter';      sub='katalog zrodel prawa PL' },
+  @{ slug='webwright-legal-pl';          kat='orzecznictwo'; title='Webwright Legal PL';     sub='MS / SN / TK przez Playwright' },
   @{ slug='markitdown';                  kat='narzedzia';    title='MarkItDown';             sub='dokument -> Markdown dla LLM' },
   @{ slug='opendataloader-pdf';          kat='narzedzia';    title='OpenDataLoader PDF';     sub='reading order + tabele' },
+  @{ slug='matematic-workspace-backup';  kat='narzedzia';    title='Workspace Backup';       sub='gogcli + age dla RODO art.32' },
+  @{ slug='let-it-be';                   kat='higiena';      title='Let It Be';              sub='anonimizacja PESEL/NIP/imion' },
   @{ slug='matematic-konstytucja-ai';    kat='produkty';     title='Konstytucja AI';         sub='produkt 15-40k PLN dla kancelarii' },
   @{ slug='matematic-expert-panel';      kat='produkty';     title='Expert Panel';           sub='produkt 5-15k PLN review' },
   @{ slug='matematic-spec-driven';       kat='metodologia';  title='Spec-Driven';            sub='4 fazy + Constitution Check' },
   @{ slug='matematic-mcp-fastmcp-instructions-pl'; kat='metodologia'; title='MCP FastMCP Kanon'; sub='5 elementow walidowanych na dograh' },
-  @{ slug='matematic-patron-pr-review-pl';         kat='metodologia'; title='PATRON PR Review';   sub='14 sekcji LegalTech-specific' }
+  @{ slug='matematic-patron-pr-review-pl';         kat='metodologia'; title='PATRON PR Review';   sub='14 sekcji LegalTech-specific' },
+  @{ slug='matematic-marketplace-installer';       kat='metodologia'; title='Marketplace Installer'; sub='dystrybucja .bat dla kancelarii' }
 )
 
 function Escape-Xml($s) {

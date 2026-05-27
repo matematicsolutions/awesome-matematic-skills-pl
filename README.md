@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-18-blue.svg)](#pakiet---18-umiejetnosci-w-skills)
+[![Skills](https://img.shields.io/badge/skills-22-blue.svg)](#pakiet---22-umiejetnosci-w-skills)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
 [![Polish law](https://img.shields.io/badge/jurysdykcja-PL%20%2B%20UE-red.svg)](#dlaczego-polski-hub)
@@ -16,7 +16,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w `./skills/` zachowuja wlasne licenc
 
 ## Co tu znajdziesz
 
-1. **Pakiet 18 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
+1. **Pakiet 22 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -56,7 +56,7 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 18 umiejetnosci w `./skills/`
+## Pakiet - 22 umiejetnosci w `./skills/`
 
 ### Walidacja outputu LLM (6 warstw)
 
@@ -73,23 +73,31 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [<img src="./assets/badge-redline-docx-pl.svg" alt="Redline DOCX PL" width="200" height="60">](./skills/redline-docx-pl) | Natywne Word Track Changes w polskich .docx + sanitize metadanych autora (RODO przy wysylce). | MIT | 2026.05.22 |
+| [<img src="./assets/badge-redline-docx-pl.svg" alt="Redline DOCX PL" width="200" height="60">](./skills/redline-docx-pl) | Natywne Word Track Changes w polskich .docx + sanitize metadanych autora (RODO przy wysylce). Safety Tiers R/M/D. | MIT | 2026.05.27 |
 
 ### Orzecznictwo PL / UE
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [<img src="./assets/badge-saos-orzecznictwo.svg" alt="SAOS Orzecznictwo" width="200" height="60">](./skills/saos-orzecznictwo) | Polish case law search via SAOS REST API - sady powszechne, SN, TK, KIO. | Apache-2.0 | 2026.05.24 |
-| [<img src="./assets/badge-szukaj-orzeczen-v2.svg" alt="Szukaj Orzeczen v2" width="200" height="60">](./skills/szukaj-orzeczen-v2) | Wyszukiwanie orzeczen PL + opcjonalne grupowanie tematyczne (klastrowanie, raport DOCX). | Apache-2.0 | 2.0.0 |
+| [<img src="./assets/badge-saos-orzecznictwo.svg" alt="SAOS Orzecznictwo" width="200" height="60">](./skills/saos-orzecznictwo) | Polish case law search via SAOS REST API - sady powszechne, SN, TK, KIO. Lean SKILL.md (125 linii) + `references/api.md`. | Apache-2.0 | 2026.05.27 |
+| [<img src="./assets/badge-szukaj-orzeczen-v2.svg" alt="Szukaj Orzeczen v2" width="200" height="60">](./skills/szukaj-orzeczen-v2) | Wyszukiwanie orzeczen PL + opcjonalne grupowanie tematyczne (klastrowanie, raport DOCX). v2.1.0: SKILL.md 460->60 linii + 4 pliki `references/`. | Apache-2.0 | 2.1.0 |
 | [<img src="./assets/badge-eu-sparql-search.svg" alt="EU SPARQL Search" width="200" height="60">](./skills/eu-sparql-search) | EUR-Lex / Cellar SPARQL - akty UE i orzecznictwo TSUE, CELEX, ELI URI. | Apache-2.0 | 2026.05.24 |
 | [<img src="./assets/badge-legal-data-hunter-pl.svg" alt="Legal Data Hunter" width="200" height="60">](./skills/legal-data-hunter-pl) | Catalog + bulk-harvest dla 11 polskich zrodel prawnych (UODO, UOKiK, KNF, KIO, NSA, TK, SN, Sejm ELI). | Apache-2.0 | 2026.05.22 |
+| [<img src="./assets/badge-webwright-legal-pl.svg" alt="Webwright Legal PL" width="200" height="60">](./skills/webwright-legal-pl) | Pobiera orzeczenia z serwisow niedostepnych w MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) przez Playwright. | Apache-2.0 | 1.0.0 |
 
-### Narzedzia - konwersja dokumentow
+### Narzedzia - konwersja dokumentow i operacyjne
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
 | [<img src="./assets/badge-markitdown.svg" alt="MarkItDown" width="200" height="60">](./skills/markitdown) | Microsoft MarkItDown - PDF/Word/Excel/PPT/HTML/EPUB/audio/obrazy/YouTube -> Markdown. | MIT | 2026.04.21 |
 | [<img src="./assets/badge-opendataloader-pdf.svg" alt="OpenDataLoader PDF" width="200" height="60">](./skills/opendataloader-pdf) | Wysokiej jakosci PDF -> JSON/MD: reading order, tabele, headings. Krytyczne dla KRS i postanowien. | Apache-2.0 | 2026.04.21 |
+| [<img src="./assets/badge-matematic-workspace-backup.svg" alt="Workspace Backup" width="200" height="60">](./skills/matematic-workspace-backup) | Szyfrowany backup Google Workspace przez gogcli + age + prywatne repo Git. Adresuje RODO art. 32 (ciaglosc, ochrona przed lockoutem). | Apache-2.0 | 1.0.0 |
+
+### Higiena tresci / RODO operacyjne
+
+| Skill | Opis | Licencja | Wersja |
+|---|---|---|---|
+| [<img src="./assets/badge-let-it-be.svg" alt="Let It Be" width="200" height="60">](./skills/let-it-be) | Silnik anonimizacji i pseudonimizacji polskich PII (PESEL, NIP, REGON, KRS, IBAN, imiona, firmy) w tekscie. Offline, deterministyczny, zero zaleznosci. | Apache-2.0 | 1.0.0 |
 
 ### Produkty MateMatic (sprzedazowe)
 
@@ -105,6 +113,8 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 | [<img src="./assets/badge-matematic-spec-driven.svg" alt="Spec-Driven" width="200" height="60">](./skills/matematic-spec-driven) | Spec-Driven Development dla wewnetrznych projektow MateMatic - 4 fazy (Konstytucja / Specyfikacja / Plan / Zadania) + Constitution Check GATE. | Apache-2.0 | 0.1.0 |
 | [<img src="./assets/badge-matematic-mcp-fastmcp-instructions-pl.svg" alt="MCP FastMCP Instructions" width="200" height="60">](./skills/matematic-mcp-fastmcp-instructions-pl) | Kanon dla MCP serverow MateMatic - FastMCP/Server(instructions=) + drift test + dwukanalowy auth + OTel org_id + ToolAnnotations. Walidowany na dograh v1.31.0 (BSD-2), zaadoptowany w 6 MCP MateMatic 2026-05-25. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-matematic-patron-pr-review-pl.svg" alt="PATRON PR Review" width="200" height="60">](./skills/matematic-patron-pr-review-pl) | Recenzent PR/diffow dla LegalTech AI agentow - org scoping multi-tenant, audit_log AI Act art. 12, citation grounding, PII w logach. 14 sekcji, 3 buckets Blocker/Should-fix/Nit. Cherry-pick z dograh review-pr (BSD-2) + 3 sekcje MateMatic-specific. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-marketplace-installer.svg" alt="Marketplace Installer" width="200" height="60">](./skills/matematic-marketplace-installer) | Generator skryptow instalacyjnych MateMatic Marketplace dla prawnikow (Windows .bat, bez Git/npm). Reproducible install: default ref = najnowszy tag. Safety Tiers R/M/D. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-marketplace-installer.svg" alt="Marketplace Installer" width="200" height="60">](./skills/matematic-marketplace-installer) | Generuje skrypt instalacyjny MateMatic Marketplace dla prawnikow (Windows .bat, bez Git/npm) - rozpowszechnianie skilli do kancelarii bez wiedzy technicznej. Safety Tiers R/M/D. | Apache-2.0 | 1.0.0 |
 
 ---
 

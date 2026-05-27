@@ -274,10 +274,10 @@ Standardowy 90-min warsztat + raport. Single case. Default 7 person.
 - `legal-ai-plugin-governance` - input dla persona IT Security
 - `anthropic-skills:pdf` - generacja raportu pozegnal PDF
 
-## Powiazane memories
+## Konwencje wewnetrzne
 
-- `reference_narzedzia_oceny_2026-05-14.md` - pozycja #6 SuperClaude (source pattern)
-- `reference_memo_ejaj_brand.md` - jezeli warsztat sluzy jako content do MEMO
+- Cherry-pick: methodology adapted from SuperClaude-Org/SuperClaude_Framework (source pattern).
+- Output warsztatu moze sluzyc jako content do dalszych formatow (PDF, slajdy, MEMO).
 
 ## Source attribution
 

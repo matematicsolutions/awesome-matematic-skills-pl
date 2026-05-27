@@ -1,0 +1,42 @@
+{
+  "name": "matematic-anonimizacja-pl",
+  "version": "0.1.0",
+  "description": "Samodzielny silnik anonimizacji i pseudonimizacji polskich danych osobowych (PESEL, NIP, REGON, KRS, sygnatury sadow, imiona) - RODO-safe, offline, zero zaleznosci.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "MateMatic Solutions",
+  "homepage": "https://github.com/matematicsolutions/matematic-anonimizacja-pl",
+  "bin": {
+    "anonimizuj-pl": "bin/cli.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "src",
+    "bin",
+    "SKILL.md",
+    "governance",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_INSPIRATIONS.md"
+  ],
+  "keywords": [
+    "anonimizacja",
+    "pseudonimizacja",
+    "RODO",
+    "GDPR",
+    "PII",
+    "PESEL",
+    "NIP",
+    "REGON",
+    "legaltech",
+    "polish"
+  ]
+}

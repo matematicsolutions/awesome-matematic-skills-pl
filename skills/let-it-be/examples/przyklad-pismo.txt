@@ -1,0 +1,19 @@
+UWAGA: Wszystkie dane w tym pliku sa FIKCYJNE. Sluza wylacznie do
+demonstracji dzialania silnika - PESEL i NIP zostaly wybrane jako
+checksum-valid wzorce testowe, nie odnosza sie do realnych osob ani firm.
+Numery REGON / KRS sa chaotycznymi sekwencjami. Imiona, nazwiska, nazwy
+firm i sygnatury - wymyslone.
+
+---
+
+Pozew o zaplate
+
+Powod: Jan Kowalski, PESEL 44051401359, zam. w Warszawie,
+e-mail jan.kowalski@kancelaria.pl, tel. +48 600 700 800.
+
+Pozwany: Przyklad Sp. z o.o., NIP 1111111111, REGON 123456785,
+wpisana do rejestru pod numerem KRS 0000123456.
+
+Powod wnosi o zasadzenie kwoty 50 000 zl wraz z odsetkami,
+powolujac sie na wyrok Sadu Najwyzszego III CZP 11/13 oraz
+stanowisko NSA II FSK 1234/22. Sprawe prowadzi Anna Nowak.

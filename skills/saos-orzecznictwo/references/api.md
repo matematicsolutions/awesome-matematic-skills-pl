@@ -172,3 +172,34 @@ realnym uzyciu).
 | Surowy obiekt API | `https://www.saos.org.pl/api/judgments/{id}` |
 | Oryginal w portalu sadu | pole `source.judgmentUrl` |
 | Dokumentacja API | `https://www.saos.org.pl/help/index.php/dokumentacja-api` |
+
+---
+
+## Przyklad inline Python (bez zewnetrznych zaleznosci)
+
+```python
+import urllib.parse, urllib.request, json
+
+def saos_search(**params):
+    qs = urllib.parse.urlencode({k: v for k, v in params.items() if v is not None})
+    url = f"https://www.saos.org.pl/api/search/judgments?{qs}"
+    with urllib.request.urlopen(url, timeout=35) as r:
+        return json.loads(r.read())
+
+def saos_get(jid):
+    url = f"https://www.saos.org.pl/api/judgments/{jid}"
+    with urllib.request.urlopen(url, timeout=35) as r:
+        return json.loads(r.read())["data"]
+
+# Przyklady
+res = saos_search(all="RODO", courtType="SUPREME", pageSize=10,
+                  sortingField="JUDGMENT_DATE", sortingDirection="DESC",
+                  judgmentDateTo="2026-05-27")
+print(res["info"]["totalResults"])
+
+j = saos_get(352475)
+print(j["courtCases"][0]["caseNumber"], j["source"]["judgmentUrl"])
+```
+
+> Uzywaj `urllib` w bash_tool, NIE `web_fetch` - URL-e SAOS z zapytan programowych
+> zostana odrzucone przez ograniczenia narzedzia `web_fetch`.

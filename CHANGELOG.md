@@ -5,6 +5,40 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [0.6.0] - 2026-05-27
+
+Iteracja 4 - sprint architektury (Safety Tiers R/M/D + references/ offload) + 4 nowe skille z trzech roznych warstw produktowych. Inspiracja wzorcami z google/skills (Safety Tiers, references/ skill leanness, Skill Registry semantic search).
+
+### Dodano
+
+- `let-it-be` v1.0.0 - silnik anonimizacji i pseudonimizacji polskich danych osobowych (PESEL, NIP, REGON, KRS, IBAN, dowod osobisty, telefon, e-mail, imiona z gazetteera ~120, firmy z forma prawna, adres). RODO-safe, offline, deterministyczny, zero zaleznosci (Node >=20). Dwa tryby: `anonimizuj` (nieodwracalne, RODO motyw 26) i `pseudonimizuj`+`odwroc` (odwracalne przez mape, RODO art. 4 pkt 5). Bramka "no PII leaves" (przerwie operacje gdy oryginal przezyl podmiane). Detekcja checksumowa (PESEL/NIP/REGON/KRS/IBAN) + heurystyczna. Lustro `redline-docx-pl` w lancuchu: `let-it-be` czysci tresc -> redline -> `adeu sanitize` czysci metadane.
+- `webwright-legal-pl` v1.0.0 - pobiera orzeczenia i akty prawne z polskich serwisow sadowych niedostepnych przez MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) uzywajac Microsoft Webwright (Playwright Firefox, code-as-action). Wrapper kierunkowany pod polskie domeny. Trzy tryby - pobierz po sygnaturze, szukaj po slowie kluczowym, pobierz akt prawny EU/PL po CELEX/ELI. Adresuje luke gdy mcp-saos / mcp-eu-sparql nie pokrywaja danego serwisu.
+- `matematic-workspace-backup` v1.0.0 - konfiguracja szyfrowanego backupu Google Workspace dla kancelarii prawnych przez gogcli (steipete/gogcli, MIT) + age (X25519) + prywatne repo Git. Adresuje RODO art. 32 (ciaglosc i odpornosc), ryzyko lockoutu Google i ransomware. Pozycjonowanie: edukator (nie odsprzedajemy gogcli, uczymy klienta z niego korzystac). Safety Tiers R/M/D.
+- `matematic-marketplace-installer` v1.0.0 - generuje skrypt instalacyjny MateMatic Marketplace dla prawnikow (Windows .bat, bez Git/npm). Rozpowszechnianie skilli MateMatic do docelowych uzytkownikow (kancelarie) bez wiedzy technicznej. Komenda `/marketplace install`. Safety Tiers R/M/D.
+
+### Zmieniono
+
+- Bundle 18 -> 22 skilli (badge counter README + sekcja "Pakiet 22 umiejetnosci" + marketplace.json plugins[])
+- `redline-docx-pl` 2026.05.22 -> 2026.05.27 - dodano Safety Tiers R/M/D dla operacji `sanitize --accept-all` (Tier D nieodwracalne)
+- `saos-orzecznictwo` refaktor architektury - SKILL.md 252 -> 125 linii, Python inline wyciagniety do `references/api.md`. Wzorzec references/ offload z google/skills (lean SKILL.md, ciezkie referencje on-demand).
+- `szukaj-orzeczen-v2` refaktor architektury - SKILL.md 460 -> 60 linii, 4 pliki references/ (api-saos.md, json-schemat.md, raport-tematyczny.md, tryb-wyszukiwanie.md). Najdrastyczniejszy slim-down w bundle.
+- Nowa kategoria README "Higiena tresci / RODO operacyjne" (anonimizacja PII).
+- Sekcja "Narzedzia" zmieniona na "Narzedzia - konwersja dokumentow i operacyjne" (dodanie matematic-workspace-backup).
+- Sekcja "Orzecznictwo PL / UE" rozszerzona o webwright-legal-pl.
+- Sekcja "Metodologia wewnetrzna" rozszerzona o matematic-marketplace-installer.
+- `.claude-plugin/marketplace.json` v2026.05.25-2 -> v2026.05.27, +4 wpisy plugins[].
+- `assets/badge-*.svg` 18 -> 22 (regeneracja przez `scripts/generate-badges.ps1`).
+
+### Wzorce zaadoptowane z google/skills (MIT)
+
+- **Safety Tiers R/M/D** - 5 skilli oznaczonych poziomami ryzyka operacji (Read-only / Modifies / Destructive). Tier D wymaga jawnego "potwierdzam" od uzytkownika. Wdrozone: redline-docx-pl, matematic-workspace-backup, let-it-be, matematic-marketplace-installer, plus rezerwacja w innych skillach gdzie operacje destruktywne nie wystepuja (R+M wystarczy).
+- **references/ offload** - 3 skille z refaktorem (saos-orzecznictwo, szukaj-orzeczen-v2, geo). SKILL.md staje sie lean (~60-125 linii), ciezkie referencje (API spec, skrypty Python, troubleshooting) przeniesione do `references/*.md`. Czytane on-demand przez Read tool, nie w prompcie.
+- **Skill Registry semantic search** - rezerwacja koncepcji (nie wdrazana w v0.6.0, kandydat na osobny release).
+
+### Kontekst
+
+google/skills (przewodnik wzorcow dla Claude Agent skills) opublikowany przez Google w maju 2026 dostarczyl trzech wzorcow architektury skilli. Dwa z nich (Safety Tiers, references/ offload) zostaly zaadoptowane do hubu MateMatic w tej iteracji. Trzeci (Skill Registry semantic search) wymaga osobnego workflow i pozostaje w rezerwacji.
+
 ## [0.5.0] - 2026-05-25
 
 Sanityzacja - wycofanie wewnetrznego skilla z bundle. Hub pozostaje pelnowartosciowy: 18 skilli zewnetrznych otwartego LegalTech.
