@@ -191,7 +191,7 @@ Methodology adapted from SuperClaude-Org/SuperClaude_Framework (MIT License) - B
 
 - Konstytucja AI (skill matematic-konstytucja-ai) dla pelnej governance struktury
 - AI Implementation Playbook 6-8 tygodni
-- Stack zero-cloud audit (matematic-stack-zero-cloud)
+- Audyt zero-cloud stacku (RODO-safe self-hosted deployment)
 
 ## Podpisy
 
@@ -268,7 +268,6 @@ Standardowy 90-min warsztat + raport. Single case. Default 7 person.
 
 - `anthropic-skills:ai-law-firm` - kontekst kancelarii
 - `matematic-konstytucja-ai` - downstream produkt (Konstytucja AI po warsztacie)
-- `matematic-pricing` - wycena per Variant A/B/C/D
 - `anthropic-skills:matematic-company` - voice firmowy MateMatic
 - `anthropic-skills:matematic-ppt` - prezentacja slides na warsztat
 - `legal-ai-plugin-governance` - input dla persona IT Security

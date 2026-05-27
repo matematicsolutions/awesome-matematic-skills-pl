@@ -146,8 +146,8 @@ Dwa różne narzędzia, dwie różne fazy:
 
 Razem stanowią dwustopniową bramę: prompt zaprojektowany odpornie (PromptDefense) + deliverable
 przeczytany kontradyktoryjnie (adversarial-legal-review-pl). Cherry-pick wzorca PromptDefense
-do dorobienia jako osobny skill `matematic-prompt-defense-pl` (backlog) - regex+zero LLM cost,
-walidator system promptów kancelarii pod kątem 12 wektorów ataku.
+do dorobienia jako osobny walidator system promptów kancelarii pod kątem 12 wektorów ataku -
+regex+zero LLM cost (backlog wewnętrzny).
 
 ## Atrybucja
 

@@ -97,7 +97,7 @@ zywo). To NIE jest dublowanie - jedno zasila lokalny indeks, drugie odpowiada na
 pytanie tu i teraz.
 
 > ⚠️ **Hostowane Search API legaldatahunter.com to zaleznosc chmurowa** - sprzeczna
-> z teza zero-cloud MateMatic (`matematic-stack-zero-cloud`). Do produktu dla
+> z teza zero-cloud MateMatic (RODO-safe self-hosted stack). Do produktu dla
 > kancelarii uruchamiaj kolektory lokalnie i trzymaj korpus u siebie. Hostowane
 > API jest OK tylko do szybkiego rozpoznania/dev.
 

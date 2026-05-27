@@ -166,7 +166,7 @@ Pierwsze wydanie publiczne. Hub kuratorski 14 umiejetnosci Agent Skills dla pols
 
 ### Nie dodano (swiadomie pominiete w v0.1.0)
 
-- `matematic-stack-zero-cloud` - skill zawiera dane sprzedazowe specyficzne dla kancelarii, zostaje prywatny w `~/.claude/skills/`
+- Internal zero-cloud blueprint skill - zawiera dane sprzedazowe specyficzne dla kancelarii, zostaje prywatny w `~/.claude/skills/`
 - Skille produktowe (`matematic-konstytucja-ai`, `matematic-expert-panel`, `matematic-readiness`) - planowane w iteracji 2 po sanitization
 
 ## [Wcześniej]

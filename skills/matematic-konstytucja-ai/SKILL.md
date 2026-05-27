@@ -497,11 +497,9 @@ Jak opisane wyzej.
 - `anthropic-skills:matematic-company` - voice firmowy MateMatic (oferta dla klienta)
 - `anthropic-skills:matematic-reviewer` - recenzja dokumentow eksperckich
 - `legal-ai-plugin-governance` - checklist audytu pluginow (input do Boundaries)
-- `matematic-stack-zero-cloud` - zatwierdzony stack RODO-safe (input do tabeli narzedzi)
 - `matematic-workspace-backup` - art. 32 RODO mapping
 - `security-and-hardening` - RODO art. 32 environment
 - `anthropic-skills:investor-materials` - jezeli ofertujemy Konstytucje jako produkt na pitch
-- `matematic-pricing` - wycena 15-40k / 60-150k PLN
 - `matematic-expert-panel` - alternatywny format warsztatu
 
 ## Konwencje wewnetrzne
