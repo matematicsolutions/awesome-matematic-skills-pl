@@ -54,7 +54,7 @@ Sanityzacja - wycofanie wewnetrznego skilla z bundle. Hub pozostaje pelnowartosc
 - Sekcja "Higiena tresci" w README usunieta (po wycofaniu jedynego skilla w kategorii)
 - Sciezki walidacji w CONTRIBUTING.md / ISSUE_TEMPLATE.md / AGENTS.md - "wewnetrzny pipeline QA" zamiast nazw skilli
 
-### Background
+### Kontekst
 
 Konwencja MateMatic: wewnetrzne narzedzia QA dla tekstow polskich (anti-slop + senior review) sa **internal-only** i NIE pojawiaja sie w publicznych artefaktach organizacji - nie w bundle, nie w README, nie w marketplace. Maintainerzy uzywaja ich przed publikacja, ale slug/persona/wzorce pozostaja prywatne.
 

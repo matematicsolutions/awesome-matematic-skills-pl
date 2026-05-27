@@ -118,14 +118,20 @@ INSTALACJA:
 1. Zweryfikuj zrodlo pliku - powinien pochodzic z oficjalnego release
    github.com/matematicsolutions/awesome-matematic-skills-pl/releases.
    Jezeli kancelaria ma polityke whitelistingu - zglos plik do IT przed otwarciem.
-2. Kliknij dwukrotnie install-matematic-skills.bat
+2. (ZALECANE dla kancelarii) Zweryfikuj sume SHA256:
+   - Pobierz z release page plik `checksums.txt`.
+   - W PowerShell w katalogu pobranego .bat uruchom:
+       Get-FileHash -Algorithm SHA256 install-matematic-skills.bat
+   - Porownaj z linia w checksums.txt. Jezeli niezgodne - NIE uruchamiaj, zglos
+     wsparcie@matematic.co.
+3. Kliknij dwukrotnie install-matematic-skills.bat
    (Windows SmartScreen moze pokazac ostrzezenie. Jezeli plik pochodzi z innego
     zrodla niz oficjalny release - NIE uruchamiaj. Jezeli jest z release i polityka
     kancelarii pozwala - kliknij "Wiecej informacji" -> "Uruchom i tak".
     Prawa administratora NIE sa wymagane - skrypt pisze do %USERPROFILE%.)
-3. Poczekaj az pojawi sie "Instalacja zakonczona!"
-4. Uruchom Claude Code od nowa
-5. Sprawdz: wpisz /szukaj-orzeczen "dobro dziecka" - komenda jest dostepna
+4. Poczekaj az pojawi sie "Instalacja zakonczona!"
+5. Uruchom Claude Code od nowa
+6. Sprawdz: wpisz /szukaj-orzeczen "dobro dziecka" - komenda jest dostepna
 
 PROBLEMY:
 - Jesli Windows blokuje skrypt: Wlasciwosci pliku -> Odblokuj
@@ -143,4 +149,11 @@ Wsparcie: support@matematic.co
 - Skrypt **nadpisuje** istniejące skille o tych samych nazwach (lokalne modyfikacje skopiowanych skilli przepadają). Klient, który dostosował skill po instalacji, powinien zrobić kopię przed re-runem.
 - Ścieżka docelowa: `%USERPROFILE%\.claude\skills\` (np. `C:\Users\<nazwa>\.claude\skills\`)
 - **Reproducible install**: domyślny ref to **najnowszy tag** z `marketplace.json` (audytowalna wersja). Tryb `--ref main` pobiera `HEAD` (do testowania, nie do produkcji w kancelarii).
-- **Bez weryfikacji SHA256**: GitHub nie publikuje stabilnej sumy dla archiwów `archive/refs/...zip` (regeneruje się). Dla pełnej kontroli integralności klient powinien ściągać przez `gh release download vX.Y.Z` z podpisanymi artefaktami (jeśli release ma sygnaturę).
+- **Weryfikacja integralności SHA256** (v0.6.1+): wraz z każdym release MateMatic publikuje plik `checksums.txt` jako asset release page zawierajacy SHA256 dla generowanego `install-matematic-skills.bat`. Klient kancelarii powinien:
+  1. Pobrać `checksums.txt` z tej samej strony co .bat.
+  2. Uruchomić `Get-FileHash -Algorithm SHA256 install-matematic-skills.bat` w PowerShell.
+  3. Porównać hex z linią w `checksums.txt` (case-insensitive, lower-case standard).
+
+  Workflow generowania `checksums.txt` jest częścią release pipeline MateMatic (`gh release upload vX.Y.Z install-matematic-skills.bat checksums.txt`). Klient dostaje hash spod tej samej autorytatywnej domeny `github.com/matematicsolutions/...` co plik instalacyjny - nie potrzebuje osobnego kanału.
+
+  **Ograniczenie znane**: GitHub nie publikuje stabilnej sumy dla automatycznie generowanych `archive/refs/tags/...zip` (regeneruje przy każdym żądaniu). `checksums.txt` dotyczy konkretnie wygenerowanego `install-matematic-skills.bat` (deterministyczny output skilla), nie archiwum całego repo.

@@ -268,7 +268,7 @@ Za kazdym razem gdy zmieniamy `konstytucja.md`:
 Footer:
 
 ```markdown
-**Version:** 1.2.0 | **Ratified:** 2026-05-20 | **Last Amended:** 2026-06-15
+**Version:** 1.2.0 | **Ratified:** 2025-05-20 | **Last Amended:** 2025-06-15
 ```
 
 Plus changelog `## Amendments` w samej konstytucji (audyt-friendly per AI Act art. 12).

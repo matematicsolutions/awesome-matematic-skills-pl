@@ -159,7 +159,7 @@ Status: roadmap, do zaplanowania w osobnym sprintcie. Nie blokuje obecnego użyc
 
 ## Roadmap rozszerzenie 2: per-decision proof receipt (`check_id` + `policy_hash`)
 
-**Komplementarne do Merkle, nie zamienne**. Merkle daje **integralność lańcucha audytu** (audytor wie, że log nie był modyfikowany). Proof receipt daje **dowód konkretnej pojedynczej decyzji** (audytor wie, że "decyzja X z 2026-09-12 14:23 została zaakceptowana zgodnie z polityką wersji Y").
+**Komplementarne do Merkle, nie zamienne**. Merkle daje **integralność lańcucha audytu** (audytor wie, że log nie był modyfikowany). Proof receipt daje **dowód konkretnej pojedynczej decyzji** (audytor wie, że "decyzja X z 2025-09-12 14:23 została zaakceptowana zgodnie z polityką wersji Y").
 
 Cherry-pick wzorca z [ICME Preflight](https://docs.icme.io) (cloud-only, NIE wpinamy jako zależność z powodu Art. 1 lokalności danych - patrz [ADR-0031 PATRON](https://github.com/matematicsolutions/patron/blob/main/governance/adr/0031-deterministyczna-walidacja-z-lokalnym-proof-receipt.md)). Wzorzec lokalny:
 
@@ -169,8 +169,8 @@ Cherry-pick wzorca z [ICME Preflight](https://docs.icme.io) (cloud-only, NIE wpi
      "check_id": "0f25c151-e63e-4253-8eb2-1e6e894c7ce5",
      "policy_hash": "60c79bbc4f8ac087de1110fa0e347292f35b6d2943a2a4ccd18ae991a5d64418",
      "verdict": "ALLOWED",
-     "policy_version": "v1.4 z 2026-08-15",
-     "timestamp": "2026-09-12T14:23:00Z"
+     "policy_version": "v1.4 z 2025-08-15",
+     "timestamp": "2025-09-12T14:23:00Z"
    }
    ```
 2. `policy_hash` to SHA256 ze skompilowanej polityki (Konstytucja AI kancelarii w wersji obowiązującej w momencie decyzji).

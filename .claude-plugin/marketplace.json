@@ -181,8 +181,8 @@
     },
     {
       "name": "webwright-legal-pl",
-      "description": "Pobiera orzeczenia i akty prawne z polskich serwisow sadowych niedostepnych przez MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) uzywajac Webwright (Playwright Firefox, code-as-action). Wrapper kierunkowany pod polskie domeny prawne. Trzy tryby - pobierz po sygnaturze, szukaj po slowie kluczowym, pobierz akt prawny EU/PL po CELEX/ELI.",
-      "version": "1.0.0",
+      "description": "Pobiera orzeczenia i akty prawne z polskich serwisow sadowych niedostepnych przez MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) uzywajac Webwright (Playwright Chromium/Firefox, code-as-action). Wrapper kierunkowany pod polskie domeny prawne. Trzy tryby - pobierz po sygnaturze, szukaj po slowie kluczowym, pobierz akt prawny EU/PL po CELEX/ELI. v1.0.1 zawiera referencyjny scripts/fetch_orzeczenie.py walidowany na sn.pl dla sygnatur post-2016 i post-2024 (I CSK 100/22, III CZP 1/24).",
+      "version": "1.0.1",
       "author": { "name": "Wieslaw Mazur / MateMatic" },
       "license": "Apache-2.0",
       "source": "./skills/webwright-legal-pl"
