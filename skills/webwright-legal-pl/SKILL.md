@@ -65,10 +65,25 @@ python szukaj_orzeczen.py --fraza "AI Act odpowiedzialnosc" --sad "Sąd Apelacyj
 
 ### 3. Pobierz akt prawny z EUR-Lex (`/webwright-legal-pl:eurlex`)
 
+Referencyjny skrypt: [`scripts/fetch_eurlex.py`](scripts/fetch_eurlex.py) (Playwright Chromium, ~200 wierszy). Komplementarny do `eu-sparql-search`: SPARQL znajduje akty semantycznie, ten skrypt pobiera pełną treść konkretnego CELEX (do citation grounding i audit bundle).
+
 ```bash
-python fetch_eurlex.py --celex "32024R1689"   # AI Act = 32024R1689
-# -> outputs/eurlex/32024R1689/akt.md + meta.json
+python scripts/fetch_eurlex.py --celex 32024R1689 --out outputs/eurlex
+# -> outputs/eurlex/32024R1689/akt.md + meta.json + screenshot.png
+
+python scripts/fetch_eurlex.py --celex 32016R0679 --lang EN   # RODO po angielsku
 ```
+
+EUR-Lex jest za CloudFront WAF (HTTP 202 + challenge), więc `curl` zwraca pustkę - skrypt używa headless Chromium, który challenge automatycznie przechodzi.
+
+Walidacja na żywym EUR-Lex (2026-05-27):
+
+| CELEX | Akt | Sparsowano |
+|---|---|---|
+| `32024R1689` | AI Act (rozporządzenie 2024/1689) | data 2024-07-12, ELI, PDF PL, pełny opisowy tytuł |
+| `32016R0679` | RODO (rozporządzenie 2016/679) | data 2016-05-04, ELI, PDF PL, pełny opisowy tytuł |
+
+Parser radzi sobie z dwoma formatami daty (`12/07/2024` w headerze + `12.7.2024` w treści Dz.U.) i filtruje link PDF wg parametru `--lang` (EUR-Lex renderuje 20+ linków PDF, po jednym na język UE).
 
 ## Format wyjściowy (kontrakt z PATRON)
 
