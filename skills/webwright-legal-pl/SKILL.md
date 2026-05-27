@@ -37,11 +37,23 @@ hardcodowanych ścieżek.
 
 ### 1. Pobierz orzeczenie po sygnaturze (`/webwright-legal-pl:orzeczenie`)
 
-Produkuje **reużywalny CLI script** `fetch_orzeczenie.py`:
+Referencyjny skrypt: [`scripts/fetch_orzeczenie.py`](scripts/fetch_orzeczenie.py) (gotowy do uruchomienia, ~150 wierszy, Playwright Chromium, sn.pl).
+
 ```bash
-python fetch_orzeczenie.py --sygnatura "I ACa 123/25" --sad "Warszawa"
-# -> outputs/orzeczenia/i-aca-123-25/orzeczenie.md + meta.json
+python scripts/fetch_orzeczenie.py --sygnatura "III CZP 1/24" --out outputs/orzeczenia
+# -> outputs/orzeczenia/iii-czp-1-24/orzeczenie.md + meta.json + 3 screenshoty
 ```
+
+Walidacja na żywym sn.pl (2026-05-27):
+
+| Sygnatura | Wynik | Sparsowano |
+|---|---|---|
+| `I CSK 100/22` | postanowienie SN z 18 marca 2022 r. | data 2022-03-18, link do PDF |
+| `III CZP 1/24` | postanowienie SN z 4 lipca 2024 r. | data 2024-07-04, link do PDF |
+
+Oba post-2016, czyli poza zasięgiem mcp-saos. Skrypt parsuje typ orzeczenia (wyrok/postanowienie/uchwala) z nagłówka wyników i datę z polskiej formy ("z dnia 18 marca 2022 r." -> ISO 2022-03-18). Robi 3 screenshoty (formularz / wyniki / detal) jako dowód wizualny dla self-verify.
+
+Dla nowej domeny (orzeczenia.ms.gov.pl, trybunal.gov.pl) skopiuj `fetch_orzeczenie.py` i podmień selektory formularza po wykonaniu ARIA snapshot - patrz workflow niżej.
 
 ### 2. Szukaj orzeczeń po słowie kluczowym (`/webwright-legal-pl:szukaj`)
 
