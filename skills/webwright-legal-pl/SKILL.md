@@ -63,9 +63,9 @@ python fetch_eurlex.py --celex "32024R1689"   # AI Act = 32024R1689
 Każdy pobrany dokument trafia do `outputs/<typ>/<slug>/`:
 
 ```
-meta.json          → {sygnatura, sad, data, typ, url, pobrano_at, zrodlo}
-orzeczenie.md      → # <sygnatura>\n\n**Sąd:** ...\n\n<treść>
-screenshot_*.png   → dowód wizualny dla self-verify
+meta.json          -> {sygnatura, sad, data, typ, url, pobrano_at, zrodlo}
+orzeczenie.md      -> # <sygnatura>\n\n**Sąd:** ...\n\n<treść>
+screenshot_*.png   -> dowód wizualny dla self-verify
 ```
 
 `meta.json` jest zgodny ze schematem oczekiwanym przez `citation-grounding-pl`
