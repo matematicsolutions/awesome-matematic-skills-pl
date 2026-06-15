@@ -13,7 +13,7 @@ To **nie jest produkt komercyjny** - kanon kuratorski MIT. Wartoscia jest uporza
 
 ## Kontekst MateMatic (TWARDE OGRANICZENIA)
 
-[MateMatic Solutions](https://matematic.co) = lokalne RODO-safe narzedzia AI dla polskich kancelarii prawnych. Zero-cloud self-host, vendor-neutral, audytowalne.
+[MateMatic Solutions](https://matematicsolutions.com) = lokalne RODO-safe narzedzia AI dla polskich kancelarii prawnych. Zero-cloud self-host, vendor-neutral, audytowalne.
 
 Hub musi byc:
 
@@ -120,5 +120,5 @@ Skille w tym repo trzymaja sie [Agent Skills format](https://github.com/anthropi
 ## Kontakt
 
 - **Maintainer**: [Wieslaw Mazur](https://www.linkedin.com/in/wieslawmazur/)
-- **Strona**: [matematic.co](https://matematic.co)
+- **Strona**: [matematicsolutions.com](https://matematicsolutions.com)
 - **Email**: kontakt@matematic.co

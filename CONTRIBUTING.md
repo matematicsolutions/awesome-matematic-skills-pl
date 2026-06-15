@@ -60,4 +60,4 @@ Zanim zglosisz PR uruchom u siebie:
 
 ## Pytania
 
-[Wieslaw Mazur](https://www.linkedin.com/in/wieslawmazur/) / MateMatic Solutions / [matematic.co](https://matematic.co)
+[Wieslaw Mazur](https://www.linkedin.com/in/wieslawmazur/) / MateMatic Solutions / [matematicsolutions.com](https://matematicsolutions.com)
