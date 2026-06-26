@@ -1,0 +1,9 @@
+{
+  "name": "dokumenty",
+  "description": "Operacje na dokumentach: konwersja PDF/Office do Markdown (markitdown, opendataloader-pdf), redlining .docx z Track Changes (redline-docx-pl), anonimizacja i pseudonimizacja PII (let-it-be). RODO-safe, bez konektorow.",
+  "version": "1.0.0",
+  "author": { "name": "Wieslaw Mazur / MateMatic Solutions" },
+  "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
+  "license": "Apache-2.0",
+  "keywords": ["legal-ai", "pdf", "docx", "redline", "anonymization", "rodo-safe"]
+}

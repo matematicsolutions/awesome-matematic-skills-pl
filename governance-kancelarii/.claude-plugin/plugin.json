@@ -1,0 +1,9 @@
+{
+  "name": "governance-kancelarii",
+  "description": "Governance AI dla kancelarii: Konstytucja AI (matematic-konstytucja-ai), warsztat decyzyjny Expert Panel, szyfrowany backup Google Workspace (matematic-workspace-backup, RODO art. 32). Generatory dokumentow, bez konektorow.",
+  "version": "1.0.0",
+  "author": { "name": "Wieslaw Mazur / MateMatic Solutions" },
+  "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
+  "license": "Apache-2.0",
+  "keywords": ["legal-ai", "ai-governance", "ai-act", "rodo", "kancelaria"]
+}

@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-22-blue.svg)](#pakiet---22-umiejetnosci)
+[![Skills](https://img.shields.io/badge/skills-22-blue.svg)](#pakiet---22-umiejetnosci-w-5-bundlach)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
 [![Polish law](https://img.shields.io/badge/jurysdykcja-PL%20%2B%20UE-red.svg)](#dlaczego-polski-hub)
@@ -10,13 +10,13 @@
 Polski hub umiejetnosci AI dla prawa - kuratorska lista i pakiet umiejetnosci agentowych (Agent Skills), ktore dzialaja w polskiej praktyce kancelaryjnej, in-house, naukowej i NGO.
 
 Maintainer: [Wieslaw Mazur](https://www.linkedin.com/in/wieslawmazur/) / [MateMatic Solutions](https://matematicsolutions.com).
-Licencja kuratorska: **MIT** (umiejetnosci w `./skills/` zachowuja wlasne licencje deklarowane w SKILL.md).
+Licencja kuratorska: **MIT** (umiejetnosci w bundlach zachowuja wlasne licencje deklarowane w SKILL.md).
 
 > **Po co kolejny hub?** Bo prawo polskie ma wlasna jurysdykcje, wlasne organy (UODO, UOKiK, KNF, KIO, NSA, SN, TK), wlasne procedury (KPC, KPK, KSH, KP) i wlasna konstrukcje obowiazku tajemnicy zawodowej. Globalne huby zostaja na poziomie „GDPR + NDA” - tu schodzimy do przepisow KPC/KPK, sygnatur KIO, ELI URI dziennika ustaw i hash-chain audit-bundle dla AI Act art. 12.
 
 ## Co tu znajdziesz
 
-1. **Bundle domenowe instalowane jedna komenda** - 22 umiejetnosci, stopniowo spinanych w pluginy wedlug funkcji. Dwa pierwsze bundle (fundament weryfikacyjny, orzecznictwo + zrodla) instalujesz jednym `/plugin install`; konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa. Pozostale 12 umiejetnosci na razie pojedynczo w `./skills/` (migracja do bundli trwa).
+1. **Bundle domenowe instalowane jedna komenda** - 22 umiejetnosci spiete w 5 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, dev). Kazdy instalujesz jednym `/plugin install`; konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -54,11 +54,13 @@ zlecenie / brief
                           deliverable + audit
 ```
 
-Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolutions/matematic-legal-verify-pl) pakuje 4 z 6 warstw w jeden install dla kancelarii: router, grounding, adversarial i audit-bundle. Pozostale dwie - intake (na wejsciu) i weryfikacja wiernosci finalnego pisma - sa dostepne osobno w `./skills/` tego huba; kancelarie z dojrzalym workflow dopinaja je modularnie.
+Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolutions/matematic-legal-verify-pl) pakuje 4 z 6 warstw w jeden install dla kancelarii: router, grounding, adversarial i audit-bundle. Pozostale dwie - intake (na wejsciu) i weryfikacja wiernosci finalnego pisma - sa w bundlu `fundament-weryfikacyjny` tego huba; kancelarie z dojrzalym workflow dopinaja je modularnie.
 
 ---
 
-## Pakiet - 22 umiejetnosci
+## Pakiet - 22 umiejetnosci w 5 bundlach
+
+Wszystkie umiejetnosci sa spiete w pluginy domenowe - instalujesz jedna komenda. Zadna nie lezy juz pojedynczo w `./skills/`.
 
 ### Plugin `fundament-weryfikacyjny` (6 warstw walidacji outputu LLM)
 
@@ -73,15 +75,9 @@ Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, nic nie wysyla
 | [<img src="./assets/badge-deliverable-fidelity-pl.svg" alt="Deliverable Fidelity" width="200" height="60">](./fundament-weryfikacyjny/skills/deliverable-fidelity-pl) | Czy zadna flaga RED nie wypadla z podsumowania - sprawdza wiernosc finalnego pisma do analizy. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-legal-ai-audit-bundle.svg" alt="AI Audit Bundle" width="200" height="60">](./fundament-weryfikacyjny/skills/legal-ai-audit-bundle) | Artefakt audytowy AI Act art. 12 - deliverable + slad + log kosztu + manifest SHA256. | Apache-2.0 | 1.0.0 |
 
-### Umowy / Redline
-
-| Skill | Opis | Licencja | Wersja |
-|---|---|---|---|
-| [<img src="./assets/badge-redline-docx-pl.svg" alt="Redline DOCX PL" width="200" height="60">](./skills/redline-docx-pl) | Natywne Word Track Changes w polskich .docx + sanitize metadanych autora (RODO przy wysylce). Safety Tiers R/M/D. | MIT | 2026.05.27 |
-
 ### Plugin `orzecznictwo-zrodla` (Orzecznictwo PL / UE + konektory)
 
-Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, publiczne API; wymaga node/npx). Instalacja: `/plugin install orzecznictwo-zrodla@matematic-skills-pl`.
+Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, publiczne API; wymaga node/npx) plus `webwright-legal-pl` do serwisow niedostepnych przez MCP. Instalacja: `/plugin install orzecznictwo-zrodla@matematic-skills-pl`.
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
@@ -89,39 +85,39 @@ Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, 
 | [<img src="./assets/badge-szukaj-orzeczen-v2.svg" alt="Szukaj Orzeczen v2" width="200" height="60">](./orzecznictwo-zrodla/skills/szukaj-orzeczen-v2) | Wyszukiwanie orzeczen PL + opcjonalne grupowanie tematyczne (klastrowanie, raport DOCX). v2.1.0: SKILL.md 460->60 linii + 4 pliki `references/`. | Apache-2.0 | 2.1.0 |
 | [<img src="./assets/badge-eu-sparql-search.svg" alt="EU SPARQL Search" width="200" height="60">](./orzecznictwo-zrodla/skills/eu-sparql-search) | EUR-Lex / Cellar SPARQL - akty UE i orzecznictwo TSUE, CELEX, ELI URI. | Apache-2.0 | 2026.05.24 |
 | [<img src="./assets/badge-legal-data-hunter-pl.svg" alt="Legal Data Hunter" width="200" height="60">](./orzecznictwo-zrodla/skills/legal-data-hunter-pl) | Catalog + bulk-harvest dla 11 polskich zrodel prawnych (UODO, UOKiK, KNF, KIO, NSA, TK, SN, Sejm ELI). | Apache-2.0 | 2026.05.22 |
+| [<img src="./assets/badge-webwright-legal-pl.svg" alt="Webwright Legal PL" width="200" height="60">](./orzecznictwo-zrodla/skills/webwright-legal-pl) | Pobiera orzeczenia z serwisow niedostepnych w MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) przez Playwright. | Apache-2.0 | 1.0.1 |
 
-Pokrewny skill instalowany pojedynczo (poza bundlem): [webwright-legal-pl](./skills/webwright-legal-pl) - pobiera orzeczenia z serwisow niedostepnych w MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) przez Playwright. Apache-2.0, v1.0.1.
+### Plugin `dokumenty` (konwersja, redline, anonimizacja)
 
-### Narzedzia - konwersja dokumentow i operacyjne
-
-| Skill | Opis | Licencja | Wersja |
-|---|---|---|---|
-| [<img src="./assets/badge-markitdown.svg" alt="MarkItDown" width="200" height="60">](./skills/markitdown) | Microsoft MarkItDown - PDF/Word/Excel/PPT/HTML/EPUB/audio/obrazy/YouTube -> Markdown. | MIT | 2026.04.21 |
-| [<img src="./assets/badge-opendataloader-pdf.svg" alt="OpenDataLoader PDF" width="200" height="60">](./skills/opendataloader-pdf) | Wysokiej jakosci PDF -> JSON/MD: reading order, tabele, headings. Krytyczne dla KRS i postanowien. | Apache-2.0 | 2026.04.21 |
-| [<img src="./assets/badge-matematic-workspace-backup.svg" alt="Workspace Backup" width="200" height="60">](./skills/matematic-workspace-backup) | Szyfrowany backup Google Workspace przez gogcli + age + prywatne repo Git. Adresuje RODO art. 32 (ciaglosc, ochrona przed lockoutem). | Apache-2.0 | 1.0.0 |
-
-### Higiena tresci / RODO operacyjne
+Operacje na dokumentach, bez konektorow. Instalacja: `/plugin install dokumenty@matematic-skills-pl`.
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [<img src="./assets/badge-let-it-be.svg" alt="Let It Be" width="200" height="60">](./skills/let-it-be) | Silnik anonimizacji i pseudonimizacji polskich PII (PESEL, NIP, REGON, KRS, IBAN, imiona, firmy) w tekscie. Offline, deterministyczny, zero zaleznosci. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-markitdown.svg" alt="MarkItDown" width="200" height="60">](./dokumenty/skills/markitdown) | Microsoft MarkItDown - PDF/Word/Excel/PPT/HTML/EPUB/audio/obrazy/YouTube -> Markdown. | MIT | 2026.04.21 |
+| [<img src="./assets/badge-opendataloader-pdf.svg" alt="OpenDataLoader PDF" width="200" height="60">](./dokumenty/skills/opendataloader-pdf) | Wysokiej jakosci PDF -> JSON/MD: reading order, tabele, headings. Krytyczne dla KRS i postanowien. | Apache-2.0 | 2026.04.21 |
+| [<img src="./assets/badge-redline-docx-pl.svg" alt="Redline DOCX PL" width="200" height="60">](./dokumenty/skills/redline-docx-pl) | Natywne Word Track Changes w polskich .docx + sanitize metadanych autora (RODO przy wysylce). Safety Tiers R/M/D. | MIT | 2026.05.27 |
+| [<img src="./assets/badge-let-it-be.svg" alt="Let It Be" width="200" height="60">](./dokumenty/skills/let-it-be) | Silnik anonimizacji i pseudonimizacji polskich PII (PESEL, NIP, REGON, KRS, IBAN, imiona, firmy) w tekscie. Offline, deterministyczny, zero zaleznosci. | Apache-2.0 | 1.0.0 |
 
-### Produkty MateMatic (sprzedazowe)
+### Plugin `governance-kancelarii` (governance AI dla kancelarii)
 
-| Skill | Opis | Licencja | Wersja |
-|---|---|---|---|
-| [<img src="./assets/badge-matematic-konstytucja-ai.svg" alt="Konstytucja AI" width="200" height="60">](./skills/matematic-konstytucja-ai) | Generuje "Konstytucje AI" - dokument governance dla kancelarii (6 sekcji + AI Implementation Playbook 6-8 tygodni). Cherry-pick patternu github/spec-kit. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-matematic-expert-panel.svg" alt="Expert Panel" width="200" height="60">](./skills/matematic-expert-panel) | Generuje 90-min warsztat multi-perspective dla zarzadu kancelarii - 7 person (compliance / IT security / etyk / partner / junior / klient / regulator). | Apache-2.0 | 1.0.0 |
-
-### Metodologia wewnetrzna (dev pipeline)
+Generatory governance i operacyjne, bez konektorow. Instalacja: `/plugin install governance-kancelarii@matematic-skills-pl`.
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [<img src="./assets/badge-matematic-spec-driven.svg" alt="Spec-Driven" width="200" height="60">](./skills/matematic-spec-driven) | Spec-Driven Development dla wewnetrznych projektow MateMatic - 4 fazy (Konstytucja / Specyfikacja / Plan / Zadania) + Constitution Check GATE. | Apache-2.0 | 0.1.0 |
-| [<img src="./assets/badge-matematic-mcp-fastmcp-instructions-pl.svg" alt="MCP FastMCP Instructions" width="200" height="60">](./skills/matematic-mcp-fastmcp-instructions-pl) | Kanon dla MCP serverow MateMatic - FastMCP/Server(instructions=) + drift test + dwukanalowy auth + OTel org_id + ToolAnnotations. Walidowany na dograh v1.31.0 (BSD-2), zaadoptowany w 6 MCP MateMatic 2026-05-25. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-matematic-patron-pr-review-pl.svg" alt="PATRON PR Review" width="200" height="60">](./skills/matematic-patron-pr-review-pl) | Recenzent PR/diffow dla LegalTech AI agentow - org scoping multi-tenant, audit_log AI Act art. 12, citation grounding, PII w logach. 14 sekcji, 3 buckets Blocker/Should-fix/Nit. Cherry-pick z dograh review-pr (BSD-2) + 3 sekcje MateMatic-specific. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-matematic-marketplace-installer.svg" alt="Marketplace Installer" width="200" height="60">](./skills/matematic-marketplace-installer) | Generator skryptow instalacyjnych MateMatic Marketplace dla prawnikow (Windows .bat, bez Git/npm). Reproducible install: default ref = najnowszy tag. Safety Tiers R/M/D. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-matematic-marketplace-installer.svg" alt="Marketplace Installer" width="200" height="60">](./skills/matematic-marketplace-installer) | Generuje skrypt instalacyjny MateMatic Marketplace dla prawnikow (Windows .bat, bez Git/npm) - rozpowszechnianie skilli do kancelarii bez wiedzy technicznej. Safety Tiers R/M/D. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-konstytucja-ai.svg" alt="Konstytucja AI" width="200" height="60">](./governance-kancelarii/skills/matematic-konstytucja-ai) | Generuje "Konstytucje AI" - dokument governance dla kancelarii (6 sekcji + AI Implementation Playbook 6-8 tygodni). Cherry-pick patternu github/spec-kit. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-expert-panel.svg" alt="Expert Panel" width="200" height="60">](./governance-kancelarii/skills/matematic-expert-panel) | Generuje 90-min warsztat multi-perspective dla zarzadu kancelarii - 7 person (compliance / IT security / etyk / partner / junior / klient / regulator). | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-workspace-backup.svg" alt="Workspace Backup" width="200" height="60">](./governance-kancelarii/skills/matematic-workspace-backup) | Szyfrowany backup Google Workspace przez gogcli + age + prywatne repo Git. Adresuje RODO art. 32 (ciaglosc, ochrona przed lockoutem). | Apache-2.0 | 1.0.0 |
+
+### Plugin `dev-mcp` (narzedzia deweloperskie, advanced)
+
+Warsztat deweloperski MateMatic, bez konektorow. Instalacja: `/plugin install dev-mcp@matematic-skills-pl`.
+
+| Skill | Opis | Licencja | Wersja |
+|---|---|---|---|
+| [<img src="./assets/badge-matematic-spec-driven.svg" alt="Spec-Driven" width="200" height="60">](./dev-mcp/skills/matematic-spec-driven) | Spec-Driven Development dla wewnetrznych projektow MateMatic - 4 fazy (Konstytucja / Specyfikacja / Plan / Zadania) + Constitution Check GATE. | Apache-2.0 | 0.1.0 |
+| [<img src="./assets/badge-matematic-mcp-fastmcp-instructions-pl.svg" alt="MCP FastMCP Instructions" width="200" height="60">](./dev-mcp/skills/matematic-mcp-fastmcp-instructions-pl) | Kanon dla MCP serverow MateMatic - FastMCP/Server(instructions=) + drift test + dwukanalowy auth + OTel org_id + ToolAnnotations. Walidowany na dograh v1.31.0 (BSD-2), zaadoptowany w 6 MCP MateMatic 2026-05-25. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-patron-pr-review-pl.svg" alt="PATRON PR Review" width="200" height="60">](./dev-mcp/skills/matematic-patron-pr-review-pl) | Recenzent PR/diffow dla LegalTech AI agentow - org scoping multi-tenant, audit_log AI Act art. 12, citation grounding, PII w logach. 14 sekcji, 3 buckets Blocker/Should-fix/Nit. Cherry-pick z dograh review-pr (BSD-2) + 3 sekcje MateMatic-specific. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-matematic-marketplace-installer.svg" alt="Marketplace Installer" width="200" height="60">](./dev-mcp/skills/matematic-marketplace-installer) | Generator skryptow instalacyjnych MateMatic Marketplace dla prawnikow (Windows .bat, bez Git/npm). Reproducible install: default ref = najnowszy tag. Safety Tiers R/M/D. | Apache-2.0 | 1.0.0 |
 
 ---
 
@@ -169,24 +165,27 @@ Pakiet wyzej to warstwa walidacji outputu i narzedzia konwersji. Pelny ekosystem
 /plugin marketplace add matematicsolutions/awesome-matematic-skills-pl
 
 # 2. Zainstaluj bundle, ktorych potrzebujesz
-/plugin install fundament-weryfikacyjny@matematic-skills-pl   # rdzen, bez konektorow
-/plugin install orzecznictwo-zrodla@matematic-skills-pl        # zrodla + konektory saos/krs/eu-sparql
+/plugin install fundament-weryfikacyjny@matematic-skills-pl    # rdzen weryfikacyjny, bez konektorow
+/plugin install orzecznictwo-zrodla@matematic-skills-pl         # zrodla PL/UE + konektory saos/krs/eu-sparql
+/plugin install dokumenty@matematic-skills-pl                   # konwersja, redline, anonimizacja
+/plugin install governance-kancelarii@matematic-skills-pl       # Konstytucja AI, Expert Panel, backup
+/plugin install dev-mcp@matematic-skills-pl                      # narzedzia deweloperskie (advanced)
 ```
 
-Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Pozostale umiejetnosci (redline, konwersja, governance, dev) instalujesz pojedynczo z `./skills/` do czasu migracji do bundli.
+Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 22 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
 
 ### Pojedynczy skill jako symlink do ~/.claude/skills/
 
 ```powershell
-# PowerShell - przyklad citation-grounding-pl
+# PowerShell - przyklad citation-grounding-pl (z bundla fundament-weryfikacyjny)
 New-Item -ItemType SymbolicLink `
   -Path "$env:USERPROFILE\.claude\skills\citation-grounding-pl" `
-  -Target "C:\sciezka\do\awesome-matematic-skills-pl\skills\citation-grounding-pl"
+  -Target "C:\sciezka\do\awesome-matematic-skills-pl\fundament-weryfikacyjny\skills\citation-grounding-pl"
 ```
 
 ```bash
 # Bash / WSL
-ln -s "$(pwd)/skills/citation-grounding-pl" ~/.claude/skills/citation-grounding-pl
+ln -s "$(pwd)/fundament-weryfikacyjny/skills/citation-grounding-pl" ~/.claude/skills/citation-grounding-pl
 ```
 
 ---
@@ -195,7 +194,7 @@ ln -s "$(pwd)/skills/citation-grounding-pl" ~/.claude/skills/citation-grounding-
 
 1. **Polskie organy maja wlasna semantyke.** UODO nie jest tylko ICO/CNIL. KIO ma wlasny tryb 23-dniowy. NSA orzeka kasacyjnie inaczej niz Bundesverwaltungsgericht. Globalny „GDPR + NDA review" tego nie pokrywa.
 2. **Tajemnica zawodowa.** Art. 6 PrAdw + art. 3 RadcPrU + tajemnica notarialna + tajemnica komornicza. Wysylka cloud do US bez SCC = naruszenie. Wszystkie nasze skille sa **RODO-safe by default** (lokalna inference albo izolacja).
-3. **AI Act art. 12 + art. 13.** Obowiazek prowadzenia rejestru zdarzen (art. 12) i transparency duty (art. 13). [legal-ai-audit-bundle](./skills/legal-ai-audit-bundle) pakuje to natywnie. Zachodnie huby dopiero o tym dyskutuja.
+3. **AI Act art. 12 + art. 13.** Obowiazek prowadzenia rejestru zdarzen (art. 12) i transparency duty (art. 13). [legal-ai-audit-bundle](./fundament-weryfikacyjny/skills/legal-ai-audit-bundle) pakuje to natywnie. Zachodnie huby dopiero o tym dyskutuja.
 4. **Polski jezyk.** Modele LLM popelniaja inne bledy w polszczyznie (kalki anglicyzmow, naduzycie em-dash, hedging). Hub zawiera narzedzia do wykrywania i poprawy tych wzorcow przed publikacja.
 
 ---

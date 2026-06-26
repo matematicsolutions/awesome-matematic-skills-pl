@@ -1,0 +1,9 @@
+{
+  "name": "dev-mcp",
+  "description": "Narzedzia deweloperskie MateMatic (advanced): spec-driven development, kanon budowy MCP serverow, recenzent PR dla LegalTech AI, generator instalatora marketplace. Bez konektorow.",
+  "version": "1.0.0",
+  "author": { "name": "Wieslaw Mazur / MateMatic Solutions" },
+  "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
+  "license": "Apache-2.0",
+  "keywords": ["mcp", "spec-driven", "code-review", "developer-tools", "legaltech"]
+}

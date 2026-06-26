@@ -6,6 +6,24 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.06.26-2] - 2026-06-26
+
+US2 - dokonczenie migracji do bundli. Pozostale 12 plaskich skilli spiete w bundle domenowe; `./skills/` zniknal, marketplace to wylacznie bundle (5 pluginow).
+
+### Added
+
+- Plugin `dokumenty` (4 skille): markitdown, opendataloader-pdf, redline-docx-pl, let-it-be. Bez konektorow.
+- Plugin `governance-kancelarii` (3 skille): matematic-konstytucja-ai, matematic-expert-panel, matematic-workspace-backup. Bez konektorow.
+- Plugin `dev-mcp` (4 skille, advanced): matematic-spec-driven, matematic-mcp-fastmcp-instructions-pl, matematic-patron-pr-review-pl, matematic-marketplace-installer. Bez konektorow.
+- `CLAUDE.md` + `.claude-plugin/plugin.json` w kazdym nowym bundlu.
+
+### Changed
+
+- `orzecznictwo-zrodla` 4 -> 5 skilli: doszedl `webwright-legal-pl` (pobieranie orzeczen spoza MCP przez Playwright), wczesniej plaski.
+- 12 skilli przeniesionych z `./skills/` do bundli; katalog `./skills/` usuniety.
+- `marketplace.json` 14 -> 5 wpisow (same bundle), wersja `2026.06.26-2`.
+- README: sekcja pakietu przebudowana na 5 bundli; instalacja pokazuje wszystkie 5; usunieto zdublowany wpis marketplace-installer.
+
 ## [2026.06.26] - 2026-06-26
 
 Restruktura z modelu plaskiego (1 skill = 1 plugin) na bundle domenowe. Major bump: sciezki skilli sie zmieniaja. Inspiracja architektura "Claude for Legal Finland" (Aku Nikkola, MIT) - bierzemy pakowanie, dokladamy nasza multi-jurysdykcje.
