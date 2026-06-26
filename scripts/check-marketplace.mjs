@@ -105,8 +105,10 @@ for (const plugin of manifest.plugins) {
     for (const sd of subdirs) checkSkillMd(join(skillsSub, sd, 'SKILL.md'), `${name}/skills/${sd}`);
   } else if (existsSync(join(src, 'SKILL.md'))) {
     checkSkillMd(join(src, 'SKILL.md'), name);
+  } else if (existsSync(join(src, '.mcp.json'))) {
+    // plugin connector-only (samo .mcp.json, bez skilli) - dozwolony
   } else {
-    issues.push(`NO_SKILLS: ${name} - brak skills/ i brak SKILL.md w korzeniu`);
+    issues.push(`NO_CONTENT: ${name} - brak skills/, SKILL.md i .mcp.json`);
   }
 
   // 3. .mcp.json (opcjonalny)

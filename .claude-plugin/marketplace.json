@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
   "name": "matematic-skills-pl",
-  "version": "2026.06.26-2",
-  "description": "Polski hub umiejetnosci AI dla prawa - 5 bundli domenowych instalowalnych jedna komenda (fundament weryfikacyjny, orzecznictwo + konektory PL/UE, dokumenty, governance kancelarii, dev). RODO-safe, vendor-agnostic.",
+  "version": "2026.06.26-3",
+  "description": "Polski hub umiejetnosci AI dla prawa - 6 bundli domenowych instalowalnych jedna komenda (fundament weryfikacyjny, orzecznictwo + konektory PL/UE, dokumenty, governance kancelarii, dev, 9 konektorow prawa krajowego UE). RODO-safe, vendor-agnostic.",
   "owner": {
     "name": "Wieslaw Mazur / MateMatic Solutions",
     "email": "wieslaw@matematic.co",
@@ -60,6 +60,16 @@
       },
       "license": "Apache-2.0",
       "source": "./dev-mcp"
+    },
+    {
+      "name": "multi-jurysdykcja-ue",
+      "description": "Dziewiec konektorow prawa krajowego UE jedna komenda (DE, AT, ES, FI, IE, NL, SE, FR, LU) - ustawodawstwo i orzecznictwo ze zrodel urzedowych, z identyfikatorami ELI/ECLI. Wymaga uv/uvx; Francja wymaga danych PISTE.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
+      "license": "Apache-2.0",
+      "source": "./multi-jurysdykcja-ue"
     }
   ],
   "tags": [

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "de-eli": { "command": "uvx", "args": ["de-eli-mcp"] },
+    "at-eli": { "command": "uvx", "args": ["at-eli-mcp"] },
+    "es-eli": { "command": "uvx", "args": ["es-eli-mcp"] },
+    "fi-eli": { "command": "uvx", "args": ["fi-eli-mcp"] },
+    "ie-eli": { "command": "uvx", "args": ["ie-eli-mcp"] },
+    "nl-eli": { "command": "uvx", "args": ["nl-eli-mcp"] },
+    "se-eli": { "command": "uvx", "args": ["se-eli-mcp"] },
+    "fr-eli": { "command": "uvx", "args": ["fr-eli-mcp"] },
+    "lu-eli": { "command": "uvx", "args": ["lu-eli-mcp"] }
+  }
+}

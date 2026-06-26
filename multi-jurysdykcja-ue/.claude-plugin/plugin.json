@@ -1,0 +1,9 @@
+{
+  "name": "multi-jurysdykcja-ue",
+  "description": "Dziewiec konektorow prawa krajowego UE jedna komenda (DE, AT, ES, FI, IE, NL, SE, FR, LU) - ustawodawstwo i orzecznictwo wprost ze zrodel urzedowych, z identyfikatorami ELI/ECLI. Wymaga uv/uvx; Francja wymaga darmowych danych PISTE.",
+  "version": "1.0.0",
+  "author": { "name": "Wieslaw Mazur / MateMatic Solutions" },
+  "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
+  "license": "Apache-2.0",
+  "keywords": ["legal-ai", "eu-law", "multi-jurisdiction", "eli", "ecli", "mcp", "vendor-agnostic"]
+}
