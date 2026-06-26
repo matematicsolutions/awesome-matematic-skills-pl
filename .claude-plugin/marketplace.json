@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
   "name": "matematic-skills-pl",
-  "version": "2026.05.27",
-  "description": "Polski hub umiejetnosci AI dla prawa - walidacja outputu LLM, orzecznictwo PL/UE, RODO, redline, AI Act audit-bundle. Vendor-agnostic, RODO-safe by default.",
+  "version": "2026.06.26",
+  "description": "Polski hub umiejetnosci AI dla prawa - bundle domenowe instalowalne jedna komenda. Fundament weryfikacyjny (anti-halucynacja), orzecznictwo + konektory PL/UE, plus pojedyncze skille (anonimizacja, redline, konwersja, governance). RODO-safe, vendor-agnostic.",
   "owner": {
     "name": "Wieslaw Mazur / MateMatic Solutions",
     "email": "wieslaw@matematic.co",
@@ -12,98 +12,42 @@
   "language": "pl",
   "plugins": [
     {
-      "name": "legal-request-router-pl",
-      "description": "Klasyfikator zadania prawnego - decyduje czy uruchomic zwykla odpowiedz, citation-grounding-pl, adversarial-legal-review-pl czy legal-ai-audit-bundle. Warstwa NAD walidacja.",
+      "name": "fundament-weryfikacyjny",
+      "description": "Rdzen weryfikacyjny instaluj-zawsze (6 skilli): routing zadania, ocena wejscia, grounding cytatu, czerwony zespol, wiernosc deliverable, paczka audytowa AI Act art. 12. Neutralny jurysdykcyjnie, bez konektorow, nic nie wysyla na zewnatrz.",
       "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
-      "source": "./skills/legal-request-router-pl"
+      "source": "./fundament-weryfikacyjny"
     },
     {
-      "name": "intake-sufficiency-pl",
-      "description": "Ocena czy zlecenie/brief MA dosc kontekstu, by zaczac prace. Generuje pytania uzupelniajace do klienta. Lustro routera - router patrzy na output, ten na wejscie.",
+      "name": "orzecznictwo-zrodla",
+      "description": "Wyszukiwanie i pobieranie zrodel prawa PL/UE (4 skille): SAOS, EUR-Lex, katalog zrodel krajowych. Niesie konektory MCP saos/krs/eu-sparql (read-only, publiczne API). Wymaga node/npx.",
       "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
-      "source": "./skills/intake-sufficiency-pl"
-    },
-    {
-      "name": "citation-grounding-pl",
-      "description": "Mechaniczny weryfikator cytatu dla tekstow prawnych po polsku - sprawdza string-matchem, czy cytat z orzeczenia/ustawy/umowy/pisma istnieje w zrodle. Anti-halucynacja, RODO-safe (lokalnie).",
-      "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
-      "license": "Apache-2.0",
-      "source": "./skills/citation-grounding-pl"
-    },
-    {
-      "name": "adversarial-legal-review-pl",
-      "description": "Czerwony zespol dla pisma prawnego high-stakes - builder/attacker/synthesizer/verifier. Wylapuje slabosc ZANIM zrobi to przeciwnik, sad lub klient. Z bramka kosztu.",
-      "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
-      "license": "Apache-2.0",
-      "source": "./skills/adversarial-legal-review-pl"
-    },
-    {
-      "name": "deliverable-fidelity-pl",
-      "description": "Weryfikator wiernosci dokumentu finalnego do analizy - czy zadna flaga RED nie wypadla z podsumowania. Trzecia warstwa walidacji obok grounding i adversarial.",
-      "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
-      "license": "Apache-2.0",
-      "source": "./skills/deliverable-fidelity-pl"
-    },
-    {
-      "name": "legal-ai-audit-bundle",
-      "description": "Pakuje output AI prawny w artefakt audytowy zgodny z AI Act art. 12 - deliverable + slad rozumowania + log kosztu + metadane + manifest SHA256.",
-      "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
-      "license": "Apache-2.0",
-      "source": "./skills/legal-ai-audit-bundle"
+      "source": "./orzecznictwo-zrodla"
     },
     {
       "name": "redline-docx-pl",
       "description": "Redlining polskich umow .docx z natywnymi Word Track Changes - bez niszczenia formatowania OOXML. Sanitize metadanych autora (RODO przy wysylce). Safety Tiers R/M/D. Silnik adeu (MIT).",
       "version": "2026.05.27",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "MIT",
       "source": "./skills/redline-docx-pl"
-    },
-    {
-      "name": "saos-orzecznictwo",
-      "description": "Polish case law search via SAOS REST API (Fundacja ePanstwo) - sady powszechne, SN, TK, KIO. Search by sygnatura/date/court/keyword, fetch full text, bulk-download. Refaktor 2026-05-27: SKILL.md 252->125 linii + Python inline -> references/api.md.",
-      "version": "2026.05.27",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
-      "license": "Apache-2.0",
-      "source": "./skills/saos-orzecznictwo"
-    },
-    {
-      "name": "szukaj-orzeczen-v2",
-      "description": "Wyszukiwanie orzeczen PL przez SAOS API + opcjonalne grupowanie tematyczne (klastrowanie, text mining, raport DOCX). Komenda /szukaj-orzeczen \"fraza\". v2.1.0: refaktor SKILL.md 460->60 linii + 4 pliki references/.",
-      "version": "2.1.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
-      "license": "Apache-2.0",
-      "source": "./skills/szukaj-orzeczen-v2"
-    },
-    {
-      "name": "eu-sparql-search",
-      "description": "Search EU legislation / CJEU case law via Publications Office SPARQL (EUR-Lex / Cellar). CELEX, ELI URI, multi-language acts. Companion to saos-orzecznictwo (PL).",
-      "version": "2026.05.24",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
-      "license": "Apache-2.0",
-      "source": "./skills/eu-sparql-search"
-    },
-    {
-      "name": "legal-data-hunter-pl",
-      "description": "Catalog + bulk-harvest layer dla polskich zrodel prawnych: UODO, UOKiK, KNF, UKE, URE, KIO, NSA, TK, SN, Dziennik Urzedowy, Sejm ELI. Lokalny RODO-safe korpus prawa PL.",
-      "version": "2026.05.22",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
-      "license": "Apache-2.0",
-      "source": "./skills/legal-data-hunter-pl"
     },
     {
       "name": "markitdown",
       "description": "Konwersja PDF/Word/Excel/PowerPoint/HTML/EPUB/audio/obrazy/YouTube na Markdown dla LLM. Microsoft MarkItDown. Zachowuje strukture (headings, listy, tabele).",
       "version": "2026.04.21",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "MIT",
       "source": "./skills/markitdown"
     },
@@ -111,7 +55,9 @@
       "name": "opendataloader-pdf",
       "description": "Wysokiej jakosci konwerter PDF -> JSON/Markdown dla AI - zachowuje reading order, strukture tabel, headings. Krytyczne dla audytow LegalTech (KRS, postanowienia, finansowe).",
       "version": "2026.04.21",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/opendataloader-pdf"
     },
@@ -119,7 +65,9 @@
       "name": "matematic-konstytucja-ai",
       "description": "Generuje 'Konstytucje AI' dla kancelarii prawnej - dokument governance definiujacy zasady uzycia AI w organizacji. 6 sekcji (mission, principles do 9 articles, boundaries, governance, audit, evolution). Cherry-pick patternu github/spec-kit (MIT). Output: dokument PDF/MD 10-25 stron + AI Implementation Playbook 6-8 tygodni.",
       "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/matematic-konstytucja-ai"
     },
@@ -127,7 +75,9 @@
       "name": "matematic-expert-panel",
       "description": "Generuje 90-min warsztat decyzyjny 'MateMatic Expert Panel' - multi-perspective analiza casu kancelarii przez 7 person (compliance officer, IT security, etyk AI, partner zarzadzajacy, junior prawnik, perspektywa klienta, regulator). Cherry-pick z SuperClaude Business Panel mode (MIT).",
       "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/matematic-expert-panel"
     },
@@ -135,7 +85,9 @@
       "name": "matematic-spec-driven",
       "description": "Spec-Driven Development dla wewnetrznych projektow MateMatic. Cherry-pick patternu github/spec-kit (MIT): 4 fazy (Konstytucja -> Specyfikacja -> Plan -> Zadania) + Constitution Check GATE z 4 bramkami MateMatic. Marker [P] dla zadan parallel-safe. Companion do matematic-konstytucja-ai (nie myl - tamten produktowy dla kancelarii, ten internal pipeline).",
       "version": "0.1.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/matematic-spec-driven"
     },
@@ -143,7 +95,9 @@
       "name": "matematic-mcp-fastmcp-instructions-pl",
       "description": "Buduj nowy MCP server z 5 elementami kanonu walidowanymi na dograh v1.31.0 (BSD-2): FastMCP/Server(instructions=) z procedural orchestration, drift test instructions vs TOOLS vs ErrorCode, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id dla per-tenant routing, ToolAnnotations dla read-only tools. Adoptowany w 6 MCP MateMatic 2026-05-25.",
       "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/matematic-mcp-fastmcp-instructions-pl"
     },
@@ -151,7 +105,9 @@
       "name": "matematic-patron-pr-review-pl",
       "description": "Recenzent PR/diffow dla LegalTech AI agentow (przyklad: PATRON, KGLF). Wylapuje regresje specyficzne dla repo legaltech ktorych nie zlapie generyczny lint - org scoping multi-tenant, authless routes, brak audit_log (AI Act art. 12), brak grounding cytatow, PII w logach. Format findings file:line -> problem -> correct pattern, 3 buckets Blocker/Should-fix/Nit. Cherry-pick z dograh v1.31.0 review-pr (BSD-2, 286 linii) + 3 sekcje MateMatic-specific (PII/audit_log/citation grounding/AI Act).",
       "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/matematic-patron-pr-review-pl"
     },
@@ -159,7 +115,9 @@
       "name": "let-it-be",
       "description": "Silnik anonimizacji i pseudonimizacji polskich danych osobowych (PESEL, NIP, REGON, KRS, IBAN, dowod osobisty, telefon, e-mail, imiona, firmy, adres) w tekscie - RODO-safe, offline, deterministycznie. Zero zaleznosci, Node >=20. Tryby anonimize (token) i pseudonymize (mapping). Detekcja checksumowa (PESEL/NIP/REGON/KRS/IBAN) + heurystyczna (imiona gazetteer ~120 + firmy z forma prawna).",
       "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/let-it-be"
     },
@@ -167,7 +125,9 @@
       "name": "matematic-marketplace-installer",
       "description": "Generuje skrypt instalacyjny MateMatic Marketplace dla prawnikow (Windows .bat, bez Git/npm). Pomaga rozpowszechniac skille MateMatic do docelowych uzytkownikow (kancelarie) bez wiedzy technicznej. Komenda /marketplace install. Safety Tiers R/M/D.",
       "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/matematic-marketplace-installer"
     },
@@ -175,7 +135,9 @@
       "name": "matematic-workspace-backup",
       "description": "Konfiguracja szyfrowanego backupu Google Workspace dla kancelarii prawnych przez gogcli + age (X25519) + prywatne repo Git. Adresuje RODO art. 32 (ciaglosc i odpornosc), ryzyko lockoutu Google i ransomware na Workspace. Pozycjonowanie edukator (nie odsprzedajemy gogcli, uczymy klienta z niego korzystac). Safety Tiers R/M/D.",
       "version": "1.0.0",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/matematic-workspace-backup"
     },
@@ -183,7 +145,9 @@
       "name": "webwright-legal-pl",
       "description": "Pobiera orzeczenia i akty prawne z polskich serwisow sadowych niedostepnych przez MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) uzywajac Webwright (Playwright Chromium/Firefox, code-as-action). Wrapper kierunkowany pod polskie domeny prawne. Trzy tryby - pobierz po sygnaturze, szukaj po slowie kluczowym, pobierz akt prawny EU/PL po CELEX/ELI. v1.0.1 zawiera referencyjny scripts/fetch_orzeczenie.py walidowany na sn.pl dla sygnatur post-2016 i post-2024 (I CSK 100/22, III CZP 1/24).",
       "version": "1.0.1",
-      "author": { "name": "Wieslaw Mazur / MateMatic" },
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
       "license": "Apache-2.0",
       "source": "./skills/webwright-legal-pl"
     }
@@ -197,6 +161,7 @@
     "claude-code",
     "claude-cowork",
     "legaltech",
-    "vendor-agnostic"
+    "vendor-agnostic",
+    "mcp-connectors"
   ]
 }

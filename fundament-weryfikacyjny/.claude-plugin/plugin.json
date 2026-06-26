@@ -1,0 +1,9 @@
+{
+  "name": "fundament-weryfikacyjny",
+  "description": "Rdzeń weryfikacyjny instaluj-zawsze: routing zadania, ocena wejścia, grounding cytatu, czerwony zespół, wierność deliverable, paczka audytowa AI Act. Neutralny jurysdykcyjnie, bez konektorów, nic nie wysyła na zewnątrz.",
+  "version": "1.0.0",
+  "author": { "name": "Wiesław Mazur / MateMatic Solutions" },
+  "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
+  "license": "Apache-2.0",
+  "keywords": ["legal-ai", "grounding", "anti-hallucination", "rodo-safe", "ai-act-art-12", "vendor-agnostic"]
+}

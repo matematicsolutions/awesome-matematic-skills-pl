@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "saos": {
+      "command": "npx",
+      "args": ["-y", "@matematicsolutions/mcp-saos"]
+    },
+    "krs": {
+      "command": "npx",
+      "args": ["-y", "@matematicsolutions/mcp-krs"]
+    },
+    "eu-sparql": {
+      "command": "npx",
+      "args": ["-y", "@matematicsolutions/mcp-eu-sparql"]
+    }
+  }
+}

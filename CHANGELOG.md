@@ -5,6 +5,32 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+
+## [2026.06.26] - 2026-06-26
+
+Restruktura z modelu plaskiego (1 skill = 1 plugin) na bundle domenowe. Major bump: sciezki skilli sie zmieniaja. Inspiracja architektura "Claude for Legal Finland" (Aku Nikkola, MIT) - bierzemy pakowanie, dokladamy nasza multi-jurysdykcje.
+
+### Added
+
+- Plugin `fundament-weryfikacyjny` - bundle instaluj-zawsze z 6 skillami rdzenia weryfikacyjnego, bez konektorow, neutralny jurysdykcyjnie.
+- Plugin `orzecznictwo-zrodla` - bundle z 4 skillami zrodlowymi + `.mcp.json` (konektory `saos`/`krs`/`eu-sparql` przez npx).
+- Katalog `references/` - wspolne standardy dziedziczone przez skille: `styl-cytatu.md` (tagi pewnosci), `odpowiedzialnosc-i-rodo.md` (5 warstw ochrony), `wdrozenie-w-kancelarii.md`.
+- `CLAUDE.md` i `.claude-plugin/plugin.json` w kazdym bundlu. CLAUDE.md samowystarczalny (inline rdzen regul, bo root-owe references nie instaluja sie z pluginem).
+- `.matematic/` - konstytucja projektu + spec 001 (model spec-driven).
+
+### Changed
+
+- 10 skilli przeniesionych z `./skills/` do katalogow bundli (`fundament-weryfikacyjny/skills/`, `orzecznictwo-zrodla/skills/`). Linki w README zaktualizowane.
+- `marketplace.json` - major bump na `2026.06.26`, 2 wpisy bundli + 12 plaskich skilli (8 zachowanych + 4 z v0.6.0; mieszany layout, wspierany przez Claude Code).
+- `scripts/check-marketplace.mjs` przepisany pod model bundle + plaski.
+- Instalacja: one-command `/plugin marketplace add` + `/plugin install <bundle>@matematic-skills-pl`.
+
+### Roadmap
+
+- US2: pozostale 8 skilli w bundle (dokumenty / governance-kancelarii / dev-mcp).
+- US3: plugin `multi-jurysdykcja-ue` (9 konektorow EU przez uvx) + walidacja w CI.
+
+
 ## [0.6.0] - 2026-05-27
 
 Iteracja 4 - sprint architektury (Safety Tiers R/M/D + references/ offload) + 4 nowe skille z trzech roznych warstw produktowych. Inspiracja wzorcami z google/skills (Safety Tiers, references/ skill leanness, Skill Registry semantic search).

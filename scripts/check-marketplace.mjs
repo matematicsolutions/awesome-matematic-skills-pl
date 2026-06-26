@@ -1,20 +1,24 @@
 #!/usr/bin/env node
 /**
- * check-marketplace.mjs - walidator spojnosci `.claude-plugin/marketplace.json` vs `./skills/`
+ * check-marketplace.mjs - walidator `.claude-plugin/marketplace.json` (model bundli + plaski)
  *
  * Zero dependencies (Node >= 18). Uruchamiac z root repo: `node scripts/check-marketplace.mjs`
  *
- * Sprawdza:
- *  1. kazdy wpis w marketplace.json ma odpowiadajacy folder `./skills/<name>/`
- *  2. kazdy folder w `./skills/` (poza ukrytymi) ma odpowiadajacy wpis w marketplace.json
- *  3. nazwy w marketplace.json (`name`) zgodne z nazwa folderu
- *  4. kazdy SKILL.md istnieje i ma frontmatter z polami `name` i `description`
- *  5. licencje i wersje w marketplace.json maja niepuste wartosci
+ * Modele wpisow (dozwolone rownolegle - Claude Code wspiera mieszane layouty):
+ *  - BUNDLE: source -> katalog z podkatalogiem `skills/<skill>/SKILL.md` (1+ skilli).
+ *            Opcjonalnie `.mcp.json` (mcpServers) i `.claude-plugin/plugin.json` (name).
+ *  - PLASKI: source -> katalog z `SKILL.md` w korzeniu (pojedynczy skill).
  *
- * Exit codes:
- *  0 = OK (wszystko spojne)
- *  1 = znaleziono niezgodnosci (lista wypisana na stderr)
- *  2 = blad uruchomienia (brak plikow konfiguracyjnych etc.)
+ * Sprawdza dla kazdego wpisu:
+ *  1. source istnieje na dysku
+ *  2. bundle: skills/ ma >=1 podkatalog, kazdy z SKILL.md + frontmatter (name, description)
+ *     plaski: SKILL.md w korzeniu + frontmatter (name, description)
+ *  3. jesli .mcp.json istnieje: poprawny JSON z obiektem `mcpServers`
+ *  4. jesli .claude-plugin/plugin.json istnieje: poprawny JSON z polem `name`
+ *  5. wpis ma niepuste description (>=10), version, license, author.name
+ *  6. kazdy katalog w ./skills/ ma odpowiadajacy wpis (brak osieroconych plaskich skilli)
+ *
+ * Exit: 0 = OK | 1 = niezgodnosci | 2 = blad uruchomienia
  */
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
@@ -32,7 +36,6 @@ function fail(msg, code = 2) {
 }
 
 if (!existsSync(MARKETPLACE)) fail(`brak ${MARKETPLACE}`);
-if (!existsSync(SKILLS_DIR)) fail(`brak ${SKILLS_DIR}`);
 
 let manifest;
 try {
@@ -40,89 +43,97 @@ try {
 } catch (e) {
   fail(`marketplace.json nie jest poprawnym JSON: ${e.message}`);
 }
-
 if (!Array.isArray(manifest.plugins)) fail('marketplace.json brakuje pola "plugins" (array)');
 
-const manifestNames = new Set(manifest.plugins.map((p) => p.name));
-
-const skillFolders = readdirSync(SKILLS_DIR)
-  .filter((entry) => !entry.startsWith('.'))
-  .filter((entry) => statSync(join(SKILLS_DIR, entry)).isDirectory());
-const folderNames = new Set(skillFolders);
-
 const issues = [];
+const isDir = (p) => existsSync(p) && statSync(p).isDirectory();
 
-// 1. wpisy bez folderu
-for (const plugin of manifest.plugins) {
-  if (!folderNames.has(plugin.name)) {
-    issues.push(`MISSING_FOLDER: marketplace deklaruje "${plugin.name}" ale brak katalogu skills/${plugin.name}/`);
-  }
-}
-
-// 2. foldery bez wpisu
-for (const folder of skillFolders) {
-  if (!manifestNames.has(folder)) {
-    issues.push(`MISSING_MANIFEST: skills/${folder}/ istnieje ale brak wpisu w marketplace.json`);
-  }
-}
-
-// 3. spojnosc name vs folder dla istniejacych
-for (const plugin of manifest.plugins) {
-  const expectedSource = `./skills/${plugin.name}`;
-  if (plugin.source && plugin.source !== expectedSource) {
-    issues.push(`SOURCE_MISMATCH: ${plugin.name} ma source "${plugin.source}", oczekiwano "${expectedSource}"`);
-  }
-}
-
-// 4. SKILL.md + frontmatter
-for (const folder of skillFolders) {
-  const skillMd = join(SKILLS_DIR, folder, 'SKILL.md');
+function checkSkillMd(skillMd, label) {
   if (!existsSync(skillMd)) {
-    issues.push(`MISSING_SKILL_MD: skills/${folder}/SKILL.md nie istnieje`);
-    continue;
+    issues.push(`MISSING_SKILL_MD: ${label} - brak SKILL.md`);
+    return;
   }
   const content = readFileSync(skillMd, 'utf-8');
   if (!content.startsWith('---')) {
-    issues.push(`NO_FRONTMATTER: skills/${folder}/SKILL.md nie ma frontmatter YAML`);
-    continue;
+    issues.push(`NO_FRONTMATTER: ${label} - SKILL.md bez frontmatter`);
+    return;
   }
-  // wez blok miedzy pierwszym a drugim "---"
   const end = content.indexOf('\n---', 3);
   if (end < 0) {
-    issues.push(`UNCLOSED_FRONTMATTER: skills/${folder}/SKILL.md frontmatter nie ma zamykajacego ---`);
-    continue;
+    issues.push(`UNCLOSED_FRONTMATTER: ${label} - frontmatter bez zamykajacego ---`);
+    return;
   }
   const fm = content.slice(3, end);
-  if (!/^name:\s*\S/m.test(fm)) {
-    issues.push(`NO_NAME: skills/${folder}/SKILL.md frontmatter bez pola "name"`);
-  }
-  if (!/^description:/m.test(fm)) {
-    issues.push(`NO_DESCRIPTION: skills/${folder}/SKILL.md frontmatter bez pola "description"`);
+  if (!/^name:\s*\S/m.test(fm)) issues.push(`NO_NAME: ${label} - frontmatter bez "name"`);
+  if (!/^description:/m.test(fm)) issues.push(`NO_DESCRIPTION: ${label} - frontmatter bez "description"`);
+}
+
+function checkJson(file, label, requireKey) {
+  try {
+    const obj = JSON.parse(readFileSync(file, 'utf-8'));
+    if (requireKey && !(requireKey in obj)) {
+      issues.push(`BAD_JSON: ${label} - brak klucza "${requireKey}"`);
+    }
+    return obj;
+  } catch (e) {
+    issues.push(`BAD_JSON: ${label} - niepoprawny JSON (${e.message})`);
+    return null;
   }
 }
 
-// 5. wartosci w marketplace
 for (const plugin of manifest.plugins) {
-  if (!plugin.description || plugin.description.trim().length < 10) {
-    issues.push(`SHORT_DESCRIPTION: ${plugin.name} ma za krotki opis w marketplace.json (< 10 znakow)`);
+  const name = plugin.name || '(bez nazwy)';
+  // 5. pola wpisu
+  if (!plugin.description || plugin.description.trim().length < 10)
+    issues.push(`SHORT_DESCRIPTION: ${name} - opis < 10 znakow`);
+  if (!plugin.version) issues.push(`NO_VERSION: ${name} - brak "version"`);
+  if (!plugin.license) issues.push(`NO_LICENSE: ${name} - brak "license"`);
+  if (!plugin.author || !plugin.author.name) issues.push(`NO_AUTHOR: ${name} - brak "author.name"`);
+
+  // 1. source istnieje
+  const src = plugin.source ? join(ROOT, plugin.source) : null;
+  if (!src || !isDir(src)) {
+    issues.push(`MISSING_SOURCE: ${name} - source "${plugin.source}" nie istnieje`);
+    continue;
   }
-  if (!plugin.version) {
-    issues.push(`NO_VERSION: ${plugin.name} brak pola "version" w marketplace.json`);
+
+  // 2. bundle vs plaski
+  const skillsSub = join(src, 'skills');
+  if (isDir(skillsSub)) {
+    const subdirs = readdirSync(skillsSub).filter((e) => !e.startsWith('.') && isDir(join(skillsSub, e)));
+    if (subdirs.length === 0) issues.push(`EMPTY_BUNDLE: ${name} - skills/ bez podkatalogow`);
+    for (const sd of subdirs) checkSkillMd(join(skillsSub, sd, 'SKILL.md'), `${name}/skills/${sd}`);
+  } else if (existsSync(join(src, 'SKILL.md'))) {
+    checkSkillMd(join(src, 'SKILL.md'), name);
+  } else {
+    issues.push(`NO_SKILLS: ${name} - brak skills/ i brak SKILL.md w korzeniu`);
   }
-  if (!plugin.license) {
-    issues.push(`NO_LICENSE: ${plugin.name} brak pola "license" w marketplace.json`);
-  }
-  if (!plugin.author || !plugin.author.name) {
-    issues.push(`NO_AUTHOR: ${plugin.name} brak "author.name" w marketplace.json`);
+
+  // 3. .mcp.json (opcjonalny)
+  const mcp = join(src, '.mcp.json');
+  if (existsSync(mcp)) checkJson(mcp, `${name}/.mcp.json`, 'mcpServers');
+
+  // 4. plugin.json (opcjonalny)
+  const pj = join(src, '.claude-plugin', 'plugin.json');
+  if (existsSync(pj)) checkJson(pj, `${name}/.claude-plugin/plugin.json`, 'name');
+}
+
+// 6. osierocone plaskie skille w ./skills/
+if (isDir(SKILLS_DIR)) {
+  const declaredSources = new Set(manifest.plugins.map((p) => p.source));
+  const flatFolders = readdirSync(SKILLS_DIR).filter((e) => !e.startsWith('.') && isDir(join(SKILLS_DIR, e)));
+  for (const f of flatFolders) {
+    if (!declaredSources.has(`./skills/${f}`)) {
+      issues.push(`ORPHAN_SKILL: skills/${f}/ istnieje ale brak wpisu w marketplace.json`);
+    }
   }
 }
 
-// raport
+const pluginCount = manifest.plugins.length;
 if (issues.length === 0) {
-  process.stdout.write(`[check-marketplace] OK - ${manifest.plugins.length} skilli, ${skillFolders.length} folderow, zero niezgodnosci.\n`);
+  process.stdout.write(`[check-marketplace] OK - ${pluginCount} pluginow, zero niezgodnosci.\n`);
   process.exit(0);
 }
-
 process.stderr.write(`[check-marketplace] FAIL - ${issues.length} niezgodnosci:\n`);
 for (const i of issues) process.stderr.write(`  - ${i}\n`);
 process.exit(1);

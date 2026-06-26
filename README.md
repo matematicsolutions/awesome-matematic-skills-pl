@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-22-blue.svg)](#pakiet---22-umiejetnosci-w-skills)
+[![Skills](https://img.shields.io/badge/skills-22-blue.svg)](#pakiet---22-umiejetnosci)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
 [![Polish law](https://img.shields.io/badge/jurysdykcja-PL%20%2B%20UE-red.svg)](#dlaczego-polski-hub)
@@ -16,9 +16,11 @@ Licencja kuratorska: **MIT** (umiejetnosci w `./skills/` zachowuja wlasne licenc
 
 ## Co tu znajdziesz
 
-1. **Pakiet 22 umiejetnosci** zainstalowanych w `./skills/` - gotowe do uzycia w Claude Code / Claude Cowork / Claude.ai jako plugin marketplace (`.claude-plugin/marketplace.json`).
+1. **Bundle domenowe instalowane jedna komenda** - 22 umiejetnosci, stopniowo spinanych w pluginy wedlug funkcji. Dwa pierwsze bundle (fundament weryfikacyjny, orzecznictwo + zrodla) instalujesz jednym `/plugin install`; konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa. Pozostale 12 umiejetnosci na razie pojedynczo w `./skills/` (migracja do bundli trwa).
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
+
+> **Model bundli (od 2026.06.26).** Umiejetnosci grupujemy wedlug funkcji, nie obszaru praktyki - bo to sa narzedzia (weryfikacja, zrodla, konwersja), nie poradniki branzowe. Pluginy wedlug dziedzin prawa (spolki, karne, RODO) to roadmap, gdy powstana skille substancjalne.
 
 ## Lancuch walidacji outputu LLM
 
@@ -56,18 +58,20 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 22 umiejetnosci w `./skills/`
+## Pakiet - 22 umiejetnosci
 
-### Walidacja outputu LLM (6 warstw)
+### Plugin `fundament-weryfikacyjny` (6 warstw walidacji outputu LLM)
+
+Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, nic nie wysyla na zewnatrz. Instalacja: `/plugin install fundament-weryfikacyjny@matematic-skills-pl`.
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [<img src="./assets/badge-legal-request-router-pl.svg" alt="Legal Request Router" width="200" height="60">](./skills/legal-request-router-pl) | Klasyfikator zadania - decyduje, ktora sciezka weryfikacji uruchomic. Warstwa NAD walidacja. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-intake-sufficiency-pl.svg" alt="Intake Sufficiency" width="200" height="60">](./skills/intake-sufficiency-pl) | Ocena czy zlecenie/brief MA dosc kontekstu, by zaczac. Generuje pytania do klienta. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-citation-grounding-pl.svg" alt="Citation Grounding" width="200" height="60">](./skills/citation-grounding-pl) | Mechaniczny weryfikator cytatu - string-match cytatu prawnego w zrodle. Anti-halucynacja. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-adversarial-legal-review-pl.svg" alt="Adversarial Review" width="200" height="60">](./skills/adversarial-legal-review-pl) | Czerwony zespol dla pisma wysokiej stawki - builder/attacker/synthesizer/verifier. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-deliverable-fidelity-pl.svg" alt="Deliverable Fidelity" width="200" height="60">](./skills/deliverable-fidelity-pl) | Czy zadna flaga RED nie wypadla z podsumowania - sprawdza wiernosc finalnego pisma do analizy. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-legal-ai-audit-bundle.svg" alt="AI Audit Bundle" width="200" height="60">](./skills/legal-ai-audit-bundle) | Artefakt audytowy AI Act art. 12 - deliverable + slad + log kosztu + manifest SHA256. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-legal-request-router-pl.svg" alt="Legal Request Router" width="200" height="60">](./fundament-weryfikacyjny/skills/legal-request-router-pl) | Klasyfikator zadania - decyduje, ktora sciezka weryfikacji uruchomic. Warstwa NAD walidacja. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-intake-sufficiency-pl.svg" alt="Intake Sufficiency" width="200" height="60">](./fundament-weryfikacyjny/skills/intake-sufficiency-pl) | Ocena czy zlecenie/brief MA dosc kontekstu, by zaczac. Generuje pytania do klienta. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-citation-grounding-pl.svg" alt="Citation Grounding" width="200" height="60">](./fundament-weryfikacyjny/skills/citation-grounding-pl) | Mechaniczny weryfikator cytatu - string-match cytatu prawnego w zrodle. Anti-halucynacja. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-adversarial-legal-review-pl.svg" alt="Adversarial Review" width="200" height="60">](./fundament-weryfikacyjny/skills/adversarial-legal-review-pl) | Czerwony zespol dla pisma wysokiej stawki - builder/attacker/synthesizer/verifier. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-deliverable-fidelity-pl.svg" alt="Deliverable Fidelity" width="200" height="60">](./fundament-weryfikacyjny/skills/deliverable-fidelity-pl) | Czy zadna flaga RED nie wypadla z podsumowania - sprawdza wiernosc finalnego pisma do analizy. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-legal-ai-audit-bundle.svg" alt="AI Audit Bundle" width="200" height="60">](./fundament-weryfikacyjny/skills/legal-ai-audit-bundle) | Artefakt audytowy AI Act art. 12 - deliverable + slad + log kosztu + manifest SHA256. | Apache-2.0 | 1.0.0 |
 
 ### Umowy / Redline
 
@@ -75,15 +79,18 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 |---|---|---|---|
 | [<img src="./assets/badge-redline-docx-pl.svg" alt="Redline DOCX PL" width="200" height="60">](./skills/redline-docx-pl) | Natywne Word Track Changes w polskich .docx + sanitize metadanych autora (RODO przy wysylce). Safety Tiers R/M/D. | MIT | 2026.05.27 |
 
-### Orzecznictwo PL / UE
+### Plugin `orzecznictwo-zrodla` (Orzecznictwo PL / UE + konektory)
+
+Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, publiczne API; wymaga node/npx). Instalacja: `/plugin install orzecznictwo-zrodla@matematic-skills-pl`.
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
-| [<img src="./assets/badge-saos-orzecznictwo.svg" alt="SAOS Orzecznictwo" width="200" height="60">](./skills/saos-orzecznictwo) | Polish case law search via SAOS REST API - sady powszechne, SN, TK, KIO. Lean SKILL.md (125 linii) + `references/api.md`. | Apache-2.0 | 2026.05.27 |
-| [<img src="./assets/badge-szukaj-orzeczen-v2.svg" alt="Szukaj Orzeczen v2" width="200" height="60">](./skills/szukaj-orzeczen-v2) | Wyszukiwanie orzeczen PL + opcjonalne grupowanie tematyczne (klastrowanie, raport DOCX). v2.1.0: SKILL.md 460->60 linii + 4 pliki `references/`. | Apache-2.0 | 2.1.0 |
-| [<img src="./assets/badge-eu-sparql-search.svg" alt="EU SPARQL Search" width="200" height="60">](./skills/eu-sparql-search) | EUR-Lex / Cellar SPARQL - akty UE i orzecznictwo TSUE, CELEX, ELI URI. | Apache-2.0 | 2026.05.24 |
-| [<img src="./assets/badge-legal-data-hunter-pl.svg" alt="Legal Data Hunter" width="200" height="60">](./skills/legal-data-hunter-pl) | Catalog + bulk-harvest dla 11 polskich zrodel prawnych (UODO, UOKiK, KNF, KIO, NSA, TK, SN, Sejm ELI). | Apache-2.0 | 2026.05.22 |
-| [<img src="./assets/badge-webwright-legal-pl.svg" alt="Webwright Legal PL" width="200" height="60">](./skills/webwright-legal-pl) | Pobiera orzeczenia z serwisow niedostepnych w MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) przez Playwright. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-saos-orzecznictwo.svg" alt="SAOS Orzecznictwo" width="200" height="60">](./orzecznictwo-zrodla/skills/saos-orzecznictwo) | Polish case law search via SAOS REST API - sady powszechne, SN, TK, KIO. Lean SKILL.md (125 linii) + `references/api.md`. | Apache-2.0 | 2026.05.27 |
+| [<img src="./assets/badge-szukaj-orzeczen-v2.svg" alt="Szukaj Orzeczen v2" width="200" height="60">](./orzecznictwo-zrodla/skills/szukaj-orzeczen-v2) | Wyszukiwanie orzeczen PL + opcjonalne grupowanie tematyczne (klastrowanie, raport DOCX). v2.1.0: SKILL.md 460->60 linii + 4 pliki `references/`. | Apache-2.0 | 2.1.0 |
+| [<img src="./assets/badge-eu-sparql-search.svg" alt="EU SPARQL Search" width="200" height="60">](./orzecznictwo-zrodla/skills/eu-sparql-search) | EUR-Lex / Cellar SPARQL - akty UE i orzecznictwo TSUE, CELEX, ELI URI. | Apache-2.0 | 2026.05.24 |
+| [<img src="./assets/badge-legal-data-hunter-pl.svg" alt="Legal Data Hunter" width="200" height="60">](./orzecznictwo-zrodla/skills/legal-data-hunter-pl) | Catalog + bulk-harvest dla 11 polskich zrodel prawnych (UODO, UOKiK, KNF, KIO, NSA, TK, SN, Sejm ELI). | Apache-2.0 | 2026.05.22 |
+
+Pokrewny skill instalowany pojedynczo (poza bundlem): [webwright-legal-pl](./skills/webwright-legal-pl) - pobiera orzeczenia z serwisow niedostepnych w MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) przez Playwright. Apache-2.0, v1.0.1.
 
 ### Narzedzia - konwersja dokumentow i operacyjne
 
@@ -158,13 +165,15 @@ Pakiet wyzej to warstwa walidacji outputu i narzedzia konwersji. Pelny ekosystem
 ### Claude Code (plugin marketplace)
 
 ```bash
-# Sklonuj repo lokalnie
-git clone https://github.com/matematicsolutions/awesome-matematic-skills-pl
-cd awesome-matematic-skills-pl
+# 1. Dodaj marketplace (raz)
+/plugin marketplace add matematicsolutions/awesome-matematic-skills-pl
 
-# Claude Code wykryje .claude-plugin/marketplace.json automatycznie
-# (sprawdz README poszczegolnych skilli w ./skills/<nazwa>/SKILL.md)
+# 2. Zainstaluj bundle, ktorych potrzebujesz
+/plugin install fundament-weryfikacyjny@matematic-skills-pl   # rdzen, bez konektorow
+/plugin install orzecznictwo-zrodla@matematic-skills-pl        # zrodla + konektory saos/krs/eu-sparql
 ```
+
+Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Pozostale umiejetnosci (redline, konwersja, governance, dev) instalujesz pojedynczo z `./skills/` do czasu migracji do bundli.
 
 ### Pojedynczy skill jako symlink do ~/.claude/skills/
 
