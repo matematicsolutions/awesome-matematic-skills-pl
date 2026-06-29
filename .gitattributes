@@ -1,0 +1,14 @@
+# Normalizacja zakonczen linii: pliki tekstowe commitowane jako LF.
+# Chroni strict-parsery (np. frontmatter YAML w `npx skills`) przed CRLF.
+* text=auto eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.mjs  text eol=lf
+*.js   text eol=lf
+*.cff  text eol=lf
+*.txt  text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+# Skrypty Windows zostaja CRLF
+*.bat text eol=crlf
+*.ps1 text eol=crlf
