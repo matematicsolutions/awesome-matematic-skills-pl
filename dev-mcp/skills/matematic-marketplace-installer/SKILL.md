@@ -1,6 +1,6 @@
 ---
 name: matematic-marketplace-installer
-description: Generuje skrypt instalacyjny MateMatic Marketplace dla prawników - Windows .bat (bez Git/npm). Użyj gdy: /marketplace install, "zainstaluj skille", "installer dla kancelarii", "jak zainstalować skille bez GitHub".
+description: Generuje skrypt instalacyjny MateMatic Marketplace dla prawników - Windows .bat (bez Git/npm). Użyj gdy - /marketplace install, "zainstaluj skille", "installer dla kancelarii", "jak zainstalować skille bez GitHub".
 allowed-tools: Bash, Read, Write
 ---
 
