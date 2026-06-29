@@ -1,0 +1,11 @@
+PISZ PO LUDZKU (humanizer-pl) - NOTICE
+
+Ten skill jest polska adaptacja projektu "blader/humanizer" (licencja MIT), ktory z
+kolei bazuje na przewodniku Wikipedii "Signs of AI writing" (WikiProject AI Cleanup).
+Oryginalna licencja MIT i atrybucja autorow originalu pozostaja w mocy dla
+zaadaptowanej logiki. Adaptacja i tresc polska: MateMatic Solutions sp. z o.o.
+
+Sekcja "Sygnatury statystyczne" (#30-#34) oparta na: W. Woloszyk, M. Domaszk,
+"Detecting AI-Generated Content: A hybrid linguistic approach", MultiLingual, wrzesien 2025.
+
+Zrodla: https://github.com/blader/humanizer | https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing

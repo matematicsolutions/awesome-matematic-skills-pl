@@ -1,0 +1,9 @@
+{
+  "name": "jakosc-tresci",
+  "description": "Narzędzia jakości tekstu polskiego (2 skille): humanizer-pl (usuwa wzorce AI-slop) i marko-pl-content (zrzędliwy senior redaktor, werdykt + zarzuty z plik:linia). Zmienia słowa, nigdy faktów. Neutralny tematycznie, bez konektorów, nic nie wysyła na zewnątrz.",
+  "version": "1.0.0",
+  "author": { "name": "Wiesław Mazur / MateMatic Solutions" },
+  "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
+  "license": "MIT",
+  "keywords": ["pisanie", "redakcja", "ai-slop", "content-review", "vendor-agnostic"]
+}

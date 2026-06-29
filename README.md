@@ -16,7 +16,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w bundlach zachowuja wlasne licencje 
 
 ## Co tu znajdziesz
 
-1. **Bundle domenowe instalowane jedna komenda** - 22 umiejetnosci spiete w 5 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, dev). Kazdy instalujesz jednym `/plugin install`; konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
+1. **Bundle domenowe instalowane jedna komenda** - 24 umiejetnosci spiete w 6 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, dev). Kazdy instalujesz jednym `/plugin install`; konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -58,7 +58,7 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 22 umiejetnosci w 5 bundlach
+## Pakiet - 24 umiejetnosci w 6 bundlach
 
 Wszystkie umiejetnosci sa spiete w pluginy domenowe - instalujesz jedna komenda. Zadna nie lezy juz pojedynczo w `./skills/`.
 
@@ -107,6 +107,15 @@ Generatory governance i operacyjne, bez konektorow. Instalacja: `/plugin install
 | [<img src="./assets/badge-matematic-konstytucja-ai.svg" alt="Konstytucja AI" width="200" height="60">](./governance-kancelarii/skills/matematic-konstytucja-ai) | Generuje "Konstytucje AI" - dokument governance dla kancelarii (6 sekcji + AI Implementation Playbook 6-8 tygodni). Cherry-pick patternu github/spec-kit. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-matematic-expert-panel.svg" alt="Expert Panel" width="200" height="60">](./governance-kancelarii/skills/matematic-expert-panel) | Generuje 90-min warsztat multi-perspective dla zarzadu kancelarii - 7 person (compliance / IT security / etyk / partner / junior / klient / regulator). | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-matematic-workspace-backup.svg" alt="Workspace Backup" width="200" height="60">](./governance-kancelarii/skills/matematic-workspace-backup) | Szyfrowany backup Google Workspace przez gogcli + age + prywatne repo Git. Adresuje RODO art. 32 (ciaglosc, ochrona przed lockoutem). | Apache-2.0 | 1.0.0 |
+
+### Plugin `jakosc-tresci` (jakosc tekstu polskiego)
+
+Narzedzia redakcyjne, neutralne tematycznie, bez konektorow. Zmieniaja slowa, nigdy faktow. Instalacja: `/plugin install jakosc-tresci@matematic-skills-pl`.
+
+| Skill | Opis | Licencja | Wersja |
+|---|---|---|---|
+| [<img src="./assets/badge-humanizer-pl.svg" alt="Pisz po ludzku" width="200" height="60">](./jakosc-tresci/skills/humanizer-pl) | Usuwa wzorce AI-slop z polskiego tekstu (34 wzorce), w tym sygnatury statystyczne wykrywane przez detektory: burstiness, dystrybucja czesci mowy, gestosc i roznorodnosc leksykalna, zakres emocji. | MIT | 1.1.0 |
+| [<img src="./assets/badge-marko-pl-content.svg" alt="Marko-PL" width="200" height="60">](./jakosc-tresci/skills/marko-pl-content) | Zrzedliwy senior redaktor - werdykt (katastrofa/slabe/przecietne/ok) + lista zarzutow z `plik:linia`. Wskazuje co zle, nie przepisuje. | MIT | 1.0.0 |
 
 ### Plugin `dev-mcp` (narzedzia deweloperskie, advanced)
 

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
   "name": "matematic-skills-pl",
-  "version": "2026.06.26-3",
-  "description": "Polski hub umiejetnosci AI dla prawa - 6 bundli domenowych instalowalnych jedna komenda (fundament weryfikacyjny, orzecznictwo + konektory PL/UE, dokumenty, governance kancelarii, dev, 9 konektorow prawa krajowego UE). RODO-safe, vendor-agnostic.",
+  "version": "2026.06.29",
+  "description": "Polski hub umiejetnosci AI dla prawa - 7 bundli domenowych instalowalnych jedna komenda (fundament weryfikacyjny, orzecznictwo + konektory PL/UE, dokumenty, governance kancelarii, jakosc tresci, dev, 9 konektorow prawa krajowego UE). RODO-safe, vendor-agnostic.",
   "owner": {
     "name": "Wieslaw Mazur / MateMatic Solutions",
     "email": "wieslaw@matematic.co",
@@ -70,6 +70,16 @@
       },
       "license": "Apache-2.0",
       "source": "./multi-jurysdykcja-ue"
+    },
+    {
+      "name": "jakosc-tresci",
+      "description": "Narzedzia jakosci tekstu polskiego (2 skille): humanizer-pl (usuwa wzorce AI-slop, w tym sygnatury statystyczne wykrywane przez detektory) i marko-pl-content (zrzedliwy senior redaktor, werdykt + zarzuty z plik:linia). Zmienia slowa, nigdy faktow. Bez konektorow, nic nie wysyla na zewnatrz.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
+      "license": "MIT",
+      "source": "./jakosc-tresci"
     }
   ],
   "tags": [

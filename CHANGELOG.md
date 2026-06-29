@@ -6,6 +6,19 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.06.29] - 2026-06-29
+
+Nowy bundel `jakosc-tresci` - hub osiaga parytet z hubem EN (`content-quality`). Narzedzia jakosci tekstu polskiego, neutralne tematycznie, bez konektorow.
+
+### Added
+
+- Plugin `jakosc-tresci` (2 skille): humanizer-pl 1.1.0, marko-pl-content 1.0.0. `CLAUDE.md` + `.claude-plugin/plugin.json` + badge'e SVG. Licencja MIT.
+
+### Changed
+
+- `humanizer-pl` 1.0.0 -> 1.1.0: nowa sekcja "Sygnatury statystyczne" (wzorce #30-#34) - cechy mierzone przez detektory AI: rozrzut dlugosci zdan (burstiness), morfologia czasownik/rzeczownik, gestosc i roznorodnosc leksykalna, zakres emocji, mechaniczne przejscia. Oparte na metodologii detekcji Woloszyka i Domaszk (MultiLingual, IX 2025).
+- Pakiet: 22 umiejetnosci w 5 bundlach -> 24 umiejetnosci w 6 bundlach.
+
 ## [2026.06.26-2] - 2026-06-26
 
 US2 - dokonczenie migracji do bundli. Pozostale 12 plaskich skilli spiete w bundle domenowe; `./skills/` zniknal, marketplace to wylacznie bundle (5 pluginow).
