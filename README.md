@@ -169,6 +169,8 @@ Pakiet wyzej to warstwa walidacji outputu i narzedzia konwersji. Pelny ekosystem
 
 Trzy drogi. **A** (`npx skills`) dziala w **dowolnym agencie** wspierajacym format Agent Skills (Cursor, OpenAI Codex, Windsurf, Gemini CLI, Claude Code) i instaluje pojedyncze skille. **B** to natywny marketplace Claude Code - instaluje calymi bundlami, z zachowaniem granic pluginu i jego inline `CLAUDE.md`. **C** to reczny symlink jednego skilla.
 
+**Co zainstalowac.** Kancelaria zaczyna od `fundament-weryfikacyjny` (rdzen walidacji) i `orzecznictwo-zrodla` (zrodla PL/UE), a `dokumenty`, `governance-kancelarii` i `jakosc-tresci` dobiera wedlug potrzeb. Bundle `dev-mcp` to warsztat dla deweloperow - pomin go, jesli nie budujesz skilli ani serwerow MCP. Caly hub jedna komenda (`npx skills add ...` bez `--skill`) wciaga wszystkie 24 skille naraz; wiekszosc kancelarii woli `--skill` albo `/plugin install` wybranych bundli.
+
 ### A. Dowolny agent - `npx skills` (cross-agent)
 
 ```bash
