@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-22-blue.svg)](#pakiet---22-umiejetnosci-w-5-bundlach)
+[![Skills](https://img.shields.io/badge/skills-24-blue.svg)](#pakiet---24-umiejetnosci-w-6-bundlach)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
 [![Polish law](https://img.shields.io/badge/jurysdykcja-PL%20%2B%20UE-red.svg)](#dlaczego-polski-hub)
@@ -167,7 +167,21 @@ Pakiet wyzej to warstwa walidacji outputu i narzedzia konwersji. Pelny ekosystem
 
 ## Instalacja
 
-### Claude Code (plugin marketplace)
+Trzy drogi. **A** (`npx skills`) dziala w **dowolnym agencie** wspierajacym format Agent Skills (Cursor, OpenAI Codex, Windsurf, Gemini CLI, Claude Code) i instaluje pojedyncze skille. **B** to natywny marketplace Claude Code - instaluje calymi bundlami, z zachowaniem granic pluginu i jego inline `CLAUDE.md`. **C** to reczny symlink jednego skilla.
+
+### A. Dowolny agent - `npx skills` (cross-agent)
+
+```bash
+# Caly hub - wszystkie skille z bundli, wykrywane rekursywnie po SKILL.md
+npx skills add matematicsolutions/awesome-matematic-skills-pl
+
+# Tylko wybrane skille - cherry-pick po nazwie z frontmatter
+npx skills add matematicsolutions/awesome-matematic-skills-pl --skill citation-grounding-pl marko-pl-content
+```
+
+`npx skills` ([vercel-labs/skills](https://github.com/vercel-labs/skills)) pobiera pliki `SKILL.md` i instaluje je do katalogu agenta (`.claude/skills/` albo `.agents/skills/`, zaleznie od narzedzia). Dziala wszedzie, gdzie dziala format Agent Skills - nie tylko w Claude Code. Ta droga instaluje same skille. Konektory MCP (bundle `orzecznictwo-zrodla` i `multi-jurysdykcja-ue`) wymagaja konfiguracji pluginu, wiec instaluj je metoda B.
+
+### B. Claude Code - plugin marketplace (natywnie, instaluje bundlami)
 
 ```bash
 # 1. Dodaj marketplace (raz)
@@ -181,9 +195,9 @@ Pakiet wyzej to warstwa walidacji outputu i narzedzia konwersji. Pelny ekosystem
 /plugin install dev-mcp@matematic-skills-pl                      # narzedzia deweloperskie (advanced)
 ```
 
-Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 22 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
+Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 24 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
 
-### Pojedynczy skill jako symlink do ~/.claude/skills/
+### C. Pojedynczy skill jako symlink do ~/.claude/skills/
 
 ```powershell
 # PowerShell - przyklad citation-grounding-pl (z bundla fundament-weryfikacyjny)
