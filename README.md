@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Skills](https://img.shields.io/badge/skills-24-blue.svg)](#pakiet---24-umiejetnosci-w-6-bundlach)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
+[![skills.sh](https://skills.sh/b/matematicsolutions/awesome-matematic-skills-pl)](https://skills.sh/matematicsolutions/awesome-matematic-skills-pl)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
 [![Polish law](https://img.shields.io/badge/jurysdykcja-PL%20%2B%20UE-red.svg)](#dlaczego-polski-hub)
 [![RODO-safe](https://img.shields.io/badge/RODO--safe-by%20default-green.svg)](#dlaczego-polski-hub)
