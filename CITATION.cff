@@ -11,12 +11,13 @@ authors:
 repository-code: "https://github.com/matematicsolutions/awesome-matematic-skills-pl"
 url: "https://github.com/matematicsolutions/awesome-matematic-skills-pl"
 abstract: >
-  Polski hub kuratorski 14 umiejetnosci Agent Skills (Anthropic open standard)
+  Polski hub kuratorski 24 umiejetnosci Agent Skills (Anthropic open standard)
   dla polskiej praktyki kancelaryjnej, in-house, naukowej i NGO. Pakiet
   porzadkuje szesc warstw weryfikacji outputu LLM dla pisma prawnego w jeden
   lancuch (intake, router, grounding, adversarial, fidelity, audit-bundle),
   dokleda redline DOCX z natywnymi Word Track Changes, orzecznictwo PL/UE
-  (SAOS, EUR-Lex SPARQL) i konwersje dokumentow (MarkItDown, OpenDataLoader PDF).
+  (SAOS, EUR-Lex SPARQL), konwersje dokumentow (MarkItDown, OpenDataLoader PDF)
+  oraz narzedzia jakosci tekstu polskiego (humanizer-pl, marko-pl-content).
   RODO-safe by default,
   vendor-agnostic (Claude Code/Cowork/Code, OpenAI Codex CLI, Gemini CLI,
   Manus, Mistral Vibe). Format zgodny z AI Act art. 12 (rejestry zdarzen)
@@ -33,8 +34,8 @@ keywords:
   - LegalTech
   - vendor-agnostic
 license: MIT
-version: "0.1.0"
-date-released: "2026-05-24"
+version: "2026.06.29"
+date-released: "2026-06-29"
 preferred-citation:
   type: software
   title: "awesome-matematic-skills-pl: Polski hub kuratorski Agent Skills dla prawa"
@@ -44,4 +45,4 @@ preferred-citation:
       affiliation: MateMatic Solutions
   year: 2026
   url: "https://github.com/matematicsolutions/awesome-matematic-skills-pl"
-  version: "0.1.0"
+  version: "2026.06.29"
