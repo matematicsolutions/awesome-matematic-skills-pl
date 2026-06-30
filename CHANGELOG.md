@@ -6,6 +6,15 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.06.30-3] - 2026-06-30
+
+Caly bundel `ochrona-danych` jest teraz tool-grade - kazdy z 4 skilli ma deterministyczny helper wykonawczy (nie tylko instrukcje).
+
+### Added
+
+- `rodo-dpia-pl` 1.0.0 -> 1.1.0: `scripts/dpia_screening.py` - przesiew progu art. 35 (9 kryteriow EROD, reguła >=2, przypadki art. 35 ust. 3) -> verdict required/recommended/not_required. Offline, zero zaleznosci.
+- `rodo-ropa-dpa-pl` 1.0.0 -> 1.1.0: `scripts/dpa_clause_check.py` - kontrola obowiazkowych klauzul umowy powierzenia art. 28 ust. 3 lit. a-h -> lista brakujacych (cel redline). Offline, zero zaleznosci.
+
 ## [2026.06.30-2] - 2026-06-30
 
 ### Added

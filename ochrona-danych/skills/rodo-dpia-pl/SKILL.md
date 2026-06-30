@@ -11,7 +11,7 @@ description: >
   "art. 35 RODO", "uprzednie konsultacje UODO", "DPIA dla nowego systemu".
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   companion_skills: uodo-grounding-pl, rodo-ropa-dpa-pl, klauzule-kontraktowe-pl, legal-ai-audit-bundle
   parity: gdpr-dpia-en
 ---
@@ -61,6 +61,17 @@ udokumentuj wg art. 35 ust. 2 i ust. 9.
 Jeśli **ryzyko szczątkowe pozostaje WYSOKIE mimo środków** => administrator MA OBOWIĄZEK
 skonsultować się z Prezesem UODO PRZED rozpoczęciem przetwarzania. Skill przygotowuje draft
 wystąpienia (zakres z art. 36 ust. 3), ale **wniosek składa człowiek** (granica governance).
+
+## Narzędzie - przesiew progu (deterministyczny, offline)
+
+Czy DPIA jest wymagane przesiej skryptem zamiast oceniać "na oko" (zero zależności, RODO-safe):
+
+```bash
+python scripts/dpia_screening.py --criteria evaluation,sensitive,largescale
+python scripts/dpia_screening.py --mandatory public_monitoring
+```
+
+Zwraca `verdict` (required / recommended / not_required) wg reguły EROD >=2 oraz przypadków art. 35 ust. 3. To przesiew, nie zwolnienie - decyzję dokumentuje administrator.
 
 ## Granica governance
 

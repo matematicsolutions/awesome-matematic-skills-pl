@@ -12,7 +12,7 @@ description: >
   "DPA art. 28", "przegląd umowy z procesorem", "rejestr RODO".
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   companion_skills: klauzule-kontraktowe-pl, redline-docx-pl, rodo-dpia-pl, uodo-grounding-pl
   parity: gdpr-ropa-dpa-en
 ---
@@ -58,6 +58,16 @@ Umowa MUSI zawierać, że podmiot przetwarzający:
 Plus: przedmiot, czas, charakter i cel, rodzaj danych, kategorie osób (art. 28 ust. 3 zd. 1) oraz
 transfery rozdz. V (SCC/decyzja adekwatności). Skill produkuje **redline** brakujących/wadliwych
 klauzul (silnik [[redline-docx-pl]], biblioteka [[klauzule-kontraktowe-pl]]).
+
+## Narzędzie - kontrola klauzul art. 28 (deterministyczny, offline)
+
+Braki w umowie powierzenia wskaż skryptem - podajesz obecne klauzule, zwraca brakujące (zero zależności, RODO-safe):
+
+```bash
+python scripts/dpa_clause_check.py --present a,b,c,g
+```
+
+Zwraca `missing` (np. d, e, f, h) = dokładny cel redline. `complete` gdy wszystkie 8 (lit. a-h) obecne.
 
 ## Granica governance
 
