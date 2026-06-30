@@ -17,7 +17,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w bundlach zachowuja wlasne licencje 
 
 ## Co tu znajdziesz
 
-1. **Bundle domenowe instalowane jedna komenda** - 24 umiejetnosci spiete w 6 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, dev). Kazdy instalujesz jednym `/plugin install`; konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
+1. **Bundle domenowe instalowane jedna komenda** - 28 umiejetnosci spiete w 7 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev). Kazdy instalujesz jednym `/plugin install`; konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -59,7 +59,7 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 24 umiejetnosci w 6 bundlach
+## Pakiet - 28 umiejetnosci w 7 bundlach
 
 Wszystkie umiejetnosci sa spiete w pluginy domenowe - instalujesz jedna komenda. Zadna nie lezy juz pojedynczo w `./skills/`.
 
@@ -118,6 +118,17 @@ Narzedzia redakcyjne, neutralne tematycznie, bez konektorow. Zmieniaja slowa, ni
 | [<img src="./assets/badge-humanizer-pl.svg" alt="Pisz po ludzku" width="200" height="60">](./jakosc-tresci/skills/humanizer-pl) | Usuwa wzorce AI-slop z polskiego tekstu (34 wzorce), w tym sygnatury statystyczne wykrywane przez detektory: burstiness, dystrybucja czesci mowy, gestosc i roznorodnosc leksykalna, zakres emocji. | MIT | 1.1.0 |
 | [<img src="./assets/badge-marko-pl-content.svg" alt="Marko-PL" width="200" height="60">](./jakosc-tresci/skills/marko-pl-content) | Zrzedliwy senior redaktor - werdykt (katastrofa/slabe/przecietne/ok) + lista zarzutow z `plik:linia`. Wskazuje co zle, nie przepisuje. | MIT | 1.0.0 |
 
+### Plugin `ochrona-danych` (operacje RODO dla kancelarii i IOD)
+
+Operacyjne narzedzia RODO ugruntowane w artykulach rozporzadzenia i wytycznych EROD/UODO, bez konektorow. Kazdy sklada draft do decyzji; akt na zewnatrz (zgloszenie, wysylka, usuniecie, podpis) zostaje czlowiekowi. Instalacja: `/plugin install ochrona-danych@matematic-skills-pl`.
+
+| Skill | Opis | Licencja | Wersja |
+|---|---|---|---|
+| [<img src="./assets/badge-rodo-dpia-pl.svg" alt="DPIA / OSOD" width="200" height="60">](./ochrona-danych/skills/rodo-dpia-pl) | Ocena skutkow dla ochrony danych (DPIA / OSOD): test czy wymagane (9 kryteriow EROD), struktura art. 35 ust. 7, uprzednie konsultacje art. 36. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-rodo-naruszenie-72h-pl.svg" alt="Naruszenie 72h" width="200" height="60">](./ochrona-danych/skills/rodo-naruszenie-72h-pl) | Obsluga naruszenia ochrony danych w 72h: drzewo decyzyjne, ocena ryzyka, zgloszenie do UODO (art. 33) z licznikiem, zawiadomienie osob (art. 34). | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-rodo-dsar-pl.svg" alt="DSAR" width="200" height="60">](./ochrona-danych/skills/rodo-dsar-pl) | Obsluga zadan osob (DSAR): klasyfikacja praw art. 15-22, licznik terminu art. 12 ust. 3, bramki wyjatkow i odmow, draft odpowiedzi + rejestr. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-rodo-ropa-dpa-pl.svg" alt="RoPA + DPA" width="200" height="60">](./ochrona-danych/skills/rodo-ropa-dpa-pl) | Rejestr czynnosci przetwarzania (RoPA, art. 30) + przeglad umow powierzenia (DPA, art. 28 ust. 3 lit. a-h) z redline brakujacych klauzul. | Apache-2.0 | 1.0.0 |
+
 ### Plugin `dev-mcp` (narzedzia deweloperskie, advanced)
 
 Warsztat deweloperski MateMatic, bez konektorow. Instalacja: `/plugin install dev-mcp@matematic-skills-pl`.
@@ -170,7 +181,7 @@ Pakiet wyzej to warstwa walidacji outputu i narzedzia konwersji. Pelny ekosystem
 
 Trzy drogi. **A** (`npx skills`) dziala w **dowolnym agencie** wspierajacym format Agent Skills (Cursor, OpenAI Codex, Windsurf, Gemini CLI, Claude Code) i instaluje pojedyncze skille. **B** to natywny marketplace Claude Code - instaluje calymi bundlami, z zachowaniem granic pluginu i jego inline `CLAUDE.md`. **C** to reczny symlink jednego skilla.
 
-**Co zainstalowac.** Kancelaria zaczyna od `fundament-weryfikacyjny` (rdzen walidacji) i `orzecznictwo-zrodla` (zrodla PL/UE), a `dokumenty`, `governance-kancelarii` i `jakosc-tresci` dobiera wedlug potrzeb. Bundle `dev-mcp` to warsztat dla deweloperow - pomin go, jesli nie budujesz skilli ani serwerow MCP. Caly hub jedna komenda (`npx skills add ...` bez `--skill`) wciaga wszystkie 24 skille naraz; wiekszosc kancelarii woli `--skill` albo `/plugin install` wybranych bundli.
+**Co zainstalowac.** Kancelaria zaczyna od `fundament-weryfikacyjny` (rdzen walidacji) i `orzecznictwo-zrodla` (zrodla PL/UE), a `dokumenty`, `governance-kancelarii`, `jakosc-tresci` i `ochrona-danych` dobiera wedlug potrzeb. Bundle `dev-mcp` to warsztat dla deweloperow - pomin go, jesli nie budujesz skilli ani serwerow MCP. Caly hub jedna komenda (`npx skills add ...` bez `--skill`) wciaga wszystkie 28 skille naraz; wiekszosc kancelarii woli `--skill` albo `/plugin install` wybranych bundli.
 
 ### A. Dowolny agent - `npx skills` (cross-agent)
 
@@ -198,7 +209,7 @@ npx skills add matematicsolutions/awesome-matematic-skills-pl --skill citation-g
 /plugin install dev-mcp@matematic-skills-pl                      # narzedzia deweloperskie (advanced)
 ```
 
-Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 24 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
+Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 28 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
 
 ### C. Pojedynczy skill jako symlink do ~/.claude/skills/
 

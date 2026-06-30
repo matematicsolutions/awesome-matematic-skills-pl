@@ -6,6 +6,18 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.06.30] - 2026-06-30
+
+Nowy bundel `ochrona-danych` - operacje RODO dla kancelarii i inspektora ochrony danych. Cztery skille ugruntowane w artykulach rozporzadzenia i wytycznych EROD/UODO, kazdy konczy draftem do decyzji (granica governance: akt na zewnatrz zostaje czlowiekowi). Nisza potwierdzona discovery (legaltech-scout): istniejace skille DPIA/DSAR/breach sa generyczne-EN i slabo instalowane - tu wersja EU/PL-grounded.
+
+### Added
+
+- Plugin `ochrona-danych` (4 skille): rodo-dpia-pl 1.0.0 (DPIA/OSOD, art. 35-36), rodo-naruszenie-72h-pl 1.0.0 (naruszenie 72h, art. 33-34), rodo-dsar-pl 1.0.0 (zadania osob, art. 12, 15-22), rodo-ropa-dpa-pl 1.0.0 (RoPA + DPA, art. 30, 28). `CLAUDE.md` + `.claude-plugin/plugin.json` + badge'e SVG. Licencja Apache-2.0.
+
+### Changed
+
+- Pakiet: 24 umiejetnosci w 6 bundlach -> 28 umiejetnosci w 7 bundlach. Parytet z hubem EN (`data-protection`).
+
 ## [2026.06.29] - 2026-06-29
 
 Nowy bundel `jakosc-tresci` - hub osiaga parytet z hubem EN (`content-quality`). Narzedzia jakosci tekstu polskiego, neutralne tematycznie, bez konektorow.

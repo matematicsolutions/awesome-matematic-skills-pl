@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
   "name": "matematic-skills-pl",
-  "version": "2026.06.29",
-  "description": "Polski hub umiejetnosci AI dla prawa - 7 bundli domenowych instalowalnych jedna komenda (fundament weryfikacyjny, orzecznictwo + konektory PL/UE, dokumenty, governance kancelarii, jakosc tresci, dev, 9 konektorow prawa krajowego UE). RODO-safe, vendor-agnostic.",
+  "version": "2026.06.30",
+  "description": "Polski hub umiejetnosci AI dla prawa - 8 bundli domenowych instalowalnych jedna komenda (fundament weryfikacyjny, orzecznictwo + konektory PL/UE, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, 9 konektorow prawa krajowego UE). RODO-safe, vendor-agnostic.",
   "owner": {
     "name": "Wieslaw Mazur / MateMatic Solutions",
     "email": "wieslaw@matematic.co",
@@ -80,6 +80,16 @@
       },
       "license": "MIT",
       "source": "./jakosc-tresci"
+    },
+    {
+      "name": "ochrona-danych",
+      "description": "Operacje RODO dla kancelarii i IOD (4 skille): ocena skutkow DPIA (art. 35-36), obsluga naruszenia w 72h (art. 33-34), zadania osob DSAR (art. 12, 15-22), rejestr czynnosci RoPA i przeglad umow powierzenia DPA (art. 30, 28). Ugruntowane w artykulach RODO i wytycznych EROD/UODO. RODO-safe, bez konektorow.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Wieslaw Mazur / MateMatic"
+      },
+      "license": "Apache-2.0",
+      "source": "./ochrona-danych"
     }
   ],
   "tags": [

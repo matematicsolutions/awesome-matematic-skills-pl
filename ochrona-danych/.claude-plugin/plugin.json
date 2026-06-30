@@ -1,0 +1,9 @@
+{
+  "name": "ochrona-danych",
+  "description": "Operacje RODO dla kancelarii i IOD (4 skille): ocena skutkow DPIA (art. 35-36), obsluga naruszenia w 72h (art. 33-34), zadania osob DSAR (art. 12, 15-22), rejestr czynnosci RoPA i przeglad umow powierzenia DPA (art. 30, 28). Ugruntowane w artykulach RODO i wytycznych EROD/UODO. RODO-safe, bez konektorow.",
+  "version": "1.0.0",
+  "author": { "name": "Wieslaw Mazur / MateMatic Solutions" },
+  "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
+  "license": "Apache-2.0",
+  "keywords": ["legal-ai", "rodo", "gdpr", "dpia", "dsar", "data-breach", "ropa", "kancelaria", "iod"]
+}
