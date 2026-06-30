@@ -11,7 +11,7 @@ description: >
   "naruszenie RODO", "zgłoszenie do UODO 72h", "czy zawiadomić osoby", "art. 33", "data breach PL".
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   companion_skills: uodo-grounding-pl, rodo-dpia-pl, legal-ai-audit-bundle
   parity: gdpr-breach-72h-en
 ---
@@ -60,6 +60,16 @@ niewspółmierny wysiłek => komunikat publiczny.
 
 KAŻDE naruszenie (nawet niezgłoszone) wpisz do wewnętrznego rejestru: okoliczności, skutki, podjęte
 działania. To dowód rozliczalności wobec UODO.
+
+## Narzędzie - kalkulator terminu (deterministyczny, offline)
+
+Licznika 72h nie licz w pamięci. Użyj skryptu (zero zależności, RODO-safe, lokalnie):
+
+```bash
+python scripts/gdpr_deadlines.py breach --from "2026-06-30T14:30"
+```
+
+Zwraca `deadline_72h` (ISO 8601) liczone od momentu stwierdzenia. Wynik wklej do draftu i rejestru.
 
 ## Granica governance
 

@@ -125,8 +125,8 @@ Operacyjne narzedzia RODO ugruntowane w artykulach rozporzadzenia i wytycznych E
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
 | [<img src="./assets/badge-rodo-dpia-pl.svg" alt="DPIA / OSOD" width="200" height="60">](./ochrona-danych/skills/rodo-dpia-pl) | Ocena skutkow dla ochrony danych (DPIA / OSOD): test czy wymagane (9 kryteriow EROD), struktura art. 35 ust. 7, uprzednie konsultacje art. 36. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-rodo-naruszenie-72h-pl.svg" alt="Naruszenie 72h" width="200" height="60">](./ochrona-danych/skills/rodo-naruszenie-72h-pl) | Obsluga naruszenia ochrony danych w 72h: drzewo decyzyjne, ocena ryzyka, zgloszenie do UODO (art. 33) z licznikiem, zawiadomienie osob (art. 34). | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-rodo-dsar-pl.svg" alt="DSAR" width="200" height="60">](./ochrona-danych/skills/rodo-dsar-pl) | Obsluga zadan osob (DSAR): klasyfikacja praw art. 15-22, licznik terminu art. 12 ust. 3, bramki wyjatkow i odmow, draft odpowiedzi + rejestr. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-rodo-naruszenie-72h-pl.svg" alt="Naruszenie 72h" width="200" height="60">](./ochrona-danych/skills/rodo-naruszenie-72h-pl) | Obsluga naruszenia ochrony danych w 72h: drzewo decyzyjne, ocena ryzyka, zgloszenie do UODO (art. 33) z licznikiem, zawiadomienie osob (art. 34). Deterministyczny kalkulator terminu 72h. | Apache-2.0 | 1.1.0 |
+| [<img src="./assets/badge-rodo-dsar-pl.svg" alt="DSAR" width="200" height="60">](./ochrona-danych/skills/rodo-dsar-pl) | Obsluga zadan osob (DSAR): klasyfikacja praw art. 15-22, licznik terminu art. 12 ust. 3, bramki wyjatkow i odmow, draft odpowiedzi + rejestr. Deterministyczny kalkulator terminu miesiecznego (Reg. 1182/71). | Apache-2.0 | 1.1.0 |
 | [<img src="./assets/badge-rodo-ropa-dpa-pl.svg" alt="RoPA + DPA" width="200" height="60">](./ochrona-danych/skills/rodo-ropa-dpa-pl) | Rejestr czynnosci przetwarzania (RoPA, art. 30) + przeglad umow powierzenia (DPA, art. 28 ust. 3 lit. a-h) z redline brakujacych klauzul. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `dev-mcp` (narzedzia deweloperskie, advanced)

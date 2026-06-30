@@ -11,7 +11,7 @@ description: >
   "żądanie usunięcia", "prawo do bycia zapomnianym", "sprzeciw RODO", "termin na odpowiedź DSAR".
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   companion_skills: uodo-grounding-pl, rodo-ropa-dpa-pl, gaius-api-anonymization
   parity: gdpr-dsar-en
 ---
@@ -56,6 +56,16 @@ decyzje UODO => [[uodo-grounding-pl]].
 
 Skill składa odpowiedź (język prosty, art. 12 ust. 1), listę danych/źródeł (z RoPA - [[rodo-ropa-dpa-pl]]),
 i wpis do rejestru żądań (data wpływu, typ, termin, rozstrzygnięcie).
+
+## Narzędzie - kalkulator terminu (deterministyczny, offline)
+
+Terminu miesięcznego nie licz w pamięci - arytmetyka miesiąca ma pułapki (wpływ 31 stycznia => koniec 28/29 lutego, wg rozporządzenia EWG 1182/71). Użyj skryptu (zero zależności, RODO-safe):
+
+```bash
+python scripts/gdpr_deadlines.py dsar --from 2026-01-31 --extend
+```
+
+Zwraca `deadline_1_month` oraz (z `--extend`) `deadline_extended_3_months`. Wynik wklej do odpowiedzi i rejestru.
 
 ## Granica governance
 

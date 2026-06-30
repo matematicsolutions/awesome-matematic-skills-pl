@@ -6,6 +6,12 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.06.30-2] - 2026-06-30
+
+### Added
+
+- `rodo-naruszenie-72h-pl` 1.0.0 -> 1.1.0 i `rodo-dsar-pl` 1.0.0 -> 1.1.0: deterministyczny kalkulator terminow `scripts/gdpr_deadlines.py` (offline, zero zaleznosci, RODO-safe). Liczy 72h od stwierdzenia (art. 33) oraz termin miesieczny z poprawna arytmetyka wg rozporzadzenia EWG 1182/71 (wplyw 31 I -> koniec 28/29 II, przeskok roku, klamrowanie +3mc). Narzedzie agent-native - skill przestaje liczyc termin "na oko".
+
 ## [2026.06.30] - 2026-06-30
 
 Nowy bundel `ochrona-danych` - operacje RODO dla kancelarii i inspektora ochrony danych. Cztery skille ugruntowane w artykulach rozporzadzenia i wytycznych EROD/UODO, kazdy konczy draftem do decyzji (granica governance: akt na zewnatrz zostaje czlowiekowi). Nisza potwierdzona discovery (legaltech-scout): istniejace skille DPIA/DSAR/breach sa generyczne-EN i slabo instalowane - tu wersja EU/PL-grounded.
