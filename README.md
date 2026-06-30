@@ -17,7 +17,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w bundlach zachowuja wlasne licencje 
 
 ## Co tu znajdziesz
 
-1. **Bundle domenowe instalowane jedna komenda** - 28 umiejetnosci spiete w 7 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev). Kazdy instalujesz jednym `/plugin install`; konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
+1. **Bundle domenowe instalowane jedna komenda** - 28 umiejetnosci spiete w 7 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
