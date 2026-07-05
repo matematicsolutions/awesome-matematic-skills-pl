@@ -10,6 +10,11 @@ description: >
   audyty) oraz transfery rozdz. V. Składa draft rejestru i redline umowy; podpis zostawia
   człowiekowi. RODO-safe (lokalnie). Używaj gdy: "rejestr czynności przetwarzania", "RCP art. 30", "umowa powierzenia",
   "DPA art. 28", "przegląd umowy z procesorem", "rejestr RODO".
+license: Apache-2.0
+allowed-tools: [Bash, Read]
+data-residency: local
+requires-human-approval: true
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0

@@ -1,6 +1,11 @@
 ---
 name: matematic-workspace-backup
 description: Konfiguracja szyfrowanego backupu Google Workspace dla kancelarii prawnych przez gogcli + age + prywatne repo Git. Używaj gdy klient-kancelaria pyta o RODO art. 32, ciągłość Workspace, ochronę przed lockout/ransomware, lub gdy MateMatic robi audyt zgodności backup'u. Trigger keywords - "backup Workspace", "art. 32 RODO", "ciągłość Workspace", "kancelaria backup Gmail/Drive", "lockout Google", "DR drill".
+license: Apache-2.0
+allowed-tools: [Bash, Read, Write]
+data-residency: cloud-ok
+requires-human-approval: true
+pii-egress: masked
 ---
 
 # matematic-workspace-backup
@@ -75,7 +80,7 @@ Wynik:
 Per klient:
 1. Pobierz gogcli v0.14.0 binary z signed releases
 2. Verify SHA256 checksum
-3. Install do `C:\Tools\gogcli\` lub `~/Tools/gogcli/`
+3. Install do `%USERPROFILE%\Tools\gogcli\` (lub inny katalog dodany do PATH)
 4. Init backup repo lokalnie + remote (prywatne)
 5. Generate age key + secure backup do 1Password / fizyczny seif
 

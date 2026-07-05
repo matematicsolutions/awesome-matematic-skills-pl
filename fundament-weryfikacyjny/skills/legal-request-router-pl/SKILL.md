@@ -10,6 +10,11 @@ description: >
   gdy: "co z tym zrobic", "czy to wymaga debaty", "jaka sciezka", "rozdziel zadanie",
   "klasyfikuj zapytanie", "czy to high-stakes", "routing", "triage zadania prawnego",
   na poczatku obslugi nowego zapytania prawnego zanim wybierzesz narzedzia.
+license: Apache-2.0
+allowed-tools: [Read]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0

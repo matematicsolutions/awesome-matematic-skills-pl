@@ -2,6 +2,10 @@
 name: matematic-marketplace-installer
 description: Generuje skrypt instalacyjny MateMatic Marketplace dla prawników - Windows .bat (bez Git/npm). Użyj gdy - /marketplace install, "zainstaluj skille", "installer dla kancelarii", "jak zainstalować skille bez GitHub".
 allowed-tools: Bash, Read, Write
+license: Apache-2.0
+data-residency: local
+requires-human-approval: true
+pii-egress: none
 ---
 
 # MateMatic Marketplace Installer
@@ -147,7 +151,7 @@ Wsparcie: support@matematic.co
 - Nie wymaga npm/node
 - Działa na Windows 10/11 z PowerShell 5.1+
 - Skrypt **nadpisuje** istniejące skille o tych samych nazwach (lokalne modyfikacje skopiowanych skilli przepadają). Klient, który dostosował skill po instalacji, powinien zrobić kopię przed re-runem.
-- Ścieżka docelowa: `%USERPROFILE%\.claude\skills\` (np. `C:\Users\<nazwa>\.claude\skills\`)
+- Ścieżka docelowa: `%USERPROFILE%\.claude\skills\` (katalog skilli Claude Code w profilu użytkownika)
 - **Reproducible install**: domyślny ref to **najnowszy tag** z `marketplace.json` (audytowalna wersja). Tryb `--ref main` pobiera `HEAD` (do testowania, nie do produkcji w kancelarii).
 - **Weryfikacja integralności SHA256** (v0.6.1+): wraz z każdym release MateMatic publikuje plik `checksums.txt` jako asset release page zawierajacy SHA256 dla generowanego `install-matematic-skills.bat`. Klient kancelarii powinien:
   1. Pobrać `checksums.txt` z tej samej strony co .bat.

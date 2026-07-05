@@ -10,6 +10,11 @@ description: >
   podsumowania", "weryfikacja wiernosci", "fidelity", "czy executive summary jest pelne",
   "czy RED jest w finalnej wersji", "spojnosc analizy z deliverable", przed wyslaniem
   zlozonego dokumentu ktory streszcza dluzsza analize.
+license: Apache-2.0
+allowed-tools: [Bash, Read]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0

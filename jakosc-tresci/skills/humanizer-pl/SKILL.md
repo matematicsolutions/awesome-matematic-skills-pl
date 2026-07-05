@@ -20,6 +20,9 @@ allowed-tools:
   - Grep
   - Glob
   - AskUserQuestion
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # humanizer-pl: usuwanie wzorcow AI ze slop polskiego tekstu

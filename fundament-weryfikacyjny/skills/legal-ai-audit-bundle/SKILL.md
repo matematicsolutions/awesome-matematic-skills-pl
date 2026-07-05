@@ -10,6 +10,11 @@ description: >
   "dokumentacja outputu AI", "record-keeping", "co archiwizować dla AI Act",
   "log kosztu i decyzji", "paczka audytowa deliverable", po zakończeniu opinii /
   adversarial-legal-review / grounding gdy trzeba zarchiwizować dowód.
+license: Apache-2.0
+allowed-tools: [Bash, Read, Write]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
@@ -80,10 +85,10 @@ odpowiedzialności zawodowej.
   "zrodla": ["II CSK 1/19", "art. 385(1) KC", "CELEX 32024R1689"],
   "pseudonimizacja_uzyta": true,
   "artefakty": {
-    "deliverable": "C:/.../opinia-final.md",
-    "slad_rozumowania": "C:/.../adversarial-transcript.md",
-    "raport_grounding": "C:/.../grounding-report.json",
-    "log_kosztu": "C:/.../cost.json"
+    "deliverable": "sciezka/do/opinia-final.md",
+    "slad_rozumowania": "sciezka/do/adversarial-transcript.md",
+    "raport_grounding": "sciezka/do/grounding-report.json",
+    "log_kosztu": "sciezka/do/cost.json"
   }
 }
 ```

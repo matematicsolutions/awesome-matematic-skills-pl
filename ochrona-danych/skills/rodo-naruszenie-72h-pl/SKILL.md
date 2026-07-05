@@ -9,6 +9,11 @@ description: >
   (art. 33 ust. 5). Składa draft zgłoszenia i zawiadomień; wysyłkę do UODO i osób zostawia
   człowiekowi. RODO-safe (lokalnie). Używaj gdy: "wyciek danych",
   "naruszenie RODO", "zgłoszenie do UODO 72h", "czy zawiadomić osoby", "art. 33", "data breach PL".
+license: Apache-2.0
+allowed-tools: [Bash, Read]
+data-residency: local
+requires-human-approval: true
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0

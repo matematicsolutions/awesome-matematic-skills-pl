@@ -1,6 +1,11 @@
 ---
 name: let-it-be
 description: Anonimizacja i pseudonimizacja polskich danych osobowych (PESEL, NIP, REGON, KRS, telefon, e-mail, imiona i nazwiska, nazwy firm) w tekscie - RODO-safe, offline, deterministycznie (bez wysylania tresci do modelu). Uzywaj gdy uzytkownik chce zanonimizowac lub spseudonimizowac dokument, usunac dane osobowe z pisma, przygotowac tekst do publikacji albo do wyslania do LLM, lub mowi o PESEL/NIP/REGON/RODO/anonimizacji/pseudonimizacji.
+license: Apache-2.0
+allowed-tools: [Bash, Read, Write]
+data-residency: local
+requires-human-approval: true
+pii-egress: none
 ---
 
 # Let It Be - anonimizacja danych po polsku

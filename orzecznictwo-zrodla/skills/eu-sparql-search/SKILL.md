@@ -9,6 +9,11 @@ description: >
   https://publications.europa.eu/webapi/rdf/sparql. Also trigger when the user asks
   about EU law programmatically, wants to query Cellar metadata, or mentions CDM
   ontology, EUR-Lex, EU publications, or SPARQL + EU/legislation.
+license: Apache-2.0
+allowed-tools: [WebFetch, Read]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # EU SPARQL Search - Cellar / EUR-Lex

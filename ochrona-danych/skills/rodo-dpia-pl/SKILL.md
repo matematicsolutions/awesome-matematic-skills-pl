@@ -9,6 +9,11 @@ description: >
   administratora i wniosek do UODO zostawia człowiekowi. RODO-safe (lokalnie).
   Używaj gdy: "czy potrzebuję DPIA", "ocena skutków RODO", "OSOD dla profilowania/monitoringu/AI",
   "art. 35 RODO", "uprzednie konsultacje UODO", "DPIA dla nowego systemu".
+license: Apache-2.0
+allowed-tools: [Bash, Read]
+data-residency: local
+requires-human-approval: true
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0

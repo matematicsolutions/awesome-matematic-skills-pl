@@ -1,6 +1,11 @@
 ---
 name: matematic-mcp-fastmcp-instructions-pl
 description: Buduj nowy MCP server MateMatic (lub retrofit istniejacego) z 5 elementami zwalidowanymi na dograh v1.31.0 - FastMCP(instructions=) z procedural orchestration, drift test, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id dla per-tenant routing, ToolAnnotations dla read-only. Uzywaj gdy zaczynasz nowy MCP server (saos/eu-compliance/anonimizacja/pomoc-prawna/kio/isap/inny), retrofit istniejacego do tego patternu, dodajesz nowy tool do MCP, debugujesz dlaczego LLM nie wywoluje Twoich tooli w odpowiedniej kolejnosci, lub gdy klient MCP (Claude Code/Cursor) nie autoryzuje. Trigger - "nowy MCP", "buduj MCP server", "FastMCP", "instructions MCP", "dryft testu MCP", "Claude Code MCP", "auth MCP", "OTel MCP", "FastMCP setup", "retrofit MCP", "tools MCP audit", "tools MCP nie sa wywolywane".
+license: Apache-2.0
+allowed-tools: [Read, Write, Edit]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # matematic-mcp-fastmcp-instructions-pl

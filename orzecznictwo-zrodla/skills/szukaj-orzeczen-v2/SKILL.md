@@ -1,6 +1,11 @@
 ---
 name: szukaj-orzeczen-v2
 description: "Skill do przeszukiwania polskich orzeczeń sądowych przez API systemu SAOS (System Analizy Orzeczeń Sądowych) z opcjonalnym grupowaniem tematycznym. Uruchamiany komendą /szukaj-orzeczen \"fraza\" lub /szukaj \"fraza\". Pobiera orzeczenia z bazy SAOS, ich pełne treści, i zapisuje wyniki równolegle w JSON i DOCX. Na życzenie użytkownika generuje raport tematyczny - automatycznie grupuje pobrane orzeczenia w klastry tematyczne (po przepisach, hasłach, wydziałach sądów), analizuje wzorce przekrojowe (najczęściej powoływane regulacje, sędziowie, konteksty frazy) i zapisuje wyniki w profesjonalnym DOCX. Triggeruje się na komendy: /szukaj-orzeczen, /szukaj, /orzeczenia, lub gdy użytkownik prosi o wyszukanie orzeczeń sądowych. Raport tematyczny triggeruje się na: 'pogrupuj tematycznie', 'raport tematyczny', 'grupowanie orzeczeń', '--raport-tematyczny', lub gdy użytkownik pyta o wzorce/klastrowanie w zbiorze orzeczeń."
+license: Apache-2.0
+allowed-tools: [WebFetch, Bash, Read, Write]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # Szukaj Orzeczeń (v2) - SAOS Search + Raport Tematyczny

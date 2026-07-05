@@ -1,6 +1,11 @@
 ---
 name: markitdown
 description: Konwersja dowolnego dokumentu (PDF, Word, Excel, PowerPoint, HTML, EPUB, audio, obrazy, YouTube) na Markdown dla LLM. Użyj gdy użytkownik mówi "konwertuj PDF", "przerób Word na markdown", "zamień PPT na MD", "markdown z Excela", "wyciągnij tekst z PDF", albo daje plik Office/PDF do analizy. Microsoft MarkItDown (pip) + MCP server.
+license: MIT
+allowed-tools: [Bash, Read, Write]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # MarkItDown - konwerter dokumentów do Markdown (PL)

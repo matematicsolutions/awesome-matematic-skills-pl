@@ -1,6 +1,11 @@
 ---
 name: matematic-spec-driven
 description: Spec-Driven Development dla wewnetrznych projektow MateMatic (PATRON, KGLF, POAS, skille, mikroprodukty, aplikacje). Cherry-pick + adaptacja patternu github/spec-kit (MIT) - 4 fazy (Konstytucja -> Specyfikacja -> Plan -> Zadania) plus opcjonalna walidacja. Tone polski, project-types rozszerzone o claude-skill/video-pipeline/desktop-app/mcp-server/MateMatic-mikroprodukt. Wbudowany Constitution Check GATE z 4 bramkami MateMatic (licencja / ToS-antyOS / jakosc / strategia). Marker `[P]` dla zadan parallel-safe (fan-out subagentow). SEMVER konstytucji per projekt. Uzywaj gdy zaczynasz nowy projekt MateMatic, dodajesz duza ficzer do PATRON/KGLF, planujesz odcinek serialu wymagajacy formalnego rozbicia zadan, projektujesz nowy mikroprodukt (Biblioteka EPUB v3, kolejny dashboard), lub gdy chcesz audytowac istniejacy projekt pod katem zgodnosci z konstytucja MateMatic. Trigger - "spec-driven", "konstytucja projektu", "rozplanuj projekt", "rozbij na zadania", "zaplanuj ficzer", "spec dla projektu", "plan implementacji", "tasks z markerem P", "audyt projektu MateMatic", "Constitution Check". NIE uzywaj dla sprzedazy klientom kancelaria (do tego jest `matematic-konstytucja-ai` - produkt 15-40k PLN).
+license: Apache-2.0
+allowed-tools: [Read, Write, Glob]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 0.1.0
@@ -140,7 +145,7 @@ Technical Context + struktura projektu. **Tu wybierasz project type.**
 
 | Project type | Kiedy | Struktura referencyjna |
 |---|---|---|
-| `claude-skill` | Nowy skill `~/.claude/skills/<name>/` | `SKILL.md` + ewent. helpers |
+| `claude-skill` | Nowy skill w `.claude/skills/` (podkatalog o nazwie skilla) | `SKILL.md` + ewent. helpers |
 | `video-pipeline` | Odcinek serialu / Akademii / MEMO | sceny per katalog, subagenci, ledger |
 | `MateMatic-mikroprodukt` | EPUB Biblioteka, NotebookLM pack | input -> processing -> output, manifest |
 | `desktop-app` | POAS, lokalne narzedzia kancelaryjne | Tauri/Electron + Rust/Python core + UI |

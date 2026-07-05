@@ -9,6 +9,11 @@ description: >
   regulation; fetch full judgment text; or bulk-download the judgment corpus. Also
   trigger on "orzecznictwo PL", "SAOS", "szukaj wyroku", "sygnatura akt", "baza
   orzeczen". Companion to eu-sparql-search (which covers EU law / CJEU).
+license: Apache-2.0
+allowed-tools: [WebFetch, Bash, Read, Write]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # SAOS - Polish Case Law Search

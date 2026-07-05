@@ -11,6 +11,11 @@ description: >
   "pokrycie polskiego prawa", "zaciagnij ustawy", "harvest orzecznictwa",
   "ktore zrodla mamy", "luka w zrodlach". Companion to saos-orzecznictwo (live
   query) and eu-sparql-search (EU law).
+license: Apache-2.0
+allowed-tools: [WebFetch, Bash, Read, Write]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # Legal Data Hunter - warstwa katalogu zrodel polskiego prawa

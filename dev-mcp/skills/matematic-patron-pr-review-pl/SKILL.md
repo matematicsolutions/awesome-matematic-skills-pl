@@ -1,6 +1,11 @@
 ---
 name: matematic-patron-pr-review-pl
 description: Recenzent PR/diffow dla PATRONa - polski LegalTech AI agent dla kancelarii. Wylapuje regresje specyficzne dla repo PATRON ktorych nie zlapie generyczny lint - org scoping multi-tenant, authless routes, niespodzianki w migracjach SQLite/Postgres, bezposredni SQL poza warstwa db, brak worker sync w cache, UI bez generated SDK, sekrety w logach, regresje audit_log, brak grounding cytatow, AI Act art. 12 record-keeping. Format findings file:line -> problem -> correct pattern, 3 buckets Blocker/Should-fix/Nit. Cherry-pick struktury z dograh v1.31.0 review-pr (BSD-2). Uzywaj gdy - recenzja PR/diff PATRON przed merge, code review pre-commit, audyt zmian w mcp-security-gateway/audit_log/ring-policy/auth, review zmian w MCP serverach matematicsolutions/*, weryfikacja czy nowy kod nie wprowadza wyciekow danych klienta kancelarii (RODO/tajemnica adwokacka), audyt drift dokumentacji vs kod. Trigger - "marko review PR", "code review PATRON", "audyt diff", "review tej zmiany", "sprawdz PR", "czy bezpiecznie merge", "PR audit", "security review PATRON", "blast radius zmiany".
+license: Apache-2.0
+allowed-tools: [Read, Grep, Glob, Bash]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # matematic-patron-pr-review-pl

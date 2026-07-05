@@ -2,6 +2,10 @@
 name: webwright-legal-pl
 description: Pobierz orzeczenia i akty prawne z polskich serwisów sądowych niedostępnych przez MCP (orzeczenia.ms.gov.pl, sn.pl, trybunal.gov.pl) używając Playwright. Użyj gdy potrzebujesz wyroku po sygnaturze z MS, SN lub TK, albo gdy mcp-saos nie ma danego orzeczenia.
 allowed-tools: Bash, Read, Write, Edit
+license: Apache-2.0
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # webwright-legal-pl

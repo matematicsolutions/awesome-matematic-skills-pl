@@ -6,6 +6,57 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.07.05-2] - 2026-07-05
+
+Konstytucja Skilla w calym hubie: wszystkie 35 skilli przechodzi bramke
+`skill-audit --marketplace` (PASS 35/35, wczesniej 0/35).
+
+### Changed
+
+- Frontmatter kazdego SKILL.md deklaruje 5 pol governance "Konstytucji Skilla":
+  `license` (zgodnie z tabelami README), `allowed-tools` (jawny minimalny zestaw;
+  Bash tylko tam, gdzie skill niesie skrypty lub woła CLI), `data-residency: local`,
+  `requires-human-approval` (true dla skilli konczacych sie bramka czlowieka:
+  caly bundel ochrona-danych, terminy-procesowe-pl, tajemnica-preflight-pl,
+  ai-act-triage-pl, redline-docx-pl, let-it-be, matematic-marketplace-installer,
+  matematic-workspace-backup; false dla skilli czysto analitycznych i read-only),
+  `pii-egress: none`. Wyjatek: matematic-workspace-backup deklaruje
+  `data-residency: cloud-ok` + `pii-egress: masked` (zaszyfrowany age backup
+  wychodzi do prywatnego repo Git).
+- Pole `signature` celowo pominiete - podpis Ed25519 dokladany przy publikacji
+  (nota bramki skill-audit).
+
+### Fixed
+
+- Flagi rot blokujace bramke marketplace: martwe sciezki przykladowe w
+  matematic-marketplace-installer, matematic-spec-driven, opendataloader-pdf,
+  legal-ai-audit-bundle i matematic-workspace-backup (zamiana na `%USERPROFILE%`
+  lub sciezki wzgledne) oraz placeholder `<YYYY-MM-DD>` w karcie triage
+  ai-act-triage-pl (zamiana na nawiasy kwadratowe).
+
+## [2026.07.05] - 2026-07-05
+
+Siedem nowych skilli kuratorskich z recenzji huba lawve.ai (139 skilli, snapshot 2026-07-05).
+Forki Apache-2.0 z atrybucja autorki; reszta pattern-only, tekst od zera.
+Szczegoly licencyjne: THIRD_PARTY_INSPIRATIONS.md, sekcja "Refresh 2026-07-05".
+
+### Added
+
+- `atak-przeciwnika-pl` 1.0.0 (fundament-weryfikacyjny 1.0.0 -> 1.1.0): jednoprzebiegowy atak przeciwnika procesowego - tani szczebel gradientu kosztu ponizej adversarial-legal-review-pl. Fork: opposing-counsel-review (L. Meredith-Flister, Apache-2.0).
+- `pierwsze-wrazenie-sedziego-pl` 1.0.0 (fundament-weryfikacyjny): neutralna 7-czesciowa ocena "jak pismo laduje u sedziego czytajacego na zimno". Fork: judicial-first-impression (L. Meredith-Flister, Apache-2.0).
+- `tajemnica-preflight-pl` 1.0.0 (governance-kancelarii 1.0.0 -> 1.1.0): pasmo SAFE/CAUTION/STOP przed wyslaniem tresci prawnej do zewnetrznego AI + draft redakcji do zatwierdzenia. Pattern-only, tekst od zera.
+- `ai-act-triage-pl` 1.0.0 (governance-kancelarii): triage AI Act 2024/1689 - definicja, zakazy art. 5, wysokie ryzyko, GPAI, art. 50, rola, FRIA art. 27; karta klasyfikacji jako wejscie do Konstytucji AI. Pattern-only.
+- `nis2-ksc-pl` 1.0.0 (ochrona-danych 1.1.0 -> 1.1.0 bundlowo, opis zaktualizowany): triage NIS2 2022/2555 + check transpozycji KSC przez sejm-eli-mcp. Pattern-only.
+- `hierarchia-zrodel-pl` 1.0.0 (orzecznictwo-zrodla 1.1.0 -> 1.2.0): routing autorytetu zrodla przed odpowiedzia (warstwy art. 87-94 Konstytucji + UE + orzecznictwo + soft law, kolizje, konektor per warstwa). Pattern: swiss-legal-source-authority-triage (MIT).
+- `terminy-procesowe-pl` 1.0.0 (dokumenty 1.0.0 -> 1.1.0): metodyka terminow KC/KPC/KPA, fail-closed, karta terminu DO ZATWIERDZENIA przez czlowieka.
+- 7 kafelkow SVG w `assets/`.
+
+### Changed
+
+- `.claude-plugin/marketplace.json` -> 2026.07.05 (opisy i wersje bundli fundament/orzecznictwo/dokumenty/governance/ochrona-danych).
+- README: licznik 35 umiejetnosci, wiersze nowych skilli w 5 tabelach.
+- THIRD_PARTY_INSPIRATIONS.md: sekcja "Refresh 2026-07-05" (mapa licencji lawve, gotcha licencja-we-frontmatterze, kolizja nazwy legal-data-hunter).
+
 ## [2026.06.30-3] - 2026-06-30
 
 Caly bundel `ochrona-danych` jest teraz tool-grade - kazdy z 4 skilli ma deterministyczny helper wykonawczy (nie tylko instrukcje).

@@ -1,6 +1,11 @@
 ---
 name: matematic-expert-panel
 description: Generuje warsztat "MateMatic Expert Panel" - multi-perspective analiza casu kancelarii przez 5-7 ekspertow z roznych dziedzin (compliance officer, IT security, etyk AI, partner zarzadzajacy, junior prawnik, klient kancelarii, regulator). Cherry-pick patternu SuperClaude Business Panel mode (MIT) - 9 modeli person, scoring, decision matrix. Output - 90-min warsztat fakturowany 5-15k PLN dla zarzadu kancelarii + raport pozegnal. Uzywaj gdy kancelaria pyta o wieloperspektywiczna analize ryzyka AI, decyzje strategiczne wdrozenia AI, drugi opinion od ekspertow, war-gaming wdrozenia, pre-mortem nowego narzedzia. Trigger - "expert panel", "panel ekspertow", "wieloperspektywiczna analiza", "war game AI", "pre-mortem", "drugi opinion AI", "warsztat decyzyjny", "multi-perspective", "decision matrix AI". Bazuje na SuperClaude-Org/SuperClaude_Framework (MIT) - cherry-pick mode, NIE pelna instalacja frameworka.
+license: Apache-2.0
+allowed-tools: [Read, Write]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 1.0.0

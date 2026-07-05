@@ -10,10 +10,18 @@ description: >
   "ocen brief", "czego brakuje w zleceniu", "jakie pytania zadac klientowi", "czy to
   zlecenie jest kompletne", "luki w brief", "doprecyzuj zlecenie", "intake", na poczatku
   nowej sprawy / po pierwszym kontakcie / po bookingu spotkania.
+license: Apache-2.0
+allowed-tools: [Read]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
-  inspiration: AnttiHero/lavern (Apache 2.0) - pattern src/api/briefing (analiza wystarczalnosci), schemat i rubryka napisane od zera
+  version: 1.1.0
+  inspiration: >
+    AnttiHero/lavern (Apache 2.0) - pattern src/api/briefing (analiza wystarczalnosci), schemat
+    i rubryka napisane od zera. v1.1 weryfikacja premis prawnych klienta ("premissien tarkistus") -
+    adaptacja z akunikkola/claude-for-legal-finland (MIT, juristi/CLAUDE.md).
   companion_skills: legal-request-router-pl, let-it-be, citation-grounding-pl
 ---
 
@@ -53,6 +61,15 @@ Werdykt: **strong** >= 80, **adequate** >= 50, **insufficient** < 50.
 1. **Pseudonimizuj** wejscie przez `let-it-be`, jesli zawiera dane objete tajemnica.
 2. **Oceń** zlecenie wg 6 wymiarow rubryki - kazdy wymiar ma fakty na poparcie oceny, nie ogolnik.
 3. **Wypisz luki i niejednoznacznosci** - co konkretnie jest nieobecne lub niejasne.
+3b. **Wyodrebnij premisy prawne klienta** - kazde twierdzenie PRAWNE w zleceniu ("termin juz minal",
+   "umowa jest niewazna, bo brak formy", "przepis X tego zakazuje", "mamy 14 dni na odpowiedz")
+   to **premisa do weryfikacji, nie fakt**. Klient moze sie mylic co do prawa, a analiza zbudowana
+   na blednej premisie jest bledna w calosci, nawet gdy rozumowanie jest poprawne. Kazda premise:
+   - wypisz osobno z tagiem `[premisa klienta - do weryfikacji u zrodla]`,
+   - jesli jest ISTOTNA dla wyniku: zweryfikuj przed startem (SAOS / ISAP / `szukaj-orzeczen-v2` /
+     tekst umowy) albo dodaj do pytan/instrukcji wstepnych jako pierwsze zadanie,
+   - jesli weryfikacja ja OBALA: powiedz to wprost i nie kontynuuj na blednym zalozeniu -
+     nawet jesli klient przedstawil je stanowczo.
 4. **Wygeneruj pytania uzupelniajace** - jedno pytanie na luke, kazde przypisane do wymiaru, oznaczone
    wymagane/opcjonalne. Pytanie ma byc gotowe do wyslania klientowi, nie notatka dla siebie.
 5. **Zloz szkielet karty zlecenia** - cel / zakres / podmiot / ryzyka / kryteria sukcesu / instrukcje wstepne.
@@ -68,6 +85,9 @@ Werdykt: **strong** >= 80, **adequate** >= 50, **insufficient** < 50.
     "luki": ["brak zdefiniowanego celu", "podmiot druga strona niezidentyfikowany"],
     "niejednoznacznosci": ["'pilne' bez konkretnego terminu"]
   },
+  "premisy_prawne": [
+    { "id": "p1", "twierdzenie": "termin na odpowiedz wynosi 14 dni", "istotna": true, "status": "do_weryfikacji", "zrodlo_weryfikacji": "KPC / tekst umowy" }
+  ],
   "pytania_uzupelniajace": [
     { "id": "q_cel", "text": "Jaki jest cel - opinia, pismo czy negocjacja?", "wymiar": "cel", "wymagane": true }
   ],
@@ -111,6 +131,10 @@ Rekomendacja: NIE zaczynaj analizy merytorycznej przed odpowiedzia na pytania wy
   najpierw pytania do klienta. Domysl wpisany jako fakt to zarodek blednej opinii.
 - **Pytanie na luke, nie na zapas.** Nie generuj pytan o rzeczy, ktore wejscie juz zawiera.
 - **Jedno wejscie, jedna ocena.** Skill ocenia kompletnosc, nie jakosc merytoryczna sprawy.
+- **Premisa prawna klienta to hipoteza, nie fakt.** Twierdzen klienta o prawie (terminy, zakazy,
+  niewaznosc, tresc przepisu) nie przenosi sie do karty zlecenia jako ustalen - ida do
+  `premisy_prawne` ze statusem `do_weryfikacji`. Analiza merytoryczna nie startuje na istotnej
+  premisie, ktorej nikt nie sprawdzil u zrodla.
 
 ## Ochrona danych (RODO)
 

@@ -11,6 +11,11 @@ description: >
   dla tego pisma", "znajdź słabości", "red team", "stress-test argumentacji",
   "co powie druga strona", "pre-mortem opinii", "obroń tę tezę", "kontradyktoryjna
   weryfikacja", "devil's advocate", weryfikacja high-stakes deliverable przed wysłaniem.
+license: Apache-2.0
+allowed-tools: [Read, Write]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0

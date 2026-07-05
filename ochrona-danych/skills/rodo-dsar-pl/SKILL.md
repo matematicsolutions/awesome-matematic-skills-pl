@@ -9,6 +9,11 @@ description: >
   odpowiedzi i rejestr. Weryfikacja tożsamości wnioskodawcy (art. 12 ust. 6) jako pierwszy krok.
   Wysyłkę odpowiedzi oraz usunięcie lub eksport danych zostawia człowiekowi. RODO-safe (lokalnie). Używaj gdy: "wniosek o dostęp do danych",
   "żądanie usunięcia", "prawo do bycia zapomnianym", "sprzeciw RODO", "termin na odpowiedź DSAR".
+license: Apache-2.0
+allowed-tools: [Bash, Read]
+data-residency: local
+requires-human-approval: true
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0

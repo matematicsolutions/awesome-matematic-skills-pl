@@ -1,6 +1,11 @@
 ---
 name: opendataloader-pdf
 description: Wysokiej jakości konwerter PDF→JSON/Markdown dla AI - zachowuje reading order, strukturę tabel, headings. Użyj gdy użytkownik mówi "wysoka jakość PDF", "papers naukowe PDF", "tabele z PDF", "opendataloader", "PDF z skomplikowaną strukturą", albo gdy MarkItDown daje słaby output. Główny konwerter PDF→MD w pipeline Konwerter/ w Obsidian Vault.
+license: Apache-2.0
+allowed-tools: [Bash, Read, Write]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 ---
 
 # OpenDataLoader PDF - PDF→JSON/MD (PL)
@@ -31,8 +36,8 @@ python -m opendataloader_pdf --input plik.pdf --output output/ --format md
 ### Batch (Obsidian Vault, pipeline Konwerter)
 ```bash
 python -m opendataloader_pdf \
-  --input "C:/Users/hp/Documents/Obsidian Vault/wszystko co wpada szybko/" \
-  --output "C:/Users/hp/Documents/Obsidian Vault/Konwerter/" \
+  --input "%USERPROFILE%/Documents/Obsidian Vault/wszystko co wpada szybko/" \
+  --output "%USERPROFILE%/Documents/Obsidian Vault/Konwerter/" \
   --format md \
   --recursive
 ```

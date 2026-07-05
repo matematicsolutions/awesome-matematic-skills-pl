@@ -1,6 +1,11 @@
 ---
 name: matematic-konstytucja-ai
 description: Generuje "Konstytucje AI" dla kancelarii prawnej - dokument governance definiujacy zasady uzycia AI w organizacji, na bazie cherry-pick patternu github/spec-kit (constitution -> spec -> plan -> tasks). 6 sekcji - mission, principles (max 9 articles), boundaries, governance roles, audit, evolution. Output - dokument PDF/MD 10-25 stron + plan wdrozenia 6-8 tygodni (AI Implementation Playbook). Uzywaj gdy kancelaria pyta o AI governance, polityke AI, etyke AI, AI policy, regulamin AI, Konstytucja AI, zasady AI w kancelarii, AI Act compliance, RODO + AI. Trigger - "Konstytucja AI", "polityka AI", "AI governance dla kancelarii", "zasady AI", "regulamin AI", "audyt AI policy", "AI Act compliance", "wdrozenie AI plan", "AI Implementation Playbook". Bazuje na github/spec-kit (MIT) - cherry-pick methodology pattern, NIE pelna instalacja.
+license: Apache-2.0
+allowed-tools: [Read, Write]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 1.0.0
