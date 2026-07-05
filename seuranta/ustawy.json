@@ -1,0 +1,77 @@
+{
+  "opis": "Rejestr ustaw, na ktorych opieraja sie skille tego marketplace. scripts/wachta-legislacyjna.mjs pyta ISAP (api.sejm.gov.pl/eli) o kazda pozycje i alarmuje, gdy ustawa przestaje obowiazywac (inForce != IN_FORCE) albo zmienia nazwe - wtedy skille cytujace ja wymagaja przegladu. Wzorzec: saadosvahti z akunikkola/claude-for-legal-finland (MIT). Dopisuj pozycje, gdy nowy skill zaczyna cytowac ustawe; usun, gdy zaden skill juz jej nie cytuje.",
+  "ustawy": [
+    {
+      "eli": "DU/1964/93",
+      "skrot": "KC",
+      "nazwa": "Kodeks cywilny",
+      "uzycie": "fundament-weryfikacyjny (przyklady kar umownych art. 484 KC), dokumenty"
+    },
+    {
+      "eli": "DU/1964/296",
+      "skrot": "KPC",
+      "nazwa": "Kodeks postępowania cywilnego",
+      "uzycie": "dokumenty/terminy-procesowe-pl (art. 165, 168, 328 KPC), fundament-weryfikacyjny"
+    },
+    {
+      "eli": "DU/1960/168",
+      "skrot": "KPA",
+      "nazwa": "Kodeks postępowania administracyjnego",
+      "uzycie": "dokumenty/terminy-procesowe-pl, governance-kancelarii"
+    },
+    {
+      "eli": "DU/1997/553",
+      "skrot": "KK",
+      "nazwa": "Kodeks karny",
+      "uzycie": "orzecznictwo-zrodla (struktura wyroku karnego)"
+    },
+    {
+      "eli": "DU/1997/555",
+      "skrot": "KPK",
+      "nazwa": "Kodeks postępowania karnego",
+      "uzycie": "dokumenty/terminy-procesowe-pl"
+    },
+    {
+      "eli": "DU/2000/1037",
+      "skrot": "KSH",
+      "nazwa": "Kodeks spółek handlowych",
+      "uzycie": "dokumenty (umowy, uchwaly), fundament-weryfikacyjny"
+    },
+    {
+      "eli": "DU/1974/141",
+      "skrot": "KP",
+      "nazwa": "Kodeks pracy",
+      "uzycie": "dokumenty (sprawy pracownicze)"
+    },
+    {
+      "eli": "DU/2018/1000",
+      "skrot": "UODO",
+      "nazwa": "o ochronie danych osobowych",
+      "uzycie": "ochrona-danych (rodo-*, uodo-grounding-pl)"
+    },
+    {
+      "eli": "DU/2018/1560",
+      "skrot": "KSC",
+      "nazwa": "o krajowym systemie cyberbezpieczeństwa",
+      "uzycie": "ochrona-danych/nis2-ksc-pl"
+    },
+    {
+      "eli": "DU/2019/2019",
+      "skrot": "PZP",
+      "nazwa": "Prawo zamówień publicznych",
+      "uzycie": "orzecznictwo-zrodla/kio-grounding-pl"
+    },
+    {
+      "eli": "DU/1994/83",
+      "skrot": "PrAut",
+      "nazwa": "o prawie autorskim i prawach pokrewnych",
+      "uzycie": "jakosc-tresci, governance-kancelarii (licencje)"
+    },
+    {
+      "eli": "DU/2002/1270",
+      "skrot": "PPSA",
+      "nazwa": "Prawo o postępowaniu przed sądami administracyjnymi",
+      "uzycie": "orzecznictwo-zrodla (NSA/WSA), dokumenty/terminy-procesowe-pl"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+name: Wachta legislacyjna
+
+# Raz w miesiacu sprawdza w ISAP (api.sejm.gov.pl/eli), czy ustawy
+# z seuranta/ustawy.json nadal obowiazuja pod oczekiwanymi nazwami.
+# Ustawa uchylona / przemianowana = fail -> skille z kolumny "uzycie"
+# wymagaja przegladu. Wzorzec: saadosvahti (claude-for-legal-finland, MIT).
+
+on:
+  schedule:
+    - cron: "0 6 2 * *"   # 2. dzien miesiaca, 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  wachta:
+    runs-on: ubuntu-latest
+    name: Ustawy z rejestru vs ISAP
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sprawdz ustawy w ISAP
+        run: node scripts/wachta-legislacyjna.mjs
