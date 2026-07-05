@@ -104,7 +104,7 @@ Filary tezy: 5 | Przetrwały: 3 | Osłabione: 1 | Obalone: 1
 | Filar                        | Atak (siła)      | Werdykt    | Działanie                  |
 |------------------------------|------------------|------------|----------------------------|
 | Podstawa roszczenia art. X   | brak (niska)     | przetrwał  | bez zmian                  |
-| Linia orzecznicza SN         | III CZP 9/22 (wysoka)| obalony| usuń lub dodaj zastrzeżenie|
+| Linia orzecznicza SN         | III CZP NN/RR (wysoka)| obalony| usuń lub dodaj zastrzeżenie|
 | ...                          | ...              | ...        | ...                        |
 
 Kontrola verifiera: 9/10 OK. Punkt 1 (grounding): 1 cytat 🔴 - BLOKADA.

@@ -82,7 +82,7 @@ odpowiedzialności zawodowej.
   "autor": "Wiesław Mazur",
   "zatwierdzajacy": "adw. ...",
   "stawka": "WYSOKA",
-  "zrodla": ["II CSK 1/19", "art. 385(1) KC", "CELEX 32024R1689"],
+  "zrodla": ["II CSK NN/RR", "art. 385(1) KC", "CELEX 32024R1689"],
   "pseudonimizacja_uzyta": true,
   "artefakty": {
     "deliverable": "sciezka/do/opinia-final.md",

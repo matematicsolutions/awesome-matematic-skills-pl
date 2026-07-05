@@ -146,6 +146,9 @@ oznacz je `claim_type` i poddaj weryfikacji na właściwym poziomie. Bez cudzys�
 
 ## Format zadania (input skryptu)
 
+> Wszystkie sygnatury, strony i cytaty w przykładach tego pliku są **fikcyjne** - ilustrują
+> format, nie realne sprawy. Nie przenoś ich do zadań ani deliverable.
+
 ```json
 {
   "items": [
