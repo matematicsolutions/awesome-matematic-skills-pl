@@ -14,9 +14,14 @@ description: >
   audyt grounding outputu LLM, "sprawdź czy ten cytat jest prawdziwy", "zweryfikuj
   cytaty", "czy ten fragment wyroku istnieje", "grounding", "anti-halucynacja",
   "citation check", "czy AI to zmyśliło", "czy SN to naprawdę orzekł".
+license: Apache-2.0
+allowed-tools: [Bash, Read, Grep]
+data-residency: local
+requires-human-approval: false
+pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 2.1.0
+  version: 2.2.0
   inspiration: >
     v1 pattern (mechanical grounding verifier) - AnttiHero/lavern (Apache 2.0), ADR-011.
     v2 gradient weryfikacji (ISTNIENIE/TREŚĆ/FRAGMENT) - adaptacja Existence/Content/Paragraph
@@ -69,6 +74,30 @@ output twierdzi na poziomie FRAGMENT (dosłowny cytat), a weryfikacja dochodzi t
 (źródło dotyczy tematu, ale cytatu dosłownie nie ma) → status **KALIBRACJA**: złagodź do
 parafrazy ALBO oznacz pinpoint jako prowizoryczny. Pełna doktryna i macierz typów twierdzeń:
 `references/gradient-weryfikacji.md`.
+
+## Kontrakt generacyjny - znakuj przy pisaniu, nie tylko weryfikuj po
+
+Grounding post-hoc łapie halucynację na końcu. Taniej jest nie wyprodukować jej wcale.
+Gdy **generujesz** tekst prawny (a nie tylko weryfikujesz cudzy), obowiązują trzy klasy
+z tagiem **przy linii, której dotyczy** - nie zbiorczo na końcu akapitu:
+
+| Klasa | Kiedy | Jak znakować |
+|---|---|---|
+| **Zweryfikowane** | Źródło sprawdzone w tej sesji (SAOS/EUR-Lex/ISAP/dokument lokalny) | pełna kotwica przy tezie: `(wyrok SN II CSK 33/19, SAOS)` |
+| **Do sprawdzenia** | Prawdopodobne, ale z pamięci modelu: przepis, termin, wyliczenie | tag przy linii: `[z pamięci - sprawdź w SAOS/ISAP]`, `[wyliczenie modelu - sprawdź]` |
+| **Nie używać** | Sygnatura/numer/cytat, którego nie da się rozwiązać | **fail-closed: nie produkuj wcale.** Napisz „zgodnie z utrwalonym orzecznictwem SN [uzupełnij sygnaturę]" zamiast zmyślać numer |
+
+Reguły domknięcia pętli generacja→weryfikacja:
+
+- Klasa **Zweryfikowane** ma pokrycie 1:1 w rekordach zadania dla skryptu - każda taka
+  kotwica trafia do `items[]` i musi wyjść 🟢/🟡. Zweryfikowane, które nie przechodzi
+  skryptu, to błąd klasyfikacji, nie pech.
+- Klasa **Do sprawdzenia** nigdy nie jest cytatem w cudzysłowie ani pinpointem - najwyżej
+  parafrazą z tagiem. Cudzysłów zobowiązuje do poziomu FRAGMENT.
+- W szablonach i przykładach używaj **jawnych placeholderów** (`II CSK NN/RR`,
+  `sygn. akt [uzupełnij]`) - realistyczne sygnatury z przykładów wyciekają do prawdziwych
+  outputów (audyt niemieckiego zbioru skilli prawnych: ~58% z 3228 sygnatur w outputach
+  było błędnych, w dużej części przeniesionych z materiałów przykładowych).
 
 ## Kiedy odpalać
 
@@ -217,6 +246,10 @@ do `legal-ai-audit-bundle` obok deliverable.
   form prawnych PL/EU i progi napisane od zera. Logika walidacji reporterów US z tamtego repo NIE jest
   przenoszona - żyje po stronie serwera CourtListener (wywołanie sieciowe + token), co łamie kontrakt
   zero-cloud; z repo bierzemy tylko lokalną, jurysdykcyjnie-neutralną heurystykę nazw stron.
+- Kontrakt generacyjny (v2.2): trójklasa znakowania przy generacji (Zweryfikowane / Do sprawdzenia /
+  Nie używać, tag przy linii, fail-closed dla klasy 3) - adaptacja „kolmiportainen varmuusmerkintä"
+  z `akunikkola/claude-for-legal-finland` (MIT, `references/viittaustyyli.md`). Stamtąd też lekcja
+  dyscypliny placeholderów w przykładach (audyt siostrzanego projektu DE: ~58% złych sygnatur).
 - Gradient weryfikacji (v2): ISTNIENIE/TREŚĆ/FRAGMENT to adaptacja Existence/Content/Paragraph
   z `jeannesulzer/international-criminal-tribunals-skills` (CC BY 4.0, Jeanne Sulzer / Impact
   Litigation Lab, 2026). Zaadaptowano **ideę gradientu i regułę kalibracji**, nie kod ani treść -

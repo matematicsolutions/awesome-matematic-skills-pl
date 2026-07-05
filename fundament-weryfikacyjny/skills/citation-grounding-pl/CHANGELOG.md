@@ -2,6 +2,18 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/), wersjonowanie [SemVer](https://semver.org/).
 
+## [2.2.0] - 2026-07-05
+
+### Added
+- **Kontrakt generacyjny** - trójklasa znakowania przy pisaniu (Zweryfikowane / Do sprawdzenia /
+  Nie używać), tag przy linii której dotyczy, fail-closed dla klasy 3 (niesprawdzalna sygnatura
+  nie powstaje wcale). Reguły domknięcia pętli generacja→weryfikacja: klasa Zweryfikowane ma
+  pokrycie 1:1 w `items[]` skryptu; Do sprawdzenia nigdy nie jest cytatem w cudzysłowie.
+  Adaptacja „kolmiportainen varmuusmerkintä" z akunikkola/claude-for-legal-finland (MIT).
+- **Dyscyplina placeholderów** w szablonach/przykładach (`II CSK NN/RR`) - lekcja audytu
+  siostrzanego projektu DE (~58% z 3228 sygnatur w outputach błędnych, częściowo
+  przeniesionych z materiałów przykładowych).
+
 ## [2.1.0] - 2026-07-04
 
 ### Added
