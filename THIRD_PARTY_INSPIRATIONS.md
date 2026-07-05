@@ -36,6 +36,40 @@ od zera pod polskie realia, polski jezyk i polskie organy prawne.
 
 **Werdykt MateMatic 4-bramkowy**: TRAFIONE warunkowo (pattern OK, kopia blocked).
 
+**Refresh 2026-07-05** (repo: https://github.com/lawvable/awesome-legal-skills,
+rebrand "Lawve AI x Anthropic", 139 skilli, 549 gwiazdek). Kluczowe ustalenie:
+licencje sa deklarowane PER-SKILL we frontmatterze SKILL.md (czesto bez pliku
+LICENSE) - ok. 62 AGPL, 32 Apache-2.0, 11 MIT, 6 CC-BY-4.0, 6 proprietary,
+reszta bez deklaracji (spada na CC BY-NC-ND repo). Zero skilli polskich.
+Adaptacje z tego refreshu:
+
+- **opposing-counsel-review** (Larissa Meredith-Flister, Apache-2.0 wg frontmatteru
+  autorki) -> FORK z adaptacja i przekladem: `atak-przeciwnika-pl` +
+  `opposing-counsel-attack-en`. Atrybucja we frontmatterze obu skilli.
+- **judicial-first-impression** (Larissa Meredith-Flister, Apache-2.0 wg frontmatteru)
+  -> FORK: `pierwsze-wrazenie-sedziego-pl` + `judicial-first-impression-en`.
+- **privilege-sentinel** (AGPL-3.0) -> PATTERN ONLY (pasma SAFE/CAUTION/STOP):
+  `tajemnica-preflight-pl` + `privilege-preflight-en` napisane od zera na
+  polskich/unijnych podstawach prawnych.
+- **suite EU AI Act** (Oliver Schmidt-Prietz AGPL / Werner Plutat proprietary) ->
+  PATTERN ONLY (dekompozycja triage -> rola -> obowiazki -> raport):
+  `ai-act-triage-pl` + `eu-ai-act-triage-en` od zera na tekscie 2024/1689.
+- **nis2-navigator** (AGPL-3.0) -> PATTERN ONLY (nawigator zakresu):
+  `nis2-ksc-pl` + `nis2-compliance-triage-en` od zera na tekscie 2022/2555.
+- **swiss-legal-source-authority-triage** (Enrique G. Zbinden, MIT) -> PATTERN
+  ("route authority before answer"): `hierarchia-zrodel-pl` + `authority-triage-en`,
+  tresc PL/UE od zera.
+- **litigation-deadline-calendar** (MIT, tresc US) -> IDEA ONLY: `terminy-procesowe-pl`
+  w calosci od zera (KC/KPC/KPA).
+- **raisonnement-juridique** (Amaury Fouret, MIT) -> STAGED FORK 1:1 do edycji FR
+  PATRONa (`~/Projects/_ref/lawve-harvest/`), nie w tym repo.
+- **skill-security-auditor** (AGPL) -> FAKTY ONLY: taksonomia 10 kategorii zagrozen
+  (w tym Trojan Source/homoglify) jako reczny checklist wewnetrznego skill-audit;
+  implementacja wlasna.
+
+Uwaga na kolizje nazwy: ich `legal-data-hunter` (installer komercyjnego hostowanego
+MCP legaldatahunter.com, brak licencji) to INNY byt niz nasz `legal-data-hunter-pl`.
+
 ### Anthropic / claude-for-legal (Apache-2.0)
 
 **Repo**: https://github.com/anthropics/claude-for-legal

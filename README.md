@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-24-blue.svg)](#pakiet---24-umiejetnosci-w-6-bundlach)
+[![Skills](https://img.shields.io/badge/skills-35-blue.svg)](#pakiet---35-umiejetnosci-w-7-bundlach)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![skills.sh](https://skills.sh/b/matematicsolutions/awesome-matematic-skills-pl)](https://skills.sh/matematicsolutions/awesome-matematic-skills-pl)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
@@ -17,7 +17,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w bundlach zachowuja wlasne licencje 
 
 ## Co tu znajdziesz
 
-1. **Bundle domenowe instalowane jedna komenda** - 28 umiejetnosci spiete w 7 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
+1. **Bundle domenowe instalowane jedna komenda** - 35 umiejetnosci spietych w 7 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -59,11 +59,11 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 28 umiejetnosci w 7 bundlach
+## Pakiet - 35 umiejetnosci w 7 bundlach
 
 Wszystkie umiejetnosci sa spiete w pluginy domenowe - instalujesz jedna komenda. Zadna nie lezy juz pojedynczo w `./skills/`.
 
-### Plugin `fundament-weryfikacyjny` (6 warstw walidacji outputu LLM)
+### Plugin `fundament-weryfikacyjny` (8 warstw walidacji outputu LLM)
 
 Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, nic nie wysyla na zewnatrz. Instalacja: `/plugin install fundament-weryfikacyjny@matematic-skills-pl`.
 
@@ -75,6 +75,8 @@ Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, nic nie wysyla
 | [<img src="./assets/badge-adversarial-legal-review-pl.svg" alt="Adversarial Review" width="200" height="60">](./fundament-weryfikacyjny/skills/adversarial-legal-review-pl) | Czerwony zespol dla pisma wysokiej stawki - builder/attacker/synthesizer/verifier. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-deliverable-fidelity-pl.svg" alt="Deliverable Fidelity" width="200" height="60">](./fundament-weryfikacyjny/skills/deliverable-fidelity-pl) | Czy zadna flaga RED nie wypadla z podsumowania - sprawdza wiernosc finalnego pisma do analizy. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-legal-ai-audit-bundle.svg" alt="AI Audit Bundle" width="200" height="60">](./fundament-weryfikacyjny/skills/legal-ai-audit-bundle) | Artefakt audytowy AI Act art. 12 - deliverable + slad + log kosztu + manifest SHA256. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-atak-przeciwnika-pl.svg" alt="Atak przeciwnika" width="200" height="60">](./fundament-weryfikacyjny/skills/atak-przeciwnika-pl) | Jednoprzebiegowy atak przeciwnika procesowego - teoria ataku, rekonstrukcja steel-man, luki punkt po punkcie. Tani szczebel ponizej pelnej debaty czerwonego zespolu. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-pierwsze-wrazenie-sedziego-pl.svg" alt="Pierwsze wrazenie sedziego" width="200" height="60">](./fundament-weryfikacyjny/skills/pierwsze-wrazenie-sedziego-pl) | Jak pismo laduje u sedziego czytajacego na zimno pod presja czasu - neutralna ocena 7-czesciowa, bez przepisywania i bez atakowania. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `orzecznictwo-zrodla` (Orzecznictwo PL / UE + konektory)
 
@@ -87,6 +89,7 @@ Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, 
 | [<img src="./assets/badge-eu-sparql-search.svg" alt="EU SPARQL Search" width="200" height="60">](./orzecznictwo-zrodla/skills/eu-sparql-search) | EUR-Lex / Cellar SPARQL - akty UE i orzecznictwo TSUE, CELEX, ELI URI. | Apache-2.0 | 2026.05.24 |
 | [<img src="./assets/badge-legal-data-hunter-pl.svg" alt="Legal Data Hunter" width="200" height="60">](./orzecznictwo-zrodla/skills/legal-data-hunter-pl) | Catalog + bulk-harvest dla 11 polskich zrodel prawnych (UODO, UOKiK, KNF, KIO, NSA, TK, SN, Sejm ELI). | Apache-2.0 | 2026.05.22 |
 | [<img src="./assets/badge-webwright-legal-pl.svg" alt="Webwright Legal PL" width="200" height="60">](./orzecznictwo-zrodla/skills/webwright-legal-pl) | Pobiera orzeczenia z serwisow niedostepnych w MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) przez Playwright. | Apache-2.0 | 1.0.1 |
+| [<img src="./assets/badge-hierarchia-zrodel-pl.svg" alt="Hierarchia zrodel" width="200" height="60">](./orzecznictwo-zrodla/skills/hierarchia-zrodel-pl) | Routing autorytetu przed odpowiedzia: ktora warstwa zrodel rzadzi pytaniem (Konstytucja / UE / ustawa / orzecznictwo / soft law), w jakiej kolejnosci weryfikowac i ktorym konektorem. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `dokumenty` (konwersja, redline, anonimizacja)
 
@@ -98,6 +101,7 @@ Operacje na dokumentach, bez konektorow. Instalacja: `/plugin install dokumenty@
 | [<img src="./assets/badge-opendataloader-pdf.svg" alt="OpenDataLoader PDF" width="200" height="60">](./dokumenty/skills/opendataloader-pdf) | Wysokiej jakosci PDF -> JSON/MD: reading order, tabele, headings. Krytyczne dla KRS i postanowien. | Apache-2.0 | 2026.04.21 |
 | [<img src="./assets/badge-redline-docx-pl.svg" alt="Redline DOCX PL" width="200" height="60">](./dokumenty/skills/redline-docx-pl) | Natywne Word Track Changes w polskich .docx + sanitize metadanych autora (RODO przy wysylce). Safety Tiers R/M/D. | MIT | 2026.05.27 |
 | [<img src="./assets/badge-let-it-be.svg" alt="Let It Be" width="200" height="60">](./dokumenty/skills/let-it-be) | Silnik anonimizacji i pseudonimizacji polskich PII (PESEL, NIP, REGON, KRS, IBAN, imiona, firmy) w tekscie. Offline, deterministyczny, zero zaleznosci. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-terminy-procesowe-pl.svg" alt="Terminy procesowe" width="200" height="60">](./dokumenty/skills/terminy-procesowe-pl) | Metodyka terminow procesowych i materialnych (KC/KPC/KPA): pelne wyliczenie krok po kroku z podstawa kazdego kroku, fail-closed, karta terminu DO ZATWIERDZENIA przez pelnomocnika. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `governance-kancelarii` (governance AI dla kancelarii)
 
@@ -108,6 +112,8 @@ Generatory governance i operacyjne, bez konektorow. Instalacja: `/plugin install
 | [<img src="./assets/badge-matematic-konstytucja-ai.svg" alt="Konstytucja AI" width="200" height="60">](./governance-kancelarii/skills/matematic-konstytucja-ai) | Generuje "Konstytucje AI" - dokument governance dla kancelarii (6 sekcji + AI Implementation Playbook 6-8 tygodni). Cherry-pick patternu github/spec-kit. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-matematic-expert-panel.svg" alt="Expert Panel" width="200" height="60">](./governance-kancelarii/skills/matematic-expert-panel) | Generuje 90-min warsztat multi-perspective dla zarzadu kancelarii - 7 person (compliance / IT security / etyk / partner / junior / klient / regulator). | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-matematic-workspace-backup.svg" alt="Workspace Backup" width="200" height="60">](./governance-kancelarii/skills/matematic-workspace-backup) | Szyfrowany backup Google Workspace przez gogcli + age + prywatne repo Git. Adresuje RODO art. 32 (ciaglosc, ochrona przed lockoutem). | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-ai-act-triage-pl.svg" alt="AI Act Triage" width="200" height="60">](./governance-kancelarii/skills/ai-act-triage-pl) | Triage AI Act (2024/1689): definicja systemu AI, zakazy art. 5, wysokie ryzyko (zal. I/III + filtr art. 6 ust. 3), GPAI, przejrzystosc art. 50, rola podmiotu, sygnal FRIA art. 27. Konczy karta klasyfikacji - wejscie do Konstytucji AI. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-tajemnica-preflight-pl.svg" alt="Tajemnica Preflight" width="200" height="60">](./governance-kancelarii/skills/tajemnica-preflight-pl) | Preflight przed wyslaniem tresci prawnej do zewnetrznego AI: pasmo SAFE/CAUTION/STOP (tajemnica adwokacka/radcowska, RODO, tajemnica przedsiebiorstwa, work-product) + draft redakcji do zatwierdzenia. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `jakosc-tresci` (jakosc tekstu polskiego)
 
@@ -128,6 +134,7 @@ Operacyjne narzedzia RODO ugruntowane w artykulach rozporzadzenia i wytycznych E
 | [<img src="./assets/badge-rodo-naruszenie-72h-pl.svg" alt="Naruszenie 72h" width="200" height="60">](./ochrona-danych/skills/rodo-naruszenie-72h-pl) | Obsluga naruszenia ochrony danych w 72h: drzewo decyzyjne, ocena ryzyka, zgloszenie do UODO (art. 33) z licznikiem, zawiadomienie osob (art. 34). Deterministyczny kalkulator terminu 72h. | Apache-2.0 | 1.1.0 |
 | [<img src="./assets/badge-rodo-dsar-pl.svg" alt="DSAR" width="200" height="60">](./ochrona-danych/skills/rodo-dsar-pl) | Obsluga zadan osob (DSAR): klasyfikacja praw art. 15-22, licznik terminu art. 12 ust. 3, bramki wyjatkow i odmow, draft odpowiedzi + rejestr. Deterministyczny kalkulator terminu miesiecznego (Reg. 1182/71). | Apache-2.0 | 1.1.0 |
 | [<img src="./assets/badge-rodo-ropa-dpa-pl.svg" alt="RoPA + DPA" width="200" height="60">](./ochrona-danych/skills/rodo-ropa-dpa-pl) | Rejestr czynnosci przetwarzania (RoPA, art. 30) + przeglad umow powierzenia (DPA, art. 28 ust. 3 lit. a-h) z redline brakujacych klauzul. Deterministyczna kontrola klauzul a-h. | Apache-2.0 | 1.1.0 |
+| [<img src="./assets/badge-nis2-ksc-pl.svg" alt="NIS2 / KSC" width="200" height="60">](./ochrona-danych/skills/nis2-ksc-pl) | Triage NIS2 (2022/2555): podmiot kluczowy czy wazny (size-cap), 10 srodkow art. 21 ust. 2, zegar incydentu art. 23 (24h/72h/1 mc), obowiazki zarzadu art. 20, check transpozycji KSC. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `dev-mcp` (narzedzia deweloperskie, advanced)
 
