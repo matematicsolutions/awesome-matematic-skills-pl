@@ -61,7 +61,7 @@ Werdykt: **strong** >= 80, **adequate** >= 50, **insufficient** < 50.
 1. **Pseudonimizuj** wejscie przez `let-it-be`, jesli zawiera dane objete tajemnica.
 2. **Oceń** zlecenie wg 6 wymiarow rubryki - kazdy wymiar ma fakty na poparcie oceny, nie ogolnik.
 3. **Wypisz luki i niejednoznacznosci** - co konkretnie jest nieobecne lub niejasne.
-3b. **Wyodrebnij premisy prawne klienta** - kazde twierdzenie PRAWNE w zleceniu ("termin juz minal",
+4. **Wyodrebnij premisy prawne klienta** - kazde twierdzenie PRAWNE w zleceniu ("termin juz minal",
    "umowa jest niewazna, bo brak formy", "przepis X tego zakazuje", "mamy 14 dni na odpowiedz")
    to **premisa do weryfikacji, nie fakt**. Klient moze sie mylic co do prawa, a analiza zbudowana
    na blednej premisie jest bledna w calosci, nawet gdy rozumowanie jest poprawne. Kazda premise:
@@ -70,9 +70,9 @@ Werdykt: **strong** >= 80, **adequate** >= 50, **insufficient** < 50.
      tekst umowy) albo dodaj do pytan/instrukcji wstepnych jako pierwsze zadanie,
    - jesli weryfikacja ja OBALA: powiedz to wprost i nie kontynuuj na blednym zalozeniu -
      nawet jesli klient przedstawil je stanowczo.
-4. **Wygeneruj pytania uzupelniajace** - jedno pytanie na luke, kazde przypisane do wymiaru, oznaczone
+5. **Wygeneruj pytania uzupelniajace** - jedno pytanie na luke, kazde przypisane do wymiaru, oznaczone
    wymagane/opcjonalne. Pytanie ma byc gotowe do wyslania klientowi, nie notatka dla siebie.
-5. **Zloz szkielet karty zlecenia** - cel / zakres / podmiot / ryzyka / kryteria sukcesu / instrukcje wstepne.
+6. **Zloz szkielet karty zlecenia** - cel / zakres / podmiot / ryzyka / kryteria sukcesu / instrukcje wstepne.
    Pola, ktorych nie da sie wypelnic z wejscia, zostaja jawnie "(do ustalenia - patrz pytania)".
 
 ## Schemat wyjscia

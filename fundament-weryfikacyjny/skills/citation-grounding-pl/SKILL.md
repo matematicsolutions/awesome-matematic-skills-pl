@@ -83,7 +83,7 @@ z tagiem **przy linii, której dotyczy** - nie zbiorczo na końcu akapitu:
 
 | Klasa | Kiedy | Jak znakować |
 |---|---|---|
-| **Zweryfikowane** | Źródło sprawdzone w tej sesji (SAOS/EUR-Lex/ISAP/dokument lokalny) | pełna kotwica przy tezie: `(wyrok SN II CSK 33/19, SAOS)` |
+| **Zweryfikowane** | Źródło sprawdzone w tej sesji (SAOS/EUR-Lex/ISAP/dokument lokalny) | pełna kotwica przy tezie: `(wyrok SN II CSK NN/RR, SAOS)` |
 | **Do sprawdzenia** | Prawdopodobne, ale z pamięci modelu: przepis, termin, wyliczenie | tag przy linii: `[z pamięci - sprawdź w SAOS/ISAP]`, `[wyliczenie modelu - sprawdź]` |
 | **Nie używać** | Sygnatura/numer/cytat, którego nie da się rozwiązać | **fail-closed: nie produkuj wcale.** Napisz „zgodnie z utrwalonym orzecznictwem SN [uzupełnij sygnaturę]" zamiast zmyślać numer |
 

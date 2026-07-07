@@ -38,11 +38,13 @@ Każdy wynik wysokiej stawki zostawia ślad: model, data, źródła, klasa pewno
 
 ## Pilotaż na fixture'ach, nie na aktach
 
-Zanim do narzędzia trafi realny materiał: przepuść skill przez materiał ćwiczebny
-([`examples/`](../examples/)) i porównaj wynik z listą kryteriów **behawioralnych**
+Zanim do narzędzia trafi realny materiał: zbuduj materiał ćwiczebny (fixture - sprzeczności
+jak w realnym zleceniu, bez ukrytej modelowej odpowiedzi) i listę kryteriów **behawioralnych**
 („dobry output robi X: podnosi sprzeczność, taguje wyliczenie, nie potwierdza przepisu
-z pamięci" - nie „dochodzi do wyniku Y"). Ten sam przebieg po każdej aktualizacji skilla
-to test regresji: widać, czy zachowanie się nie zepsuło.
+z pamięci" - nie „dochodzi do wyniku Y"), potem przepuść skill przez fixture i porównaj wynik
+z kryteriami. [`examples/`](../examples/) w tym repo ma na razie jeden ogólny przykład
+łańcucha walidacji, nie gotowe fixture'y per skill. Ten sam przebieg po każdej aktualizacji
+skilla to test regresji: widać, czy zachowanie się nie zepsuło.
 
 ## Konektory - tylko niezbędne
 

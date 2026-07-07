@@ -55,9 +55,11 @@ ocena tajemnicy zanim akta trafią do jakiegokolwiek narzędzia.
   oparte o dyscyplinę źródeł (SAOS / ISAP / terminy z ustawy, nie z pamięci) i przykład
   zdarzeń sterujących - pod polskie źródła i polską procedurę.
 - **Nie dostajesz:** agenta produkcyjnego. Podepnij konektory do swoich systemów, ustaw
-  rytm, skonfiguruj powiadomienia i zrób własną ewaluację, zanim zaufasz outputowi
-  (fixture'y do ewaluacji: katalog [`examples/`](../examples/) i behawioralne listy
-  kryteriów - „dobry output ROBI X", nie „dochodzi do wyniku Y").
+  rytm, skonfiguruj powiadomienia i zrób własną ewaluację, zanim zaufasz outputowi -
+  zbuduj fixture'y i listę kryteriów **behawioralnych** („dobry output ROBI X", nie
+  „dochodzi do wyniku Y"). [`examples/`](../examples/) w tym repo ma na razie jeden
+  ogólny przykład łańcucha walidacji, nie fixture per przepis - to do zrobienia, nie do
+  skopiowania.
 - **W żadnym wypadku nie dostajesz:** zastępcy prawnika.
 
 ## Atrybucja

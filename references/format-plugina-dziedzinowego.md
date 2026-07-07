@@ -28,7 +28,8 @@ z kolei odwzorowuje `anthropics/claude-for-legal`.
    dopisuje do rejestru [`../seuranta/ustawy.json`](../seuranta/ustawy.json)
    (wachta legislacyjna alarmuje o uchyleniu/zmianie nazwy).
 3. **Placeholdery sygnatur w przykładach** (`II CSK NN/RR`) albo realne sprawy jawnie
-   oznaczone jako zweryfikowane (wzór: `kio-grounding-pl`, KIO 1564/18 + id SAOS).
+   oznaczone jako zweryfikowane (wzór spoza tego repo: lokalny skill `kio-grounding-pl`
+   znakuje sprawę KIO 1564/18 pełnym id SAOS - tego pliku tu nie ma, sam wzorzec warto powtórzyć).
    Realistyczne fikcyjne sygnatury wyciekają do outputów - patrz
    [`styl-cytatu.md`](styl-cytatu.md).
 4. **Jawny zakres ujemny** - plugin mówi, czego NIE pokrywa (wzór: SAOS nie indeksuje
