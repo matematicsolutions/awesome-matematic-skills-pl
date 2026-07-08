@@ -59,7 +59,7 @@ cytatów mógłby jeden przeoczyć albo dopowiedzieć. Lokalnie, RODO-safe.
 - Unijny: `ECLI:EU:C:2020:559`, `ECLI:EU:T:2019:...`.
 
 ### Akty prawne (Dz.U. / M.P. / ELI / UE)
-- `Dz.U. 2020 poz. 1234`, `Dz.U. z 2020 r. poz. 1234`, starszy format `Dz.U. z 2020 r. Nr 5, poz. 100`.
+- `Dz.U. RRRR poz. NNNN`, `Dz.U. z RRRR r. poz. NNNN`, starszy format `Dz.U. z RRRR r. Nr N, poz. NNNN`.
 - `M.P. 2019 poz. 50`; `Dz.Urz. UE L 119` (RODO), `Dz.Urz. UE C ...`.
 - ELI URI Sejmu, np. `.../DU/2020/1234`.
 
@@ -80,7 +80,7 @@ ZNALEZIONE CYTATY (n):
 | # | Typ | Cytat (znormalizowany) | Wystąpienia (offset/strona) | Antecedent (jeśli skrót) |
 | 1 | orzeczenie SN | II CSK NN/RR | s.3, s.7 (tamże) | - |
 | 2 | przepis | art. 415 KC | s.4 | - |
-| 3 | akt | Dz.U. 2020 poz. 1234 | s.2 | - |
+| 3 | akt | Dz.U. RRRR poz. NNNN | s.2 | - |
 
 DO WERYFIKACJI: przekaż kolumnę "Cytat" do citation-grounding-pl.
 ```
