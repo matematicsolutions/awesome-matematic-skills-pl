@@ -6,6 +6,47 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.07.08] - 2026-07-08
+
+Domkniecie luki miedzy stronia matematicsolutions.com/boutique/skille (live,
+zip-y do pobrania) a hubem GitHub: 6 skilli bylo dostepnych na stronie i
+lokalnie, ale nie w tym repo. Wszystkie 41/41 przechodzi teraz
+`skill-audit --marketplace` (PASS, governance 5/5 pol - brakuje tylko
+podpisu Ed25519, dokladanego przy publikacji, jak w calej reszcie huba).
+
+### Added
+
+- `subsumpcja-pl` (bundel `fundament-weryfikacyjny`) - jawny sylogizm
+  prawniczy (przeslanka wieksza/mniejsza, podciagniecie faktow, wniosek).
+- `ekstraktor-cytatow-pl` (bundel `fundament-weryfikacyjny`) - deterministyczny
+  ekstraktor wszystkich odwolan prawnych z pisma, front-end do
+  `citation-grounding-pl`.
+- `ocena-outputu-pl` (bundel `fundament-weryfikacyjny`) - scoring gotowego
+  outputu prawnego w dwoch warstwach (obiektywna + rubryka 1-5).
+- `struktura-wyroku-pl` (bundel `orzecznictwo-zrodla`) - streszczenie
+  ekstraktywne orzeczenia wg roli retorycznej (stan faktyczny / zarzuty /
+  podstawa prawna / rozwazania / sentencja / teza).
+- `uodo-grounding-pl` (bundel `orzecznictwo-zrodla`) - drugi weryfikator
+  domenowy na silniku `citation-grounding-pl` (grounding cytatow decyzji
+  Prezesa UODO); zyje w `orzecznictwo-zrodla`, nie `ochrona-danych`, zgodnie
+  z wlasnym `ochrona-danych/CLAUDE.md`.
+- `klauzule-kontraktowe-pl` (bundel `dokumenty`) - lista kontrolna 41
+  kategorii klauzul umownych (taksonomia CUAD zlokalizowana PL/UE) dla
+  jednej umowy.
+- 6 nowych badge SVG w `assets/`, ten sam wzor co pozostale 35.
+
+### Changed
+
+- Pakiet: 35 -> 41 umiejetnosci, 7 -> 8 bundli w naglowkach README (bundel
+  `multi-jurysdykcja-ue` byl pominiety w liczeniu od poczatku - poprawione
+  przy okazji).
+- `README.md`: naprawiona niespojna liczba "28 umiejetnosci" (dwa miejsca w
+  sekcji Instalacja) - powinno bylo byc rowne liczbie w naglowku od dawna.
+- `marketplace.json`: opisy i wersje bundli `fundament-weryfikacyjny`
+  (1.1.0->1.2.0), `orzecznictwo-zrodla` (1.2.0->1.3.0), `dokumenty`
+  (1.1.0->1.2.0) zaktualizowane o nowe skille i liczby.
+
+
 ## [2026.07.05-2] - 2026-07-05
 
 Konstytucja Skilla w calym hubie: wszystkie 35 skilli przechodzi bramke

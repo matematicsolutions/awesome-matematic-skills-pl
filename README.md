@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-35-blue.svg)](#pakiet---35-umiejetnosci-w-7-bundlach)
+[![Skills](https://img.shields.io/badge/skills-41-blue.svg)](#pakiet---41-umiejetnosci-w-8-bundlach)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![skills.sh](https://skills.sh/b/matematicsolutions/awesome-matematic-skills-pl)](https://skills.sh/matematicsolutions/awesome-matematic-skills-pl)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
@@ -17,7 +17,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w bundlach zachowuja wlasne licencje 
 
 ## Co tu znajdziesz
 
-1. **Bundle domenowe instalowane jedna komenda** - 35 umiejetnosci spietych w 7 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
+1. **Bundle domenowe instalowane jedna komenda** - 41 umiejetnosci spietych w 8 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, multi-jurysdykcja UE). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -59,11 +59,11 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 35 umiejetnosci w 7 bundlach
+## Pakiet - 41 umiejetnosci w 8 bundlach
 
 Wszystkie umiejetnosci sa spiete w pluginy domenowe - instalujesz jedna komenda. Zadna nie lezy juz pojedynczo w `./skills/`.
 
-### Plugin `fundament-weryfikacyjny` (8 warstw walidacji outputu LLM)
+### Plugin `fundament-weryfikacyjny` (11 warstw walidacji outputu LLM)
 
 Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, nic nie wysyla na zewnatrz. Instalacja: `/plugin install fundament-weryfikacyjny@matematic-skills-pl`.
 
@@ -77,6 +77,9 @@ Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, nic nie wysyla
 | [<img src="./assets/badge-legal-ai-audit-bundle.svg" alt="AI Audit Bundle" width="200" height="60">](./fundament-weryfikacyjny/skills/legal-ai-audit-bundle) | Artefakt audytowy AI Act art. 12 - deliverable + slad + log kosztu + manifest SHA256. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-atak-przeciwnika-pl.svg" alt="Atak przeciwnika" width="200" height="60">](./fundament-weryfikacyjny/skills/atak-przeciwnika-pl) | Jednoprzebiegowy atak przeciwnika procesowego - teoria ataku, rekonstrukcja steel-man, luki punkt po punkcie. Tani szczebel ponizej pelnej debaty czerwonego zespolu. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-pierwsze-wrazenie-sedziego-pl.svg" alt="Pierwsze wrazenie sedziego" width="200" height="60">](./fundament-weryfikacyjny/skills/pierwsze-wrazenie-sedziego-pl) | Jak pismo laduje u sedziego czytajacego na zimno pod presja czasu - neutralna ocena 7-czesciowa, bez przepisywania i bez atakowania. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-subsumpcja-pl.svg" alt="Subsumpcja" width="200" height="60">](./fundament-weryfikacyjny/skills/subsumpcja-pl) | Buduje jawny sylogizm prawniczy - przeslanka wieksza, przeslanka mniejsza, podciagniecie faktow, wniosek - i wskazuje slabe ogniwa do ataku. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-ekstraktor-cytatow-pl.svg" alt="Ekstraktor Cytatow" width="200" height="60">](./fundament-weryfikacyjny/skills/ekstraktor-cytatow-pl) | Deterministyczny ekstraktor wszystkich odwolan prawnych (sygnatury, ECLI, Dz.U./ELI, przepisy) z pisma - front-end do citation-grounding-pl. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-ocena-outputu-pl.svg" alt="Ocena Outputu" width="200" height="60">](./fundament-weryfikacyjny/skills/ocena-outputu-pl) | Ocenia gotowy output prawny w dwoch warstwach - obiektywnej (cytaty, przepisy) i subiektywnej (rubryka 1-5) - zwraca decyzje wyslij/popraw/pelna weryfikacja. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `orzecznictwo-zrodla` (Orzecznictwo PL / UE + konektory)
 
@@ -90,6 +93,8 @@ Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, 
 | [<img src="./assets/badge-legal-data-hunter-pl.svg" alt="Legal Data Hunter" width="200" height="60">](./orzecznictwo-zrodla/skills/legal-data-hunter-pl) | Catalog + bulk-harvest dla 11 polskich zrodel prawnych (UODO, UOKiK, KNF, KIO, NSA, TK, SN, Sejm ELI). | Apache-2.0 | 2026.05.22 |
 | [<img src="./assets/badge-webwright-legal-pl.svg" alt="Webwright Legal PL" width="200" height="60">](./orzecznictwo-zrodla/skills/webwright-legal-pl) | Pobiera orzeczenia z serwisow niedostepnych w MCP (orzeczenia.ms.gov.pl, sn.pl po 2016, trybunal.gov.pl, EUR-Lex PL) przez Playwright. | Apache-2.0 | 1.0.1 |
 | [<img src="./assets/badge-hierarchia-zrodel-pl.svg" alt="Hierarchia zrodel" width="200" height="60">](./orzecznictwo-zrodla/skills/hierarchia-zrodel-pl) | Routing autorytetu przed odpowiedzia: ktora warstwa zrodel rzadzi pytaniem (Konstytucja / UE / ustawa / orzecznictwo / soft law), w jakiej kolejnosci weryfikowac i ktorym konektorem. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-struktura-wyroku-pl.svg" alt="Struktura Wyroku" width="200" height="60">](./orzecznictwo-zrodla/skills/struktura-wyroku-pl) | Rozklada orzeczenie na role retoryczne (stan faktyczny, zarzuty, podstawa prawna, rozwazania, sentencja, teza) i streszcza ekstraktywnie - cytuje zdania sadu, nie parafrazuje. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-uodo-grounding-pl.svg" alt="UODO Grounding" width="200" height="60">](./orzecznictwo-zrodla/skills/uodo-grounding-pl) | Mechaniczny weryfikator cytatu dla decyzji Prezesa UODO - gradient ISTNIENIE/TRESC/FRAGMENT, silnik wspoldzielony z citation-grounding-pl. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `dokumenty` (konwersja, redline, anonimizacja)
 
@@ -102,6 +107,7 @@ Operacje na dokumentach, bez konektorow. Instalacja: `/plugin install dokumenty@
 | [<img src="./assets/badge-redline-docx-pl.svg" alt="Redline DOCX PL" width="200" height="60">](./dokumenty/skills/redline-docx-pl) | Natywne Word Track Changes w polskich .docx + sanitize metadanych autora (RODO przy wysylce). Safety Tiers R/M/D. | MIT | 2026.05.27 |
 | [<img src="./assets/badge-let-it-be.svg" alt="Let It Be" width="200" height="60">](./dokumenty/skills/let-it-be) | Silnik anonimizacji i pseudonimizacji polskich PII (PESEL, NIP, REGON, KRS, IBAN, imiona, firmy) w tekscie. Offline, deterministyczny, zero zaleznosci. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-terminy-procesowe-pl.svg" alt="Terminy procesowe" width="200" height="60">](./dokumenty/skills/terminy-procesowe-pl) | Metodyka terminow procesowych i materialnych (KC/KPC/KPA): pelne wyliczenie krok po kroku z podstawa kazdego kroku, fail-closed, karta terminu DO ZATWIERDZENIA przez pelnomocnika. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-klauzule-kontraktowe-pl.svg" alt="Klauzule Pod Lupa" width="200" height="60">](./dokumenty/skills/klauzule-kontraktowe-pl) | Lista kontrolna 41 kategorii klauzul umownych (taksonomia CUAD zlokalizowana PL/UE) dla jednej umowy - obecna/brak/ryzykowna, z kotwica do przepisu. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `governance-kancelarii` (governance AI dla kancelarii)
 
@@ -188,7 +194,7 @@ Pakiet wyzej to warstwa walidacji outputu i narzedzia konwersji. Pelny ekosystem
 
 Trzy drogi. **A** (`npx skills`) dziala w **dowolnym agencie** wspierajacym format Agent Skills (Cursor, OpenAI Codex, Windsurf, Gemini CLI, Claude Code) i instaluje pojedyncze skille. **B** to natywny marketplace Claude Code - instaluje calymi bundlami, z zachowaniem granic pluginu i jego inline `CLAUDE.md`. **C** to reczny symlink jednego skilla.
 
-**Co zainstalowac.** Kancelaria zaczyna od `fundament-weryfikacyjny` (rdzen walidacji) i `orzecznictwo-zrodla` (zrodla PL/UE), a `dokumenty`, `governance-kancelarii`, `jakosc-tresci` i `ochrona-danych` dobiera wedlug potrzeb. Bundle `dev-mcp` to warsztat dla deweloperow - pomin go, jesli nie budujesz skilli ani serwerow MCP. Caly hub jedna komenda (`npx skills add ...` bez `--skill`) wciaga wszystkie 28 skille naraz; wiekszosc kancelarii woli `--skill` albo `/plugin install` wybranych bundli.
+**Co zainstalowac.** Kancelaria zaczyna od `fundament-weryfikacyjny` (rdzen walidacji) i `orzecznictwo-zrodla` (zrodla PL/UE), a `dokumenty`, `governance-kancelarii`, `jakosc-tresci` i `ochrona-danych` dobiera wedlug potrzeb. Bundle `dev-mcp` to warsztat dla deweloperow - pomin go, jesli nie budujesz skilli ani serwerow MCP. Caly hub jedna komenda (`npx skills add ...` bez `--skill`) wciaga wszystkie 41 skilli naraz; wiekszosc kancelarii woli `--skill` albo `/plugin install` wybranych bundli.
 
 ### A. Dowolny agent - `npx skills` (cross-agent)
 
@@ -213,10 +219,13 @@ npx skills add matematicsolutions/awesome-matematic-skills-pl --skill citation-g
 /plugin install orzecznictwo-zrodla@matematic-skills-pl         # zrodla PL/UE + konektory saos/krs/eu-sparql
 /plugin install dokumenty@matematic-skills-pl                   # konwersja, redline, anonimizacja
 /plugin install governance-kancelarii@matematic-skills-pl       # Konstytucja AI, Expert Panel, backup
+/plugin install jakosc-tresci@matematic-skills-pl                # humanizer-pl, marko-pl-content
+/plugin install ochrona-danych@matematic-skills-pl               # DPIA, naruszenie 72h, DSAR, RoPA/DPA, NIS2, UODO grounding
+/plugin install multi-jurysdykcja-ue@matematic-skills-pl         # 9 konektorow prawa krajowego UE jedna komenda
 /plugin install dev-mcp@matematic-skills-pl                      # narzedzia deweloperskie (advanced)
 ```
 
-Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 28 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
+Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 41 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
 
 ### C. Pojedynczy skill jako symlink do ~/.claude/skills/
 
