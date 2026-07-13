@@ -18,7 +18,7 @@ requires-human-approval: false
 pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   inspiration: AnttiHero/lavern (Apache 2.0) - pattern ADR-010 debate + 3-layer verification, prompty i role napisane od zera
   companion_skills: citation-grounding-pl, legal-ai-audit-bundle, matematic-expert-panel, saos-orzecznictwo
 ---
@@ -75,10 +75,25 @@ Zaatakuj każdy filar jak przeciwnik procesowy / sceptyczny sąd:
 Output: per filar - zarzut + jego siła (wysoka/średnia/niska) + źródło zarzutu.
 
 ### 3. Synthesizer - bilans
-Dla każdego filaru rozstrzygnij: **przetrwał / osłabiony / obalony**. Wskaż, co zostaje z
-tezy po ataku, gdzie deliverable wymaga przeformułowania, gdzie trzeba zastrzeżenia ("ryzyko
-sporne, linia orzecznicza niejednolita").
+Dla każdego filaru rozstrzygnij: **przetrwał / osłabiony / obalony / NIEPEWNE**. Wskaż, co
+zostaje z tezy po ataku, gdzie deliverable wymaga przeformułowania, gdzie trzeba zastrzeżenia
+("ryzyko sporne, linia orzecznicza niejednolita").
 Output: tabela filar → werdykt → rekomendowana zmiana.
+
+**NIEPEWNE to werdykt pierwszej klasy, nie unik.** Synthesizer używa go, gdy debata nie
+rozstrzygnęła sporu, i ZAWSZE dokłada dwie rzeczy: podkategorię oraz wskazanie, jakiego
+dowodu brakuje do rozstrzygnięcia. Podkategorie:
+
+- **NIEWYSTARCZAJĄCY_DOWÓD** - zarzut attackera ani nie potwierdzony, ani nie odparty,
+  bo brakuje konkretnego materiału (np. pełny tekst uzasadnienia wyroku SN II CSK NN/RR,
+  brzmienie aneksu do umowy, stan faktyczny od klienta).
+- **DOKUMENT_NIEJEDNOZNACZNY** - materiał jest, ale nie daje się z niego wyczytać jednej
+  odpowiedzi (klauzula dwuznaczna, rozbieżne wersje językowe, sprzeczne zapisy w umowie).
+
+Zakaz przemilczania: filaru nierozstrzygniętego NIE wolno zapisać jako "przetrwał" ani
+pominąć w tabeli. Ciche podciągnięcie niepewności pod pewność to najgorszy możliwy błąd
+tego skilla - dokładnie ten, który ma łapać. To slogan "AI, która wie, czego nie wie"
+jako schemat danych, nie deklaracja marketingowa.
 
 ### 4. Verifier - kontrola końcowa (10-punktowa)
 Mechaniczna i merytoryczna kontrola zsyntetyzowanego deliverable:
@@ -93,24 +108,74 @@ Mechaniczna i merytoryczna kontrola zsyntetyzowanego deliverable:
 9. Ryzyka proceduralne wymienione
 10. Poziom pewności wyrażony jawnie (nie fałszywa stanowczość)
 
+### 4a. Pętla rewizji - twardy limit 2 rund
+
+Gdy verifier znajdzie uchybienia, deliverable wraca do poprawy. Ta pętla ma twardy limit:
+
+- **Runda 1**: verifier zgłasza uchybienia → poprawa → ponowna kontrola.
+- **Runda 2**: to samo, ostatni raz.
+- **Trzeci fail NIE jest kolejną iteracją.** Po drugiej nieudanej rewizji następuje
+  obowiązkowa eskalacja do człowieka: raport z listą nierozstrzygniętych zarzutów
+  (numer punktu kontroli, treść zarzutu, co próbowano w rundach 1-2, dlaczego nie
+  przeszło). Żadnego "spróbuję jeszcze raz".
+
+Powód: nieskończone polerowanie maskuje problem zamiast go rozstrzygać. Jeśli dwie
+rewizje nie domknęły zarzutu, redakcja go nie domknie - spór jest merytoryczny albo
+brakuje dowodu, a takie rzeczy rozstrzyga prawnik, nie kolejny przebieg modelu. Licznik
+rund zapisuj w raporcie (patrz Output) - to część śladu audytowego.
+
+### 4b. Funkcja werdyktu - deterministyczna, z jawnymi wagami
+
+Werdykt końcowy NIE jest ogólnym osądem verifiera. Liczy się go z jawnego wzoru:
+
+**Krok A - warunki krytyczne (dowolny spełniony → FAIL, bez liczenia dalej):**
+- cytat 🔴 z citation-grounding-pl,
+- filar obalony pozostawiony w tezie bez zastrzeżenia,
+- zarzut attackera o sile wysokiej bez odpowiedzi w syntezie.
+
+**Krok B - score ważony.** Każdy filar dostaje wagę wg werdyktu synthesizera:
+
+| Werdykt filaru | Waga |
+|---|---|
+| przetrwał | 1.0 |
+| osłabiony | 0.5 |
+| NIEPEWNE (obie podkategorie) | 0.25 |
+| obalony | 0.0 |
+
+`score = suma wag / liczba filarów`. **Score < 0.6 → FAIL.**
+
+**Krok C - próg warunkowy.** 2 lub więcej filarów osłabionych lub NIEPEWNYCH →
+najwyżej **WYŚLIJ_WARUNKOWO** (odpowiednik CONDITIONAL_PASS w `deliverable-fidelity-pl`;
+lista warunków: jakie zastrzeżenia dopisać, jaki dowód uzupełnić). Inaczej **PASS**.
+
+Wagi i progi są wypisane w skillu celowo: audytor ma odtworzyć werdykt z samych liczb,
+bez pytania modelu "dlaczego". To wymóg rejestrowania zdarzeń z art. 12 AI Act
+zamieniony na arytmetykę - argument wprost pod PATRONa. Te same trzy kroki
+(A krytyczne → B score ważony → C próg warunkowy) stosuje `deliverable-fidelity-pl`;
+różnią się tylko wagi, bo inna jest materia (filary tezy vs ustalenia analizy).
+
 ## Output
 
 ```
 ## Adversarial review - <nazwa deliverable>
 
 Stawka: WYSOKA (kwalifikuje)
-Filary tezy: 5 | Przetrwały: 3 | Osłabione: 1 | Obalone: 1
+Filary tezy: 5 | Przetrwały: 2 | Osłabione: 1 | Obalone: 1 | NIEPEWNE: 1
 
 | Filar                        | Atak (siła)      | Werdykt    | Działanie                  |
 |------------------------------|------------------|------------|----------------------------|
 | Podstawa roszczenia art. X   | brak (niska)     | przetrwał  | bez zmian                  |
 | Linia orzecznicza SN         | III CZP NN/RR (wysoka)| obalony| usuń lub dodaj zastrzeżenie|
+| Skuteczność zastrzeżenia umownego | II CSK NN/RR (średnia) | NIEPEWNE (NIEWYSTARCZAJĄCY_DOWÓD) | brakuje: pełny tekst uzasadnienia - pobierz przez saos-orzecznictwo |
 | ...                          | ...              | ...        | ...                        |
 
-Kontrola verifiera: 9/10 OK. Punkt 1 (grounding): 1 cytat 🔴 - BLOKADA.
-Poziom pewności po debacie: ŚREDNI (linia orzecznicza niejednolita w 1 filarze).
+Kontrola verifiera: 9/10 OK. Punkt 1 (grounding): 1 cytat 🔴 - warunek krytyczny.
+Rundy rewizji: 1/2 (limit twardy; trzeci fail = eskalacja do człowieka).
+Funkcja werdyktu: Krok A (krytyczne) TAK - cytat 🔴 → FAIL. Krok B informacyjnie: (1.0+1.0+0.5+0.25+0.0)/5 = 0.55 (< 0.6).
+Poziom pewności po debacie: ŚREDNI (1 filar NIEPEWNY, linia orzecznicza niejednolita w 1 filarze).
 
-Rekomendacja: NIE wysyłaj przed (a) poprawą cytatu 🔴, (b) dodaniem zastrzeżenia do filaru obalonego.
+Werdykt: FAIL. NIE wysyłaj przed (a) poprawą cytatu 🔴, (b) dodaniem zastrzeżenia do filaru
+obalonego, (c) uzupełnieniem dowodu dla filaru NIEPEWNEGO albo jawnym zastrzeżeniem w tekście.
 ```
 
 Pełny zapis debaty (transcript builder/attacker/synthesizer) zwróć jako załącznik do
@@ -159,6 +224,11 @@ regex+zero LLM cost (backlog wewnętrzny).
 Pattern (debate + 3-layer verification) zainspirowany przez AnttiHero/lavern (Apache 2.0,
 ADR-010 w blueprincie Patrona). Role, prompty i 10-punktowa kontrola napisane od zera pod
 polską procedurę i semantykę. Nie skopiowano 67 promptów agentów Lavern (US common law).
+
+Trzy wzorce dodane w v1.1.0, każdy z AnttiHero/lavern (Apache 2.0), adaptacja od zera:
+NIEPEWNE jako werdykt pierwszej klasy (sekcja 3), pętla rewizji z twardym limitem 2 rund
+i przymusową eskalacją (sekcja 4a), deterministyczna funkcja werdyktu z jawnymi wagami
+(sekcja 4b). Wagi, progi i podkategorie polskie - opracowanie MateMatic.
 
 Referencja komplementarna do PromptDefense (12-vector) z [microsoft/agent-governance-toolkit](https://github.com/microsoft/agent-governance-toolkit)
 (MIT, snapshot 2026-05-24, audyt RODO 🟢 ZIELONY) - tylko jako wskazanie różnicy fazy/scope,

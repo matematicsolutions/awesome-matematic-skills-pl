@@ -17,7 +17,7 @@ requires-human-approval: false
 pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   inspiration: AnttiHero/lavern (Apache 2.0) - pattern src/assembly/post-assembly-verifier.ts, kod i reguly napisane od zera
   companion_skills: adversarial-legal-review-pl, citation-grounding-pl, legal-ai-audit-bundle, legal-request-router-pl
 ---
@@ -69,8 +69,39 @@ pisma bez warstwy "analiza -> streszczenie".
    maks. 3) sprawdz nie tylko obecnosc slow, ale czy **sens** jest oddany (RED moze byc wspomniany, ale
    zbagatelizowany - "drobna uwaga" zamiast "klauzula niewazna"). To robi model, nie skrypt - mechaniczny
    match nie wykryje przeklamania tonu. Gdy brak ustalen RED, ta kontrola odpada (skrypt nie eskaluje YELLOW).
-3. **Werdykt** - passed tylko gdy: zero pominietych RED (mechanicznie) ORAZ kontrola wyrywkowa nie wykryla
-   bagatelizowania. Inaczej failed + lista do poprawy.
+3. **Werdykt** - liczony deterministycznie wg funkcji ponizej, nie "na oko".
+
+## Funkcja werdyktu (deterministyczna, jawne wagi i progi)
+
+Werdykt NIE jest ogolnym osadem modelu. Liczy sie go z wynikow kroku 1 (skrypt) i kroku 2
+(kontrola wyrywkowa) wg jawnego wzoru - trzy kroki, zawsze w tej kolejnosci:
+
+**Krok A - warunki krytyczne (dowolny spelniony -> FAIL, bez liczenia dalej):**
+- pominiete RED (skrypt: `pominiete_red` niepuste, exit 1),
+- RED obecny, ale zbagatelizowany (kontrola wyrywkowa LLM),
+- rozstrzygniecie RED nieodzwierciedlone (skrypt: `rozstrzygniecia_red_brak` niepuste).
+
+**Krok B - score wazony pokrycia.** Kazde ustalenie ma wage wg severity:
+
+| Severity | Waga |
+|---|---|
+| RED | 5 |
+| YELLOW | 2 |
+| GREEN / INFO | 1 |
+
+`score = suma wag ustalen reprezentowanych / suma wag wszystkich ustalen`.
+**Score < 0.85 -> FAIL** (nawet gdy zaden RED nie wypadl - masowe gubienie YELLOW
+tez jest przemilczeniem).
+
+**Krok C - prog warunkowy.** 3 lub wiecej pominietych YELLOW -> najwyzej
+**CONDITIONAL_PASS**: deliverable moze wyjsc dopiero po decyzji czlowieka, z lista
+pominietych ustalen dolaczona do raportu. Inaczej **PASS**.
+
+Wagi i progi sa wypisane wprost celowo: audytor odtwarza werdykt z samych liczb
+w raporcie, bez pytania modelu o uzasadnienie. To wymog rejestrowania zdarzen
+z art. 12 AI Act sprowadzony do arytmetyki - argument wprost pod PATRONa. Te same
+trzy kroki (krytyczne -> score wazony -> prog warunkowy) stosuje
+`adversarial-legal-review-pl` dla filarow tezy; roznia sie tylko wagi, bo inna materia.
 
 ## Output (dla uzytkownika)
 
@@ -84,7 +115,12 @@ Kontrola wyrywkowa LLM (RED, maks. 3):
 - F2 (RED) - OBECNY ALE ZBAGATELIZOWANY: analiza "niewazny zapis", deliverable "kwestia do rozwazenia"
 - F4 (YELLOW) - oddany
 
-Werdykt: NIE wysylaj. Dodaj F3 do podsumowania, wzmocnij F2 do faktycznej wagi.
+Funkcja werdyktu:
+- Krok A (krytyczne): pominiete RED F3 + zbagatelizowany RED F2 -> FAIL.
+- Krok B (informacyjnie): reprezentowane F1(5)+F2(5)+F4(2)+F5(1) / wszystkie F1..F5 (5+5+5+2+1)
+  = 13/18 = 0.72 < 0.85 (F5 = GREEN, reprezentowane).
+
+Werdykt: FAIL - NIE wysylaj. Dodaj F3 do podsumowania, wzmocnij F2 do faktycznej wagi.
 ```
 
 ## Reguly twarde
@@ -111,3 +147,7 @@ przed decydentem ustalen, ktore analiza wykryla. Raport wiernosci wkladaj do `le
 Pattern (post-assembly fidelity: mechaniczny check reprezentacji ustalen + kontrola wyrywkowa LLM najciezszych)
 zainspirowany przez AnttiHero/lavern (Apache 2.0, `src/assembly/post-assembly-verifier.ts`). Kod, reguly
 i polska lista stop-slow napisane od zera. Nie skopiowano kodu Lavern.
+
+Wzorzec dodany w v1.1.0: deterministyczna funkcja werdyktu z jawnymi wagami i progami
+(krytyczne -> score wazony -> prog warunkowy) z AnttiHero/lavern (Apache 2.0), adaptacja
+od zera - wagi severity, prog 0.85 i regula CONDITIONAL_PASS to opracowanie MateMatic.

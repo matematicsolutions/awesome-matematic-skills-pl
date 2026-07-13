@@ -18,7 +18,7 @@ requires-human-approval: false
 pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   inspiration: >
     Metoda dwuwarstwowa (obiektywne dopasowanie + subiektywna rubryka LLM-as-judge,
     skala 1-5) oparta na DISC-Law-Eval z DISC-LawLLM (Fudan DISC Lab), licencja
@@ -62,12 +62,35 @@ Oceń wg jawnej rubryki, każdy wymiar 1-5 z jednozdaniowym uzasadnieniem:
 | Zgodność z jurysdykcją | myli porządki/przepisy | trafne dla prawa polskiego/UE |
 | Ugruntowanie (anty-halucynacja) | twierdzenia bez podstawy | każde twierdzenie ma oparcie |
 
+### NIEPEWNE zamiast liczby - ocena pierwszej klasy
+
+Gdy sędzia nie ma podstaw, by wystawić liczbę, NIE wystawia jej. Zamiast wymuszonej trójki
+wpisuje **NIEPEWNE** z podkategorią i wskazaniem, jakiego dowodu brakuje:
+
+- **NIEWYSTARCZAJĄCY_DOWÓD** - oceny nie da się wystawić bez materiału, którego nie ma
+  w sesji (np. brak tekstu źródłowego wyroku II CSK NN/RR, brak umowy, do której output
+  się odwołuje). Wpisz, CZEGO brakuje i skąd to wziąć.
+- **DOKUMENT_NIEJEDNOZNACZNY** - materiał jest, ale nie rozstrzyga (dwuznaczna klauzula,
+  sprzeczne fragmenty, pytanie klienta dopuszcza dwie wykładnie). Wpisz, NA CZYM polega
+  niejednoznaczność.
+
+Reguły twarde:
+- NIEPEWNE nie wchodzi do średniej i nie wolno go cicho zamienić na 3 - wymuszona
+  środkowa ocena to przemilczenie niepewności, dokładnie to, co ten skill ma łapać.
+- NIEPEWNE w wymiarze Poprawność prawna lub Ugruntowanie -> decyzja co najwyżej
+  **Pełna weryfikacja**.
+- NIEPEWNE w pozostałych wymiarach -> decyzja co najwyżej **Popraw**.
+
+To slogan "AI, która wie, czego nie wie" jako pole w karcie ocen, nie deklaracja.
+
 ## Decyzja
 
-- **Wyślij** - warstwa 1 czysta i średnia subiektywna ≥ 4, żaden wymiar < 3.
-- **Popraw** - warstwa 1 czysta, ale któryś wymiar subiektywny 2-3 (wskaż który).
-- **Pełna weryfikacja** - warstwa 1 ma niezgodność albo wymiar = 1 -> skieruj do
-  legal-request-router-pl (grounding / adversarial / paczka audytowa).
+- **Wyślij** - warstwa 1 czysta, zero NIEPEWNYCH, średnia subiektywna ≥ 4, żaden wymiar < 3.
+- **Popraw** - warstwa 1 czysta, ale któryś wymiar subiektywny 2-3 (wskaż który) albo
+  NIEPEWNE poza wymiarami krytycznymi.
+- **Pełna weryfikacja** - warstwa 1 ma niezgodność, wymiar = 1 albo NIEPEWNE w Poprawności
+  prawnej / Ugruntowaniu -> skieruj do legal-request-router-pl (grounding / adversarial /
+  paczka audytowa).
 
 ## Format wyjścia
 
@@ -77,10 +100,12 @@ WARSTWA 2 (rubryka 1-5):
   Poprawność prawna: 4 - <uzasadnienie>
   Kompletność: 3 - <...>
   Jasność: 5 - <...>
-  Zgodność z jurysdykcją: 4 - <...>
+  Zgodność z jurysdykcją: NIEPEWNE (NIEWYSTARCZAJĄCY_DOWÓD) - output opiera się na wyroku
+    II CSK NN/RR, którego tekstu nie ma w sesji; brakuje: treść uzasadnienia (saos-orzecznictwo)
   Ugruntowanie: 4 - <...>
-  Średnia: 4.0
-DECYZJA: Popraw (Kompletność 3 - brak omówienia przedawnienia)
+  Średnia: 4.0 (z 4 wymiarów liczbowych; NIEPEWNE poza średnią)
+DECYZJA: Popraw (Kompletność 3 - brak omówienia przedawnienia; Zgodność z jurysdykcją
+NIEPEWNE - uzupełnij tekst wyroku przed wysyłką)
 ```
 
 ## Granice
@@ -96,3 +121,8 @@ Metoda dwuwarstwowa (obiektywne dopasowanie + subiektywna rubryka LLM-as-judge w
 **DISC-Law-Eval** z projektu DISC-LawLLM (Fudan DISC Lab), licencja **Apache-2.0**. Chińskie dane
 egzaminacyjne i model-sędzia porzucone; wymiary rubryki, progi decyzji i kotwice PL to oryginalne
 opracowanie MateMatic. Interpretacja MateMatic, nie stanowisko NRA ani KRRP.
+
+Wzorzec dodany w v1.1.0: NIEPEWNE jako ocena pierwszej klasy (podkategorie
+NIEWYSTARCZAJĄCY_DOWÓD / DOKUMENT_NIEJEDNOZNACZNY, wymóg wskazania brakującego dowodu,
+zakaz wymuszonej trójki) z AnttiHero/lavern (Apache 2.0), adaptacja od zera - podkategorie,
+reguły decyzji i polska semantyka to opracowanie MateMatic.
