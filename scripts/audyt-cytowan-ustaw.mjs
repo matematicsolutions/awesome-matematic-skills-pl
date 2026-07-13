@@ -90,18 +90,29 @@ const known = new Set(
     return `${rok}/${poz}`;
   })
 );
+// Swiadome pominiecia z rejestru (sekcja "pominiete"): noweli skonsumowane
+// itp. - cytowane historycznie, ich tresc zyje w zarejestrowanym akcie
+// bazowym. Kazdy wpis niesie "powod"; bez powodu w JSON nie dopisuj.
+const pominiete = new Map((reg.pominiete ?? []).map((p) => [p.dzu, p.powod]));
 const unregistered = new Map();
 
 for (const [f, lines] of fileLines) {
   lines.forEach((line, i) => {
     for (const m of line.matchAll(DZU_RE)) {
       const key = `${m[1]}/${m[2]}`;
-      if (!known.has(key)) {
+      if (!known.has(key) && !pominiete.has(key)) {
         if (!unregistered.has(key)) unregistered.set(key, []);
         unregistered.get(key).push(`${relative(root, f)}:${i + 1}`);
       }
     }
   });
+}
+
+if (pominiete.size) {
+  console.log(`\n--- Swiadomie pominiete (${pominiete.size}, sekcja "pominiete" rejestru) ---`);
+  for (const [key, powod] of pominiete) {
+    console.log(`Dz.U. ${key.replace("/", " poz. ")}: ${powod}`);
+  }
 }
 
 console.log(`\n--- Cytowania Dz.U. spoza rejestru (${unregistered.size}) ---`);

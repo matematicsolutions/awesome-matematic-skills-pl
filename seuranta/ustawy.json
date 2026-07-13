@@ -1,5 +1,19 @@
 {
-  "opis": "Rejestr ustaw, na ktorych opieraja sie skille tego marketplace. scripts/wachta-legislacyjna.mjs pyta ISAP (api.sejm.gov.pl/eli) o kazda pozycje i alarmuje, gdy ustawa przestaje obowiazywac (inForce != IN_FORCE) albo zmienia nazwe - wtedy skille cytujace ja wymagaja przegladu. Wzorzec: saadosvahti z akunikkola/claude-for-legal-finland (MIT). Dopisuj pozycje, gdy nowy skill zaczyna cytowac ustawe; usun, gdy zaden skill juz jej nie cytuje.",
+  "opis": "Rejestr ustaw, na ktorych opieraja sie skille tego marketplace. scripts/wachta-legislacyjna.mjs pyta ISAP (api.sejm.gov.pl/eli) o kazda pozycje i alarmuje, gdy ustawa przestaje obowiazywac (inForce != IN_FORCE) albo zmienia nazwe - wtedy skille cytujace ja wymagaja przegladu. Wzorzec: saadosvahti z akunikkola/claude-for-legal-finland (MIT). Dopisuj pozycje, gdy nowy skill zaczyna cytowac ustawe; usun, gdy zaden skill juz jej nie cytuje. Sekcja 'pominiete' to swiadomie niezarejestrowane cytowania Dz.U. (np. noweli skonsumowanych, ktorych tresc zyje w akcie bazowym) - audyt-cytowan-ustaw.mjs ich nie flaguje, kazde wymaga powodu.",
+  "pominiete": [
+    {
+      "dzu": "2018/1104",
+      "powod": "nowela KC z 13.04.2018 (skrocenie terminow przedawnienia do 6 lat, koniec roku) - skonsumowana, tresc w KC (DU/1964/93); cytowana historycznie w kalkulatory-procesowe-pl"
+    },
+    {
+      "dzu": "2021/2459",
+      "powod": "nowela KC z 2.12.2021 (mediacja i zawezwanie = zawieszenie zamiast przerwania) - skonsumowana, tresc w KC (DU/1964/93)"
+    },
+    {
+      "dzu": "2025/1157",
+      "powod": "nowela UKSC z 25.07.2025 (limit oplaty stosunkowej 100 000 zl) - skonsumowana, tresc w UKSC (DU/2005/1398); data graniczna 23.09.2025 cytowana w kalkulatory-procesowe-pl"
+    }
+  ],
   "ustawy": [
     {
       "eli": "DU/1964/93",
