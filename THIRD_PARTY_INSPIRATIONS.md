@@ -95,6 +95,8 @@ od zera pod polski jezyk i polskie cytaty (Art. X k.p.k. / sygnatury PL).
 
 **Wykorzystane wzorce**:
 - ADR-010 debate + 3-layer verification -> `adversarial-legal-review-pl`
+- `src/mcp/tools/dissent.ts` panel rozbieznosci (multiple-choice do niezaleznych ocen,
+  split = FINDING, resolveDissent -> re-vote -> eskalacja) -> `adversarial-legal-review-pl` sekcja 4c
 - ADR-011 mechanical grounding verifier -> `citation-grounding-pl`
 - `src/api/briefing` analiza wystarczalnosci -> `intake-sufficiency-pl`
 - `router/RouterClassification` -> `legal-request-router-pl`
@@ -128,6 +130,16 @@ offline verifier wpiete jako roadmap 2 w `legal-ai-audit-bundle`.
 **Relacja**: ZALEZNOSC CLI. `redline-docx-pl` to wrapper workflow PL nad CLI adeu
 (`uvx adeu ...`). Nie kopiujemy kodu adeu - wolamy go. Smoke test PL na polskim
 .docx w skill THIRD_PARTY_INSPIRATIONS.md.
+
+### evolsb / legal-redline-tools (MIT)
+
+**Repo**: https://github.com/evolsb/legal-redline-tools
+**Snapshot**: 2026-07-13
+**Licencja**: MIT
+**Relacja**: PATTERN. Dwa wzorce zaadaptowane w `redline-docx-pl` v0.2.0:
+memo negocjacyjne (pola tier/rationale/walkaway/precedent, grupowanie wg
+tierow 1-3) oraz skan placeholderow przed wysylka. Oba skrypty napisane od
+zera (Python stdlib) pod polskie wzorce i format edits.json adeu.
 
 ### Microsoft / MarkItDown (MIT)
 

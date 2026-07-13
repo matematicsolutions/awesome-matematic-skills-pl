@@ -45,6 +45,26 @@ last-modified-by "Anna Nowak"):
 Wniosek: silnik dziala na polskim materiale, sanitize realnie domyka wyciek metadanych
 Worda (istotne RODO przy wysylce pisma).
 
+## evolsb / legal-redline-tools (wzorce memo + skan)
+
+- **Repo:** https://github.com/evolsb/legal-redline-tools
+- **Licencja:** MIT
+- **Snapshot:** 2026-07-13
+- **Relacja:** PATTERN, nie kod. Dwa wzorce zaadaptowane w v0.2.0:
+  1. **Memo negocjacyjne** - pola `tier`/`rationale`/`walkaway`/`precedent`
+     w redline JSON + memo grupowane wg tierow (ich `memo.py` generuje PDF
+     z naglowkiem "attorney work product"; nasz `memo_negocjacyjne.py`
+     generuje Markdown z polskim naglowkiem poufnosci, format wejscia =
+     edits.json adeu).
+  2. **Skan placeholderow** - bramka przed wysylka (ich `scan.py` lapie
+     `$X`/`TBD`/puste nawiasy; nasz `skan_placeholder.py` dodaje wzorce PL:
+     `DO UZUPELNIENIA`, `NN/RR`, `dnia __`, kwoty w zl, i raportuje
+     `plik:pozycja`).
+
+Kod obu skryptow napisany od zera (Python stdlib, zero zaleznosci). MIT
+pozwala takze na kopiowanie kodu z atrybucja - nie skorzystano, bo ich kod
+jest zwiazany z ich formatem redlines i python-docx, a nasz z adeu.
+
 ## Powiazania
 
 - [`let-it-be`](../let-it-be) - anonimizacja TRESCI (PII PL); adeu sanitize czysci METADANE pliku.

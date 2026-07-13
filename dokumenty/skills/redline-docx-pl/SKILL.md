@@ -28,7 +28,7 @@ Przed wykonaniem każdej operacji ustal tier i zastosuj regułę:
 
 | Tier | Operacje | Reguła |
 |------|----------|--------|
-| **R - Read-only** | `extract` (czytanie .docx) | Bez potwierdzenia. Wykonaj od razu. |
+| **R - Read-only** | `extract` (czytanie .docx), `skan_placeholder.py`, `memo_negocjacyjne.py` (pisza tylko nowe pliki raportu/memo) | Bez potwierdzenia. Wykonaj od razu. |
 | **M - Mutating** | `apply`, `diff`, `apply --live` | Pokaż użytkownikowi proponowane zmiany. Czekaj na potwierdzenie słowne. |
 | **D - Destructive** | `sanitize --accept-all` (akceptuje wszystkie zmiany nieodwracalnie) | Użytkownik musi wpisać dosłownie: **"potwierdzam"** zanim wykonasz. |
 
@@ -65,6 +65,66 @@ Format to lista obiektow `modify` (search-and-replace na tekscie, NIE na pozycji
 ZANIM dotkna pliku (bramka walidacji). Jezeli fragment wystepuje kilka razy,
 doprecyzuj kontekst.
 
+#### Rozszerzenie schematu - pola negocjacyjne (opcjonalne)
+
+Kazdy obiekt `modify` moze dostac cztery dodatkowe pola. Sluza one memo
+negocjacyjnemu (krok 2a), NIE trafiaja do adeu ani do drugiej strony:
+
+```json
+[
+  {
+    "type": "modify",
+    "target_text": "kara umowna w wysokosci 20% wartosci umowy",
+    "new_text": "kara umowna w wysokosci 5% wartosci umowy, lacznie nie wiecej niz 10%",
+    "comment": "Proponujemy ograniczenie kary umownej.",
+    "tier": 1,
+    "rationale": "20% bez limitu lacznego to ekspozycja nieproporcjonalna do wartosci kontraktu.",
+    "walkaway": "Maksymalnie 10% z limitem lacznym 15%. Powyzej tego nie podpisujemy.",
+    "precedent": "Umowa z kontrahentem X (2025): 5% z limitem 10% przeszlo bez sporu."
+  }
+]
+```
+
+| Pole | Znaczenie |
+|------|-----------|
+| `tier` | Priorytet 1-3 (framework nizej). |
+| `rationale` | Uzasadnienie zmiany - argument do rozmowy, nie do dokumentu. |
+| `walkaway` | Granica ustepstwa: co akceptujemy najdalej i kiedy odchodzimy od stolu. |
+| `precedent` | Odwolanie do porownywalnej umowy lub wczesniejszej negocjacji. |
+
+Rozdzial widocznosci jest twardy: `comment` widzi druga strona (komentarz w
+track changes), `rationale`/`walkaway`/`precedent` zostaja w memo wewnetrznym.
+
+#### Framework Tier 1-3 - kategorie ryzyka
+
+| Tier | Kategoria | Regula negocjacyjna |
+|------|-----------|---------------------|
+| **1** | Warunki brzegowe (non-starter) | Bez tej zmiany umowy nie podpisujemy. Pozycja `walkaway` obowiazkowa - memo bez niej nie przejdzie walidacji. |
+| **2** | Istotne | Realne ryzyko prawne lub finansowe. Negocjuj, ustepstwo tylko za cos. |
+| **3** | Pozadane | Poprawia nasza pozycje, ale mozna odpuscic bez straty. Waluta wymienna za tier 2. |
+
+Brak `tier` = pozycja nieskategoryzowana; memo wypisze ja osobno jako zaleglosc
+do klasyfikacji przez prawnika.
+
+### 2a. Memo negocjacyjne (opcjonalne, dokument WEWNETRZNY)
+
+```bash
+# sciezka scripts/ wzgledem katalogu tego skilla; z katalogu sprawy podaj pelna
+python scripts/memo_negocjacyjne.py edits.json -o memo.md --tytul "Umowa serwisowa - kontrahent X"
+python scripts/memo_negocjacyjne.py edits.json --adeu edits_adeu.json   # kopia bez pol memo, do kroku 3
+```
+
+Generuje memo w Markdown: zmiany pogrupowane wg tierow, naglowek poufnosci,
+licznik zmian per tier, przy kazdej pozycji rationale / walkaway / precedent.
+Skrypt zero-dep (Python stdlib). Walidacja: tier spoza 1-3 lub tier 1 bez
+`walkaway` = exit 1.
+
+**Granica governance**: memo to draft do rozmowy, nie automat. Negocjacje
+prowadzi czlowiek - skrypt przygotowuje mu mape pozycji, niczego nie wysyla
+i nie rozstrzyga. Memo NIGDY nie idzie do drugiej strony (naglowek poufnosci
+jest w szablonie na stale). Do adeu `apply` podawaj kopie z `--adeu` - pola
+negocjacyjne nie moga trafic do pliku wymienianego z kontrahentem.
+
 ### 3. Aplikuj - natywne Track Changes
 
 ```bash
@@ -74,6 +134,26 @@ uvx adeu apply umowa.docx edits.json -o umowa_redline.docx --author "Kancelaria"
 Daje `umowa_redline.docx` ze sledzonymi zmianami i komentarzami. Bez `--author`
 adeu wpisuje nazwe konta systemowego biezacego uzytkownika - **zawsze podawaj
 `--author` jawnie**, zeby nie wyciekla nazwa konta do dokumentu.
+
+### 3a. Skan placeholderow - bramka "czy draft nie wychodzi z dziurami"
+
+```bash
+# sciezka scripts/ wzgledem katalogu tego skilla, jak w kroku 2a
+python scripts/skan_placeholder.py umowa_redline.docx        # tez .md / .txt, wiele plikow naraz
+python scripts/skan_placeholder.py umowa_redline.docx --json # raport maszynowy
+```
+
+Wykrywa niedokonczone pola: `[...]`, `[   ]`, `[wstaw ...]`, `[insert ...]`,
+`TBD`, `DO UZUPELNIENIA`, `$X` / `$___`, ciagi podkreslen `___`, placeholder
+sygnatury `NN/RR`, puste pola dat (`dnia __`, `[data]`) i kwot (`[kwota]` oraz
+kazde `0,00 zl` - czesty artefakt niewypelnionego pola; jezeli kwota zerowa
+jest zamierzona, odnotuj to przy przekazaniu). Raport `plik:pozycja` (paragraf w .docx,
+linia w tekscie) + fragment kontekstu.
+
+Zero zaleznosci (Python stdlib, .docx czytany przez `zipfile`). Exit 0 = czysto,
+exit 1 = znaleziska. **Kazde znalezisko blokuje wysylke** - najpierw uzupelnij
+pole albo swiadomie zostaw (np. kwota do wpisania przez klienta) i odnotuj to
+przy przekazaniu draftu czlowiekowi.
 
 ### 4. Sanitize PRZED wyslaniem - RODO
 
@@ -118,4 +198,11 @@ Dwie rozne warstwy wycieku, obie trzeba domknac.
 ## Atrybucja
 
 Silnik: [adeu](https://github.com/dealfluence/adeu) (c) 2026 Dealfluence Oy, licencja MIT.
-Szczegoly i snapshot licencji: [THIRD_PARTY_INSPIRATIONS.md](THIRD_PARTY_INSPIRATIONS.md).
+
+Wzorce memo negocjacyjnego (pola tier/rationale/walkaway/precedent, grupowanie
+wg tierow) i skanera placeholderow: [evolsb/legal-redline-tools](https://github.com/evolsb/legal-redline-tools)
+(MIT). PATTERN, nie kod - oba skrypty napisane od zera pod polskie realia
+(wzorce PL: `DO UZUPELNIENIA`, `NN/RR`, `dnia __`, kwoty w zl) i pod format
+edits.json adeu zamiast ich wlasnego formatu redlines.
+
+Szczegoly i snapshoty licencji: [THIRD_PARTY_INSPIRATIONS.md](THIRD_PARTY_INSPIRATIONS.md).

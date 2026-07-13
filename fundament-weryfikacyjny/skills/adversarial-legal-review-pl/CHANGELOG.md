@@ -2,6 +2,26 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/), wersjonowanie [SemVer](https://semver.org/).
 
+## [1.2.0] - 2026-07-13
+
+### Added
+- **Panel rozbieżności (dissent) jako moduł OPCJONALNY (sekcja 4c).** Dla 1-2
+  filarów NOŚNYCH przy wysokiej stawce: pytanie interpretacyjne multiple-choice
+  (2-4 opcje) do co najmniej 2 niezależnych ocen (drugi model / drugi przebieg
+  z innym promptem bez transkryptu debaty / człowiek). Split = FINDING pierwszej
+  klasy, cytowany verbatim w deliverable, nie ukrywany. Pętla rozstrzygania:
+  dociągnięcie autorytetu (saos-orzecznictwo / ISAP / eu-sparql-search) → jedna
+  runda re-vote → split, który przetrwał dowody, idzie do human gate jako
+  NIEPEWNE. Jawna bramka kosztu (domyślnie 0 pytań panelu).
+- Spójność z v1.1.0: split nierozstrzygnięty wpina się w werdykt NIEPEWNE
+  (sekcja 3) i wagę 0.25 funkcji werdyktu (sekcja 4b); re-vote panelu nie
+  konsumuje limitu 2 rund rewizji (sekcja 4a).
+
+### Attribution
+- Wzorzec z AnttiHero/lavern (Apache 2.0, `src/mcp/tools/dissent.ts`),
+  adaptacja od zera - polskie i unijne źródła autorytetu zamiast CourtListener,
+  wpięcie w istniejące sekcje zamiast osobnego rejestru panelistów.
+
 ## [1.1.0] - 2026-07-13
 
 ### Added

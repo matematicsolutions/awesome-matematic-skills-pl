@@ -18,8 +18,8 @@ requires-human-approval: false
 pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.1.0
-  inspiration: AnttiHero/lavern (Apache 2.0) - pattern ADR-010 debate + 3-layer verification, prompty i role napisane od zera
+  version: 1.2.0
+  inspiration: AnttiHero/lavern (Apache 2.0) - pattern ADR-010 debate + 3-layer verification oraz src/mcp/tools/dissent.ts (panel rozbieżności), prompty i role napisane od zera
   companion_skills: citation-grounding-pl, legal-ai-audit-bundle, matematic-expert-panel, saos-orzecznictwo
 ---
 
@@ -154,6 +154,66 @@ zamieniony na arytmetykę - argument wprost pod PATRONa. Te same trzy kroki
 (A krytyczne → B score ważony → C próg warunkowy) stosuje `deliverable-fidelity-pl`;
 różnią się tylko wagi, bo inna jest materia (filary tezy vs ustalenia analizy).
 
+### 4c. Panel rozbieżności (dissent) - moduł OPCJONALNY
+
+Debata builder/attacker to spór wyreżyserowany: obie role gra ten sam model i
+może zgodnie mylić się w tym samym miejscu. Panel rozbieżności łapie inny typ
+błędu - interpretację, którą jeden przebieg uznaje za oczywistą, a która wcale
+oczywista nie jest.
+
+**Kiedy (bramka kosztu, jawna).** Tylko dla klauzul i tez NOŚNYCH: takich, od
+których zależy wynik sprawy, przy stawce już zakwalifikowanej jako wysoka
+(sekcja 0). Każda niezależna ocena to osobny pełny przebieg, więc domyślnie
+panel dostaje 0 pytań; wskaż maksymalnie 1-2 filary, dla których rozbieżność
+interpretacji realnie zmienia werdykt. Jeśli żaden filar nie spełnia tego
+progu - nie uruchamiaj panelu i napisz to wprost w raporcie.
+
+**Protokół.**
+
+1. Sformułuj pytanie interpretacyjne jako multiple-choice (2-4 opcje), np.:
+   „Czy kara umowna z par. 8 obejmuje także odstąpienie od umowy?
+   A) tak, B) nie, C) tylko przy odstąpieniu z winy wykonawcy".
+   Zamknięta lista opcji wymusza porównywalne werdykty - „to zależy" nie jest opcją.
+2. Zbierz **co najmniej 2 NIEZALEŻNE oceny**: drugi model, drugi przebieg z
+   innym promptem i bez dostępu do transkryptu debaty, albo człowiek. Każdy
+   głosujący dostaje identyczne pytanie + sporny fragment i NIE widzi werdyktów
+   pozostałych.
+3. Zgoda panelu → odnotuj jedną linią w raporcie (pytanie, opcja, kto głosował).
+4. **Split = FINDING pierwszej klasy.** Rozbieżność trafia do deliverable
+   cytowana verbatim: kto głosował, jaka opcja, z jaką pewnością, jaki fragment
+   klauzuli wskazał jako podstawę. NIE ukrywaj jej i NIE uśredniaj. Cichy wybór
+   „lepszej" odpowiedzi to rozstrzygnięcie bez mandatu - dokładnie to, przed czym
+   panel ma chronić.
+5. **Pętla rozstrzygania: dociągnij autorytet.** Pobierz orzecznictwo lub
+   przepis przez `saos-orzecznictwo` / ISAP (`legal-data-hunter-pl`) /
+   `eu-sparql-search` (polskie i unijne źródła; oryginał lavern używa
+   CourtListener - US) i powtórz głosowanie z dowodem na stole. Jedna runda
+   re-vote, nie więcej.
+6. **Split, który przetrwał dowody → human gate.** Filar dostaje werdykt
+   NIEPEWNE (sekcja 3): DOKUMENT_NIEJEDNOZNACZNY, gdy panel czytał ten sam
+   materiał i widzi różne rzeczy; NIEWYSTARCZAJĄCY_DOWÓD, gdy do rozstrzygnięcia
+   brakuje materiału (np. pełnego uzasadnienia wyroku SN II CSK NN/RR).
+   Rozstrzyga prawnik, nie trzeci przebieg modelu.
+
+Format FINDING w deliverable:
+
+```
+FINDING - rozbieżność panelu (par. 8, kara umowna):
+  Ocena A (model X): opcja B - "kara umowna zastrzeżona na wypadek niewykonania" (pewność: wysoka)
+  Ocena B (przebieg niezależny): opcja C - "z winy wykonawcy" (pewność: średnia)
+  Re-vote po dowodzie (uchwała SN III CZP NN/RR, SAOS): split utrzymany.
+  Werdykt filaru: NIEPEWNE (DOKUMENT_NIEJEDNOZNACZNY) - decyzja prawnika.
+```
+
+**Spójność z resztą skilla (dissent wpina się, nie dubluje).** Werdykt z panelu
+wchodzi do tabeli synthesizera jak każdy inny: split nierozstrzygnięty = NIEPEWNE
+z wagą 0.25 w funkcji werdyktu (sekcja 4b), więc 2+ takie filary same z siebie
+ściągają wynik do WYŚLIJ_WARUNKOWO. Re-vote panelu NIE liczy się jako runda
+rewizji z sekcji 4a - limit 2 rund dotyczy poprawek deliverable po verifierze,
+a panel ma własny, jeszcze twardszy limit: jedno głosowanie + jedno powtórzenie
+z dowodem. Eskalacja do człowieka to ten sam mechanizm, co przy trzecim failu
+verifiera.
+
 ## Output
 
 ```
@@ -229,6 +289,13 @@ Trzy wzorce dodane w v1.1.0, każdy z AnttiHero/lavern (Apache 2.0), adaptacja o
 NIEPEWNE jako werdykt pierwszej klasy (sekcja 3), pętla rewizji z twardym limitem 2 rund
 i przymusową eskalacją (sekcja 4a), deterministyczna funkcja werdyktu z jawnymi wagami
 (sekcja 4b). Wagi, progi i podkategorie polskie - opracowanie MateMatic.
+
+Czwarty wzorzec dodany w v1.2.0: panel rozbieżności (sekcja 4c) z AnttiHero/lavern
+(Apache 2.0, `src/mcp/tools/dissent.ts`) - pytanie multiple-choice do niezależnych ocen,
+split jako FINDING pokazywany verbatim, pętla resolveDissent (autorytet → re-vote →
+eskalacja). Adaptacja od zera: źródła autorytetu polskie i unijne (saos-orzecznictwo /
+ISAP / eu-sparql-search zamiast CourtListener), wpięcie splitu w werdykt NIEPEWNE i wagę
+0.25 zamiast osobnego rejestru panelistów, limit jednej rundy re-vote.
 
 Referencja komplementarna do PromptDefense (12-vector) z [microsoft/agent-governance-toolkit](https://github.com/microsoft/agent-governance-toolkit)
 (MIT, snapshot 2026-05-24, audyt RODO 🟢 ZIELONY) - tylko jako wskazanie różnicy fazy/scope,
