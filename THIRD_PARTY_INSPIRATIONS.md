@@ -155,6 +155,33 @@ MarkItDown z poziomu Claude Code. Instalacja przez `pip install markitdown marki
 **Relacja**: ZALEZNOSC CLI. `opendataloader-pdf` skill to wrapper na ten konwerter
 PDF -> JSON/MD wysokiej jakosci (reading order, tabele, headings).
 
+### crankshift / lawpowers (MIT)
+
+**Repo**: https://github.com/crankshift/lawpowers
+**Snapshot**: 2026-07-13 (namierzony jako upstream agregatora ThomasMoreAI;
+22 skille PL + skille UA, autorstwo raz w `skills/<jur>/`, adaptery
+per-platforma generowane)
+**Licencja**: MIT
+**Relacja**: PATTERN. `kalkulatory-procesowe-pl` adaptuje dwa wzorce:
+dekompozycje kalkulatorow procesowych na 4 osobne rachunki (oplata sadowa /
+przedawnienie / odsetki / WPS) oraz protokol "parameter retrieval" - tabela
+zrodel zywych wartosci + fallback z data weryfikacji przed kazdym
+obliczeniem. Tresc, tabele i rachunki napisane od zera na tekstach
+UKSC/KC/KPC; przy adaptacji poprawiono 4 nieaktualne wartosci zrodla:
+
+- limit oplaty stosunkowej 200 000 zl -> 100 000 zl (nowela Dz.U. 2025
+  poz. 1157, od 23.09.2025),
+- odsetki w transakcjach handlowych +8 p.p. -> +10 p.p. dla zwyklego
+  dluznika (od 2020 r.; +8 zostalo tylko dla publicznych leczniczych),
+- mediacja jako przerwanie biegu przedawnienia -> zawieszenie
+  (art. 121 pkt 5-6 KC, od 30.06.2022),
+- najem na czas nieoznaczony w WPS: 6 miesiecy -> suma czynszu za
+  3 miesiace (art. 23 KPC).
+
+**Werdykt MateMatic 4-bramkowy**: TRAFIONE (MIT, jakosc probek wysoka,
+ale wartosci liczbowe wymagaly odswiezenia - stad wlasna wachta parametrow
+w CI zamiast zaufania tabelom).
+
 ### Lum1104 / Understand-Anything (MIT)
 
 **Repo**: https://github.com/Lum1104/Understand-Anything

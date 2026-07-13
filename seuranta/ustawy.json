@@ -5,13 +5,13 @@
       "eli": "DU/1964/93",
       "skrot": "KC",
       "nazwa": "Kodeks cywilny",
-      "uzycie": "fundament-weryfikacyjny (przyklady kar umownych art. 484 KC), dokumenty"
+      "uzycie": "fundament-weryfikacyjny (przyklady kar umownych art. 484 KC), dokumenty, dokumenty/kalkulatory-procesowe-pl (przedawnienie art. 117-125, odsetki art. 359 i 481)"
     },
     {
       "eli": "DU/1964/296",
       "skrot": "KPC",
       "nazwa": "Kodeks postępowania cywilnego",
-      "uzycie": "dokumenty/terminy-procesowe-pl (art. 165, 168, 328 KPC), fundament-weryfikacyjny"
+      "uzycie": "dokumenty/terminy-procesowe-pl (art. 165, 168, 328 KPC), dokumenty/kalkulatory-procesowe-pl (WPS art. 19-26, art. 17 pkt 4), fundament-weryfikacyjny"
     },
     {
       "eli": "DU/1960/168",
@@ -66,6 +66,18 @@
       "skrot": "PrAut",
       "nazwa": "o prawie autorskim i prawach pokrewnych",
       "uzycie": "jakosc-tresci, governance-kancelarii (licencje)"
+    },
+    {
+      "eli": "DU/2005/1398",
+      "skrot": "UKSC",
+      "nazwa": "o kosztach sądowych w sprawach cywilnych",
+      "uzycie": "dokumenty/kalkulatory-procesowe-pl (oplata sadowa art. 13-21)"
+    },
+    {
+      "eli": "DU/2013/403",
+      "skrot": "UTH",
+      "nazwa": "o przeciwdziałaniu nadmiernym opóźnieniom w transakcjach handlowych",
+      "uzycie": "dokumenty/kalkulatory-procesowe-pl (odsetki w transakcjach handlowych, rekompensata art. 10)"
     },
     {
       "eli": "DU/2002/1270",

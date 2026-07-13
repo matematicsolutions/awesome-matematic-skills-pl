@@ -6,6 +6,38 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.07.13] - 2026-07-13
+
+### Added
+
+- `kalkulatory-procesowe-pl` (bundel `dokumenty`) - cztery kalkulatory
+  procesu cywilnego w jednym skillu: oplata sadowa (UKSC), przedawnienie
+  (art. 117-125 KC), odsetki (ustawowe / za opoznienie / w transakcjach
+  handlowych) i WPS (art. 19-26 KPC). Kazdy kalkulator otwiera tabela
+  "Aktualne parametry - POBIERZ przed obliczeniem" (zrodlo zywej wartosci +
+  fallback z data weryfikacji); wynik zawsze jako pelny rachunek z podstawa
+  prawna kazdego kroku i karta DO ZATWIERDZENIA PRZEZ CZLOWIEKA. Wzorce
+  z crankshift/lawpowers (MIT), tresc od zera - przy adaptacji poprawione
+  4 nieaktualne wartosci zrodla (m.in. limit oplaty stosunkowej 100 000 zl
+  po noweli Dz.U. 2025 poz. 1157).
+- `scripts/wachta-parametrow-kalkulatorow.mjs` - druga warstwa wachty
+  legislacyjnej: alarmuje, gdy akt bazowy kalkulatorow (UKSC, KC, KPC,
+  ustawa o transakcjach handlowych) zostal uchylony albo zmieniony po dacie
+  baseline fallbackow (`parametry-baseline.json`); nadchodzace nowele
+  z przyszla data wejscia w zycie raportuje jako ostrzezenia. Wpieta do
+  miesiecznego CI `wachta-legislacyjna.yml`.
+- Rejestr `seuranta/ustawy.json`: + UKSC (DU/2005/1398) i ustawa
+  o przeciwdzialaniu nadmiernym opoznieniom w transakcjach handlowych
+  (DU/2013/403); zaktualizowane kolumny "uzycie" KC i KPC.
+- Badge `assets/badge-kalkulatory-procesowe-pl.svg`, ten sam wzor co
+  pozostale 41.
+
+### Changed
+
+- Pakiet: 41 -> 42 umiejetnosci w naglowkach README.
+- `marketplace.json`: bundel `dokumenty` 1.2.0 -> 1.3.0, opis + kalkulatory.
+
+
 ## [2026.07.08] - 2026-07-08
 
 Domkniecie luki miedzy stronia matematicsolutions.com/boutique/skille (live,

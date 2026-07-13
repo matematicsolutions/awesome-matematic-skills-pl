@@ -26,3 +26,11 @@ jobs:
 
       - name: Sprawdz ustawy w ISAP
         run: node scripts/wachta-legislacyjna.mjs
+
+      # Druga warstwa: aktualnosc parametrow liczbowych kalkulatorow
+      # (dokumenty/kalkulatory-procesowe-pl) - alarm, gdy akt bazowy ma
+      # zmiane po dacie baseline fallbackow. `always()` - raportuj nawet
+      # gdy pierwsza warstwa znalazla problem.
+      - name: Sprawdz parametry kalkulatorow procesowych
+        if: always()
+        run: node scripts/wachta-parametrow-kalkulatorow.mjs

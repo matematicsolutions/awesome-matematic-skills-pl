@@ -57,6 +57,11 @@ w katalogu konkretnego skilla jezeli istnieje. Sumarycznie:
 - Microsoft / MarkItDown (MIT) - konwerter dokumentow. Wykorzystany w:
   markitdown jako CLI dependency (pip install markitdown).
 
+- crankshift/lawpowers (MIT) - pattern dekompozycji kalkulatorow
+  procesowych i protokolu "pobierz parametry przed obliczeniem".
+  Wykorzystany w: kalkulatory-procesowe-pl. Tresc, tabele i rachunki
+  napisane od zera na tekstach UKSC/KC/KPC.
+
 - worldwidelaw/legal-sources (AGPL-3.0) - katalog 960+ kolektorow
   publicznych zrodel prawnych. Wykorzystany w: legal-data-hunter-pl
   jako CLI dependency (wolane osobno, nie linkowane statycznie -

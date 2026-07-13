@@ -1,0 +1,34 @@
+{
+  "opis": "Baseline parametrow kalkulatorow procesowych. Data = dzien weryfikacji fallbackow w references/*.md. scripts/wachta-parametrow-kalkulatorow.mjs alarmuje w CI, gdy ktorys akt bazowy zostal uchylony albo zmieniony PO tej dacie - wtedy przejrzyj wskazany plik metodyki, zweryfikuj fallbacki i podnies baseline.",
+  "baseline": "2026-07-13",
+  "akty": [
+    {
+      "eli": "DU/2005/1398",
+      "skrot": "UKSC",
+      "nazwa": "o kosztach sądowych w sprawach cywilnych",
+      "parametry": "widelki art. 13 ust. 1, limit oplaty stosunkowej art. 13 ust. 2 (100 000 zl od 23.09.2025), ulamki art. 19, oplaty stale",
+      "plik": "references/oplata-sadowa.md"
+    },
+    {
+      "eli": "DU/1964/93",
+      "skrot": "KC",
+      "nazwa": "Kodeks cywilny",
+      "parametry": "przedawnienie art. 117-125, odsetki art. 359 i 481 (marze +3,5 / +5,5 p.p.)",
+      "plik": "references/przedawnienie.md, references/odsetki.md"
+    },
+    {
+      "eli": "DU/1964/296",
+      "skrot": "KPC",
+      "nazwa": "Kodeks postępowania cywilnego",
+      "parametry": "WPS art. 19-26, prog wlasciwosci art. 17 pkt 4 (100 000 zl), zaokraglenie art. 126(1) par. 3",
+      "plik": "references/wps.md"
+    },
+    {
+      "eli": "DU/2013/403",
+      "skrot": "UTH",
+      "nazwa": "o przeciwdziałaniu nadmiernym opóźnieniom w transakcjach handlowych",
+      "parametry": "stopy art. 4 pkt 3 (+10 / +8 p.p.), rekompensata 40/70/100 EUR art. 10",
+      "plik": "references/odsetki.md"
+    }
+  ]
+}

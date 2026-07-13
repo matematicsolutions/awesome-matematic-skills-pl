@@ -33,8 +33,8 @@
     },
     {
       "name": "dokumenty",
-      "description": "Operacje na dokumentach (6 skilli): konwersja PDF/Office->Markdown (markitdown, opendataloader-pdf), redlining .docx z Track Changes (redline-docx-pl), anonimizacja i pseudonimizacja PII (let-it-be), metodyka terminow procesowych z bramka czlowieka (terminy-procesowe-pl), lista kontrolna klauzul umownych (klauzule-kontraktowe-pl). RODO-safe, bez konektorow.",
-      "version": "1.2.0",
+      "description": "Operacje na dokumentach (7 skilli): konwersja PDF/Office->Markdown (markitdown, opendataloader-pdf), redlining .docx z Track Changes (redline-docx-pl), anonimizacja i pseudonimizacja PII (let-it-be), metodyka terminow procesowych z bramka czlowieka (terminy-procesowe-pl), lista kontrolna klauzul umownych (klauzule-kontraktowe-pl), cztery kalkulatory procesowe z zywymi parametrami (kalkulatory-procesowe-pl). RODO-safe, bez konektorow.",
+      "version": "1.3.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
       },
