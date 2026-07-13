@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// citation-grounding-pl v2 - mechaniczny weryfikator cytatu z GRADIENTEM weryfikacji (zero-dep ESM).
+// citation-grounding-pl v2.3 - mechaniczny weryfikator cytatu z GRADIENTEM weryfikacji (zero-dep ESM).
 // Usage: node ground-citations.mjs <task.json>
 //
 // Gradient (adaptacja Existence/Content/Paragraph z jeannesulzer/international-criminal-tribunals-skills, CC BY 4.0):
@@ -41,6 +41,103 @@ const STOPWORDS = new Set(
    "przed przez przy sa sie tak takze tam te tego tej temu ten to tych tym u w we wiec za ze " +
    "zeby ze az nr poz art").split(" ")
 );
+
+// Fold polskich diakrytykow - dopasowanie frazy szablonowej musi lapac tez tekst ASCII
+// (OCR, transliteracja, degradacja kodowania), a lista fraz jest pisana z diakrytykami.
+const DIAKRYTYKI = { "ą": "a", "ć": "c", "ę": "e", "ł": "l", "ń": "n", "ó": "o", "ś": "s", "ź": "z", "ż": "z" };
+function fold(s) {
+  return s.replace(/[ąćęłńóśźż]/g, (ch) => DIAKRYTYKI[ch]);
+}
+
+// --- Dyskonto jezyka szablonowego (poziom TRESC) ---
+// Frazy-wytrychy polskiego jezyka prawnego wystepuja w niemal kazdym akcie/umowie, wiec ich
+// obecnosc w zrodle NIE jest dowodem, ze zrodlo mowi to, co twierdzi output. Termin nosny
+// pochodzacy WYLACZNIE z frazy szablonowej liczy sie 0.5 zamiast 1.0 do pokrycia (wazonego).
+// Wzorzec COMMON_LEGAL_PHRASES z AnttiHero/lavern (Apache-2.0); lista PL i kod od zera.
+const BOILERPLATE_FRAZY = [
+  "z zastrzeżeniem",
+  "w szczególności",
+  "nie ponosi odpowiedzialności",
+  "ponosi odpowiedzialność",
+  "chyba że umowa stanowi inaczej",
+  "chyba że strony postanowiły inaczej",
+  "o którym mowa",
+  "o której mowa",
+  "o których mowa",
+  "stosuje się odpowiednio",
+  "pod rygorem nieważności",
+  "na zasadach określonych",
+  "zgodnie z postanowieniami",
+  "mając na uwadze",
+  "w rozumieniu przepisów",
+  "wchodzi w życie",
+  "traci moc",
+  "w drodze rozporządzenia",
+  "z uwzględnieniem",
+  "w zakresie nieuregulowanym",
+  "postanowienia niniejszej umowy",
+  "strony zgodnie postanawiają",
+  "zasady współżycia społecznego",
+  "należyta staranność",
+  "należytej staranności",
+].map((f) => fold(normalize(f)));
+
+// Tokeny nosne (>=4 znaki, nie-stopword) pochodzace z fraz szablonowych obecnych w twierdzeniu.
+// Zwraca tokeny w formie FOLDED - porownuj przez fold(t).
+function boilerplateTokens(normClaim) {
+  const foldedClaim = fold(normClaim);
+  const toks = new Set();
+  for (const fraza of BOILERPLATE_FRAZY) {
+    if (!foldedClaim.includes(fraza)) continue;
+    for (const t of fraza.split(" ")) {
+      if (t.length >= 4 && !STOPWORDS.has(t)) toks.add(t);
+    }
+  }
+  return toks;
+}
+
+// --- Zbieznosc fragmentu (poziom TRESC, sygnal pomocniczy) ---
+// Trigram-Jaccard twierdzenia z najlepszym oknem zrodla. Lapie przypadek "terminy obecne, ale
+// rozproszone po dokumencie" - zrodlo zawiera slowa twierdzenia, lecz zaden zwarty fragment
+// nie odpowiada tezie (wariant "prawdziwe slowa, falszywa teza" na poziomie tresci).
+// Wzorzec citation-content-matcher z chrisryugj/korean-law-mcp (MIT): tam bigramy znakowe dla
+// koreanskiego (1 znak = sylaba); dla polskiego alfabetu lacinskiego odpowiednikiem informacyjnym
+// jest TRIGRAM (bigram lacinski nakladal sie przypadkowo w kazdym tekscie prawniczym - zmierzone
+// na fixture: bigram scatter 0.33 vs trigram scatter 0.15 przy parafrazie 0.45-0.78). Kod i progi
+// od zera; u nas to wylacznie SYGNAL (uwaga dla czlowieka), nigdy samodzielna blokada.
+const PROG_ZBIEZNOSC_NISKA = 0.2; // ponizej = terminy rozproszone, brak zwartego fragmentu
+
+function trigramy(s) {
+  const out = new Set();
+  for (let i = 0; i <= s.length - 3; i++) {
+    const g = s.slice(i, i + 3);
+    if (!g.includes(" ")) out.add(g);
+  }
+  return out;
+}
+
+function jaccardZbiorow(a, b) {
+  if (a.size === 0 || b.size === 0) return 0;
+  let wspolne = 0;
+  for (const x of a) if (b.has(x)) wspolne++;
+  return wspolne / (a.size + b.size - wspolne);
+}
+
+// Maksymalny trigram-Jaccard twierdzenia z oknem zrodla dlugosci ~twierdzenia (krok 1/3 okna).
+function zbieznoscFragmentu(normClaim, src) {
+  const cb = trigramy(normClaim);
+  if (cb.size === 0) return null;
+  const L = Math.max(normClaim.length, 60);
+  if (src.length <= L) return jaccardZbiorow(cb, trigramy(src));
+  const step = Math.max(20, Math.floor(L / 3));
+  let best = 0;
+  for (let i = 0; i <= src.length - Math.floor(L / 2); i += step) {
+    const j = jaccardZbiorow(cb, trigramy(src.slice(i, i + L)));
+    if (j > best) best = j;
+    if (best >= 0.95) break;
+  }
+  return best;
+}
 
 function normalize(s) {
   if (s == null) return "";
@@ -208,14 +305,17 @@ function sprawdzFragment(quote, src) {
 }
 
 // --- POZIOM TRESC: obecnosc terminow nosnych twierdzenia w zrodle (warunek konieczny) ---
+// v2.3: pokrycie WAZONE (termin szablonowy liczy sie 0.5) + pokrycie surowe + zbieznosc fragmentu.
 function sprawdzTresc(claimText, src) {
+  const normClaim = normalize(claimText);
   const terms = [...new Set(
-    normalize(claimText)
+    normClaim
       .replace(/[".,;:()\[\]»«]/g, " ")
       .split(" ")
       .filter((t) => t.length >= 4 && !STOPWORDS.has(t))
   )];
-  if (terms.length === 0) return { pokrycie: 0, obecne: [], brakujace: [] };
+  if (terms.length === 0) return { pokrycie: 0, pokrycieSurowe: 0, obecne: [], brakujace: [], boilerplate: [], zbieznosc: null };
+  const boiler = boilerplateTokens(normClaim);
   // Dopasowanie po RDZENIU (prefiks) - polska deklinacja: "Warszawie"~"Warszawa", "spółki"~"spółka".
   // Termin obecny, gdy zrodlo zawiera jego prefiks dlugosci max(4, len-3) (ucina do 3 znakow koncowki).
   const obecny = (t) => {
@@ -224,8 +324,18 @@ function sprawdzTresc(claimText, src) {
     return pref.length >= 4 && src.includes(pref);
   };
   const obecne = [], brakujace = [];
-  for (const t of terms) (obecny(t) ? obecne : brakujace).push(t);
-  return { pokrycie: obecne.length / terms.length, obecne, brakujace, liczbaTerminow: terms.length };
+  let licznikWazony = 0;
+  for (const t of terms) {
+    if (obecny(t)) { obecne.push(t); licznikWazony += boiler.has(fold(t)) ? 0.5 : 1; }
+    else brakujace.push(t);
+  }
+  return {
+    pokrycie: licznikWazony / terms.length, // wazone: szablon nie zawyza dowodu
+    pokrycieSurowe: obecne.length / terms.length,
+    obecne, brakujace, liczbaTerminow: terms.length,
+    boilerplate: obecne.filter((t) => boiler.has(fold(t))),
+    zbieznosc: zbieznoscFragmentu(normClaim, src),
+  };
 }
 
 // --- POZIOM ISTNIENIE: zgodnosc kotwicy zadeklarowanej z rozwiazana (SAOS/EUR-Lex dostarcza agent) ---
@@ -271,7 +381,7 @@ function sprawdzIstnienie(anchor, resolved) {
   return { stan: roznice.length === 0 ? "potwierdzona" : "rozbiezna", roznice, uwagi };
 }
 
-export { stronyOverlap, partyTokens };
+export { stronyOverlap, partyTokens, zbieznoscFragmentu, boilerplateTokens };
 
 export function verify(item) {
   const claimType = item.claim_type || (item.quote ? "cytat_doslowny" : "powolanie");
@@ -341,15 +451,21 @@ export function verify(item) {
       out.status = "ZMODYFIKOWANY"; out.note = "drobne roznice (interpunkcja/uciecie) - patrz diff"; out.detail = frag.detail; return out;
     }
     // cytat nieznaleziony - ale czy dokument w ogole mowi o rzeczy (TRESC)?
+    // v2.3: prog na pokryciu WAZONYM - obecnosc samych fraz szablonowych nie ratuje
+    // brakujacego cytatu doslownego (lekcja lavern: boilerplate nie jest dowodem).
     if (tresc && tresc.pokrycie >= 0.7) {
       out.status = "KALIBRACJA";
       out.note = "doslowny cytat nieznaleziony, ale zrodlo dotyczy tematu (poziom TRESC). Zloagodz do parafrazy LUB oznacz pinpoint jako prowizoryczny.";
-      out.detail = { brakujace_terminy: tresc.brakujace };
+      out.detail = { brakujace_terminy: tresc.brakujace, zbieznosc_fragmentu: tresc.zbieznosc };
       return out;
     }
     out.status = "NIEZWERYFIKOWANY";
-    out.note = "brak cytatu i brak pokrycia terminow - potencjalna halucynacja, BLOKADA";
+    out.note = tresc && tresc.pokrycieSurowe >= 0.7
+      ? "brak cytatu; terminy obecne w zrodle to glownie jezyk szablonowy (pokrycie wazone " +
+        `${Math.round(tresc.pokrycie * 100)}%, surowe ${Math.round(tresc.pokrycieSurowe * 100)}%) - potencjalna halucynacja, BLOKADA`
+      : "brak cytatu i brak pokrycia terminow - potencjalna halucynacja, BLOKADA";
     out.detail = frag ? frag.detail : { powod: "brak tekstu/quote" };
+    if (tresc) out.detail = { ...((typeof out.detail === "object" && out.detail) || {}), terminy_szablonowe: tresc.boilerplate, zbieznosc_fragmentu: tresc.zbieznosc };
     return out;
   }
 
@@ -358,7 +474,20 @@ export function verify(item) {
     if (tresc.pokrycie >= 0.7) {
       out.status = "WYMAGA_OSADU";
       out.note = `terminy nosne obecne (${Math.round(tresc.pokrycie * 100)}%) - substancje potwierdza czlowiek/paraphrase-judge`;
-      out.detail = { pokrycie: tresc.pokrycie, brakujace_terminy: tresc.brakujace };
+      // Sygnal zbieznosci (v2.3): terminy obecne, ale zaden zwarty fragment zrodla nie odpowiada
+      // twierdzeniu - podwyzszone ryzyko "prawdziwe slowa, falszywa teza". Uwaga, nie blokada.
+      if (tresc.zbieznosc != null && tresc.zbieznosc < PROG_ZBIEZNOSC_NISKA) {
+        out.note += `; UWAGA: terminy rozproszone po zrodle (zbieznosc fragmentu ${Math.round(tresc.zbieznosc * 100)}%) - brak zwartego fragmentu odpowiadajacego twierdzeniu`;
+      }
+      out.detail = { pokrycie: tresc.pokrycie, pokrycie_surowe: tresc.pokrycieSurowe, brakujace_terminy: tresc.brakujace, terminy_szablonowe: tresc.boilerplate, zbieznosc_fragmentu: tresc.zbieznosc };
+      return out;
+    }
+    // v2.3: pokrycie surowe wysokie, ale wazone ponizej progu = dowod glownie szablonowy.
+    // Miekko (czlowiek osadza), bo wszystkie terminy SA w zrodle - to nie klasyczna halucynacja.
+    if (tresc.pokrycieSurowe >= 0.7) {
+      out.status = "WYMAGA_OSADU";
+      out.note = `terminy obecne, ale pokrycie w przewazajacej mierze jezykiem szablonowym (wazone ${Math.round(tresc.pokrycie * 100)}%, surowe ${Math.round(tresc.pokrycieSurowe * 100)}%) - podwyzszona ostroznosc, substancje potwierdza czlowiek`;
+      out.detail = { pokrycie: tresc.pokrycie, pokrycie_surowe: tresc.pokrycieSurowe, terminy_szablonowe: tresc.boilerplate, brakujace_terminy: tresc.brakujace, zbieznosc_fragmentu: tresc.zbieznosc };
       return out;
     }
     out.status = "NIEZWERYFIKOWANY";

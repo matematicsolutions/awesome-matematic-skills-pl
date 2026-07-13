@@ -253,6 +253,16 @@ do `legal-ai-audit-bundle` obok deliverable.
   Nie używać, tag przy linii, fail-closed dla klasy 3) - adaptacja „kolmiportainen varmuusmerkintä"
   z `akunikkola/claude-for-legal-finland` (MIT, `references/viittaustyyli.md`). Stamtąd też lekcja
   dyscypliny placeholderów w przykładach (audyt siostrzanego projektu DE: ~58% złych sygnatur).
+- Dyskonto języka szablonowego (v2.3): wzorzec `COMMON_LEGAL_PHRASES` z `AnttiHero/lavern`
+  (Apache 2.0, `src/mcp/tools/grounding-verifier.ts`) - trafiona fraza-wytrych liczy się 0.5 zamiast
+  1.0, żeby boilerplate nie zawyżał dowodu. Lista polskich fraz („z zastrzeżeniem", „w szczególności",
+  „chyba że umowa stanowi inaczej"...) i kod napisane od zera.
+- Zbieżność fragmentu (v2.3): wzorzec `citation-content-matcher` z `chrisryugj/korean-law-mcp`
+  (MIT) - n-gram-Jaccard twierdzenia z najlepszym oknem źródła łapie „prawdziwe słowa, fałszywa
+  teza" (terminy obecne, ale rozproszone; żaden zwarty fragment nie odpowiada tezie). Tam bigramy
+  znakowe (koreański: 1 znak = sylaba); tu TRIGRAMY dla polskiego alfabetu łacińskiego (zmierzone
+  na fixture: bigram dawał szum 0.33 na rozproszeniu, trigram 0.15 przy parafrazie 0.45-0.78).
+  Wyłącznie sygnał (uwaga dla człowieka), nigdy samodzielna blokada. Kod i progi od zera.
 - Gradient weryfikacji (v2): ISTNIENIE/TREŚĆ/FRAGMENT to adaptacja Existence/Content/Paragraph
   z `jeannesulzer/international-criminal-tribunals-skills` (CC BY 4.0, Jeanne Sulzer / Impact
   Litigation Lab, 2026). Zaadaptowano **ideę gradientu i regułę kalibracji**, nie kod ani treść -

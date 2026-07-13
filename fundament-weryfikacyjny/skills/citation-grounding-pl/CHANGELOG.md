@@ -2,6 +2,34 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/), wersjonowanie [SemVer](https://semver.org/).
 
+## [2.3.0] - 2026-07-13
+
+### Added
+- **Dyskonto języka szablonowego (poziom TREŚĆ).** Pokrycie terminów nośnych liczone WAŻONE:
+  termin pochodzący wyłącznie z frazy-wytrycha polskiego języka prawnego („z zastrzeżeniem",
+  „w szczególności", „nie ponosi odpowiedzialności", „chyba że umowa stanowi inaczej"...) liczy
+  się 0.5 zamiast 1.0. Skutek twardy: fałszywy cytat dosłowny „na poduszce szablonu" przestaje
+  wpadać w KALIBRACJĘ - jest blokowany (NIEZWERYFIKOWANY). Skutek miękki: parafraza o pokryciu
+  surowym ≥ 0.7, ale ważonym < 0.7 dostaje WYMAGA_OSADU z jawną notą o dominacji szablonu
+  (wszystkie terminy SĄ w źródle, więc to nie klasyczna halucynacja - człowiek osądza).
+  Dopasowanie fraz odporne na tekst bez diakrytyków (fold ą→a itd. - OCR/transliteracja).
+- **Zbieżność fragmentu (poziom TREŚĆ, sygnał).** Trigram-Jaccard twierdzenia z najlepszym oknem
+  źródła (okno ~długości twierdzenia, krok 1/3). Łapie „terminy obecne, ale rozproszone po
+  dokumencie" - źródło zawiera słowa twierdzenia, lecz żaden zwarty fragment nie odpowiada tezie.
+  Próg 0.20 (zmierzony na fixture w `scripts/test-grounding.mjs`: rozproszenie 0.15, luźna
+  parafraza 0.45, zwarta 0.78).
+  Wyłącznie UWAGA w nocie/detail - nigdy samodzielna blokada (filozofia warunku koniecznego
+  bez zmian). Nowe pola detail: `pokrycie_surowe`, `terminy_szablonowe`, `zbieznosc_fragmentu`.
+- Test-harness rozszerzony 11 → 19 przypadków (fałszywy cytat na szablonie, parafraza na
+  szablonie, rozproszenie terminów, regresje zwartej parafrazy).
+
+### Attribution
+- Dyskonto szablonu: wzorzec `COMMON_LEGAL_PHRASES` z `AnttiHero/lavern` (Apache 2.0);
+  lista polskich fraz i kod od zera.
+- Zbieżność fragmentu: wzorzec `citation-content-matcher` z `chrisryugj/korean-law-mcp` (MIT);
+  bigram→trigram to świadoma adaptacja do polskiego alfabetu łacińskiego (koreański znak ≈ sylaba);
+  kod i progi od zera.
+
 ## [2.2.0] - 2026-07-05
 
 ### Added
