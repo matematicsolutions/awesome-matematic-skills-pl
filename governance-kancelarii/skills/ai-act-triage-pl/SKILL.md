@@ -13,13 +13,13 @@ description: >-
   pod AI Act", "klasyfikacja systemu AI", "wysokie ryzyko załącznik III", "jaka
   jest nasza rola pod AI Act", "triage AI Act", "czy nasz chatbot ma obowiązki".
 license: Apache-2.0
-allowed-tools: [Read]
+allowed-tools: [Read, Bash]
 data-residency: local
 requires-human-approval: true
 pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   inspiration: dekompozycja triage -> rola -> obowiązki -> raport to utrwalony wzorzec w ekosystemie compliance; treść napisana od zera na tekście rozporządzenia (UE) 2024/1689
   companion_skills: matematic-konstytucja-ai, legal-ai-audit-bundle, rodo-dpia-pl, konektor mcp-eu-compliance
 ---
@@ -250,6 +250,27 @@ zanim trafi do rejestru jako obowiązująca. Trzy wyniki eskalują obowiązkowo 
 natychmiast: podejrzenie praktyki zakazanej (art. 5), wysokie ryzyko, GPAI.
 W tych przypadkach triage kończy się skierowaniem do człowieka i pełnej analizy -
 skill nie próbuje jej zastąpić.
+
+## Narzędzia deterministyczne (opcjonalne)
+
+Łańcuch ośmiu pytań prowadzi człowiek. Trzy skrypty w `scripts/` dają deterministyczne
+wsparcie tam, gdzie klasyfikacja i mapa obowiązków dają się policzyć maszynowo. Tylko
+biblioteka standardowa Pythona, praca lokalna, nic nie wychodzi na zewnątrz. Nie zastępują
+Kroku 0: cytaty w skryptach idą za strukturą rozporządzenia, ale przy wpisie do karty i tak
+weryfikuj artykuł w EUR-Lex. Każdy skrypt kończy banner "INTERPRETACJA MateMatic".
+
+- `klasyfikator_ryzyka_ai.py` - poziom ryzyka wg art. 5 / 6 / 50 + załącznik III (drzewo
+  decyzyjne z filtrem art. 6 ust. 3 i wyjątkiem profilowania). Odpowiada krokom 2-5.
+- `plan_zgodnosci.py` - dla wysokiego ryzyka: wybór modułu oceny zgodności (A kontrola
+  wewnętrzna vs H jednostka notyfikowana, art. 43) i 8-punktowa checklista dokumentacji
+  technicznej (załącznik IV). To warstwa, której triage celowo nie robi - następny krok
+  po klasyfikacji, gdy sprawa i tak idzie do pełnej analizy.
+- `tracker_obowiazkow.py` - macierz obowiązków per rola (dostawca / podmiot stosujący /
+  importer / dystrybutor) posortowana wg terminów fazowania (art. 113). Odpowiada krokom 6-7.
+
+Uruchomienie: `python scripts/<nazwa>.py` (wbudowana próbka) albo z własnym plikiem JSON;
+`--output json` do dalszego przetwarzania. Referencje `references/` rozwijają załącznik III,
+artykuł po artykule oraz styk z RODO.
 
 ## Companion skills
 

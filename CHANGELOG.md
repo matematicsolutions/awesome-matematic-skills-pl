@@ -23,6 +23,17 @@ Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
   poza EOG - dla danych klienta tylko backend lokalny/EOG. Bump bundla `dokumenty`
   1.3.0 -> 1.4.0 (7 -> 8 skilli).
 
+### Changed
+
+- `ai-act-triage-pl` (bundel `governance-kancelarii`) 1.0.0 -> 1.1.0 - triage z
+  prose-only zyskuje trzy deterministyczne skrypty (stdlib, lokalne): klasyfikator
+  ryzyka (art. 5/6/50 + zalacznik III), plan oceny zgodnosci (moduly art. 43 +
+  checklista dokumentacji technicznej z zalacznika IV) i tracker obowiazkow per
+  rola wg fazowania art. 113. Skrypty wspieraja lancuch osmiu pytan i wchodza w
+  warstwe oceny zgodnosci, ktorej triage wczesniej nie robil; nie zastepuja Kroku 0
+  (weryfikacja przepisu w EUR-Lex). `allowed-tools` [Read] -> [Read, Bash]. Bump
+  bundla `governance-kancelarii` 1.1.0 -> 1.2.0.
+
 ## [2026.07.13] - 2026-07-13
 
 ### Added

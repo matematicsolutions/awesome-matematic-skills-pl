@@ -43,8 +43,8 @@
     },
     {
       "name": "governance-kancelarii",
-      "description": "Governance AI dla kancelarii (5 skilli): Konstytucja AI, triage AI Act (klasyfikacja + rola + mapa obowiazkow), preflight tajemnicy zawodowej przed wyslaniem tresci do zewnetrznego AI, warsztat decyzyjny Expert Panel, szyfrowany backup Google Workspace (RODO art. 32). Generatory dokumentow, bez konektorow.",
-      "version": "1.1.0",
+      "description": "Governance AI dla kancelarii (5 skilli): Konstytucja AI, triage AI Act (klasyfikacja + rola + mapa obowiazkow, teraz z deterministycznymi skryptami: klasyfikator ryzyka art. 5/6/50, plan oceny zgodnosci art. 43 + checklista zalacznika IV, tracker obowiazkow wg fazowania art. 113), preflight tajemnicy zawodowej przed wyslaniem tresci do zewnetrznego AI, warsztat decyzyjny Expert Panel, szyfrowany backup Google Workspace (RODO art. 32). Generatory dokumentow, bez konektorow.",
+      "version": "1.2.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
       },
