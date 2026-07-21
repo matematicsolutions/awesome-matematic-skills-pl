@@ -6,6 +6,23 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.07.21] - 2026-07-21
+
+### Added
+
+- `doc-intel-llm-tier-pl` (bundel `dokumenty`) - warstwa LLM-tier groundowanej
+  ekstrakcji konceptow z polskich dokumentow prawnych. Wyciaga inferowane pola
+  (kara umowna, termin, sad wlasciwy, ryzyka), ktorych nie zlapie regex, i
+  zakotwicza kazde do zdania/akapitu zrodlowego + uzasadnienie. Zwraca rekordy
+  zgodne z kontraktem doc-intel {concept, block_type, text, confidence, refs,
+  justification} - most do citation-grounding-pl. Dopelnia (nie zastepuje)
+  deterministyczny doc-intel-contract-pl. WRAP na `contextgem` (Apache-2.0,
+  shcherbak-ai) - jedyna zaleznosc, swiadomy wyjatek od stdlib. Governance
+  wbudowany w tool: domyslny backend lokalny (Ollama), model chmurowy wymaga
+  jawnej flagi `--allow-cloud` (odmowa exit 2 bez niej) i ostrzega o transferze
+  poza EOG - dla danych klienta tylko backend lokalny/EOG. Bump bundla `dokumenty`
+  1.3.0 -> 1.4.0 (7 -> 8 skilli).
+
 ## [2026.07.13] - 2026-07-13
 
 ### Added
