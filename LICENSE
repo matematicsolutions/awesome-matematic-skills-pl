@@ -19,13 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Note on bundled skills:
-
-This repository's curation (README, taxonomy, marketplace manifest) is MIT.
-Individual skills bundled under ./skills/ retain their own license, declared
-in each SKILL.md frontmatter and in .claude-plugin/marketplace.json. MateMatic
-skills are Apache-2.0 unless otherwise stated. Third-party inspirations are
-attributed in each skill (see "inspiration" / "attribution" frontmatter).
