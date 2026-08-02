@@ -1,7 +1,7 @@
 {
   "name": "dokumenty",
   "description": "Operacje na dokumentach: konwersja PDF/Office do Markdown (markitdown, opendataloader-pdf), redlining .docx z Track Changes (redline-docx-pl), anonimizacja i pseudonimizacja PII (let-it-be), terminy procesowe (terminy-procesowe-pl), klauzule umowne (klauzule-kontraktowe-pl), kalkulatory procesowe (kalkulatory-procesowe-pl). RODO-safe, bez konektorow.",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": { "name": "Wieslaw Mazur / MateMatic Solutions" },
   "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
   "license": "Apache-2.0",

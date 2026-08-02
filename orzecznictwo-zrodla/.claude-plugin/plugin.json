@@ -1,7 +1,7 @@
 {
   "name": "orzecznictwo-zrodla",
   "description": "Wyszukiwanie i pobieranie źródeł prawa PL/UE: SAOS, EUR-Lex, katalog źródeł krajowych. Niesie konektory MCP saos/krs/eu-sparql (read-only, publiczne API). Wymaga node/npx.",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "author": { "name": "Wiesław Mazur / MateMatic Solutions" },
   "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
   "license": "Apache-2.0",
