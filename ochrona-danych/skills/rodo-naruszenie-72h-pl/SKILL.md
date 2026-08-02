@@ -7,7 +7,7 @@ description: >
   i wolności, czy zgłaszać do UODO w 72h (art. 33) z licznikiem terminu od stwierdzenia, czy
   zawiadomić osoby (art. 34, "wysokie ryzyko") i wyjątki, wpis do wewnętrznego rejestru naruszeń
   (art. 33 ust. 5). Składa draft zgłoszenia i zawiadomień; wysyłkę do UODO i osób zostawia
-  człowiekowi. RODO-safe (lokalnie). Używaj gdy: "wyciek danych",
+  człowiekowi. Nie dodaje konektorów i sam niczego nie wysyła; wklejony opis incydentu trafia do modelu, który masz skonfigurowany. Używaj gdy: "wyciek danych",
   "naruszenie RODO", "zgłoszenie do UODO 72h", "czy zawiadomić osoby", "art. 33", "data breach PL".
 license: Apache-2.0
 allowed-tools: [Bash, Read]
@@ -68,7 +68,7 @@ działania. To dowód rozliczalności wobec UODO.
 
 ## Narzędzie - kalkulator terminu (deterministyczny, offline)
 
-Licznika 72h nie licz w pamięci. Użyj skryptu (zero zależności, RODO-safe, lokalnie):
+Licznika 72h nie licz w pamięci. Użyj skryptu (zero zależności, offline):
 
 ```bash
 python scripts/gdpr_deadlines.py breach --from "2026-06-30T14:30"

@@ -6,7 +6,7 @@
 [![skills.sh](https://skills.sh/b/matematicsolutions/awesome-matematic-skills-pl)](https://skills.sh/matematicsolutions/awesome-matematic-skills-pl)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
 [![Polish law](https://img.shields.io/badge/jurysdykcja-PL%20%2B%20UE-red.svg)](#dlaczego-polski-hub)
-[![RODO-safe](https://img.shields.io/badge/RODO--safe-by%20default-green.svg)](#dlaczego-polski-hub)
+[![RODO-safe](https://img.shields.io/badge/RODO--safe-warstwa%20skilla-green.svg)](TRUST.md)
 
 Polski hub umiejetnosci AI dla prawa - kuratorska lista i pakiet umiejetnosci agentowych (Agent Skills), ktore dzialaja w polskiej praktyce kancelaryjnej, in-house, naukowej i NGO.
 
@@ -65,7 +65,7 @@ Wszystkie umiejetnosci sa spiete w pluginy domenowe - instalujesz jedna komenda.
 
 ### Plugin `fundament-weryfikacyjny` (11 warstw walidacji outputu LLM)
 
-Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, nic nie wysyla na zewnatrz. Instalacja: `/plugin install fundament-weryfikacyjny@matematic-skills-pl`.
+Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, bez wlasnych polaczen wychodzacych. Instalacja: `/plugin install fundament-weryfikacyjny@matematic-skills-pl`.
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
@@ -247,7 +247,7 @@ ln -s "$(pwd)/fundament-weryfikacyjny/skills/citation-grounding-pl" ~/.claude/sk
 ## Dlaczego polski hub
 
 1. **Polskie organy maja wlasna semantyke.** UODO nie jest tylko ICO/CNIL. KIO ma wlasny tryb 23-dniowy. NSA orzeka kasacyjnie inaczej niz Bundesverwaltungsgericht. Globalny „GDPR + NDA review" tego nie pokrywa.
-2. **Tajemnica zawodowa.** Art. 6 PrAdw + art. 3 RadcPrU + tajemnica notarialna + tajemnica komornicza. Wysylka cloud do US bez SCC = naruszenie. Wszystkie nasze skille sa **RODO-safe by default** (lokalna inference albo izolacja).
+2. **Tajemnica zawodowa.** Art. 6 PrAdw + art. 3 RadcPrU + tajemnica notarialna + tajemnica komornicza. Wysylka cloud do US bez SCC = naruszenie. Nasze skille **nie dodaja wlasnych kanalow wychodzacych** - co trafia do modelu, decyduje Twoja konfiguracja, a dokladna granice tej deklaracji spisuje [TRUST.md](TRUST.md). Pelna lokalnosc = model lokalny (np. Ollama).
 3. **AI Act art. 12 + art. 13.** Obowiazek prowadzenia rejestru zdarzen (art. 12) i transparency duty (art. 13). [legal-ai-audit-bundle](./fundament-weryfikacyjny/skills/legal-ai-audit-bundle) pakuje to natywnie. Zachodnie huby dopiero o tym dyskutuja.
 4. **Polski jezyk.** Modele LLM popelniaja inne bledy w polszczyznie (kalki anglicyzmow, naduzycie em-dash, hedging). Hub zawiera narzedzia do wykrywania i poprawy tych wzorcow przed publikacja.
 

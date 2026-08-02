@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-plugin-marketplace.json",
   "name": "matematic-skills-pl",
   "version": "2026.07.21",
-  "description": "Polski hub umiejetnosci AI dla prawa - 8 bundli domenowych instalowalnych jedna komenda (fundament weryfikacyjny, orzecznictwo + konektory PL/UE, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, 9 konektorow prawa krajowego UE). RODO-safe, vendor-agnostic.",
+  "description": "Polski hub umiejetnosci AI dla prawa - 8 bundli domenowych instalowalnych jedna komenda (fundament weryfikacyjny, orzecznictwo + konektory PL/UE, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, 9 konektorow prawa krajowego UE). Vendor-agnostic; zakres deklaracji RODO-safe definiuje TRUST.md.",
   "owner": {
     "name": "Wieslaw Mazur / MateMatic Solutions",
     "email": "wieslaw@matematic.co",
@@ -13,7 +13,7 @@
   "plugins": [
     {
       "name": "fundament-weryfikacyjny",
-      "description": "Rdzen weryfikacyjny instaluj-zawsze (11 skilli): routing zadania, ocena wejscia, grounding cytatu, ekstrakcja cytatow, sylogizm/subsumpcja, czerwony zespol, jednoprzebiegowy atak przeciwnika, test zimnego czytelnika (pierwsze wrazenie sedziego), wiernosc deliverable, ocena outputu, paczka audytowa AI Act art. 12. Neutralny jurysdykcyjnie, bez konektorow, nic nie wysyla na zewnatrz.",
+      "description": "Rdzen weryfikacyjny instaluj-zawsze (11 skilli): routing zadania, ocena wejscia, grounding cytatu, ekstrakcja cytatow, sylogizm/subsumpcja, czerwony zespol, jednoprzebiegowy atak przeciwnika, test zimnego czytelnika (pierwsze wrazenie sedziego), wiernosc deliverable, ocena outputu, paczka audytowa AI Act art. 12. Neutralny jurysdykcyjnie, bez konektorow, bez wlasnych polaczen wychodzacych.",
       "version": "1.2.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
@@ -33,7 +33,7 @@
     },
     {
       "name": "dokumenty",
-      "description": "Operacje na dokumentach (8 skilli): konwersja PDF/Office->Markdown (markitdown, opendataloader-pdf), redlining .docx z Track Changes (redline-docx-pl), anonimizacja i pseudonimizacja PII (let-it-be), metodyka terminow procesowych z bramka czlowieka (terminy-procesowe-pl), lista kontrolna klauzul umownych (klauzule-kontraktowe-pl), cztery kalkulatory procesowe z zywymi parametrami (kalkulatory-procesowe-pl), groundowana ekstrakcja konceptow prawnych warstwa LLM z zakotwiczeniem cytatu do zdania zrodlowego (doc-intel-llm-tier-pl, wymaga contextgem + modelu lokalnego/EOG; backend chmurowy tylko za jawna flaga). Rdzen RODO-safe bez konektorow; doc-intel domyslnie lokalny (Ollama).",
+      "description": "Operacje na dokumentach (8 skilli): konwersja PDF/Office->Markdown (markitdown, opendataloader-pdf), redlining .docx z Track Changes (redline-docx-pl), anonimizacja i pseudonimizacja PII (let-it-be), metodyka terminow procesowych z bramka czlowieka (terminy-procesowe-pl), lista kontrolna klauzul umownych (klauzule-kontraktowe-pl), cztery kalkulatory procesowe z zywymi parametrami (kalkulatory-procesowe-pl), groundowana ekstrakcja konceptow prawnych warstwa LLM z zakotwiczeniem cytatu do zdania zrodlowego (doc-intel-llm-tier-pl, wymaga contextgem + modelu lokalnego/EOG; backend chmurowy tylko za jawna flaga). Rdzen bez konektorow; doc-intel domyslnie lokalny (Ollama).",
       "version": "1.4.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
@@ -73,7 +73,7 @@
     },
     {
       "name": "jakosc-tresci",
-      "description": "Narzedzia jakosci tekstu polskiego (2 skille): humanizer-pl (usuwa wzorce AI-slop, w tym sygnatury statystyczne wykrywane przez detektory) i marko-pl-content (zrzedliwy senior redaktor, werdykt + zarzuty z plik:linia). Zmienia slowa, nigdy faktow. Bez konektorow, nic nie wysyla na zewnatrz.",
+      "description": "Narzedzia jakosci tekstu polskiego (2 skille): humanizer-pl (usuwa wzorce AI-slop, w tym sygnatury statystyczne wykrywane przez detektory) i marko-pl-content (zrzedliwy senior redaktor, werdykt + zarzuty z plik:linia). Zmienia slowa, nigdy faktow. Bez konektorow, bez wlasnych polaczen wychodzacych.",
       "version": "1.0.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
@@ -83,7 +83,7 @@
     },
     {
       "name": "ochrona-danych",
-      "description": "Operacje RODO i cyber dla kancelarii i IOD (5 skilli): ocena skutkow DPIA (art. 35-36), obsluga naruszenia w 72h (art. 33-34), zadania osob DSAR (art. 12, 15-22), rejestr czynnosci RoPA i przeglad umow powierzenia DPA (art. 30, 28), triage NIS2/KSC (zakres, 10 srodkow art. 21, zegar raportowania). Grounding cytatu decyzji UODO zyje w orzecznictwo-zrodla (uodo-grounding-pl). Ugruntowane w artykulach RODO/NIS2 i wytycznych EROD/UODO. RODO-safe, bez konektorow.",
+      "description": "Operacje RODO i cyber dla kancelarii i IOD (5 skilli): ocena skutkow DPIA (art. 35-36), obsluga naruszenia w 72h (art. 33-34), zadania osob DSAR (art. 12, 15-22), rejestr czynnosci RoPA i przeglad umow powierzenia DPA (art. 30, 28), triage NIS2/KSC (zakres, 10 srodkow art. 21, zegar raportowania). Grounding cytatu decyzji UODO zyje w orzecznictwo-zrodla (uodo-grounding-pl). Ugruntowane w artykulach RODO/NIS2 i wytycznych EROD/UODO. Bez konektorow, bez wlasnych polaczen wychodzacych.",
       "version": "1.1.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"

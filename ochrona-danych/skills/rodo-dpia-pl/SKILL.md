@@ -6,7 +6,7 @@ description: >
   WYMAGANE (9 kryteriów EROD, reguła co najmniej dwóch kryteriów, wykaz operacji UODO), strukturę
   OSOD wg art. 35 ust. 7 (opis, niezbędność i proporcjonalność, ocena ryzyka, środki) oraz decyzję
   o uprzednich konsultacjach z UODO wg art. 36. Składa draft OSOD i rejestr decyzji; decyzję
-  administratora i wniosek do UODO zostawia człowiekowi. RODO-safe (lokalnie).
+  administratora i wniosek do UODO zostawia człowiekowi. Nie dodaje konektorów i sam niczego nie wysyła; wklejony opis systemu trafia do modelu, który masz skonfigurowany.
   Używaj gdy: "czy potrzebuję DPIA", "ocena skutków RODO", "OSOD dla profilowania/monitoringu/AI",
   "art. 35 RODO", "uprzednie konsultacje UODO", "DPIA dla nowego systemu".
 license: Apache-2.0
@@ -69,7 +69,7 @@ wystąpienia (zakres z art. 36 ust. 3), ale **wniosek składa człowiek** (grani
 
 ## Narzędzie - przesiew progu (deterministyczny, offline)
 
-Czy DPIA jest wymagane przesiej skryptem zamiast oceniać "na oko" (zero zależności, RODO-safe):
+Czy DPIA jest wymagane przesiej skryptem zamiast oceniać "na oko" (zero zależności, offline):
 
 ```bash
 python scripts/dpia_screening.py --criteria evaluation,sensitive,largescale

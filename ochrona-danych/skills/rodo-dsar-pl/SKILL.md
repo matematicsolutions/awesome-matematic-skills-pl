@@ -7,7 +7,7 @@ description: >
   ust. 3; przedłużenie o maks. 2 miesiące przy złożoności), bramkuje wyjątki i podstawy odmowy (np.
   art. 17 ust. 3, żądania ewidentnie bezzasadne lub nadmierne - art. 12 ust. 5), składa draft
   odpowiedzi i rejestr. Weryfikacja tożsamości wnioskodawcy (art. 12 ust. 6) jako pierwszy krok.
-  Wysyłkę odpowiedzi oraz usunięcie lub eksport danych zostawia człowiekowi. RODO-safe (lokalnie). Używaj gdy: "wniosek o dostęp do danych",
+  Wysyłkę odpowiedzi oraz usunięcie lub eksport danych zostawia człowiekowi. Nie dodaje konektorów i sam niczego nie wysyła; treść wniosku trafia do modelu, który masz skonfigurowany. Używaj gdy: "wniosek o dostęp do danych",
   "żądanie usunięcia", "prawo do bycia zapomnianym", "sprzeciw RODO", "termin na odpowiedź DSAR".
 license: Apache-2.0
 allowed-tools: [Bash, Read]
@@ -64,7 +64,7 @@ i wpis do rejestru żądań (data wpływu, typ, termin, rozstrzygnięcie).
 
 ## Narzędzie - kalkulator terminu (deterministyczny, offline)
 
-Terminu miesięcznego nie licz w pamięci - arytmetyka miesiąca ma pułapki (wpływ 31 stycznia => koniec 28/29 lutego, wg rozporządzenia EWG 1182/71). Użyj skryptu (zero zależności, RODO-safe):
+Terminu miesięcznego nie licz w pamięci - arytmetyka miesiąca ma pułapki (wpływ 31 stycznia => koniec 28/29 lutego, wg rozporządzenia EWG 1182/71). Użyj skryptu (zero zależności, offline):
 
 ```bash
 python scripts/gdpr_deadlines.py dsar --from 2026-01-31 --extend

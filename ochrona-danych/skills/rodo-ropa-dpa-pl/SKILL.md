@@ -8,7 +8,7 @@ description: >
   powierzenia pod kątem obowiązkowych klauzul art. 28 ust. 3 lit. a-h (polecenia administratora,
   poufność, bezpieczeństwo, podpowierzenie, pomoc w prawach osób, pomoc art. 32-36, usunięcie/zwrot,
   audyty) oraz transfery rozdz. V. Składa draft rejestru i redline umowy; podpis zostawia
-  człowiekowi. RODO-safe (lokalnie). Używaj gdy: "rejestr czynności przetwarzania", "RCP art. 30", "umowa powierzenia",
+  człowiekowi. Nie dodaje konektorów i sam niczego nie wysyła; wklejona treść umowy trafia do modelu, który masz skonfigurowany. Używaj gdy: "rejestr czynności przetwarzania", "RCP art. 30", "umowa powierzenia",
   "DPA art. 28", "przegląd umowy z procesorem", "rejestr RODO".
 license: Apache-2.0
 allowed-tools: [Bash, Read]
@@ -66,7 +66,7 @@ klauzul (silnik [[redline-docx-pl]], biblioteka [[klauzule-kontraktowe-pl]]).
 
 ## Narzędzie - kontrola klauzul art. 28 (deterministyczny, offline)
 
-Braki w umowie powierzenia wskaż skryptem - podajesz obecne klauzule, zwraca brakujące (zero zależności, RODO-safe):
+Braki w umowie powierzenia wskaż skryptem - podajesz obecne klauzule, zwraca brakujące (zero zależności, offline):
 
 ```bash
 python scripts/dpa_clause_check.py --present a,b,c,g
