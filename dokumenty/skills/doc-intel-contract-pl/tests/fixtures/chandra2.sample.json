@@ -1,0 +1,11 @@
+[
+  {"bbox": [112, 88, 1240, 156], "label": "Section-Header",
+   "content": "<h1>POSTANOWIENIE</h1>"},
+  {"bbox": [112, 190, 1240, 480], "label": "Text",
+   "content": "<p>S&#261;d Rejonowy w Warszawie po rozpoznaniu sprawy <b>oddali&#322; wniosek</b>.</p>"},
+  {"bbox": [112, 520, 1240, 830], "label": "Table",
+   "content": "<table><tr><td>Lp.</td><td>Pozycja</td><td>Kwota</td></tr><tr><td>1</td><td>Oplata</td><td>300 zl</td></tr></table>"},
+  {"bbox": [112, 900, 620, 980], "label": "Page-Footer",
+   "content": "<p>Strona 1 z 2</p>"},
+  {"bbox": [0, 0, 1240, 1754], "label": "Blank-Page", "content": ""}
+]

@@ -1,0 +1,23 @@
+{
+  "pages": [
+    {
+      "page_number": 1,
+      "width": 595,
+      "height": 842,
+      "blocks": [
+        {"type": "Title", "bbox": [50, 40, 545, 80], "text": "POSTANOWIENIE", "confidence": 0.99},
+        {"type": "Text", "bbox": [50, 100, 545, 300], "text": "Sad Rejonowy w Warszawie po rozpoznaniu sprawy...", "confidence": 0.97},
+        {"type": "Table", "bbox": [50, 320, 545, 500], "text": "Lp. | Pozycja | Kwota", "confidence": 0.62},
+        {"type": "Signature", "bbox": [350, 700, 545, 780], "text": "(podpis nieczytelny)", "confidence": 0.41}
+      ]
+    },
+    {
+      "page_number": 2,
+      "width": 595,
+      "height": 842,
+      "blocks": [
+        {"type": "Text", "bbox": [50, 60, 545, 220], "text": "Uzasadnienie. W ocenie Sadu...", "confidence": 0.95}
+      ]
+    }
+  ]
+}

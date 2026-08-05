@@ -1,0 +1,25 @@
+{
+  "pages": [
+    {
+      "page": 1,
+      "blocks": [
+        {"type": "section-header", "bbox": [0.08, 0.05, 0.92, 0.09],
+         "lines": [{"text": "POSTANOWIENIE", "conf": 0.99}]},
+        {"type": "text", "bbox": [0.08, 0.12, 0.92, 0.34],
+         "lines": [{"text": "Sad Rejonowy w Warszawie", "conf": 0.96},
+                   {"text": "po rozpoznaniu sprawy oddalil wniosek.", "conf": 0.55}]},
+        {"type": "table", "bbox": [0.08, 0.38, 0.92, 0.60],
+         "lines": [{"text": "Lp. Pozycja Kwota", "conf": 0.71}]}
+      ]
+    },
+    {
+      "page": 2,
+      "width": 1000,
+      "height": 1400,
+      "blocks": [
+        {"type": "text", "bbox": [80, 60, 920, 220],
+         "lines": [{"text": "Uzasadnienie w ocenie Sadu.", "conf": 0.93}]}
+      ]
+    }
+  ]
+}

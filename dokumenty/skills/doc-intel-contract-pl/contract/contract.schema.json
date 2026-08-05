@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document Intelligence Output Contract",
+  "type": "object",
+  "required": ["doc_id", "contract_version", "source", "blocks", "gating", "meta"],
+  "properties": {
+    "doc_id": { "type": "string" },
+    "contract_version": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["engine"],
+      "properties": {
+        "path": { "type": ["string", "null"] },
+        "engine": { "type": "string", "enum": ["opendataloader", "pdftotext", "chandra", "gaius", "vlm-html"] },
+        "engine_variant": { "type": ["string", "null"] },
+        "pages": { "type": ["integer", "null"] }
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "page", "bbox", "block_type", "text", "confidence", "flags"],
+        "properties": {
+          "id": { "type": "string" },
+          "page": { "type": "integer" },
+          "bbox": { "type": ["array", "null"], "items": { "type": "number" } },
+          "block_type": {
+            "type": "string",
+            "enum": ["title", "paragraph", "table", "list", "equation", "signature", "stamp", "figure", "header", "footer", "unknown"]
+          },
+          "text": { "type": "string" },
+          "confidence": { "type": ["number", "null"] },
+          "flags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "gating": {
+      "type": "object",
+      "required": ["threshold", "review_required", "auto_approved"],
+      "properties": {
+        "threshold": { "type": "number" },
+        "review_required": { "type": "array", "items": { "type": "string" } },
+        "auto_approved": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "redaction_candidates": { "type": "array", "items": { "type": "string" } },
+    "meta": {
+      "type": "object",
+      "required": ["created_at"],
+      "properties": {
+        "created_at": { "type": "string" }
+      }
+    }
+  }
+}
