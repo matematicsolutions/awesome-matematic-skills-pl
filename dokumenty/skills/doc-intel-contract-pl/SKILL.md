@@ -13,7 +13,26 @@ description: >
   bloki do przegladu", "confidence gating", "przygotuj redakcje PII", "bbox do
   cytatu", "wyjscie opendataloader do JSON", "human-in-the-loop dla skanu".
   Komplementarny do citation-grounding-pl (konsument kontraktu) i drabinki PDF.
-attribution: "pattern-only (Mistral OCR 4 - idea kontraktu, model zamkniety) + adaptation (datalab-to/chandra, Apache-2.0 kod: prompt-kontrakt constrained-HTML, detektor degeneracji, przepis flatten+DPI)"
+attribution:
+  - source: Mistral OCR 4 (Mistral AI)
+    url: https://mistral.ai/news/mistral-ocr
+    license: proprietary
+    relationship: pattern-only
+    note: >
+      Idea kontraktu wyjscia Document Intelligence: typed blocks + bbox + confidence
+      jako jedno audytowalne wyjscie. Model jest zamkniety, wiec bierzemy sam ksztalt
+      kontraktu; schemat, gating, flagi PII i caly kod napisane od zera.
+  - source: datalab-to/chandra
+    url: https://github.com/datalab-to/chandra
+    license: Apache-2.0
+    relationship: adaptation
+    note: >
+      Z KODU (Apache-2.0), nie z wag (wagi sa na Modified OpenRAIL-M i nie sa tu
+      uzywane). Wzorzec prompt-kontraktu constrained-HTML z data-label/data-bbox
+      w skali 0-1000 (silnik vlm-html), algorytm detekcji zapetlenia generacji
+      detect_repeat_token (degeneracja.py) oraz przepis renderu strony
+      flatten AcroForm + dynamiczne DPI. Taksonomia etykiet, obsluga podpisu
+      i pieczatki, adapter i testy napisane od zera.
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 0.2.0
@@ -21,7 +40,6 @@ metadata:
   cost: zero LLM (deterministyczna normalizacja)
   license: MIT
   companion_skills: citation-grounding-pl, opendataloader-pdf, markitdown
-  source_pattern: architektura Mistral OCR 4 (idea, nie wagi) - reference_ocr_output_contract_from_mistral4
 ---
 
 # doc-intel-contract-pl - kontrakt wyjscia Document Intelligence
