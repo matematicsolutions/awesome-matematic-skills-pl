@@ -17,10 +17,15 @@ allowed-tools: [Read, Bash]
 data-residency: local
 requires-human-approval: true
 pii-egress: none
+attribution:
+  relationship: original
+  note: >
+    Brak źródła trzeciej strony. Dekompozycja triage -> rola -> obowiązki -> raport to
+    utrwalony wzorzec w ekosystemie compliance; treść napisana od zera na tekście
+    rozporządzenia (UE) 2024/1689.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0
-  inspiration: dekompozycja triage -> rola -> obowiązki -> raport to utrwalony wzorzec w ekosystemie compliance; treść napisana od zera na tekście rozporządzenia (UE) 2024/1689
   companion_skills: matematic-konstytucja-ai, legal-ai-audit-bundle, rodo-dpia-pl, konektor mcp-eu-compliance
 ---
 

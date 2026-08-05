@@ -17,12 +17,14 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: true
 pii-egress: none
+attribution:
+  relationship: original
+  note: >
+    Brak źródła trzeciej strony do skredytowania. Idea „litigation deadline calendar” jest
+    utrwalona w ekosystemie legal-AI; metodyka i treść PL napisane od zera.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: >-
-    idea "litigation deadline calendar" z ekosystemu legal-AI (MIT);
-    metodyka i treść PL napisane od zera
   companion_skills: sejm-eli-mcp (konektor), hierarchia-zrodel-pl, intake-sufficiency-pl, legal-request-router-pl
 ---
 

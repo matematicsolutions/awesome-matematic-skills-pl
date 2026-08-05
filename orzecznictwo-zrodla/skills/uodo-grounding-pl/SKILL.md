@@ -15,12 +15,15 @@ allowed-tools: [Bash, Read, Grep, WebFetch]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  relationship: original
+  note: >
+    Brak źródła trzeciej strony. Drugi weryfikator domenowy zbudowany z własnego szablonu
+    citation-grounding-pl/references/szkielet-weryfikatora-domenowego; silnik współdzielony.
+    Dowód generalizacji na domenie bez resolvera w SAOS (decyzje na uodo.gov.pl).
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: >
-    Drugi weryfikator domenowy z szablonu citation-grounding-pl/references/szkielet-weryfikatora-domenowego.
-    Dowód generalizacji: domena BEZ resolvera w SAOS (decyzje na uodo.gov.pl). Silnik WSPÓŁDZIELONY.
   companion_skills: citation-grounding-pl, eu-sparql-search, saos-orzecznictwo, let-it-be, legal-ai-audit-bundle
   shared_engine: citation-grounding-pl/scripts/ground-citations.mjs
 ---

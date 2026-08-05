@@ -15,13 +15,21 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  - source: AnttiHero/lavern
+    license: Apache-2.0
+    relationship: pattern-only
+    note: >
+      Wzorzec analizy wystarczalności zlecenia przed przyjęciem sprawy. Schemat i rubryka
+      napisane od zera.
+  - source: akunikkola/claude-for-legal-finland
+    license: MIT
+    relationship: adaptation
+    note: >
+      Weryfikacja premis prawnych klienta („premissien tarkistus”) dodana w v1.1.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0
-  inspiration: >
-    AnttiHero/lavern (Apache 2.0) - pattern src/api/briefing (analiza wystarczalnosci), schemat
-    i rubryka napisane od zera. v1.1 weryfikacja premis prawnych klienta ("premissien tarkistus") -
-    adaptacja z akunikkola/claude-for-legal-finland (MIT, juristi/CLAUDE.md).
   companion_skills: legal-request-router-pl, let-it-be, citation-grounding-pl
 ---
 

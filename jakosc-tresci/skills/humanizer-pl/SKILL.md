@@ -11,7 +11,15 @@ description: |
   detektory AI (burstiness, gestosc i roznorodnosc leksykalna, dystrybucja czesci mowy,
   zakres emocji).
 license: MIT
-attribution: Polska adaptacja blader/humanizer (https://github.com/blader/humanizer, MIT)
+attribution:
+  source: blader/humanizer
+  url: https://github.com/blader/humanizer
+  license: MIT
+  relationship: adaptation
+  note: >
+    Źródło samo bazuje na Wikipedia „Signs of AI writing” (WikiProject AI Cleanup).
+    Polska adaptacja 29 wzorców, odwrócony wzorzec cudzysłowów, dodany wzorzec kalk
+    anglicyzmów. Odpowiednik EN: humanizer-en.
 compatibility: claude-code
 allowed-tools:
   - Read

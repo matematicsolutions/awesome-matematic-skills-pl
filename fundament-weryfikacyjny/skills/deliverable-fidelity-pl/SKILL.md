@@ -15,10 +15,16 @@ allowed-tools: [Bash, Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: AnttiHero/lavern
+  license: Apache-2.0
+  relationship: pattern-only
+  note: >
+    Wzorzec weryfikatora uruchamianego po złożeniu deliverable: krytyczne ustalenia, wynik
+    ważony, próg warunkowy. Kod i reguły napisane od zera.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0
-  inspiration: AnttiHero/lavern (Apache 2.0) - pattern src/assembly/post-assembly-verifier.ts, kod i reguly napisane od zera
   companion_skills: adversarial-legal-review-pl, citation-grounding-pl, legal-ai-audit-bundle, legal-request-router-pl
 ---
 

@@ -15,14 +15,18 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: freelawproject/eyecite (Free Law Project)
+  url: https://github.com/freelawproject/eyecite
+  license: BSD-2-Clause
+  relationship: clean-room
+  note: >
+    Architektura ekstrakcja -> agregacja -> adnotacja idzie za eyecite. Amerykańskie wzorce
+    reporterów porzucone; wzorce sygnatur PL, ECLI, Dz.U./ELI i logika antecedentów napisane
+    od zera dla realiów polskich.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: >
-    Architektura ekstrakcja -> agregacja -> adnotacja oparta na eyecite (Free Law Project),
-    licencja BSD-2-Clause (https://github.com/freelawproject/eyecite). Amerykanskie wzorce
-    reporterow porzucone; wzorce sygnatur PL, ECLI, Dz.U./ELI i logika antecedentow napisane
-    od zera dla realiow polskich.
   companion_skills: citation-grounding-pl, saos-orzecznictwo, eu-sparql-search, legal-ai-audit-bundle
 ---
 

@@ -119,6 +119,41 @@ if not os.path.isfile(rd):
 elif "instal" not in open(rd, encoding="utf-8", errors="replace").read().lower():
     warnings.append("README.md does not mention installation")
 
+# 6. attribution + licence gate. Kept as its own script so it can run alone
+# against either marketplace, but folded in here so the pre-release gate stays
+# the single thing you have to remember to run.
+gate = os.path.join(ROOT, "scripts", "attribution-gate.py")
+if os.path.isfile(gate):
+    import subprocess
+    r = subprocess.run([sys.executable, gate], capture_output=True, text=True)
+    print()
+    print((r.stdout or "").rstrip())
+    if r.returncode != 0:
+        problems.append("attribution-gate: blocking attribution/licence findings (listed above)")
+else:
+    warnings.append("scripts/attribution-gate.py missing - attribution not checked")
+
+# 7. fork-layer meter. attribution-gate reads what a skill CLAIMS about its
+# upstream; this measures the bytes and reports where claim and reality part
+# company. Folded in for the same reason as step 6: one command to remember.
+# Offline - it compares against pinned local snapshots and never fetches.
+delta = os.path.join(ROOT, "scripts", "upstream-delta.py")
+if os.path.isfile(delta):
+    import subprocess
+    r = subprocess.run([sys.executable, delta, "--gate"], capture_output=True, text=True)
+    print()
+    print((r.stdout or "").rstrip())
+    if r.returncode != 0:
+        problems.append("upstream-delta: blocking fork-layer findings (listed above)")
+    # Roll the sub-gate's warnings into this summary. A final "WARNINGS: 0"
+    # printed under a report that just listed three of them is the kind of
+    # tidy-looking output people stop reading.
+    n_soft = sum(1 for ln in (r.stdout or "").splitlines() if ln.startswith("  ! "))
+    if n_soft:
+        warnings.append("upstream-delta: %d fork-layer warning(s) listed above" % n_soft)
+elif os.path.isfile(os.path.join(ROOT, ".matematic", "upstreams.json")):
+    warnings.append("scripts/upstream-delta.py missing - fork layer not measured")
+
 print()
 print(f"BLOCKING: {len(problems)}")
 for x in problems:

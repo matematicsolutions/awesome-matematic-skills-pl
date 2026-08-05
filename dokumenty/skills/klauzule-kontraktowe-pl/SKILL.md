@@ -14,13 +14,17 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: CUAD (Contract Understanding Atticus Dataset), The Atticus Project
+  url: https://www.atticusprojectai.org/cuad
+  license: CC-BY-4.0
+  relationship: adaptation
+  note: >
+    Taksonomia 41 kategorii klauzul pochodzi z CUAD. Opisy kategorii, kotwice do prawa
+    polskiego i logika red-flag napisane od zera dla realiów PL/UE.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: >
-    Taksonomia 41 kategorii klauzul oparta na CUAD (Contract Understanding Atticus Dataset),
-    The Atticus Project, licencja CC BY 4.0 (https://www.atticusprojectai.org/cuad). Opisy
-    kategorii, kotwice do prawa polskiego i logika red-flag napisane od zera dla realiów PL/UE.
   companion_skills: contract-review-pl, citation-grounding-pl, redline-docx-pl, let-it-be
 ---
 

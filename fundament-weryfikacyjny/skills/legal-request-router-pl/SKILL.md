@@ -15,10 +15,16 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: AnttiHero/lavern
+  license: Apache-2.0
+  relationship: pattern-only
+  note: >
+    Wzorzec klasyfikacji żądania przed skierowaniem go do narzędzia. Schemat i reguły
+    napisane od zera.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: AnttiHero/lavern (Apache 2.0) - pattern router/RouterClassification, schemat i reguly napisane od zera
   companion_skills: citation-grounding-pl, adversarial-legal-review-pl, legal-ai-audit-bundle, let-it-be
 ---
 

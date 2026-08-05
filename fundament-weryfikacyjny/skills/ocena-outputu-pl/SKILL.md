@@ -16,14 +16,18 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: FudanDISC/DISC-LawLLM (Fudan DISC Lab)
+  url: https://github.com/FudanDISC/DISC-LawLLM
+  license: Apache-2.0
+  relationship: clean-room
+  note: >
+    Metoda dwuwarstwowa (obiektywne dopasowanie plus subiektywna rubryka LLM-as-judge,
+    skala 1-5) oparta na DISC-Law-Eval. Chińskie dane egzaminacyjne i model-sędzia
+    porzucone; rubryka, wymiary i kotwice PL napisane od zera.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0
-  inspiration: >
-    Metoda dwuwarstwowa (obiektywne dopasowanie + subiektywna rubryka LLM-as-judge,
-    skala 1-5) oparta na DISC-Law-Eval z DISC-LawLLM (Fudan DISC Lab), licencja
-    Apache-2.0 (https://github.com/FudanDISC/DISC-LawLLM). Chińskie dane egzaminacyjne
-    i model-sędzia porzucone; rubryka, wymiary i kotwice PL napisane od zera.
   companion_skills: legal-request-router-pl, citation-grounding-pl, deliverable-fidelity-pl, adversarial-legal-review-pl
 ---
 

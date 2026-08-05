@@ -17,10 +17,17 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: lawvable/awesome-legal-skills
+  url: https://github.com/lawvable/awesome-legal-skills
+  license: Apache-2.0
+  relationship: adaptation
+  note: >
+    Adaptacja i przekład skilla opposing-counsel-review autorstwa Larissy Meredith-Flister.
+    Licencja wg frontmatteru autorki. Odpowiednik EN: opposing-counsel-attack-en.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: "lawvable/awesome-legal-skills - opposing-counsel-review (Larissa Meredith-Flister, Apache-2.0 wg frontmatteru autorki) - adaptacja i przekład"
   companion_skills: adversarial-legal-review-pl, citation-grounding-pl, legal-request-router-pl
 ---
 

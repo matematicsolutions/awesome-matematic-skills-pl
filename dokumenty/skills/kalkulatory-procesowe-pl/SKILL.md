@@ -18,14 +18,17 @@ allowed-tools: [Read, WebFetch]
 data-residency: local
 requires-human-approval: true
 pii-egress: none
+attribution:
+  source: crankshift/lawpowers
+  license: MIT
+  relationship: pattern-only
+  note: >
+    Dekompozycja na 4 kalkulatory i protokół „fetch przed obliczeniem”. Treść, tabele i
+    rachunki napisane od zera na tekstach UKSC/KC/KPC; przy okazji poprawione 4 nieaktualne
+    wartości źródła, m.in. limit opłaty stosunkowej po noweli z 2025 r.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: >-
-    wzorce z crankshift/lawpowers (MIT) - dekompozycja na 4 kalkulatory i
-    protokół "fetch przed obliczeniem"; treść, tabele i rachunki napisane
-    od zera na tekstach UKSC/KC/KPC (przy okazji poprawione 4 nieaktualne
-    wartości źródła, m.in. limit opłaty stosunkowej po noweli z 2025 r.)
   companion_skills: terminy-procesowe-pl, sejm-eli-mcp (konektor), hierarchia-zrodel-pl, intake-sufficiency-pl, legal-request-router-pl
 ---
 

@@ -14,10 +14,17 @@ description: >-
 license: MIT
 data-residency: local
 requires-human-approval: true
+attribution:
+  source: shcherbak-ai/contextgem
+  url: https://github.com/shcherbak-ai/contextgem
+  license: Apache-2.0
+  relationship: dependency
+  note: >
+    Zależność runtime (contextgem>=0.25.1), świadomy wyjątek od zasady stdlib dla ekstrakcji
+    LLM. Skill nie wywodzi się z contextgem - wywołuje go.
 metadata:
   version: 1.0.0
   author: MateMatic (Wieslaw Mazur)
-  upstream: shcherbak-ai/contextgem (Apache-2.0)
   domain: document-intelligence-pl
   updated: 2026-07-21
   requires: contextgem>=0.25.1 (NIE stdlib - swiadomy wyjatek dla ekstrakcji LLM)

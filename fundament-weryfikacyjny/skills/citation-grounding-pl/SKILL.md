@@ -19,15 +19,26 @@ allowed-tools: [Bash, Read, Grep]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  - source: AnttiHero/lavern
+    license: Apache-2.0
+    relationship: pattern-only
+    note: >
+      Wzorzec mechanicznego weryfikatora grounding (v1). Kod i prompty napisane od zera.
+  - source: jeannesulzer/international-criminal-tribunals-skills
+    license: CC-BY-4.0
+    relationship: adaptation
+    note: >
+      Gradient weryfikacji ISTNIENIE/TREŚĆ/FRAGMENT (v2) to adaptacja trójstopniowego
+      Existence/Content/Paragraph.
+  - source: john-walkoe/courtlistener_citations_mcp
+    license: MIT
+    relationship: pattern-only
+    note: >
+      Guard STRONY oparty na niezgodności nazw metodą Jaccarda (v2.1). Stop-listy własne.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 2.2.0
-  inspiration: >
-    v1 pattern (mechanical grounding verifier) - AnttiHero/lavern (Apache 2.0), ADR-011.
-    v2 gradient weryfikacji (ISTNIENIE/TREŚĆ/FRAGMENT) - adaptacja Existence/Content/Paragraph
-    z jeannesulzer/international-criminal-tribunals-skills (CC BY 4.0). v2.1 guard STRONY
-    (Jaccard name-mismatch) - wzorzec z john-walkoe/courtlistener_citations_mcp (MIT).
-    Kod, stop-listy i prompty od zera.
   companion_skills: saos-orzecznictwo, szukaj-orzeczen-v2, eu-sparql-search, legal-ai-audit-bundle, adversarial-legal-review-pl, deliverable-fidelity-pl, legal-request-router-pl
 ---
 

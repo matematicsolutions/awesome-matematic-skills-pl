@@ -1,5 +1,25 @@
 # Changelog - redline-docx-pl
 
+## bez zmiany wersji - 2026-08-05
+
+Pomiar wendorowanego silnika `vendor/docx-engine` (GenOffice, Apache-2.0).
+Workflow bez zmian - skill nadal stoi w calosci na adeu.
+
+- **Sledzone zmiany zmierzone** (71 pism, `verify/revision-vs-adeu.ts`):
+  `SaveBlock.revision` nie produkuje Word Track Changes - `w:ins`/`w:del`
+  laduja w `w:body` owijajac `w:p`, tekst usuniety zostaje w `w:t` zamiast
+  `w:delText`, `adeu extract` nie widzi zmiany 0/71, LibreOffice widzi
+  wstawienie ale nie usuniecie. Sciezka `Run.ins`/`Run.del` jest poprawna
+  (70/71 rozpoznane), ale nie daje przewagi nad adeu.
+- **Tabele zmierzone** (`verify/table-roundtrip.ts`): otoczenie tabeli
+  bezpieczne 24/24, ale `patchTableCellTexts` odbudowuje komorke - runy
+  splaszczone w 5/24, akapity i `w:br` utracone w 2/24, tekst inny niz
+  zamierzony w 1/24.
+- **Rekomendacja**: nie wpinac do sciezki zapisu; ewentualnie opcjonalna
+  bramka ODCZYTU po `adeu apply`. Decyzja u WM - THIRD_PARTY_INSPIRATIONS.md.
+- Harness metryk-only rozszerzony o dwa skrypty; nowe nie wypisuja nawet nazw
+  plikow, wiec pomiar idzie na aktach.
+
 ## v0.2.0 - 2026-07-13
 
 Harvest wzorcow z evolsb/legal-redline-tools (MIT) - pattern, kod od zera.

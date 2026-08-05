@@ -15,10 +15,16 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: swiss-legal-source-authority-triage (Enrique G. Zbinden)
+  license: MIT
+  relationship: pattern-only
+  note: >
+    Wzorzec „route authority before answer”. Bez kodu i tekstu źródła; treść PL/UE napisana
+    od zera.
 metadata:
   author: "Wiesław Mazur / MateMatic"
   version: "1.0.0"
-  inspiration: "swiss-legal-source-authority-triage (Enrique G. Zbinden, MIT) - wzorzec 'route authority before answer'; treść PL/UE napisana od zera"
   companion_skills: "citation-grounding-pl, legal-request-router-pl, saos-orzecznictwo, eu-sparql-search, legal-data-hunter-pl"
 ---
 

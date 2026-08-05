@@ -15,10 +15,15 @@ allowed-tools: [Bash, Read, Write]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: AnttiHero/lavern
+  license: Apache-2.0
+  relationship: pattern-only
+  note: >
+    Wzorzec paczki audytowej; wzór własny matematic-video-governance (AI Act art. 12).
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: AnttiHero/lavern (Apache 2.0) - pattern audit-bundle; wzór własny matematic-video-governance (AI Act art. 12)
   companion_skills: adversarial-legal-review-pl, citation-grounding-pl, matematic-video-governance, legal-ai-plugin-governance
 ---
 

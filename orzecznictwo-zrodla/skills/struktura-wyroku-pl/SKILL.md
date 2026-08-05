@@ -16,14 +16,18 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: OpenNyAI/Opennyai (Legal-NLP-EkStep)
+  url: https://github.com/OpenNyAI/Opennyai
+  license: MIT
+  relationship: clean-room
+  note: >
+    Metoda: strukturyzacja wyroku przez role retoryczne zdań plus extractive summarization.
+    Indyjskie role i modele porzucone; role retoryczne polskiego orzeczenia i reguły
+    ekstrakcji napisane od zera.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: >
-    Metoda (judgment structuring przez role retoryczne zdań + extractive summarization)
-    oparta na OpenNyAI / Opennyai (Legal-NLP-EkStep), licencja MIT
-    (https://github.com/OpenNyAI/Opennyai). Indyjskie role i modele porzucone; role
-    retoryczne polskiego orzeczenia i reguly ekstrakcji napisane od zera.
   companion_skills: saos-orzecznictwo, ekstraktor-cytatow-pl, citation-grounding-pl, szukaj-orzeczen-v2
 ---
 

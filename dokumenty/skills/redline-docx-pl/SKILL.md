@@ -2,6 +2,31 @@
 name: redline-docx-pl
 description: Redlining polskich umow i pism w .docx z natywnymi Word Track Changes - bez niszczenia formatowania OOXML. Czyta .docx do Markdown (CriticMarkup) dla LLM, aplikuje zmiany jako sledzone (w:ins/w:del) + komentarze, i robi sanitize przed wyslaniem (strip metadanych autora, last-modified-by, rsid, timestampy - RODO przy wysylce pisma). Silnik = adeu (MIT). Use when the user wants to nanosic poprawki w umowie/pismie .docx, zrobic redline/tryb sledzenia zmian, czytac docx dla LLM bez utraty formatowania, przygotowac pismo do wyslania (usunac metadane autora z Worda), porownac dwie wersje .docx, lub mentions track changes / sledzenie zmian / redline / .docx / DOCX.
 license: MIT
+attribution:
+  - source: dealfluence/adeu
+    url: https://github.com/dealfluence/adeu
+    license: MIT
+    relationship: dependency
+    note: >
+      Silnik konwersji i aplikacji zmian, wolany przez uvx. Skill go opakowuje,
+      nie wywodzi sie z jego kodu.
+  - source: evolsb/legal-redline-tools
+    url: https://github.com/evolsb/legal-redline-tools
+    license: MIT
+    relationship: pattern-only
+    note: >
+      Wzorce memo negocjacyjnego (tier/rationale/walkaway/precedent) i skanera
+      placeholderow. Oba skrypty napisane od zera pod realia polskie.
+  - source: genspark-ai/genoffice
+    url: https://github.com/genspark-ai/genoffice
+    license: Apache-2.0
+    relationship: vendored
+    note: >
+      packages/docx-engine wendorowany do vendor/docx-engine (commit 8f52328,
+      Apache-2.0). Silnik round-trip po bajtach. Zmierzony 2026-08-05 (round-trip,
+      sledzone zmiany, tabele), NIE wpiety w workflow skilla - sledzonych zmian
+      nie robi poprawnie na sciezce blokowej. Szczegoly i wykaz zmian
+      w vendor/docx-engine/NOTICE i README.md.
 allowed-tools: [Bash, Read, Write, Edit]
 data-residency: local
 requires-human-approval: true
@@ -194,6 +219,9 @@ Dwie rozne warstwy wycieku, obie trzeba domknac.
 - `target_text` na dopasowaniu tekstu - przy duplikatach trzeba kontekstu.
 - adeu to narzedzie wspomagajace, NIE zastepuje weryfikacji przez prawnika.
 - Silnik zewnetrzny (adeu, Dealfluence) - przy aktualizacji wersji zrob ponowny smoke test.
+- W `vendor/docx-engine/` lezy DRUGI silnik (GenOffice, Apache-2.0), zweryfikowany
+  pomiarowo, ale **NIE wpiety w zaden krok workflow**. Workflow stoi w calosci na adeu.
+  Nie wolaj go z tego skilla, dopoki nie zapadnie decyzja opisana nizej.
 
 ## Atrybucja
 
@@ -205,4 +233,26 @@ wg tierow) i skanera placeholderow: [evolsb/legal-redline-tools](https://github.
 (wzorce PL: `DO UZUPELNIENIA`, `NN/RR`, `dnia __`, kwoty w zl) i pod format
 edits.json adeu zamiast ich wlasnego formatu redlines.
 
+Silnik wendorowany (NIEAKTYWNY): [`vendor/docx-engine/`](vendor/docx-engine/) - `packages/docx-engine`
+z [genspark-ai/genoffice](https://github.com/genspark-ai/genoffice) (Apache-2.0, commit `8f52328`),
+redystrybuowany razem z LICENSE i NOTICE zgodnie z sekcjami 4(b) i 4(d) tej licencji.
+
 Szczegoly i snapshoty licencji: [THIRD_PARTY_INSPIRATIONS.md](THIRD_PARTY_INSPIRATIONS.md).
+
+## Drugi silnik - dlaczego lezy nieaktywny
+
+W `vendor/docx-engine/` lezy silnik round-tripu po bajtach z GenOffice (Apache-2.0),
+zmierzony 2026-08-05 na pismach z maszyny WM. **Nie zastepuje adeu** i nie wolno
+go wolac z tego workflow.
+
+Pomiar sledzonych zmian (2026-08-05 wieczor, 71 pism) rozstrzygnal, ze pole
+`SaveBlock.revision` NIE produkuje Word Track Changes: `w:ins`/`w:del` laduja na
+poziomie `w:body`, tekst usuniety zostaje w `w:t` zamiast `w:delText`, a niezalezny
+czytnik (`adeu extract`) nie widzi zmiany w zadnym z 71 plikow. Druga sciezka silnika
+(`Run.ins`/`Run.del`) jest poprawna, ale nie daje przewagi nad adeu. Osobno zmierzono
+`patchTableCellTexts` - odbudowuje komorke zamiast ja patchowac, wiec do edycji tabel
+takze sie nie nadaje bez wlasnej warstwy ochronnej.
+
+Komplet liczb i rekomendacja: [THIRD_PARTY_INSPIRATIONS.md](THIRD_PARTY_INSPIRATIONS.md)
+(sekcja o genoffice) oraz [vendor/docx-engine/README.md](vendor/docx-engine/README.md).
+Decyzja o jakimkolwiek wpieciu nalezy do WM.

@@ -1,0 +1,220 @@
+{
+  "$comment": [
+    "Machine-readable fork layer for this marketplace. The prose version, with the",
+    "licence snapshots and the reasoning, stays in THIRD_PARTY_INSPIRATIONS.md - this",
+    "file is the part scripts/upstream-delta.py can measure, and the two are meant to",
+    "be read against each other.",
+    "relation uses the SAME vocabulary as attribution.relationship in SKILL.md (WM canon",
+    "2026-08-05): vendored | adaptation | pattern-only | clean-room | dependency | original.",
+    "Deliberately not a second private vocabulary - the gate cross-checks the two, and a",
+    "skill claiming LESS provenance than the manifest records is a blocking finding.",
+    "map entries override the upstream-level relation, and are set to what the skill",
+    "itself declares; mapping an 'original' skill is legitimate and strict - it polices a",
+    "no-source claim against the nearest upstream somebody might think it came from.",
+    "pin is written only by `python scripts/upstream-delta.py sync`, and only after the",
+    "checkout is verified complete - never by hand."
+  ],
+  "version": 1,
+  "snapshot_root": "~/Projects/_ref/upstream-snapshots",
+  "upstreams": [
+    {
+      "id": "blader-humanizer",
+      "repo": "https://github.com/blader/humanizer",
+      "slug": "blader/humanizer",
+      "license": "MIT",
+      "relation": "adaptation",
+      "ref": "main",
+      "pin": {
+        "commit": "523374dee72d67c7b2b5f858ea0094ffda49c3ac",
+        "ref": "main",
+        "files": 9,
+        "synced": "2026-08-05"
+      },
+      "credit_tokens": [
+        "blader/humanizer"
+      ],
+      "rebrand": [
+        [
+          "humanizer",
+          "humanizer-pl"
+        ]
+      ],
+      "map": [
+        {
+          "upstream": "SKILL.md",
+          "ours": "jakosc-tresci/skills/humanizer-pl/SKILL.md",
+          "relation": "adaptation"
+        }
+      ],
+      "dropped": [
+        "AGENTS.md",
+        "README.md",
+        "LICENSE",
+        ".claude-plugin/plugin.json",
+        ".claude-plugin/marketplace.json",
+        ".github/workflows/validate.yml",
+        "agents/openai.yaml",
+        "scripts/validate-package.py"
+      ],
+      "note": "Polish adaptation, so line-level text similarity is near zero by construction. Read struct, and read it as a question for a human, not as proof of anything. MIT notice travels in jakosc-tresci/skills/humanizer-pl/NOTICE.txt."
+    },
+    {
+      "id": "lawvable-awesome-legal-skills",
+      "repo": "https://github.com/lawvable/awesome-legal-skills",
+      "slug": "lawvable/awesome-legal-skills",
+      "license": "CC-BY-NC-ND-4.0 on the curation; per-skill licence declared in each upstream SKILL.md frontmatter",
+      "relation": "pattern-only",
+      "ref": "main",
+      "pin": {
+        "commit": "4b0a895640d44add67ab4db1a0250e5a48888ee1",
+        "ref": "main",
+        "files": 2711,
+        "synced": "2026-08-05"
+      },
+      "credit_tokens": [
+        "lawvable/awesome-legal-skills",
+        "lawve-ai/awesome-legal-skills",
+        "awesome-legal-skills"
+      ],
+      "rebrand": [],
+      "map": [
+        {
+          "relation": "adaptation",
+          "upstream": "skills/opposing-counsel-review-larissa-meredith-flister/SKILL.md",
+          "ours": "fundament-weryfikacyjny/skills/atak-przeciwnika-pl/SKILL.md"
+        },
+        {
+          "relation": "adaptation",
+          "upstream": "skills/judicial-first-impression-larissa-meredith-flister/SKILL.md",
+          "ours": "fundament-weryfikacyjny/skills/pierwsze-wrazenie-sedziego-pl/SKILL.md"
+        },
+        {
+          "relation": "original",
+          "upstream": "skills/privilege-sentinel-emily-cabrera/SKILL.md",
+          "ours": "governance-kancelarii/skills/tajemnica-preflight-pl/SKILL.md"
+        },
+        {
+          "relation": "pattern-only",
+          "upstream": "skills/swiss-legal-source-and-authority-triage-enrique-g-zbinden/SKILL.md",
+          "ours": "orzecznictwo-zrodla/skills/hierarchia-zrodel-pl/SKILL.md"
+        },
+        {
+          "relation": "original",
+          "upstream": "skills/eu-ai-act-quick-assessment-oliver-schmidt-prietz/SKILL.md",
+          "ours": "governance-kancelarii/skills/ai-act-triage-pl/SKILL.md"
+        },
+        {
+          "relation": "original",
+          "upstream": "skills/nis2-navigator-oliver-schmidt-prietz/SKILL.md",
+          "ours": "ochrona-danych/skills/nis2-ksc-pl/SKILL.md"
+        },
+        {
+          "relation": "original",
+          "upstream": "skills/litigation-deadline-calendar-dave-marcus/SKILL.md",
+          "ours": "dokumenty/skills/terminy-procesowe-pl/SKILL.md"
+        }
+      ],
+      "note": "The two forks are Apache-2.0 per the author's own frontmatter; everything else here is a PATTERN ONLY claim that CC-BY-NC-ND makes load-bearing. The EU AI Act claim covers an eleven-skill suite and is policed against the closest single upstream (quick-assessment); the other ten are unpoliced - a known gap, not a clean result."
+    },
+    {
+      "id": "anttihero-lavern",
+      "repo": "https://github.com/AnttiHero/lavern",
+      "slug": "AnttiHero/lavern",
+      "license": "Apache-2.0",
+      "relation": "pattern-only",
+      "ref": "main",
+      "pin": {
+        "commit": "9d32167c7bc0d6e69037ebcbe9c81698892cec09",
+        "ref": "main",
+        "files": 1856,
+        "synced": "2026-08-05"
+      },
+      "credit_tokens": [
+        "AnttiHero/lavern",
+        "lavern"
+      ],
+      "rebrand": [],
+      "map": [],
+      "note": "Six verification skills take architecture patterns from lavern (debate roles, mechanical grounding, post-assembly verifier, router classification, audit bundle). Upstream is TypeScript, ours is markdown: there is no comparable text surface, so this claim cannot be machine-checked here. Left visible on purpose rather than dropped."
+    },
+    {
+      "id": "crankshift-lawpowers",
+      "repo": "https://github.com/crankshift/lawpowers",
+      "slug": "crankshift/lawpowers",
+      "license": "MIT",
+      "relation": "pattern-only",
+      "ref": "main",
+      "pin": {
+        "commit": "36188da33115ac3844a6ffe43212e91f18529e6f",
+        "ref": "main",
+        "files": 244,
+        "synced": "2026-08-05"
+      },
+      "credit_tokens": [
+        "crankshift/lawpowers",
+        "lawpowers"
+      ],
+      "rebrand": [],
+      "map": [],
+      "note": "Nasz kalkulatory-procesowe-pl SCALA cztery osobne skille upstreamu (oplata-sadowa, odsetki, WPS, alimenty) w jeden plik. Para 1:1 NIE istnieje, a wymuszenie jej dalo by wysoka pozorna oryginalnosc z samej konstrukcji (merge zawsze slabo przypomina kazda czesc z osobna). Zostaje UNMEASURED swiadomie - lepiej brak liczby niz liczba, ktora klamie w nasza strone."
+    },
+    {
+      "id": "evolsb-legal-redline-tools",
+      "repo": "https://github.com/evolsb/legal-redline-tools",
+      "slug": "evolsb/legal-redline-tools",
+      "license": "MIT",
+      "relation": "pattern-only",
+      "ref": "main",
+      "pin": {
+        "commit": "1dbc70ddfdf594fc4699c31b9077d15e74be56a0",
+        "ref": "main",
+        "files": 28,
+        "synced": "2026-08-05"
+      },
+      "credit_tokens": [
+        "evolsb/legal-redline-tools"
+      ],
+      "rebrand": [],
+      "map": [
+        {
+          "relation": "pattern-only",
+          "upstream": "skill.md",
+          "ours": "dokumenty/skills/redline-docx-pl/SKILL.md"
+        }
+      ],
+      "note": "Pola memo negocjacyjnego i skan placeholderow przed wysylka; skrypty napisane od zera w Pythonie stdlib. Para 1:1 istnieje, wiec deklaracja jest mierzalna."
+    },
+    {
+      "id": "dealfluence-adeu",
+      "repo": "https://github.com/dealfluence/adeu",
+      "slug": "dealfluence/adeu",
+      "license": "MIT",
+      "relation": "dependency",
+      "note": "redline-docx-pl calls `uvx adeu`. No adeu code carried."
+    },
+    {
+      "id": "microsoft-markitdown",
+      "repo": "https://github.com/microsoft/markitdown",
+      "slug": "microsoft/markitdown",
+      "license": "MIT",
+      "relation": "dependency",
+      "note": "markitdown skill is a usage wrapper over the installed CLI."
+    },
+    {
+      "id": "opendataloader-pdf",
+      "repo": "https://github.com/opendataloader/opendataloader-pdf",
+      "slug": "opendataloader/opendataloader-pdf",
+      "license": "Apache-2.0",
+      "relation": "dependency",
+      "note": "opendataloader-pdf skill is a usage wrapper over the installed converter."
+    },
+    {
+      "id": "worldwidelaw-legal-sources",
+      "repo": "https://github.com/worldwidelaw/legal-sources",
+      "slug": "worldwidelaw/legal-sources",
+      "license": "AGPL-3.0",
+      "relation": "dependency",
+      "note": "legal-data-hunter-pl runs the collectors as separate processes. AGPL makes the process boundary the point: carrying any of this code would change the licence of the hub."
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+Wendorowany komponent: docx-engine
+==================================
+
+Ten katalog zawiera kod osob trzecich redystrybuowany na licencji Apache-2.0.
+Pelny tekst licencji: ./LICENSE
+
+--------------------------------------------------------------------------
+Nota atrybucyjna upstreamu (zachowana zgodnie z Apache-2.0 sekcja 4(d))
+--------------------------------------------------------------------------
+
+GenOffice
+Copyright 2026 Mainfunc, Inc.
+
+This product includes software developed at Mainfunc, Inc.
+
+--------------------------------------------------------------------------
+Zrodlo
+--------------------------------------------------------------------------
+
+Repozytorium : https://github.com/genspark-ai/genoffice
+Sciezka      : packages/docx-engine
+Commit       : 8f523289d6c34f940cd691472ee56b2013d148c8 (2026-08-04)
+Licencja     : Apache-2.0
+Wendorowano  : 2026-08-05
+
+--------------------------------------------------------------------------
+Wykaz zmian wobec upstreamu (Apache-2.0 sekcja 4(b))
+--------------------------------------------------------------------------
+
+Kod silnika w src/ oraz testy w tests/ przeniesiono BEZ ZMIAN w tresci plikow.
+Zmiany dotycza wylacznie opakowania pakietu:
+
+1. package.json - zastapiony. Nazwa `@genoffice/docx-engine` zmieniona na
+   `@matematic/vendor-docx-engine`; dodano pole `_vendoredFrom` z proweniencja.
+   Lista zaleznosci bez zmian (fast-xml-parser, jszip).
+2. tsconfig.json - splaszczony. Upstream dziedziczyl po `../../tsconfig.base.json`
+   z korzenia monorepo; tu opcje sa wpisane wprost, wartosci identyczne.
+3. verify/ - katalog DODANY, autorstwa MateMatic, NIE pochodzi z upstreamu.
+   Zawiera harness pomiarowy: probe.mjs, roundtrip-real.ts, core-and-notes.ts
+   (wiernosc round-tripu akapitu, 2026-08-05), table-roundtrip.ts (edycja
+   komorki tabeli) i revision-vs-adeu.ts (sciezka sledzonych zmian wobec adeu).
+   Objety licencja tego repozytorium, nie Apache-2.0 upstreamu.
+4. Nie przeniesiono pozostalych pakietow monorepo (apps/, packages/ui,
+   packages/electron-utils itd.) - nie sa potrzebne, silnik od nich nie zalezy.
+
+Pliki upstreamu nie byly edytowane. Kazda przyszla modyfikacja pliku z src/
+lub tests/ musi zostac dopisana do tego wykazu.
+
+--------------------------------------------------------------------------
+Uwaga o pliku LICENSE upstreamu
+--------------------------------------------------------------------------
+
+README repozytorium HermesOffice (soft-fork GenOffice) wspomina katalog `ee/`
+objety odrebna licencja enterprise. W GenOffice plik LICENSE to czysty
+Apache-2.0 (copyright Mainfunc, Inc.) bez klauzuli enterprise, a katalog `ee/`
+nie wystepuje w wendorowanym zakresie. Przy aktualizacji upstreamu ufaj plikom
+LICENSE/NOTICE, nie README.

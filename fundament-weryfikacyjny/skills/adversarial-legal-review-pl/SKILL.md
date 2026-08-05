@@ -16,10 +16,22 @@ allowed-tools: [Read, Write]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  - source: AnttiHero/lavern
+    license: Apache-2.0
+    relationship: pattern-only
+    note: >
+      Wzorzec debaty z trójwarstwową weryfikacją oraz panel rozbieżności. Prompty i role
+      napisane od zera.
+  - source: microsoft/agent-governance-toolkit
+    url: https://github.com/microsoft/agent-governance-toolkit
+    license: MIT
+    relationship: pattern-only
+    note: >
+      Wzorzec PromptDefense: twardy podział na instrukcję systemową i treść niezaufaną.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.2.0
-  inspiration: AnttiHero/lavern (Apache 2.0) - pattern ADR-010 debate + 3-layer verification oraz src/mcp/tools/dissent.ts (panel rozbieżności), prompty i role napisane od zera
   companion_skills: citation-grounding-pl, legal-ai-audit-bundle, matematic-expert-panel, saos-orzecznictwo
 ---
 

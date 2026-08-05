@@ -16,10 +16,14 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: true
 pii-egress: none
+attribution:
+  relationship: original
+  note: >
+    Brak źródła trzeciej strony. Wzorzec „scope navigator” jest utrwalony w ekosystemie
+    compliance; treść napisana od zera na tekście dyrektywy (UE) 2022/2555.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: "wzorzec 'scope navigator' z ekosystemu compliance; treść od zera na tekście dyrektywy (UE) 2022/2555"
   companion_skills: rodo-naruszenie-72h-pl, matematic-konstytucja-ai, sejm-eli-mcp, mcp-eu-compliance
   parity: nis2-compliance-triage-en
 ---

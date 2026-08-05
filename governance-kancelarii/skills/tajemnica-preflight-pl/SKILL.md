@@ -17,10 +17,15 @@ allowed-tools: [Read]
 data-residency: local
 requires-human-approval: true
 pii-egress: none
+attribution:
+  relationship: original
+  note: >
+    Brak źródła trzeciej strony. Wzorzec „privilege pre-flight” i koncepcja pasm
+    SAFE/CAUTION/STOP są utrwalone w ekosystemie legal-AI; całość tekstu i podstawy prawne
+    PL/UE napisane od zera.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  inspiration: "pattern 'privilege pre-flight' z ekosystemu legal-AI - koncepcja pasm SAFE/CAUTION/STOP; całość tekstu i podstawy prawne PL/UE napisane od zera"
   companion_skills: matematic-prompt-defense-pl, rodo-dpia-pl, doc-intel-contract-pl, legal-request-router-pl
 ---
 
