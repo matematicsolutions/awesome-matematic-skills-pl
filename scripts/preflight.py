@@ -169,6 +169,24 @@ if os.path.isfile(delta):
 elif os.path.isfile(os.path.join(ROOT, ".matematic", "upstreams.json")):
     warnings.append("scripts/upstream-delta.py missing - fork layer not measured")
 
+# 8. legal-accuracy gate. Steps 6-7 protect provenance; this protects the
+# LAW in the text. Born 2026-08-07: an external reviewer found 7 legal
+# defects our form/style gates had passed - all omissions (statutory units
+# nobody had listed, so nobody had checked). It diffs changed skills against
+# the last release, extracts statutory units from the changed lines and
+# requires ledger coverage in reviews/legal-accuracy.md. Coverage blocks;
+# verdict truth stays with the adversarial-review layer (Goodhart line).
+lag = os.path.join(ROOT, "scripts", "legal-accuracy-gate.py")
+if os.path.isfile(lag):
+    import subprocess
+    r = subprocess.run([sys.executable, lag], capture_output=True, text=True)
+    print()
+    print((r.stdout or "").rstrip())
+    if r.returncode != 0:
+        problems.append("legal-accuracy: uncovered statutory units (listed above)")
+else:
+    warnings.append("scripts/legal-accuracy-gate.py missing - legal units not checked")
+
 print()
 print(f"BLOCKING: {len(problems)}")
 for x in problems:
