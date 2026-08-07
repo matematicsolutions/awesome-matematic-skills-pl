@@ -16,7 +16,7 @@ requires-human-approval: true
 pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.1.0
+  version: 1.2.0
   companion_skills: uodo-grounding-pl, rodo-ropa-dpa-pl, gaius-api-anonymization
   parity: gdpr-dsar-en
 ---
@@ -32,7 +32,10 @@ to akt nieodwracalny/na zewnątrz => zawsze człowiek (granica governance).
 ## Krok 0 - Tożsamość i termin
 
 - **Weryfikacja tożsamości** (art. 12 ust. 6) - przy uzasadnionych wątpliwościach żądaj dodatkowych
-  informacji; to **zawiesza** bieg do potwierdzenia, ale nie służy do obstrukcji.
+  informacji. To NIE zawiesza biegu bezwarunkowo: wg Wytycznych EROD 01/2022 zawieszenie wchodzi w grę
+  **tylko**, gdy informacja jest niezbędna do potwierdzenia tożsamości ORAZ administrator zażądał jej
+  bez zbędnej zwłoki. Datę wpływu zachowaj w rejestrze zawsze - spóźnione lub nieproporcjonalne żądanie
+  tożsamości nie przedłuża terminu, a weryfikacja nie służy do obstrukcji.
 - **TERMIN: 1 miesiąc od otrzymania** (art. 12 ust. 3). Przedłużenie o **max 2 miesiące** przy
   skomplikowaniu/liczbie żądań - poinformuj w ciągu pierwszego miesiąca z przyczyną. Skill liczy
   `deadline` i `deadline_extended`.
@@ -49,7 +52,7 @@ to akt nieodwracalny/na zewnątrz => zawsze człowiek (granica governance).
 | 18 | Ograniczenie | "zamrożenie" zamiast usunięcia |
 | 20 | Przenoszenie | tylko zgoda/umowa + przetwarzanie zautomatyzowane; format ustrukturyzowany |
 | 21 | Sprzeciw | uzasadniony interes / marketing (marketing = bezwzględny) |
-| 22 | Decyzje zautomatyzowane | prawo do interwencji ludzkiej |
+| 22 | Decyzje zautomatyzowane | prawo pierwotne = **niepodleganie** decyzji opartej wyłącznie na zautomatyzowanym przetwarzaniu wywołującej skutki prawne/istotne; wyjątki ust. 2 (umowa, przepis, wyraźna zgoda) => zabezpieczenia ust. 3: interwencja ludzka, własne stanowisko, zakwestionowanie |
 
 ## Krok 2 - Bramki i podstawy odmowy
 
@@ -59,8 +62,11 @@ decyzje UODO => [[uodo-grounding-pl]].
 
 ## Krok 3 - Draft odpowiedzi + rejestr
 
-Skill składa odpowiedź (język prosty, art. 12 ust. 1), listę danych/źródeł (z RoPA - [[rodo-ropa-dpa-pl]]),
-i wpis do rejestru żądań (data wpływu, typ, termin, rozstrzygnięcie).
+Skill składa odpowiedź (język prosty, art. 12 ust. 1), dopasowaną do powołanego prawa. Przy art. 15
+to **kopia danych osobowych pobrana z systemów operacyjnych**, które je faktycznie przechowują, plus
+dostępne informacje o źródle danych (art. 15 ust. 1 lit. g) - RCP ([[rodo-ropa-dpa-pl]]) dostarcza
+tylko ogólnych informacji o przetwarzaniu (cele, kategorie, odbiorcy), nie danych osoby. Do tego wpis
+do rejestru żądań (data wpływu, typ, termin, rozstrzygnięcie).
 
 ## Narzędzie - kalkulator terminu (deterministyczny, offline)
 

@@ -17,7 +17,7 @@ requires-human-approval: true
 pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.1.0
+  version: 1.2.0
   companion_skills: klauzule-kontraktowe-pl, redline-docx-pl, rodo-dpia-pl, uodo-grounding-pl
   parity: gdpr-ropa-dpa-en
 ---
@@ -41,11 +41,17 @@ to akt człowieka.
 - planowane terminy usunięcia kategorii danych,
 - ogólny opis technicznych i organizacyjnych środków bezpieczeństwa (art. 32).
 
-**Podmiot przetwarzający (art. 30 ust. 2)** - węższy zakres: kategorie przetwarzań w imieniu każdego
-administratora, transfery + zabezpieczenia, opis środków.
+**Podmiot przetwarzający (art. 30 ust. 2)** - pola obowiązkowe wg lit. a-d: nazwa i dane kontaktowe
+procesora (procesorów) **i każdego administratora**, w imieniu którego działa (oraz, gdy dotyczy,
+przedstawicieli i IOD), kategorie przetwarzań w imieniu każdego administratora, transfery +
+zabezpieczenia, opis środków. Samo wymienienie administratorów i subprocesorów z nazwy to NIE jest
+kompletny rejestr - dane kontaktowe, przedstawiciele i IOD są polami ustawowymi.
 
 Skill waliduje kompletność (brak pola = luka, nie zgadywanie) i wskazuje czynności wymagające DPIA
-=> [[rodo-dpia-pl]]. Zwolnienie z obowiązku (art. 30 ust. 5, <250 osób) interpretuj wąsko - w praktyce
+=> [[rodo-dpia-pl]]. Zwolnienie z obowiązku (art. 30 ust. 5, <250 osób) interpretuj wąsko - i pamiętaj,
+że niezależnie od zatrudnienia zwolnienie odpada, gdy przetwarzanie może powodować ryzyko dla praw lub
+wolności, nie ma charakteru sporadycznego, obejmuje szczególne kategorie z art. 9 ust. 1 **albo dane
+dotyczące wyroków skazujących i czynów zabronionych z art. 10** (każda przesłanka osobno). W praktyce
 rzadko ma zastosowanie.
 
 ## Część 2 - Przegląd umowy powierzenia (art. 28 ust. 3)

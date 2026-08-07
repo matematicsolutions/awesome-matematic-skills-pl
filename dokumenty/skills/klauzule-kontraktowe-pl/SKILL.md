@@ -24,7 +24,7 @@ attribution:
     polskiego i logika red-flag napisane od zera dla realiów PL/UE.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   companion_skills: contract-review-pl, citation-grounding-pl, redline-docx-pl, let-it-be
 ---
 
@@ -40,6 +40,11 @@ jest, ale ryzykowna - z kotwicą do polskiego przepisu, żeby prawnik wiedział,
 Skill **nie zastępuje oceny prawnika.** Wskazuje obecność, brak i ryzyko; rozstrzygnięcie i
 rekomendacja zostają po stronie mecenasa. To checklista, nie opinia.
 
+Zastrzeżenie wpisane w metodę: **CUAD to taksonomia ekstrakcji, nie lista zabezpieczeń obowiązkowych
+w każdej umowie.** Część kategorii zależy od typu transakcji, a niektóre to pary wzajemnie wykluczające
+się (odpowiedzialność bez limitu vs limit odpowiedzialności; licencja nieograniczona vs ograniczona).
+Traktowanie każdego braku jak red-flagi zakopuje prawdziwe luki w fałszywych alarmach.
+
 ## Różnica wobec contract-review-pl
 
 - `contract-review-pl` - bulk audit PORTFELA umów (folder PDF/DOCX) do jednej tabeli .docx.
@@ -52,8 +57,11 @@ wymaga uwagi.
 
 1. **Wczytaj umowę** (tekst lub przez `contract-review-pl` / `redline-docx-pl` jako ekstraktor).
 2. **Pseudonimizuj** dane osobowe stron, jeśli umowa idzie do modelu w chmurze (`let-it-be`).
-3. **Przejdź 41 kategorii** poniżej. Dla każdej: status `JEST` / `BRAK` / `RYZYKO` + krótkie uzasadnienie
-   + cytat fragmentu (jeśli `JEST`).
+3. **Przejdź 41 kategorii** poniżej - w dwóch krokach na kategorię. Najpierw **zastosowalność**: czy ta
+   transakcja w ogóle potrzebuje tej klauzuli (typ umowy, strony, przedmiot)? Potem, tylko dla kategorii
+   zastosowalnych: status `JEST` / `BRAK` / `RYZYKO` + krótkie uzasadnienie + cytat fragmentu (jeśli
+   `JEST`). Pary wykluczające się licz jako jedną decyzję - odnotuj, którą stronę umowa wybrała, a nie
+   "brak" drugiej strony.
 4. **Zweryfikuj cytaty** mechanicznie (`citation-grounding-pl`) - żaden fragment nie może być zmyślony.
 5. **Zbierz red-flagi** na górze raportu: brakujące zabezpieczenia + klauzule jednostronnie niekorzystne.
 
@@ -123,13 +131,15 @@ którego sięga mecenas; nie jest poradą, tylko wskazaniem.
 
 ```
 RED-FLAGI (na górze):
-- BRAK: <kategoria> - <dlaczego to ryzyko w tej transakcji>
+- BRAK: <kategoria zastosowalna w tej transakcji> - <dlaczego ta transakcja jej potrzebuje>
 - RYZYKO: <kategoria> - <na czym polega jednostronność>
+(kategoria oznaczona jako niezastosowalna nigdy nie zostaje red-flagą)
 
 TABELA 41 KATEGORII:
-| Kategoria | Status | Uzasadnienie | Cytat (jeśli JEST) | Kotwica |
-| Prawo właściwe | JEST | prawo polskie, sąd w Warszawie | "..." | Rzym I |
-| Kara umowna | BRAK | brak zabezpieczenia terminów | - | art. 483 KC |
+| Kategoria | Zastosowalna | Status | Uzasadnienie | Cytat (jeśli JEST) | Kotwica |
+| Prawo właściwe | tak | JEST | prawo polskie, sąd w Warszawie | "..." | Rzym I |
+| Kara umowna | tak | BRAK | brak zabezpieczenia terminów | - | art. 483 KC |
+| Escrow kodu źródłowego | nie - umowa bez software | n/d | - | - | - |
 ...
 ```
 

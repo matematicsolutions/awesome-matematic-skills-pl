@@ -6,6 +6,30 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.08.07] - 2026-08-07
+
+Poprawki merytoryczne po zewnetrznym review (flagi codex na PR eu-gdpr-pack
+do mike-workflows; wszystkie 7 potwierdzone u zrodel, backport z linii EN).
+
+### Fixed
+
+- `rodo-ropa-dpa-pl` 1.2.0: rejestr procesora z pelna lista pol art. 30
+  ust. 2 lit. a (procesor, kazdy administrator, przedstawiciele, IOD, dane
+  kontaktowe); art. 10 (wyroki skazujace) jako osobna przeslanka wylaczajaca
+  zwolnienie z art. 30 ust. 5.
+- `rodo-dsar-pl` 1.2.0: weryfikacja tozsamosci nie zawiesza terminu
+  bezwarunkowo (warunki z Wytycznych EROD 01/2022, data wplywu zachowana);
+  odpowiedz z art. 15 = kopia danych z systemow operacyjnych, nie z RCP;
+  art. 22 przeformulowany - prawo pierwotne to niepodleganie decyzji,
+  wyjatki ust. 2 i zabezpieczenia ust. 3 nazwane.
+- `klauzule-kontraktowe-pl` 1.1.0: bramka zastosowalnosci przed flagowaniem
+  braku - CUAD to taksonomia ekstrakcji, nie lista obowiazkowych zabezpieczen;
+  pary wykluczajace sie = jedna decyzja; niezastosowalna nigdy nie red-flaga.
+- `ekstraktor-cytatow-pl` 1.1.0: reguly antecedentow wrazliwe na wskaznik
+  (tamze/ibidem/j.w. = bezposrednio poprzedzajace; op. cit./cyt. wyzej po
+  wskazniku autora/tytulu/przypisu; niejednoznaczne = nierozwiazane, do
+  przegladu recznego).
+
 ## [2026.07.21] - 2026-07-21
 
 ### Added

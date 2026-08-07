@@ -26,7 +26,7 @@ attribution:
     od zera dla realiów polskich.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.1.0
   companion_skills: citation-grounding-pl, saos-orzecznictwo, eu-sparql-search, legal-ai-audit-bundle
 ---
 
@@ -46,7 +46,7 @@ cytatów mógłby jeden przeoczyć albo dopowiedzieć. Lokalnie, RODO-safe.
 
 1. **Ekstrakcja** - rozpoznaj i wyłap każde odwołanie wg wzorców PL poniżej.
 2. **Agregacja** - rozwiąż odwołania skrótowe (tamże / op. cit. / wyżej powołany wyrok) do
-   pełnego antecedentu, żeby policzyć je jako jeden cytat, nie kilka.
+   antecedentów wg reguł wrażliwych na wskaźnik (poniżej), żeby policzyć je jako jeden cytat, nie kilka.
 3. **Przekazanie** - oddaj ustrukturyzowaną listę do citation-grounding-pl do weryfikacji string-match.
 
 ## Wzorce odwołań (PL)
@@ -72,10 +72,19 @@ cytatów mógłby jeden przeoczyć albo dopowiedzieć. Lokalnie, RODO-safe.
 
 ## Agregacja - odwołania skrótowe (antecedenty PL)
 
-Rozwiąż do pełnego cytatu powołanego wcześniej:
-`tamże`, `ibidem`, `op. cit.`, `tak też`, `cyt. wyżej`, `wyżej powołany/przywołany wyrok`,
-`powołane orzeczenie`, `j.w.`. Każde takie odwołanie wskazuje na ostatni zgodny antecedent
-w tekście - policz je jako ten sam cytat, ale zachowaj miejsce wystąpienia.
+Formy skrótowe mają **różne reguły rozwiązywania** - nie wolno wszystkich odsyłać do najbliższego
+antecedentu:
+
+- `tamże` / `ibidem` / `j.w.` - bezpośrednio poprzedzające źródło.
+- `op. cit.` / `cyt. wyżej` - często niosą **wskaźnik**, który wygrywa z bliskością: nazwisko autora,
+  fragment tytułu, numer przypisu ("Radwański, op. cit., s. 120"). Rozwiązuj najpierw po wskaźniku;
+  do bliskości sięgaj tylko przy odwołaniu gołym.
+- Formy opisowe (`wyżej powołany wyrok`, `powołane orzeczenie`, `tak też`) - dopasuj po opisanych
+  atrybutach (sąd, sygnatura, przedmiot), nie po samej pozycji w tekście.
+
+Gdy pasuje więcej niż jeden antecedent albo żaden - oznacz odwołanie **nierozwiązane - do przeglądu
+ręcznego** zamiast zgadywać: błędne sklejenie po cichu zlewa dwa różne źródła w jedno. Rozwiązane
+odwołanie policz jako ten sam cytat co antecedent, ale zachowaj miejsce wystąpienia.
 
 ## Format wyjścia
 
