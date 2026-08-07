@@ -10,6 +10,21 @@ installed users from ever receiving updates.
 Run from the repo root:  python scripts/preflight.py
 Exit 0 = releasable. Exit 1 = blocking defects listed on stdout.
 Stdlib only, ASCII-safe output, no network.
+
+Tier doctrine (Goodhart line; adapted from danielmiessler/LifeOS ISAGate, MIT):
+  BLOCKING (problems) - only binary structural facts a junk entry cannot
+      satisfy: file missing, JSON does not parse, name mismatch, version
+      drift. Blocking these cannot be gamed, only fixed.
+  WARNING (soft=True) - anything a count or a token could satisfy without
+      the underlying quality existing. Blocking a count just manufactures
+      the count: force "attribution present" and you get relationship:
+      original slapped on a fork. Surface it, never block on it alone.
+  The pairing rule: every claim-shaped check that could be gamed gets a
+      MEASUREMENT counter-gate instead of a block. Here: attribution-gate
+      reads what a skill CLAIMS (gameable) -> upstream-delta measures the
+      BYTES against pinned snapshots (not gameable). New checks follow the
+      same pattern: classify by "can a throwaway entry satisfy this?"
+      before choosing the tier.
 """
 import json
 import os
