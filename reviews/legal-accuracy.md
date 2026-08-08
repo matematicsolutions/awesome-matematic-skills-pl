@@ -32,3 +32,10 @@ Przeglad 2026-08-07 (backport flag codex z PR #16 mike-workflows).
 Przeglad 2026-08-07 (backport flag codex z PR #16 mike-workflows).
 
 - art. 483 - ok - kara umowna tylko za zobowiazanie niepieniezne (art. 483 § 1 KC); wiersz przykladowy tabeli, kotwica niezmieniona, ponownie odczytana z KC.
+
+
+## matematic-patron-pr-review-pl
+
+Przeglad 2026-08-08 (skrocenie description pod limit 1024 rejestru Smithery Skills; jednostka w zmienionej linii bez zmiany tresci).
+
+- art. 12 - ok - AI Act (rozp. UE 2024/1689) art. 12 "Rejestrowanie zdarzen": systemy AI wysokiego ryzyka musza automatycznie rejestrowac zdarzenia w calym cyklu zycia; etykieta "record-keeping" w description poprawna. Zweryfikowane u zrodla EUR-Lex CELEX:32024R1689 (PL) 2026-08-08.
