@@ -87,7 +87,8 @@ export function formatAuditLine(timestamp, event) {
  *
  * Typy zdarzen (lista zamknieta):
  *   pseudonim-applied | anonimizacja-applied | pseudonim-reversed
- *   llm-call-out | mapping-stored | mapping-cleanup | archive-created
+ *   paczka-applied | llm-call-out | mapping-stored | mapping-cleanup
+ *   archive-created
  */
 export class AuditLog {
     constructor(logPath, clock = () => new Date()) {

@@ -26,6 +26,29 @@ Ten projekt powstał metodą cherry-pick MateMatic: bierzemy pattern strukturaln
 - **Co napisane od zera**: cała implementacja w ESM na `node:crypto`/`node:fs`, polskie nazewnictwo zdarzeń, integracja z bramką `ResidualPIIError`.
 - **Czego NIE wzięto**: GLiNER zero-shot NER + ONNX Runtime (>100 MB modeli, łamie zasadę zero-LLM/offline), architektura MCP server, 33 typy encji US/UK/zach.EU (nie rozszerzamy zakresu poza polskie PII).
 
+## 3. Rizzo-AI-Academy/rizzo-pii - cherry-pick patternu (MIT)
+
+- **Źródło**: https://github.com/Rizzo-AI-Academy/rizzo-pii
+- **Licencja**: MIT.
+- **Snapshot**: 2026-07-13.
+- **Co wzięte (pattern strukturalny, NIE kod)**:
+  1. stabilny placeholder per (label, wartość znormalizowana) - ten sam byt zawsze dostaje ten sam placeholder,
+  2. lokalny słownik odwracania {placeholder -> wartość} z eksportem/importem JSON, który przeżywa restart aplikacji,
+  3. osobny krok "Restore" - wklejasz odpowiedź LLM, oryginały wracają lokalnie.
+- **Co napisane od zera**: `SlownikOdwracania` w ESM (klucz `KATEGORIA:znormalizowana`, odtwarzanie liczników z sufiksów placeholderów), integracja z istniejącą detekcją checksumową i bramką residual.
+- **Czego NIE wzięto**: UI (Streamlit), detekcja przez Presidio/spaCy (łamie zasadę zero zależności), kategorie encji US.
+
+## 4. moyupeng0422/legal-doc-redactor - cherry-pick patternu (MIT)
+
+- **Źródło**: https://github.com/moyupeng0422/legal-doc-redactor
+- **Licencja**: MIT.
+- **Snapshot**: 2026-07-13.
+- **Co wzięte (pattern strukturalny, NIE kod)**:
+  1. batch wielu plików z JEDNOLITĄ numeracją placeholderów między plikami (liczniki nie resetują się per plik),
+  2. mapping w sidecarze obok dokumentów (u nas: `*.mapa-pii.json` - ostrzeżenie w samej nazwie pliku).
+- **Co napisane od zera**: `pseudonimizujPaczke` w ESM na wspólnym słowniku, bramka residual rozszerzona na całą paczkę (każdy wynik vs wszystkie oryginały słownika), zdarzenia audit logu per plik.
+- **Czego NIE wzięto (roadmap v2)**: restore `.docx` z zachowaniem tracked changes przez podmianę na poziomie runs - nasz silnik jest dziś tekstowy; odnotowane w CHANGELOG jako v2.
+
 ## Zgodność z kanonem cherry-pick MateMatic
 
 - **Snapshot permissive licencji** zachowany (data 2026-05-22 w LICENSE i tutaj).

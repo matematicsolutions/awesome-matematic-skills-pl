@@ -22,7 +22,7 @@ Wymaga Node 20+. Zero zależności - nic do `npm install`.
 ```bash
 git clone https://github.com/matematicsolutions/matematic-anonimizacja-pl
 cd matematic-anonimizacja-pl
-node --test          # 18 testów, powinny przejść
+node --test          # 32 testy, powinny przejść
 ```
 
 Jako skill Claude Code: skopiuj katalog do `~/.claude/skills/let-it-be/`.
@@ -42,6 +42,59 @@ node bin/cli.mjs odwroc odpowiedz.txt --map mapa.json
 ```
 
 Wejście `-` lub brak argumentu = stdin. Po podmianie obie komendy uruchamiają **bramkę "no PII leaves"**: jeśli jakiś oryginał przetrwał (np. fleksja nazwiska), operacja jest przerywana z kodem 2.
+
+## Paczka dokumentów - odwracalna redakcja z jednolitą numeracją
+
+`pseudonimizuj` działa na jednym dokumencie i w każdym pliku numeruje od nowa: `[OSOBA_1]` w pozwie i `[OSOBA_1]` w zeznaniu mogą być dwiema różnymi osobami. Przy sprawie złożonej z kilku pism to psuje korreferencję i utrudnia modelowi rozumowanie. Komenda `paczka` rozwiązuje to wspólnym słownikiem odwracania:
+
+- **stabilny placeholder** per (kategoria, wartość znormalizowana) - ten sam byt w każdym pliku paczki to ten sam `[OSOBA_1]`,
+- **jednolita numeracja między plikami** - liczniki nie resetują się per plik,
+- **słownik przeżywa restart** - kolejne wywołanie z tym samym `--slownik` kontynuuje numerację, znane wartości trzymają stare placeholdery.
+
+```bash
+# 1. Pseudonimizacja paczki (sidecar *.mapa-pii.json powstaje obok)
+node bin/cli.mjs paczka pozew.txt zeznanie.txt --slownik sprawa.mapa-pii.json --audit audit.log
+# -> pozew.pseudo.txt, zeznanie.pseudo.txt
+
+# 2. Człowiek wysyła pliki *.pseudo.txt do LLM i zapisuje odpowiedź.
+
+# 3. Przywrócenie oryginałów w odpowiedzi - lokalnie
+node bin/cli.mjs przywroc odpowiedz-llm.txt --slownik sprawa.mapa-pii.json --out odpowiedz-jawna.txt
+
+# 4. Dokument doszedł później? Dołóż go - numeracja jest kontynuowana.
+node bin/cli.mjs paczka aneks.txt --slownik sprawa.mapa-pii.json
+```
+
+`przywroc` raportuje na stderr placeholdery, których słownik nie zna (pochodzą z innej paczki albo zmyślił je model) - to sygnał do ręcznej weryfikacji. Bramka "no PII leaves" dla paczki jest szersza niż dla pojedynczego pliku: każdy wynik jest sprawdzany przeciw wszystkim oryginałom słownika, także tym z innych plików i z poprzednich sesji; przy porażce nic nie jest zapisywane.
+
+### Plik `*.mapa-pii.json` to dane wrażliwe
+
+Słownik odwracania zawiera oryginały PII - to jest klucz do całej pseudonimizacji. Konwencja `*.mapa-pii.json` istnieje po to, żeby nazwa pliku sama ostrzegała każdego, kto go zobaczy. Zasady: nie wysyłaj do LLM, nie commituj do repo, nie udostępniaj; utrata pliku = utrata możliwości odwrócenia. Do transferu użyj `encryptArchive` (AES-256-GCM).
+
+### Granica governance
+
+Narzędzie **przygotowuje** teksty z placeholderami i **przywraca** oryginały - wyłącznie lokalnie. Niczego samo nie wysyła; o tym, co idzie do LLM, decyduje człowiek. Wariant `AuditLog.appendLlmCallOut` pozwala dodatkowo zatrzymać wysyłkę, jeśli w tekście zostało cokolwiek z oryginałów.
+
+### Biblioteka (paczka)
+
+```js
+import { pseudonimizujPaczke, przywroc, SlownikOdwracania } from "matematic-anonimizacja-pl";
+
+const { wyniki, slownik } = pseudonimizujPaczke([
+  { nazwa: "pozew.txt", text: "..." },
+  { nazwa: "zeznanie.txt", text: "..." },
+]);
+// eksport/import JSON (przeżywa restart):
+const json = slownik.toJSON();
+const wznowiony = SlownikOdwracania.fromJSON(json);
+const { text, nieznanePlaceholdery } = przywroc(odpowiedzLlm, wznowiony);
+```
+
+### Roadmap v2
+
+- Tryb `.docx` z zachowaniem tracked changes (podmiana na poziomie runs, mapping w sidecarze) - dziś silnik jest tekstowy, `.docx` wymaga osobnej ścieżki.
+
+Wzorce tej warstwy (pattern, nie kod): [Rizzo-AI-Academy/rizzo-pii](https://github.com/Rizzo-AI-Academy/rizzo-pii) (MIT) - stabilny placeholder + słownik odwracania z eksportem/importem; [moyupeng0422/legal-doc-redactor](https://github.com/moyupeng0422/legal-doc-redactor) (MIT) - jednolita numeracja w batchu + mapping w sidecarze. Szczegóły: [THIRD_PARTY_INSPIRATIONS.md](THIRD_PARTY_INSPIRATIONS.md).
 
 ## Biblioteka
 
@@ -98,7 +151,8 @@ Próg czułości regulujesz flagą `--min-confidence <n>` (np. `--min-confidence
 
 - **Fleksja**: imiona i nazwiska w odmianie ("Kowalskiego") nie zawsze są łapane poza pierwszym wystąpieniem. Bramka residual to wykryje i zatrzyma - zweryfikuj dokument.
 - **Gazetteer imion**: ~120 najczęstszych. Rzadkie lub obce imiona mogą umknąć.
-- **Daty urodzenia, paszport, prawo jazdy, PWZ**: poza zakresem v0.1.0.
+- **Daty urodzenia, paszport, prawo jazdy, PWZ**: poza zakresem v0.2.0.
+- **`.docx` z tracked changes**: roadmap v2 - dziś silnik jest tekstowy.
 - **Adres**: łapane `ul./al./pl./os. Nazwa numer` i kod pocztowy; adres bez prefiksu ulicy może umknąć.
 - To narzędzie **wspomaga**, nie zastępuje weryfikacji przez prawnika.
 

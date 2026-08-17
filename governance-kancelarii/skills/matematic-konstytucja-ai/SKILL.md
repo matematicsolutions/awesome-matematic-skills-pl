@@ -407,7 +407,7 @@ Cherry-pick z [hshadab/preflight-mike](https://github.com/hshadab/preflight-mike
 **Polityka 4: Citation integrity (integralnosc cytowania)**
 - Tresc PL: "Kazdy cytat wyroku, ustawy, artykulu lub klauzuli umownej w odpowiedzi AI MUSI rozwiazywac sie do dokumentu istniejacego w korpusie kancelarii lub publicznym MCP konektorze (SAOS, EUR-Lex, KRS, ISAP). Halucynacja cytatu = BLOCKED."
 - Mechanizm: lookup w grafie wiedzy lub MCP query. Brak match = nieistniejacy cytat.
-- Rationale: zasada `citation-grounding-pl` - mechaniczna walidacja cytatu chroni przed halucynacja modelu.
+- Rationale: zasada [[citation-grounding-pl]] - mechaniczna walidacja cytatu chroni przed halucynacja modelu.
 
 **Polityka 5: Escalation scope (zakres eskalacji do czlowieka)**
 - Tresc PL: "Pytania dotyczace: papierow wartosciowych (KSH, ustawa o ofercie publicznej), zdrowia/leczenia (Kodeks Etyki Lekarskiej), fuzji i przejec (KSH, prawo konkurencji), spraw karnych - WYMAGAJA review przez prawnika prowadzacego sprawe przed wyslaniem klientowi. AI nie autoryzuje tych odpowiedzi samodzielnie."
@@ -425,14 +425,14 @@ Pattern z ICME Preflight (dokumentacja `docs.icme.io`, snapshot 2026-05-24): pol
 
 **Wartosc**: kancelaria nie deployuje polityki AI ad-hoc. Iteruje az pokrycie scenariuszy jest >= 80% poprawne. Audit log zawiera historie iteracji (`policy_hash` per moment, nie tylko aktualnie obowiazujacy).
 
-### Wartosc dla kancelarii
+### Dlaczego to gold dla matematic-konstytucja-ai
 
-- **Klient nie wie "co napisac" w Konstytucji** - dostaje 5 gotowych polityk-szablonow zaadaptowanych do polskich realiow.
-- **Klient nie wie "czy nasza polityka dziala"** - dostaje iterator polityki (scenarios + feedback + tests).
-- **Pozycjonowanie**: kierunek deterministycznej walidacji polityk jest reprezentowany m.in. przez [Microsoft Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) i [ICME Preflight](https://docs.icme.io). MateMatic adresuje ten obszar w wersji lokalnej (zero cloud) dla kancelarii polskich.
+- **Klient nie wie "co napisac" w Konstytucji** - daje sie mu 5 gotowych polityk-szablonow zaadaptowanych do PL realia.
+- **Klient nie wie "czy nasza polityka dziala"** - daje sie mu iterator (scenarios + feedback + tests).
+- **Argument sprzedazowy**: branza 2026 idzie w deterministyczna walidacje polityk (Microsoft AGT + ICME Preflight + Will Chen). MateMatic dostarcza ten standard kancelariom polskim z lokalnym solver'em (zero cloud).
 
 ### Atrybucja
-5 polityk: wzor z [hshadab/preflight-mike `docs/mikeoss-legal-ai.md`](https://github.com/hshadab/preflight-mike/blob/main/docs/mikeoss-legal-ai.md) (MIT). Polskie sformulowanie + adaptacja na realia kancelaryjne PL napisane od zera w tym Appendix. Iterator polityki: wzor z [docs.icme.io](https://docs.icme.io) endpointy `scenarios/feedback/refinePolicy/runPolicyTests`. NIE wpinamy ICME jako zaleznosc - patrz [ADR-0031 PATRON](https://github.com/matematicsolutions/patron/blob/main/governance/adr/0031-deterministyczna-walidacja-z-lokalnym-proof-receipt.md) dla peinych granic.
+5 polityk: wzor z [hshadab/preflight-mike `docs/mikeoss-legal-ai.md`](https://github.com/hshadab/preflight-mike/blob/main/docs/mikeoss-legal-ai.md) (MIT). Polskie sformulowanie + adaptacja na realia kancelaryjne PL napisane od zera w tym Appendix. Iterator polityki: wzor z [docs.icme.io](https://docs.icme.io) endpointy `scenarios/feedback/refinePolicy/runPolicyTests`. NIE wpinamy ICME jako zaleznosc - patrz [[ADR-0031 PATRON]] dla peinych granic.
 
 ---
 
@@ -502,16 +502,61 @@ Jak opisane wyzej.
 - `anthropic-skills:matematic-company` - voice firmowy MateMatic (oferta dla klienta)
 - `anthropic-skills:matematic-reviewer` - recenzja dokumentow eksperckich
 - `legal-ai-plugin-governance` - checklist audytu pluginow (input do Boundaries)
+- `matematic-stack-zero-cloud` - zatwierdzony stack RODO-safe (input do tabeli narzedzi)
 - `matematic-workspace-backup` - art. 32 RODO mapping
 - `security-and-hardening` - RODO art. 32 environment
 - `anthropic-skills:investor-materials` - jezeli ofertujemy Konstytucje jako produkt na pitch
+- `matematic-pricing` - wycena 15-40k / 60-150k PLN
 - `matematic-expert-panel` - alternatywny format warsztatu
 
-## Konwencje wewnetrzne
+## Appendix H - Rejestr systemow AI (format wpisu, deliverable Tygodnia 1)
 
-- Typografia: ASCII lacznik "-" zawsze w dokumencie (zero em-dash/en-dash).
-- Cherry-pick: methodology adapted from github/spec-kit (source pattern).
+Shadow AI Discovery (Appendix - Tydzien 1 Discovery, pattern z Microsoft AGT) produkuje ZNALEZISKA.
+Ten appendix daje im FORMAT: znormalizowany wpis rejestru systemow AI kancelarii - deliverable,
+ktory zostaje u klienta po wdrozeniu i jest jego dowodem inwentaryzacji pod AI Act.
+
+Schemat wpisu (adaptacja modelu `aiApplication` + `mcpServer` z open-metadata/OpenMetadata,
+Apache-2.0, rejestr ocen #71; pola przyciete do skali kancelarii, nazwy PL):
+
+```yaml
+system_ai:
+  nazwa:                      # np. "Asystent pism procesowych"
+  typ: chatbot | agent | copilot | narzedzie-wbudowane | serwer-mcp
+  etap: pilotaz | produkcja | wycofywany
+  modele:                     # dostawca + model + wersja, per uzycie
+  zrodla_danych:              # do czego system ma dostep (DMS, poczta, akta)
+  serwery_mcp:                # jesli agent - lista konektorow z wersja protokolu
+  governance:
+    status_rejestracji: zarejestrowany | wykryty-shadow | zatwierdzony | odrzucony
+    wykryto_przez:            # zgloszenie / ruch API / logi SSO / przeglad umow
+    ocena_ryzyka:             # klasyfikacja AI Act (zakazane/wysokie/ograniczone/minimalne)
+                              # -> uzyj skilla ai-act-triage-pl
+    zgodnosc:                 # frameworki: EU AI Act, RODO; status per framework
+    dowody:                   # linki: DPIA, karta modelu, umowa powierzenia, testy
+    dzialania_naprawcze:      # kazde z: wlasciciel + termin + priorytet + status
+    zatwierdzil:              # rola z Governance Roles Konstytucji + data
+  cykl_przegladu: miesieczny | kwartalny | polroczny | roczny
+  nastepny_przeglad:          # data - puste pole = flaga audytu
+```
+
+Reguly uzycia:
+1. Wpis powstaje dla KAZDEGO znaleziska Shadow AI Discovery - takze odrzuconych
+   (status `odrzucony` z uzasadnieniem to tez dowod governance).
+2. `ocena_ryzyka` NIGDY recznie "na oko" - zawsze przez `ai-act-triage-pl`.
+3. Pole `dowody` puste przy statusie `zatwierdzony` = blokada zatwierdzenia
+   (bramka mechaniczna, nie regula w glowie).
+4. Rejestr = zalacznik zywy Konstytucji; zmiana wpisu przechodzi proces z sekcji Evolution.
+5. Dla serwerow MCP: `serwery_mcp` z wersja protokolu - umozliwia audyt zgodnosci
+   przy zmianach spec MCP (jak breaking changes 2026-07-28).
+
+## Powiazane memories
+
+- `feedback_review_process.md` - marko-pl review obowiazkowy przed dostarczeniem
+- `feedback_typografia_myslnik.md` - "-" zawsze w dokumencie
+- `reference_narzedzia_oceny_2026-05-14.md` - pozycja #5 spec-kit (source pattern), #71 OpenMetadata (Appendix H)
 
 ## Source attribution
 
 Methodology adapted from github/spec-kit (MIT License) - Constitution -> Spec -> Plan -> Tasks pattern. Adaptacja na B2B services dla kancelarii prawnych. NIE pelna instalacja spec-kit (CLI tool dla developers).
+
+Appendix H: struktura wpisu rejestru adaptowana z open-metadata/OpenMetadata (Apache-2.0) - encje `aiApplication`/`mcpServer`/`governanceMetadata` z `openmetadata-spec` (JSON Schema), przyciete do skali kancelarii i przetlumaczone; zero kodu OpenMetadata.

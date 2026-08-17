@@ -22,7 +22,7 @@ Generuje warsztat decyzyjny dla zarzadu kancelarii. Cherry-pick z `SuperClaude-O
 
 **Format:** 90-minutowy warsztat live z zarzadem kancelarii (online lub on-site), facilitated przez MateMatic. Analiza konkretnego casu (np. "Czy wdrazac voice clone dla obslugi infolinii?") przez 7 person z roznych perspektyw + final decision matrix.
 
-**Pricing:** 5-15k PLN per warsztat (zalezy od wielkosci kancelarii i zlozonosci casu). Drugi poziom oferty MateMatic, kierowany do partnerow zarzadzajacych.
+**Pricing:** 5-15k PLN per warsztat (zalezy od kancelarii size + casu complexity). Tier 2 produkt sprzedawany do partnerow zarzadzajacych.
 
 ---
 
@@ -196,7 +196,7 @@ Methodology adapted from SuperClaude-Org/SuperClaude_Framework (MIT License) - B
 
 - Konstytucja AI (skill matematic-konstytucja-ai) dla pelnej governance struktury
 - AI Implementation Playbook 6-8 tygodni
-- Audyt zero-cloud stacku (RODO-safe self-hosted deployment)
+- Stack zero-cloud audit (matematic-stack-zero-cloud)
 
 ## Podpisy
 
@@ -273,15 +273,18 @@ Standardowy 90-min warsztat + raport. Single case. Default 7 person.
 
 - `anthropic-skills:ai-law-firm` - kontekst kancelarii
 - `matematic-konstytucja-ai` - downstream produkt (Konstytucja AI po warsztacie)
+- `matematic-pricing` - wycena per Variant A/B/C/D
 - `anthropic-skills:matematic-company` - voice firmowy MateMatic
 - `anthropic-skills:matematic-ppt` - prezentacja slides na warsztat
 - `legal-ai-plugin-governance` - input dla persona IT Security
+- `marko-pl-content` - review raportu pozegnal
 - `anthropic-skills:pdf` - generacja raportu pozegnal PDF
 
-## Konwencje wewnetrzne
+## Powiazane memories
 
-- Cherry-pick: methodology adapted from SuperClaude-Org/SuperClaude_Framework (source pattern).
-- Output warsztatu moze sluzyc jako content do dalszych formatow (PDF, slajdy, MEMO).
+- `reference_narzedzia_oceny_2026-05-14.md` - pozycja #6 SuperClaude (source pattern)
+- `feedback_review_process.md` - marko-pl review raportu obowiazkowy
+- `reference_memo_ejaj_brand.md` - jezeli warsztat sluzy jako content do MEMO
 
 ## Source attribution
 

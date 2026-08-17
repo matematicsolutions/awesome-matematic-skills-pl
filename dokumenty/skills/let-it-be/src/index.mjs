@@ -7,6 +7,10 @@
 // Atrybucja: THIRD_PARTY_INSPIRATIONS.md.
 
 export { pseudonimizuj, anonimizuj, odwroc } from "./pseudonimizuj.mjs";
+export {
+    SlownikOdwracania, pseudonimizujPaczke, przywroc,
+    SLOWNIK_FORMAT, SLOWNIK_OSTRZEZENIE,
+} from "./paczka.mjs";
 export { detect, countByType, PII_TYPES } from "./detect.mjs";
 export { PL_EXTRACTION_RULES, detectAll, foldPl } from "./regex.mjs";
 export {

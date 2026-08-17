@@ -18,7 +18,7 @@ metadata:
 
 # MateMatic Spec-Driven - dev pipeline dla naszych projektow
 
-Spec-Driven Development dla **wewnetrznych** projektow MateMatic. NIE produkt sprzedazowy dla kancelarii (tym jest `matematic-konstytucja-ai`). Tutaj: my, dla siebie, do PATRON / KGLF / POAS / skilli / mikroproduktow / aplikacji / serialu.
+Spec-Driven Development dla **wewnetrznych** projektow MateMatic. NIE produkt sprzedazowy dla kancelarii (tym jest [[matematic-konstytucja-ai]]). Tutaj: my, dla siebie, do PATRON / KGLF / POAS / skilli / mikroproduktow / aplikacji / serialu.
 
 **Source pattern:** github/spec-kit (MIT) v0.8.12 - 4-fazowa methodology Constitution -> Specify -> Plan -> Tasks z marker `[P]` i Constitution Check GATE. Cherry-pick wybranych elementow + adaptacja pod MateMatic project types.
 
@@ -36,10 +36,10 @@ Spec-Driven Development dla **wewnetrznych** projektow MateMatic. NIE produkt sp
 - Audyt istniejacego projektu - czy ma konstytucje? czy ficzer zgadza sie z konstytucja?
 
 ❌ **NIE:**
-- Sprzedaz kancelarii (uzyj `matematic-konstytucja-ai`)
-- Krotki post LI / aktualnosc BW (uzyj `edit-article` albo `linkedin-voice-wieslaw-mazur`)
+- Sprzedaz kancelarii (uzyj [[matematic-konstytucja-ai]])
+- Krotki post LI / aktualnosc BW (uzyj [[edit-article]] albo [[linkedin-voice-wieslaw-mazur]])
 - Pojedynczy bugfix / refactor w juz dzialajacym module
-- MEMO Ej Aj (uzyj `memo-production-pipeline`)
+- MEMO Ej Aj (uzyj [[memo-production-pipeline]])
 
 ---
 
@@ -67,6 +67,19 @@ Struktura:
 ### Article II - [Nazwa]
 ...
 
+**Dwa gotowe wzorce artykulow** (zapozyczone z `tutti-os/tutti`, egzekwowalne
+mechanicznie, nie tylko deklaratywnie - wklej i dostosuj gdy pasuje do projektu):
+
+- **Limit rozmiaru pliku** - "Pliki z logika biznesowa MUST pozostac <= 800 linii;
+  przekroczenie wymaga rozbicia modulu, nie wyjatku w konstytucji." Prosta,
+  mechaniczna bariera przeciw monolitom - latwa do sprawdzenia w CI/pre-commit.
+- **Drift ADR dla vendorowanych/forkowanych specyfikacji** - "Kazdy fork/vendoring
+  zewnetrznego protokolu, schematu lub API (np. ELI, wzorzec ADR z dograh, logika
+  scrapowania ISAP) MUST miec wlasny ADR dokumentujacy punkt pinowania + cykliczny
+  recheck upstream drift." Formalizuje problem ktory juz mielismy nieformalnie -
+  patrz [[feedback_kod_wyprzedza_dokumentacje_drift]] i
+  [[feedback_errata_propagacja_z_rodzica_adr]].
+
 ## Boundaries (granice)
 - Co projekt **robi**
 - Czego projekt **nie robi** (anty-zakres)
@@ -74,7 +87,7 @@ Struktura:
 
 ## Governance (kto decyduje)
 - Owner: Wieslaw Mazur
-- Reviewers: [wewnetrzny senior review dla content, security-review dla kodu, etc.]
+- Reviewers: [marko-pl dla content, security-review dla kodu, etc.]
 - Amendment process: [jak zmieniac konstytucje]
 
 ## Compliance Map (mapowanie na zewnetrzne wymogi)
@@ -85,7 +98,7 @@ Struktura:
 **Version:** 0.1.0 | **Ratified:** YYYY-MM-DD | **Last Amended:** YYYY-MM-DD
 ```
 
-**Bramki MateMatic** (zawsze pytaj zanim ratifikujesz konstytucje, per regule "discovery to nie rekomendacja" - 4 bramki kanonu):
+**Bramki MateMatic** (zawsze pytaj zanim ratifikujesz konstytucje, per [[feedback_discovery_nie_rekomendacja]]):
 
 1. **Licencja** - jaka licencja projektu? Czy zgadza sie z licencjami zaleznosci?
 2. **ToS / anty-OS** - czy projekt nie omija ToS dostawcow? Czy nie jest brand-toxic?
@@ -128,12 +141,32 @@ Struktura:
 - Tego NIE robimy w tej iteracji
 - ...
 
+## Anty-kryteria (stan idealny, nie cel) [wzorzec ISA]
+- Co ma POZOSTAC prawdziwe po dostarczeniu (np. "testy istniejace nadal przechodza",
+  "zero nowych zaleznosci", "PII nie opuszcza maszyny")
+- Roznica vs Non-Goals: Non-Goals = czego nie budujemy; anty-kryteria = czego
+  budowa nie moze ZEPSUC. Cel bez anty-kryteriow = maksymalizator spinaczy.
+
+## Sondy falsyfikujace (per twierdzenie spec-a) [wzorzec ISA]
+- Kazde twierdzenie "system robi X" dostaje sonde: KOMENDA/test, ktorej porazka
+  by je OBALILA - i uwage, co by bylo falszywym potwierdzeniem
+  (por. pamiec: sonda falszujaca wlasny wynik, 08-07)
+- Twierdzenie bez sondy = opinia, nie spec. Oznacz `[NO-PROBE]` - do rozwiazania
+  przed zamknieciem
+- Sondy z tej sekcji staja sie harnessem odbioru w Fazie 4 - spec JEST testem
+
 ## Open Questions / NEEDS CLARIFICATION
 - [ ] Pytanie 1
 - [ ] Pytanie 2
 ```
 
 Markery `NEEDS CLARIFICATION` przechodza do `/mspec-clarify` (opcjonalna pomocnicza komenda).
+
+**Regula zamkniecia (mgla):** spec nie moze zostac zamkniety z niepustym
+`NEEDS CLARIFICATION` ani z `[NO-PROBE]` - to binarne fakty strukturalne
+(bramka HARD). Liczby "ile sond, ile anty-kryteriow" NIE sa bramka - wymuszony
+licznik to sfabrykowany licznik (linia Goodharta). Wzorce ISA/anty-kryteria/sondy:
+adaptacja z danielmiessler/LifeOS (MIT, rejestr ocen #74), doktryna ISAGate.
 
 ### Faza 3 - `/mspec-plan` (Plan)
 
@@ -145,7 +178,7 @@ Technical Context + struktura projektu. **Tu wybierasz project type.**
 
 | Project type | Kiedy | Struktura referencyjna |
 |---|---|---|
-| `claude-skill` | Nowy skill w `.claude/skills/` (podkatalog o nazwie skilla) | `SKILL.md` + ewent. helpers |
+| `claude-skill` | Nowy skill `~/.claude/skills/<name>/` | `SKILL.md` + ewent. helpers |
 | `video-pipeline` | Odcinek serialu / Akademii / MEMO | sceny per katalog, subagenci, ledger |
 | `MateMatic-mikroprodukt` | EPUB Biblioteka, NotebookLM pack | input -> processing -> output, manifest |
 | `desktop-app` | POAS, lokalne narzedzia kancelaryjne | Tauri/Electron + Rust/Python core + UI |
@@ -236,7 +269,7 @@ Format: `[ID] [P?] [Story] Description`
 ## Phase N - Polish
 - [ ] TXXX [P] Dokumentacja / README
 - [ ] TXXX Performance tuning
-- [ ] TXXX Wewnetrzny senior review (jesli tresc tekstowa)
+- [ ] TXXX Marko-pl review (jesli tresc tekstowa)
 - [ ] TXXX [P] Security review
 
 ## Parallel Opportunities
@@ -245,7 +278,7 @@ Format: `[ID] [P?] [Story] Description`
 
 **Wazne dla MateMatic:**
 
-- Markery `[P]` w `tasks.md` to formalny input dla wewnetrznego orchestratora pipeline'a wideo MateMatic - mowi orchestratorowi ktore subagenty palic rownolegle (zamiast manualnie projektowac graf questow).
+- Markery `[P]` w `tasks.md` to formalny input dla [[reference_matematic_video_pipeline]] orkiestratora - mowi orchestratorowi ktore subagenty palic rownolegle (zamiast manualnie projektowac graf questow).
 - `US1` jako MVP = zawsze pierwsza ratowalna wartosc, nawet jesli reszta poslizgnie sie.
 - Phase 2 (Foundational) BLOKUJE - to bardzo wazne, nie pomijac, inaczej downstream taski sie sypia (jak w PATRON gdzie wpierw brakowalo Supabase self-host).
 
@@ -273,7 +306,7 @@ Za kazdym razem gdy zmieniamy `konstytucja.md`:
 Footer:
 
 ```markdown
-**Version:** 1.2.0 | **Ratified:** 2025-05-20 | **Last Amended:** 2025-06-15
+**Version:** 1.2.0 | **Ratified:** 2026-05-20 | **Last Amended:** 2026-06-15
 ```
 
 Plus changelog `## Amendments` w samej konstytucji (audyt-friendly per AI Act art. 12).
@@ -306,13 +339,45 @@ Plus changelog `## Amendments` w samej konstytucji (audyt-friendly per AI Act ar
 
 ---
 
+## Notatki mikro-decyzji (alternatywa dla pelnego cyklu)
+
+Wzorzec zapozyczony z `stablyai/orca` - plaski folder `docs/` z dziesiatkami
+malych, jednostronicowych notatek per-feature (`worktree-delete-preflight.md`,
+`orchestration-reset-scope-validation.md`) zamiast pelnego ADR/konstytucji
+dla kazdej drobnej zmiany. Wypelnia luke: pelny cykl 4-fazowy ponizej jest
+za ciezki dla poprawki na <1 dzien pracy, wiec takie zmiany czesto NIE
+dostaja zadnej dokumentacji - a to jest gorsze niz lekka notatka.
+
+**Kiedy notatka wystarczy (NIE trzeba pelnego cyklu):**
+- Zmiana <1 dzien pracy, jeden plik/modul, brak nowego ADR-worthy decyzji
+- Nie zmienia kontraktu API/MCP/CLI (jesli zmienia - patrz Constitution Check GATE)
+- Nie dotyczy Article z konstytucji projektu (jesli dotyczy - to jest ADR-worthy)
+
+**Konwencja:** `notes/<data>-<krotki-slug>.md` w korzeniu projektu (analogicznie
+do `docs/` w orca, u nas `notes/` zeby nie kolidowac z istniejacym `docs/`).
+Szablon (jedna strona, max ~30 linii):
+
+```md
+# <Tytul decyzji/zmiany>
+
+**Data:** <ISO 8601>
+**Kontekst:** <1-2 zdania - jaki problem/potrzeba>
+**Decyzja:** <co zrobiono, 1 akapit>
+**Alternatywy odrzucone:** <opcjonalnie, 1 zdanie kazda>
+**Wplyw:** <pliki/moduly dotkniete>
+```
+
+Jesli w trakcie pisania notatki okazuje sie ze zmiana jednak dotyka Article
+konstytucji lub kontraktu API - eskaluj do pelnego ADR/spec, nie zostawiaj
+tego w `notes/`.
+
 ## Czego ten skill NIE robi
 
-- NIE instaluje specify-cli (to wczesniejsza faza B - sandbox install).
+- NIE instaluje specify-cli (to faza B, juz zrobiona w sandboxie - [[reference_spec_kit_install_2026-05-20]]).
 - NIE generuje plikow automatycznie - Claude (ty) piszesz `konstytucja.md`/`spec.md`/`plan.md`/`tasks.md` na podstawie templates w tej instrukcji, w rozmowie z Wieslawem.
 - NIE wymaga `.claude/skills/speckit-*` w projekcie - to skill samowystarczalny.
-- NIE zastapuje `matematic-konstytucja-ai` - tamten = sprzedaz, ten = wewnetrzny dev.
-- NIE zastapuje wewnetrznego pipeline'a wideo MateMatic - tamten = orkiestracja runtime, ten = projekt artefaktow planu. Wspolpraca: `tasks.md` z `[P]` jest INPUTEM dla pipeline'a.
+- NIE zastapuje [[matematic-konstytucja-ai]] - tamten = sprzedaz, ten = wewnetrzny dev.
+- NIE zastapuje [[reference_matematic_video_pipeline]] - tamten = orkiestracja runtime, ten = projekt artefaktow planu. Wspolpraca: `tasks.md` z `[P]` jest INPUTEM dla pipeline'a.
 
 ---
 
@@ -320,18 +385,18 @@ Plus changelog `## Amendments` w samej konstytucji (audyt-friendly per AI Act ar
 
 | Skill / proces | Jak wspolpracuje |
 |---|---|
-| `matematic-konstytucja-ai` | Brat-blizniak (produkt klient vs dev nasz). Wspolny rdzen, inny target audience. |
-| matematic video pipeline (internal) | `tasks.md` -> graf questow orchestratora. `[P]` markery -> fan-out subagentow. |
-| `matematic-video-governance` | 4 fazy validation (pre-compose / render / post / distribution) wbudowane w `/mspec-analyze` dla projektow video-pipeline. |
-| wewnetrzny senior review MateMatic | Auto-dorzucany jako reviewer w `## Governance` konstytucji projektow tresciowych. |
-| `anthropic-skills:matematic-reviewer` | Auto-dorzucany dla projektow kodowych (PATRON / KGLF / POAS). |
-| KGLF (Knowledge Graph for Law Firms) | KGLF jako Reference Implementation - juz ma ADR-y, jest dobrym kandydatem na pierwszy projekt z `.matematic/konstytucja.md` (rozszerzajacy ADR-y SEMVER konstytucja). |
+| [[matematic-konstytucja-ai]] | Brat-blizniak (produkt klient vs dev nasz). Wspolny rdzen, inny target audience. |
+| [[reference_matematic_video_pipeline]] | `tasks.md` -> graf questow orchestratora. `[P]` markery -> fan-out subagentow. |
+| [[matematic-video-governance]] | 4 fazy validation (pre-compose / render / post / distribution) wbudowane w `/mspec-analyze` dla projektow video-pipeline. |
+| [[marko-pl-content]] | Auto-dorzucany jako reviewer w `## Governance` konstytucji projektow tresciowych. |
+| [[anthropic-skills:matematic-reviewer]] | Auto-dorzucany dla projektow kodowych (PATRON / KGLF / POAS). |
+| [[reference_kglf_lokalizacja]] | KGLF jako Reference Implementation - juz ma ADR-y, jest dobrym kandydatem na pierwszy projekt z `.matematic/konstytucja.md` (rozszerzajacy ADR-y SEMVER konstytucja). |
 
 ---
 
 ## Pierwsze 2 walidacje w boju (rekomendacja)
 
-1. **Nowy konektor SAOS w PATRON** (planowany od 2026-05-19) - czysty greenfield, dobry test dla `/mspec-spec` + `/mspec-plan` z project type `mcp-server`.
+1. **Nowy konektor SAOS w PATRON** ([[session_summary_2026-05-19_patron]]) - czysty greenfield, dobry test dla `/mspec-spec` + `/mspec-plan` z project type `mcp-server`.
 2. **Biblioteka EPUB v3** (jesli planujemy 3-ci tom) - prosta domena, test dla project type `MateMatic-mikroprodukt`.
 
 NIE testowac na PATRON core ani KGLF (oba juz maja ADR-y, ryzyko podwojnego trackingu).

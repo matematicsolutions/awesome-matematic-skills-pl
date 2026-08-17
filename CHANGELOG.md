@@ -47,6 +47,15 @@ sedziego monotonicznego. Druga: cztery wzorce procesu z deepseek-harness (MIT, p
   odsylacza - walidator istnieje jako `matematic-prompt-defense-pl`. Ledger legal-accuracy:
   art. 12 i 14 AI Act zweryfikowane u zrodla (EUR-Lex CELEX:32024R1689).
 
+- **Parytet kopia robocza -> hub (bramka `parity_gate`, 26 rozjazdow zmierzonych)**: do hubu
+  wchodzi robota, ktora od tygodni siedziala tylko w `~/.claude/skills`:
+  `let-it-be` 0.1.0-alpha -> **0.2.0** (2026-07-13: `paczka.mjs` - slownik odwracania stabilny
+  w calej paczce, `pseudonimizujPaczke`, eksport/import slownika przezywa restart; 32 testy),
+  `matematic-spec-driven` (+4,4k znakow: Constitution Check GATE, marker `[P]`),
+  `matematic-konstytucja-ai` (+4,3k), `matematic-expert-panel` (+0,7k). Frontmatter governance
+  huba zachowany. W druga strone (hub -> kopia) poszlo 16 skilli, m.in. poprawki uczciwosci
+  „RODO-safe" -> „wklejony opis trafia do modelu, ktory masz skonfigurowany".
+
 ### Fixed
 
 - `markitdown` - przyklad wsadowy wskazywal `/c/Users/hp/...`; teraz `$USERPROFILE`.
