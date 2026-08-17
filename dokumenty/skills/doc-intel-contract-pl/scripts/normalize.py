@@ -22,6 +22,7 @@ from adapters import pdftotext as ptt  # noqa: E402
 from adapters import chandra as chd  # noqa: E402
 from adapters import gaius as gai  # noqa: E402
 from adapters import vlm_html as vlm  # noqa: E402
+from adapters import pdf_inspector as pdfi  # noqa: E402
 import degeneracja  # noqa: E402
 import pii_flags  # noqa: E402
 import signature  # noqa: E402
@@ -42,10 +43,12 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Document Intelligence Output Contract")
     ap.add_argument("input", help="plik wejsciowy lub '-' dla stdin")
     ap.add_argument("--engine", required=True,
-                    choices=["opendataloader", "pdftotext", "chandra", "gaius", "vlm-html"],
+                    choices=["opendataloader", "pdftotext", "chandra", "gaius", "vlm-html",
+                             "pdf-inspector"],
                     help="silnik zrodlowy (gaius = OCR PATRONa /ocr/poll; "
                          "vlm-html = dowolny VLM z prompt-kontraktem "
-                         "references/prompt_vlm_ocr_pl.md)")
+                         "references/prompt_vlm_ocr_pl.md; pdf-inspector = JSON "
+                         "z scripts/pdfi_extract.py, szczebel 1.5)")
     ap.add_argument("--threshold", type=float, default=0.85,
                     help="prog confidence-gating (domyslnie 0.85)")
     ap.add_argument("--pretty", action="store_true", help="wyjscie z wcieciami")
@@ -78,6 +81,24 @@ def main(argv=None) -> int:
             blocks = gai.to_blocks(result)
             pages = gai.page_count(result)
             engine_variant = gai.variant(result)
+        elif args.engine == "pdf-inspector":
+            data = json.loads(raw.decode("utf-8"))
+            blocks = pdfi.to_blocks(data)
+            pages = pdfi.page_count(data)
+            need, total = pdfi.ocr_gap(data)
+            if need:
+                # Ta sama zasada co przy degeneracji VLM: niepelnosc ma byc
+                # GLOSNA. Strony bez warstwy tekstowej siedza w kontrakcie jako
+                # bloki `needs_ocr`, ale operator ma to zobaczyc od razu.
+                print(f"OSTRZEZENIE: {need} z {total} stron bez warstwy tekstowej "
+                      f"- kontrakt jest NIEPELNY do czasu domkniecia OCR",
+                      file=sys.stderr)
+            if not pdfi.bbox_available(data):
+                # Tekst jest dobry, ale nie ma go jak zakotwiczyc w stronie.
+                # Bez tego komunikatu brak groundingu wyszedlby dopiero u konsumenta.
+                print("OSTRZEZENIE: nieznane wymiary strony (nieczytelny /MediaBox) "
+                      "- bloki bez bbox, GROUNDING CYTATU niedostepny dla tego dokumentu",
+                      file=sys.stderr)
         elif args.engine == "vlm-html":
             text = raw.decode("utf-8", errors="replace")
             blocks = vlm.to_blocks(text)

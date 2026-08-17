@@ -11,7 +11,7 @@
       "required": ["engine"],
       "properties": {
         "path": { "type": ["string", "null"] },
-        "engine": { "type": "string", "enum": ["opendataloader", "pdftotext", "chandra", "gaius", "vlm-html"] },
+        "engine": { "type": "string", "enum": ["opendataloader", "pdftotext", "chandra", "gaius", "vlm-html", "pdf-inspector"] },
         "engine_variant": { "type": ["string", "null"] },
         "pages": { "type": ["integer", "null"] }
       }

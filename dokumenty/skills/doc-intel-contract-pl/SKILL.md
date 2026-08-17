@@ -33,9 +33,42 @@ attribution:
       detect_repeat_token (degeneracja.py) oraz przepis renderu strony
       flatten AcroForm + dynamiczne DPI. Taksonomia etykiet, obsluga podpisu
       i pieczatki, adapter i testy napisane od zera.
+  - source: firecrawl/pdf-inspector
+    url: https://github.com/firecrawl/pdf-inspector
+    license: MIT
+    relationship: dependency
+    note: >
+      Zaleznosc opcjonalna (PyPI `pdf-inspector`, MIT) uzywana WYLACZNIE przez
+      `scripts/routing_gate.py` do mechanicznej klasyfikacji skan-vs-tekst
+      (classify_pdf: pdf_type, pages_needing_ocr, confidence 0-1). Sciezka
+      normalizacji pozostaje zero-dep stdlib. Zmierzone 2026-08-08 na aktach WM:
+      pelny skan 14/14 stron wykryty w 8 ms (pewnosc 0.95), 102-stronicowy PDF
+      tekstowy w 22 ms. Zamyka dziure szczebla 4 drabinki, gdzie decyzja
+      "czy to skan" byla dotad ocena oka ludzkiego.
+  - source: firecrawl/anydoc
+    url: https://github.com/firecrawl/anydoc
+    license: MIT
+    relationship: pattern-only
+    note: >
+      NIE jest zaleznoscia - jest POWODEM istnienia bramki. Audyt zrodla
+      2026-08-08 wykazal, ze zdarzenia pominiecia tresci (42 miejsca, m.in.
+      "skipping slide", "skipping chapter", "duplicate note id dropped") ida do
+      fasady `log`, a repo nigdzie nie rejestruje loggera. Dowod bojowy:
+      .docx z jednym uszkodzonym chart1.xml -> exit 0, stderr 0 bajtow,
+      a z wyjscia znika cala tabela danych. `check_ooxml` nazywa uszkodzona
+      czesc ZANIM ktokolwiek zaufa wyjsciu. Kod bramki napisany od zera.
+  - source: sandbox-quantum/flintai-cli
+    url: https://github.com/sandbox-quantum/flintai-cli
+    license: Apache-2.0 WITH Commons-Clause
+    relationship: pattern-only
+    note: >
+      `mask_for_model.py` - maska dlugosciowa dla KOPII tekstu wysylanej do modelu
+      (rung-5): kazdy znak sekretu -> `*`, dlugosc i pozycje reszty identyczne, wiec
+      offsety i bbox dalej pasuja do oryginalu. Idea z ich `secret_anonymizer.py`
+      (maskowanie kluczy w kodzie); tu regexy PII PL z pii_flags i wlasne. Zero kodu.
 metadata:
   author: Wieslaw Mazur / MateMatic
-  version: 0.2.0
+  version: 0.3.0
   scope: warstwa normalizujaca stack OCR/PDF -> kontrakt wyjscia (zero-cloud)
   cost: zero LLM (deterministyczna normalizacja)
   license: MIT
@@ -84,14 +117,44 @@ cat wyjscie.json | python scripts/normalize.py --engine opendataloader -
 ```
 Exit: `0` = kontrakt schema-valid, `2` = blad wejscia / kontrakt niepoprawny (pasuje pod CI / pre-commit).
 
+## Bramka routingu (PRZED silnikiem) - `routing_gate.py`
+Odpowiada na pytanie, ktore dotad rozstrzygalo oko: **czy ten dokument w ogole da
+sie przeczytac tekstowo i ktorym szczeblem**. Werdykt trojstanowy z pelnym
+mianownikiem, kod wyjscia `0/10/20` (ok/degraded/failed).
+```bash
+python scripts/routing_gate.py AKTA.pdf --pretty
+python scripts/routing_gate.py *.pdf *.docx --quiet   # tylko to, co nie jest ok
+```
+Lapie trzy rzeczy, ktorych zaden konwerter nie zglasza:
+- **PDF mieszany** (czesc stron to skany) - kazde wyjscie tekstowe bedzie NIEPELNE,
+  a wyglada na kompletne. Status `degraded` + numery stron do OCR.
+- **Pelny skan** - `failed`, eskalacja (Chandra wymaga GPU, ktorego tu nie ma).
+- **Uszkodzona czesc OOXML** - konwerter pominie ja bez slowa (zmierzone na anydoc:
+  uszkodzony `chart1.xml` = exit 0, stderr pusty, znika cala tabela). Bramka nazywa
+  czesc PRZED konwersja.
+
+PDF wymaga `pip install pdf-inspector` (MIT). Jego brak = `failed`, nigdy ciche `ok`.
+
 ## Miejsce w drabince PDF
 Ten skill jest warstwa PO silniku OCR, PRZED groundingiem/redakcja:
-`(pdftotext|opendataloader|Chandra) -> doc-intel-contract-pl -> {gating do czlowieka | redaction_candidates | citation-grounding-pl}`
+`routing_gate -> (pdftotext|anydoc|opendataloader|Chandra) -> doc-intel-contract-pl -> {gating do czlowieka | redaction_candidates | citation-grounding-pl}`
 
 ## Granica governance (Article III)
 Skill PRZYGOTOWUJE: kolejke `review_required`, liste `redaction_candidates`,
 wspolrzedne cytatu. NIE wykonuje redakcji ani akceptacji - to robi czlowiek.
 Confidence-gating to kolejka, nie werdykt prawny.
+
+**Wyjatek pozorny - `mask_for_model.py`.** Gdy fragment ma wyjsc do modelu (rung-5
+vision, LLM-sedzia), kopia dostaje maske dlugosciowa: PESEL/NIP/REGON z suma kontrolna,
+IBAN, e-mail, dowod, klucze API, `Bearer` -> `*` znak w znak. Oryginal, kontrakt i bloki
+sa nietkniete, wiec to NIE jest redakcja dokumentu (Article III), tylko bezpiecznik na
+kanale wyjscia (Article I). Dlugosc identyczna = offsety i bbox z `grounding_bridge`
+pasuja do oryginalu bez przeliczania.
+
+```bash
+python scripts/mask_for_model.py < fragment.txt > fragment.dla_modelu.txt
+# stderr: {"zamaskowane": 3, "kategorie": ["email", "iban", "pesel"]}
+```
 
 ## Status / roadmap (spec 001)
 - **US1 (MVP, DONE 2026-07-01):** adaptery opendataloader+pdftotext, kontrakt, confidence-gating, walidacja schematu.

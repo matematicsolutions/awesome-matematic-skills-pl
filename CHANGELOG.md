@@ -28,9 +28,22 @@ sedziego monotonicznego. Druga: cztery wzorce procesu z deepseek-harness (MIT, p
 - `ocena-outputu-pl` v1.2.0 - rewizja oceny: podniesienie decyzji wymaga nowego dowodu,
   kotwice ograniczaja decyzje do Pelnej weryfikacji.
 
+- `doc-intel-contract-pl` v0.3.0 - **port calej roboty z 2026-08-08, ktora nigdy nie
+  trafila do hubu**: `routing_gate.py` (bramka trojstanowa ok/degraded/failed przed
+  konwersja, pelny mianownik stron do OCR, kontrola integralnosci OOXML, limity zasobow
+  liczone z naglowkow ZIP + fixtury naduzyc), adapter `--engine pdf-inspector` (bbox +
+  confidence dla PDF-ow tekstowych, strona bez tekstu = jawny blok `needs_ocr`), oraz nowy
+  `mask_for_model.py` - maska dlugosciowa dla KOPII wysylanej do modelu w rung-5 (PII PL
+  z suma kontrolna, IBAN, e-mail, klucze API, Bearer -> `*` znak w znak; oryginal i bbox
+  nietkniete, wiec offsety pasuja). Testy 83 -> 122 zielone.
+
 ### Fixed
 
 - `markitdown` - przyklad wsadowy wskazywal `/c/Users/hp/...`; teraz `$USERPROFILE`.
+- `doc-intel-contract-pl` - `pdfi_extract.page_size` polykal `OSError` i zwracal `None`,
+  nieodroznialne od uczciwego "MediaBoxy niezgodne". Wyjatek idzie w gore z nazwanym
+  powodem. Zlapane pierwsza rubryka `ciche_awarie.md` z audyt-kodu w minute po jej
+  napisaniu.
 
 ### Changed
 

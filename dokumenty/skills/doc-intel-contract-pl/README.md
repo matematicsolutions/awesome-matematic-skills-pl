@@ -24,6 +24,7 @@ jednego i od razu odpowiada na trzy pytania audytu LegalTech:
 | `chandra` | Chandra OCR 2 (`parse_chunks`) | bbox + 19 etykiet layoutu, bez confidence |
 | `vlm-html` | dowolny VLM z promptem `references/prompt_vlm_ocr_pl.md` | bbox + nasze etykiety (w tym podpis i pieczątka), bez confidence |
 | `gaius` | OCR PATRONa, Gaius-Lex `/api/v1/ocr/poll` | tekst + wariant silnika (default / google_doc_ai) |
+| `pdf-inspector` | `scripts/pdfi_extract.py` (PDF tekstowy) | bbox + confidence + font/bold + **maszynowy powód OCR per strona** |
 | `pdftotext` | pdftotext (plain) | tekst (partial, bez bbox) |
 
 Silnik, który nie dostarcza bbox lub confidence, degraduje się łagodnie: pole
@@ -41,6 +42,12 @@ ani pieczątki, a bez nich nie ma redakcji RODO.
 
 ```bash
 cd ~/.claude/skills/doc-intel-contract-pl
+
+# krok 0: bramka routingu - czy dokument w ogole da sie przeczytac i czym
+python scripts/routing_gate.py AKTA.pdf --pretty        # exit 0=ok 10=degraded 20=failed
+
+# PDF tekstowy -> kontrakt z bbox, bez schodzenia na OCR
+python scripts/pdfi_extract.py AKTA.pdf | python scripts/normalize.py --engine pdf-inspector -
 
 # normalizacja do kontraktu
 python scripts/normalize.py --engine opendataloader wyjscie.json --pretty
