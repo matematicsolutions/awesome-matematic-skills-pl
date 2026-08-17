@@ -27,7 +27,7 @@ attribution:
     porzucone; rubryka, wymiary i kotwice PL napisane od zera.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.1.0
+  version: 1.2.0
   companion_skills: legal-request-router-pl, citation-grounding-pl, deliverable-fidelity-pl, adversarial-legal-review-pl
 ---
 
@@ -96,6 +96,32 @@ To slogan "AI, która wie, czego nie wie" jako pole w karcie ocen, nie deklaracj
   prawnej / Ugruntowaniu -> skieruj do legal-request-router-pl (grounding / adversarial /
   paczka audytowa).
 
+## Rewizja oceny - monotoniczność i kotwica
+
+Karta ocen bywa wystawiana dwa razy: po pierwszym przebiegu i po poprawkach. Drugi przebieg
+jest miejscem, w którym ocena po cichu rośnie, bo autor zna już zarzuty i umie je opowiedzieć.
+Stąd dwie reguły twarde.
+
+**Monotoniczność.** Rewizja może obniżyć decyzję zawsze i z dowolnego powodu. Podniesienie
+wymaga **nowego dowodu**, nie nowego uzasadnienia. Nowy dowód to ponowny przebieg warstwy 1
+z innym wynikiem albo materiał, którego wcześniej nie było w sesji (dosłany wyrok, dosłana
+umowa). Zdanie „po namyśle to jednak wystarczające" nie jest dowodem i nie podnosi oceny.
+
+**Kotwica.** Dopóki którakolwiek z poniższych pozycji jest otwarta, decyzja nie może wyjść
+powyżej **Pełna weryfikacja**, niezależnie od średniej subiektywnej i niezależnie od tego, jak
+dobrze brzmi uzasadnienie:
+
+- cytat, przepis albo sygnatura niezgodne ze źródłem w warstwie 1,
+- flaga RED, która wypadła z podsumowania (`deliverable-fidelity-pl`),
+- NIEPEWNE w wymiarze Poprawność prawna albo Ugruntowanie.
+
+Kotwicę zdejmuje wyłącznie ponowny przebieg narzędzia, które ją postawiło. Osąd sędziego jej
+nie zdejmuje. To ta sama zasada, którą stosuje `agentic-risk-asi-pl` przy dotkliwości ustaleń:
+dowód bezpośredni nie podlega negocjacji.
+
+Każdą zablokowaną próbę podniesienia zapisz w karcie - widok „ktoś próbował przesunąć ocenę
+i czym to uzasadnił" bywa cenniejszy od samej oceny.
+
 ## Format wyjścia
 
 ```
@@ -108,8 +134,16 @@ WARSTWA 2 (rubryka 1-5):
     II CSK NN/RR, którego tekstu nie ma w sesji; brakuje: treść uzasadnienia (saos-orzecznictwo)
   Ugruntowanie: 4 - <...>
   Średnia: 4.0 (z 4 wymiarów liczbowych; NIEPEWNE poza średnią)
+KOTWICE: brak (albo: cytat II CSK NN/RR niezgodny - decyzja ograniczona do Pełnej weryfikacji)
 DECYZJA: Popraw (Kompletność 3 - brak omówienia przedawnienia; Zgodność z jurysdykcją
 NIEPEWNE - uzupełnij tekst wyroku przed wysyłką)
+```
+
+Przy rewizji dopisz jedną linię:
+
+```
+REWIZJA #2: decyzja Popraw -> Popraw. Odrzucone podniesienie do Wyślij: uzasadnienie bez
+nowego dowodu (warstwa 1 nie była powtórzona).
 ```
 
 ## Granice

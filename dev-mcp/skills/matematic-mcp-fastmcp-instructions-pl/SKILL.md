@@ -1,15 +1,37 @@
 ---
 name: matematic-mcp-fastmcp-instructions-pl
-description: Buduj nowy MCP server MateMatic (lub retrofit istniejacego) z 5 elementami zwalidowanymi na dograh v1.31.0 - FastMCP(instructions=) z procedural orchestration, drift test, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id dla per-tenant routing, ToolAnnotations dla read-only. Uzywaj gdy zaczynasz nowy MCP server (saos/eu-compliance/anonimizacja/pomoc-prawna/kio/isap/inny), retrofit istniejacego do tego patternu, dodajesz nowy tool do MCP, debugujesz dlaczego LLM nie wywoluje Twoich tooli w odpowiedniej kolejnosci, lub gdy klient MCP (Claude Code/Cursor) nie autoryzuje. Trigger - "nowy MCP", "buduj MCP server", "FastMCP", "instructions MCP", "dryft testu MCP", "Claude Code MCP", "auth MCP", "OTel MCP", "FastMCP setup", "retrofit MCP", "tools MCP audit", "tools MCP nie sa wywolywane".
+description: Buduj nowy MCP server MateMatic (lub retrofit istniejacego) z 7 elementami (5 zwalidowanych na dograh v1.31.0) - FastMCP(instructions=) z procedural orchestration, drift test, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id dla per-tenant routing, ToolAnnotations dla read-only, stabilne kody bledow + trojstan ok/degraded/failed, allowlista atrybutow telemetrii na granicy emisji. Uzywaj gdy zaczynasz nowy MCP server (saos/eu-compliance/anonimizacja/pomoc-prawna/kio/isap/inny), retrofit istniejacego do tego patternu, dodajesz nowy tool do MCP, debugujesz dlaczego LLM nie wywoluje Twoich tooli w odpowiedniej kolejnosci, lub gdy klient MCP (Claude Code/Cursor) nie autoryzuje. Trigger - "nowy MCP", "buduj MCP server", "FastMCP", "instructions MCP", "dryft testu MCP", "Claude Code MCP", "auth MCP", "OTel MCP", "FastMCP setup", "retrofit MCP", "tools MCP audit", "tools MCP nie sa wywolywane".
 license: Apache-2.0
 attribution:
-  source: dograh-hq/dograh
-  url: https://github.com/dograh-hq/dograh
-  license: BSD-2-Clause
-  relationship: pattern-only
-  note: >
-    Wzorzec źródłowy dla FastMCP(instructions=) i orkiestracji proceduralnej. Treść, testy
-    driftu i kanon MateMatic napisane od zera.
+  - source: dograh-hq/dograh
+    url: https://github.com/dograh-hq/dograh
+    license: BSD-2-Clause
+    relationship: pattern-only
+    note: >
+      Elementy 1-5: wzorzec zrodlowy dla FastMCP(instructions=) i orkiestracji
+      proceduralnej, walidowany na v1.31.0. Tresc, testy driftu i kanon MateMatic
+      napisane od zera. Licencja zweryfikowana przez GitHub API 2026-08-17.
+  - source: firecrawl/anydoc
+    url: https://github.com/firecrawl/anydoc
+    license: MIT
+    relationship: pattern-only
+    note: >
+      Element 6: stabilny `code()` oddzielony od komunikatu dla czlowieka plus test,
+      ktorego jedynym zadaniem jest przypiecie tych stringow, bo konsumenci na nich
+      branchuja. Anty-wzorzec z tego samego audytu (2026-08-08) uzasadnia sprzezenie
+      z trojstanem: anydoc liczy poprawny mianownik pominietych stron i wysyla go do
+      fasady `log`, ktorej nigdzie nie rejestruje. Kod napisany od zera.
+  - source: sandbox-quantum/flintai-cli
+    url: https://github.com/sandbox-quantum/flintai-cli
+    license: Apache-2.0 WITH Commons-Clause
+    relationship: pattern-only
+    note: >
+      Element 7: allowlista atrybutow egzekwowana w jednym miejscu na granicy emisji,
+      swiadome wykluczenie `exception.message` (bo `str(blad)` niesie sciezki, prompty
+      i output providera) oraz providery OTel trzymane prywatnie, zeby cudza
+      instrumentacja nie wychodzila naszym eksporterem. Kod i testy wlasne. Commons
+      Clause zabrania sprzedazy uslug opartych na tym oprogramowaniu, wiec kopiowanie
+      kodu odpada.
 allowed-tools: [Read, Write, Edit]
 data-residency: local
 requires-human-approval: false
@@ -24,10 +46,10 @@ Wzorzec kanoniczny dla MCP serverow MateMatic. Walidowany empirycznie na [dograh
 
 - Nowy MCP server MateMatic od pierwszego commita
 - Retrofit istniejacych (saos-orzecznictwo, mcp-eu-compliance, matematic-anonimizacja-pl, mcp-pomoc-prawna-pl, sejm-eli-mcp, mcp-uodo, mcp-kio) - do konca Q3 2026
-- Audit istniejacego MCP server (czy ma 5 elementow)
+- Audit istniejacego MCP server (czy ma 7 elementow)
 - Debug: LLM nie wywoluje tooli w odpowiedniej kolejnosci, klient MCP nie autoryzuje, error_codes ginace dla LLM
 
-## 5 elementow kanonu
+## 7 elementow kanonu
 
 ### 1. `FastMCP(instructions=...)` z procedural orchestration
 
@@ -125,6 +147,108 @@ _READ_ONLY = ToolAnnotations(
 for _tool in (list_docs, search_docs, read_doc):
     mcp.tool(_tool, annotations=_READ_ONLY)
 ```
+
+### 6. Stabilny `code` bledu + test, ktory go przypina
+
+Wzorzec zmierzony na `firecrawl/anydoc` (MIT, audyt 2026-08-08). Ich `ConvertError`
+ma metode `code()` zwracajaca **stabilny string maszynowy** (`unsupported`,
+`encrypted`, `resourceLimit`, ...), oddzielony od komunikatu dla czlowieka - plus
+test, ktorego jedynym zadaniem jest pilnowanie, ze te stringi sie nie zmienily,
+z komentarzem "bindingi publikuja to doslownie, wiec zmiana lamie kazdego konsumenta".
+
+Nasz odpowiednik: **agent branchuje na `code`, czlowiek czyta `message`**. Bez tego
+LLM parsuje polski tekst bledu regexem i lamie sie przy pierwszej korekcie stylu.
+
+```python
+class ToolError(Exception):
+    """Blad narzedzia MCP. `code` = kontrakt maszynowy, `message` = dla czlowieka."""
+    CODES = ("not_found", "invalid_input", "upstream_unavailable",
+             "rate_limited", "forbidden", "partial_result")
+
+    def __init__(self, code: str, message: str, **detail):
+        assert code in self.CODES, f"nieznany code: {code}"
+        self.code, self.message, self.detail = code, message, detail
+
+    def as_result(self) -> dict:
+        return {"status": "failed", "code": self.code,
+                "message": self.message, "detail": self.detail}
+```
+
+```python
+# tests/test_error_codes_stable.py
+def test_kody_bledow_sa_stabilne():
+    """Konsumenci (agent, klient MCP) branchuja na tych stringach.
+    Zmiana ktoregokolwiek = breaking change, wiec ma boles TUTAJ, nie u klienta."""
+    assert set(ToolError.CODES) == {
+        "not_found", "invalid_input", "upstream_unavailable",
+        "rate_limited", "forbidden", "partial_result",
+    }
+```
+
+**Sprzezenie z `partial_result` (kardynalna regula cichej niekompletnosci):** tool,
+ktory zwrocil CZESC danych, NIE MOZE zwrocic `status: ok`. Trojstan
+`ok | degraded | failed` plus **pelny mianownik** w tej samej odpowiedzi:
+
+```python
+return {"status": "degraded", "code": "partial_result",
+        "coverage": {"unit": "pages", "total": 14, "usable": 9},
+        "message": "9 z 14 stron bez warstwy tekstowej", "data": blocks}
+```
+
+Anty-wzorzec, ktory to unaocznil: anydoc liczy poprawny mianownik
+(`"{} of {} pages need OCR"`), po czym wysyla go do fasady `log`, ktorej
+**nigdzie nie rejestruje** - konsument dostaje `Ok` i niepelny dokument.
+Zdarzenie niepelnosci ma isc TA SAMA droga co wynik, nie kanalem obok.
+
+### 7. Allowlista atrybutow na granicy emisji telemetrii
+
+Element 4 kaze wpisywac do spanu `org_id` i `user_id`. Element 7 pilnuje, zeby to
+byly JEDYNE rzeczy, ktore wyjda z procesu. Bez tego telemetria konektora
+kancelaryjnego jest kanalem wycieku danych objetych tajemnica zawodowa, a wyciek
+nastapi przez atrybut, ktorego nikt swiadomie nie dodawal.
+
+Trzy reguly.
+
+**Jedno gardlo.** Kazdy zestaw atrybutow przechodzi przez jedna funkcje przed
+eksportem. Klucz spoza listy jest odrzucany niezaleznie od tego, gdzie na spanie
+zostal ustawiony.
+
+```python
+_DOZWOLONE_ATRYBUTY = frozenset({
+    "mcp.org_id", "mcp.user_id", "mcp.tool", "mcp.status",
+    "mcp.duration_ms", "mcp.code", "service.name", "service.version",
+})
+
+def _przesiej(atrybuty: dict) -> dict:
+    """Jedyne miejsce, przez ktore atrybuty wychodza z procesu."""
+    return {k: v for k, v in atrybuty.items() if k in _DOZWOLONE_ATRYBUTY}
+```
+
+**`exception.message` nigdy nie wychodzi.** `str(blad)` rutynowo niesie sciezki
+dyskowe, fragmenty promptu, sygnatury spraw i output providera. Eksportuj
+`exception.type`, czyli sama nazwe klasy, i nasz stabilny `code` z elementu 6.
+Trescia bledu zajmuje sie log lokalny, ktory zostaje na maszynie.
+
+**Providery prywatne, nie globalne.** Nie rejestruj swojego providera przez
+`set_tracer_provider` ani `set_logger_provider`. Globalna rejestracja sprawia, ze
+cudza instrumentacja w tym samym procesie (SDK modelu, framework agenta) zaczyna
+wychodzic Twoim eksporterem, razem z tym, co akurat wkłada do swoich spanow.
+
+```python
+# tests/test_telemetry_allowlist.py
+def test_atrybut_spoza_listy_nie_wychodzi():
+    assert _przesiej({"mcp.org_id": "7", "prompt": "tresc pisma"}) == {"mcp.org_id": "7"}
+
+def test_exception_message_nie_wychodzi():
+    assert "exception.message" not in _przesiej({"exception.message": "C:/akta/…"})
+```
+
+Regula bez bramki nie trzyma, wiec allowlista bez tego testu jest komentarzem.
+Deklaracja w README nie jest kontrola - kontrola jest funkcja, przez ktora
+wszystko przechodzi, i test, ktory to przypina.
+
+Wzorzec zaadaptowany z `flintai/cli/telemetry.py` w `sandbox-quantum/flintai-cli`
+(Apache-2.0 z Commons Clause, wylacznie idea, zero kodu).
 
 ## Templatey gotowe do skopiowania
 

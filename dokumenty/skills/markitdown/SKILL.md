@@ -40,7 +40,7 @@ python -m markitdown input.pptx -o output.md
 
 ### Batch (Obsidian Vault)
 ```bash
-for f in "/c/Users/hp/Documents/Obsidian Vault/Konwerter"/*.pdf; do
+for f in "$USERPROFILE/Documents/Obsidian Vault/Konwerter"/*.pdf; do
   python -m markitdown "$f" > "${f%.pdf}.md"
 done
 ```

@@ -6,6 +6,35 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.08.17] - 2026-08-17
+
+Uzgodnienie kopii roboczych z kanonem repo (rozjechaly sie w obie strony) plus
+wzorzec sedziego monotonicznego.
+
+### Added
+
+- `matematic-mcp-fastmcp-instructions-pl` - element 6 kanonu (stabilny `code` bledu
+  oddzielony od komunikatu dla czlowieka + test przypinajacy stringi, sprzezony
+  z trojstanem ok/degraded/failed) oraz element 7 (allowlista atrybutow telemetrii
+  egzekwowana w jednym gardle przed eksportem, `exception.message` nigdy nie wychodzi,
+  providery OTel prywatne zamiast globalnych). Kanon ma teraz 7 elementow.
+- `ocena-outputu-pl` v1.2.0 - sekcja o rewizji oceny: podniesienie decyzji wymaga
+  nowego dowodu, nie nowego uzasadnienia; kotwice (niezgodny cytat, pominieta flaga
+  RED, NIEPEWNE w wymiarze krytycznym) ograniczaja decyzje do Pelnej weryfikacji.
+
+### Fixed
+
+- `markitdown` - przyklad wsadowy wskazywal `/c/Users/hp/...`, czyli sciezke, ktorej
+  odbiorca nie ma. Teraz `$USERPROFILE`.
+
+### Changed
+
+- `matematic-mcp-fastmcp-instructions-pl` - blok `attribution:` z mapy na liste,
+  dopisane dwa upstreamy pattern-only: `firecrawl/anydoc` (MIT, element 6)
+  i `sandbox-quantum/flintai-cli` (Apache-2.0 z Commons Clause, element 7).
+  Licencja dograh potwierdzona u zrodla przez GitHub API: BSD-2-Clause.
+- `NOTICE` - blok generowanych upstreamow przeliczony.
+
 ## [2026.08.07] - 2026-08-07
 
 Poprawki merytoryczne po zewnetrznym review (flagi codex na PR eu-gdpr-pack
