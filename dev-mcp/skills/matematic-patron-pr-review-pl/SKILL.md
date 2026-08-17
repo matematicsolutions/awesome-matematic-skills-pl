@@ -3,13 +3,20 @@ name: matematic-patron-pr-review-pl
 description: Recenzent PR/diffow dla PATRONa - polski LegalTech AI agent dla kancelarii. Wylapuje regresje specyficzne dla repo PATRON ktorych nie zlapie generyczny lint - org scoping multi-tenant, authless routes, niespodzianki w migracjach SQLite/Postgres, bezposredni SQL poza warstwa db, brak worker sync w cache, UI bez generated SDK, sekrety w logach, regresje audit_log, brak grounding cytatow, AI Act art. 12 record-keeping. Format findings file:line -> problem -> correct pattern, 3 buckets Blocker/Should-fix/Nit. Uzywaj gdy - recenzja PR/diff PATRON przed merge, code review pre-commit, audyt zmian w mcp-security-gateway/audit_log/ring-policy/auth, review zmian w MCP serverach matematicsolutions/*, weryfikacja czy nowy kod nie wprowadza wyciekow danych klienta kancelarii (RODO/tajemnica adwokacka), audyt drift dokumentacji vs kod. Trigger - "marko review PR", "code review PATRON", "audyt diff", "review tej zmiany", "sprawdz PR", "czy bezpiecznie merge", "PR audit", "security review PATRON", "blast radius zmiany".
 license: Apache-2.0
 attribution:
-  source: dograh-hq/dograh
-  url: https://github.com/dograh-hq/dograh
-  license: BSD-2-Clause
-  relationship: pattern-only
-  note: >
-    Cherry-pick struktury review-pr (v1.31.0): format znalezisk plik:linia i trzy kubełki
-    Blocker/Should-fix/Nit. Reguły specyficzne dla repo PATRON napisane od zera.
+  - source: dograh-hq/dograh
+    url: https://github.com/dograh-hq/dograh
+    license: BSD-2-Clause
+    relationship: pattern-only
+    note: >
+      Cherry-pick struktury review-pr (v1.31.0): format znalezisk plik:linia i trzy kubełki
+      Blocker/Should-fix/Nit. Reguły specyficzne dla repo PATRON napisane od zera.
+  - source: deepseek-ai/deepseek-harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+    license: MIT
+    relationship: pattern-only
+    note: >
+      Sekcja 13, check "widoczne dla modelu = zapisane w dzienniku" - adaptacja ich
+      inwariantu runtime'u "model-visible <=> logged" na kryterium recenzji. Zero kodu.
 allowed-tools: [Read, Grep, Glob, Bash]
 data-residency: local
 requires-human-approval: false
@@ -197,7 +204,7 @@ Checks:
 
 ## 7. MCP servers (`mcp-servers/**`, `matematicsolutions/mcp-*`)
 
-Reguly z [matematic-mcp-fastmcp-instructions-pl](../matematic-mcp-fastmcp-instructions-pl) - 5 elementow kanonu.
+Reguly z [matematic-mcp-fastmcp-instructions-pl](../matematic-mcp-fastmcp-instructions-pl) - 8 elementow kanonu.
 
 Checks:
 - Nowe tools uzywaja `authenticateMcpRequest()` (lub Pythonowy `authenticate_mcp_request()`), NIE reimplementuja API-key validation.
@@ -277,12 +284,14 @@ Checks:
 - Dane z prawdziwych akt klienta (kwoty, sygnatury, inicjaly) w README/aktualnosci/post LI = czerwona linia tajemnicy adwokackiej (art. 6 ust. 1 PrAdw) / radcowskiej (art. 3 ust. 3 RadcPrU). Grep przed push.
 - Nowy retention policy: dane klienta kancelarii max 90 dni in-memory / 7 lat archive (RODO + KPK + KC).
 - ADR rezerwacja: kazdy duza zmiana decyzyjna potrzebuje ADR proposed przed implementacja (NIE post-hoc).
+- **Widoczne dla modelu = zapisane w dzienniku.** Cokolwiek trafia do zapytania modelu (system prompt, wynik narzedzia, fragment akt, wstrzykniety kontekst, wynik konektora MCP) musi dac sie odtworzyc z dziennika sesji / `audit_log`. Nowy input widoczny dla modelu bez nowego zdarzenia w dzienniku = finding. Test odwrotny: czy z samego dziennika da sie zrekonstruowac, co model widzial w tej turze? Jesli nie, art. 12 jest deklaracja, nie mechanizmem. Wzorzec z inwariantu "model-visible <=> logged" (deepseek-harness, MIT, pattern-only).
 
 Komendy:
 ```bash
 rg -n "auditLog|writeAuditEntry|recordDecision" lib/audit/ lib/services/
 rg -n "anonymize|piiDetect|let-it-be" lib/pii/ lib/services/
 rg -n "PESEL|NIP|REGON" README.md docs/ aktualnosci/   # zero hits expected w public
+rg -n "messages\.push|\.append\(\{.*role|systemPrompt|system_prompt" lib/ src/   # kazde miejsce = czy ma zdarzenie w dzienniku?
 ```
 
 ---
@@ -310,6 +319,7 @@ Findings w 3 buckets:
 - UI bypassuje generated SDK dla internal API calls (sekcja 9)
 - Secrets/PII klienta logowane (sekcja 10, 13)
 - Operacja decyzyjna BEZ audit_log entry (sekcja 13)
+- Input widoczny dla modelu, ktorego nie da sie odtworzyc z dziennika sesji (sekcja 13)
 - Generowanie LLM bez citation-grounding lub pisma docx bez wewnetrznego pipeline QA (sekcja 13)
 - Dane z realnych akt w public artefactach (sekcja 13)
 

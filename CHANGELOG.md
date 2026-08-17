@@ -8,30 +8,34 @@ Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 ## [2026.08.17] - 2026-08-17
 
-Uzgodnienie kopii roboczych z kanonem repo (rozjechaly sie w obie strony) plus
-wzorzec sedziego monotonicznego.
+Dwie porcje jednego dnia. Pierwsza: uzgodnienie kopii roboczych z kanonem repo plus wzorzec
+sedziego monotonicznego. Druga: cztery wzorce procesu z deepseek-harness (MIT, pattern-only).
 
 ### Added
 
-- `matematic-mcp-fastmcp-instructions-pl` - element 6 kanonu (stabilny `code` bledu
-  oddzielony od komunikatu dla czlowieka + test przypinajacy stringi, sprzezony
-  z trojstanem ok/degraded/failed) oraz element 7 (allowlista atrybutow telemetrii
-  egzekwowana w jednym gardle przed eksportem, `exception.message` nigdy nie wychodzi,
-  providery OTel prywatne zamiast globalnych). Kanon ma teraz 7 elementow.
-- `ocena-outputu-pl` v1.2.0 - sekcja o rewizji oceny: podniesienie decyzji wymaga
-  nowego dowodu, nie nowego uzasadnienia; kotwice (niezgodny cytat, pominieta flaga
-  RED, NIEPEWNE w wymiarze krytycznym) ograniczaja decyzje do Pelnej weryfikacji.
+- `matematic-mcp-fastmcp-instructions-pl` - element 6 (stabilny `code` bledu + test
+  przypinajacy stringi, sprzezony z trojstanem), element 7 (allowlista atrybutow telemetrii
+  w jednym gardle, `exception.message` nigdy nie wychodzi, providery OTel prywatne),
+  element 8 (zdolnosc = definicja / dostawca / konsument; jedna rola to nie zdolnosc;
+  dostawca-fixture daje testy konektora bez sieci). Kanon ma 8 elementow.
+- `matematic-patron-pr-review-pl` - sekcja 13: check "widoczne dla modelu = zapisane
+  w dzienniku" (nowy input widoczny dla modelu bez zdarzenia w dzienniku = Blocker), z komenda
+  `rg` na miejsca skladania promptu.
+- `humanizer-pl` v1.2.0 - TRYB DOKUMENTACJA (#35-#42): jeden dom na fakt, narracja historii,
+  adnotacje statusu, reczne inwentarze, transkrypt rozumowania, emfaza inflacyjna,
+  spec-speak w opisie wdrozonego, slowa-worki; plus regula skracania "zachowaj kompletna
+  propozycje" - mniejsza liczba slow sama w sobie nie jest poprawa.
+- `ocena-outputu-pl` v1.2.0 - rewizja oceny: podniesienie decyzji wymaga nowego dowodu,
+  kotwice ograniczaja decyzje do Pelnej weryfikacji.
 
 ### Fixed
 
-- `markitdown` - przyklad wsadowy wskazywal `/c/Users/hp/...`, czyli sciezke, ktorej
-  odbiorca nie ma. Teraz `$USERPROFILE`.
+- `markitdown` - przyklad wsadowy wskazywal `/c/Users/hp/...`; teraz `$USERPROFILE`.
 
 ### Changed
 
-- `matematic-mcp-fastmcp-instructions-pl` - blok `attribution:` z mapy na liste,
-  dopisane dwa upstreamy pattern-only: `firecrawl/anydoc` (MIT, element 6)
-  i `sandbox-quantum/flintai-cli` (Apache-2.0 z Commons Clause, element 7).
+- Atrybucje: bloki na listy; dopisane `firecrawl/anydoc` (MIT), `sandbox-quantum/flintai-cli`
+  (Apache-2.0 z Commons Clause) i `deepseek-ai/deepseek-harness` (MIT), wszystkie pattern-only.
   Licencja dograh potwierdzona u zrodla przez GitHub API: BSD-2-Clause.
 - `NOTICE` - blok generowanych upstreamow przeliczony.
 

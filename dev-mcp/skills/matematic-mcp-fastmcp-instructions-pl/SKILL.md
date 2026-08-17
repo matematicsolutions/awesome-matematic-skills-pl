@@ -1,6 +1,6 @@
 ---
 name: matematic-mcp-fastmcp-instructions-pl
-description: Buduj nowy MCP server MateMatic (lub retrofit istniejacego) z 7 elementami (5 zwalidowanych na dograh v1.31.0) - FastMCP(instructions=) z procedural orchestration, drift test, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id dla per-tenant routing, ToolAnnotations dla read-only, stabilne kody bledow + trojstan ok/degraded/failed, allowlista atrybutow telemetrii na granicy emisji. Uzywaj gdy zaczynasz nowy MCP server (saos/eu-compliance/anonimizacja/pomoc-prawna/kio/isap/inny), retrofit istniejacego do tego patternu, dodajesz nowy tool do MCP, debugujesz dlaczego LLM nie wywoluje Twoich tooli w odpowiedniej kolejnosci, lub gdy klient MCP (Claude Code/Cursor) nie autoryzuje. Trigger - "nowy MCP", "buduj MCP server", "FastMCP", "instructions MCP", "dryft testu MCP", "Claude Code MCP", "auth MCP", "OTel MCP", "FastMCP setup", "retrofit MCP", "tools MCP audit", "tools MCP nie sa wywolywane".
+description: Buduj nowy MCP server MateMatic (lub retrofit istniejacego) z 8 elementami (5 zwalidowanych na dograh v1.31.0) - FastMCP(instructions=) z procedural orchestration, drift test, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id dla per-tenant routing, ToolAnnotations dla read-only, stabilne kody bledow + trojstan ok/degraded/failed, allowlista atrybutow telemetrii na granicy emisji, zdolnosc = definicja/dostawca/konsument. Uzywaj gdy zaczynasz nowy MCP server (saos/eu-compliance/anonimizacja/pomoc-prawna/kio/isap/inny), retrofit istniejacego do tego patternu, dodajesz nowy tool do MCP, debugujesz dlaczego LLM nie wywoluje Twoich tooli w odpowiedniej kolejnosci, lub gdy klient MCP (Claude Code/Cursor) nie autoryzuje. Trigger - "nowy MCP", "buduj MCP server", "FastMCP", "instructions MCP", "dryft testu MCP", "Claude Code MCP", "auth MCP", "OTel MCP", "FastMCP setup", "retrofit MCP", "tools MCP audit", "tools MCP nie sa wywolywane".
 license: Apache-2.0
 attribution:
   - source: dograh-hq/dograh
@@ -32,6 +32,13 @@ attribution:
       instrumentacja nie wychodzila naszym eksporterem. Kod i testy wlasne. Commons
       Clause zabrania sprzedazy uslug opartych na tym oprogramowaniu, wiec kopiowanie
       kodu odpada.
+  - source: deepseek-ai/deepseek-harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+    license: MIT
+    relationship: pattern-only
+    note: >
+      Element 8: zdolnosc jako komplet trzech rol (definicja / dostawca / konsument),
+      "jedna rola to nie zdolnosc" - adaptacja ich capability seam. Kod i przyklady wlasne.
 allowed-tools: [Read, Write, Edit]
 data-residency: local
 requires-human-approval: false
@@ -46,10 +53,10 @@ Wzorzec kanoniczny dla MCP serverow MateMatic. Walidowany empirycznie na [dograh
 
 - Nowy MCP server MateMatic od pierwszego commita
 - Retrofit istniejacych (saos-orzecznictwo, mcp-eu-compliance, matematic-anonimizacja-pl, mcp-pomoc-prawna-pl, sejm-eli-mcp, mcp-uodo, mcp-kio) - do konca Q3 2026
-- Audit istniejacego MCP server (czy ma 7 elementow)
+- Audit istniejacego MCP server (czy ma 8 elementow)
 - Debug: LLM nie wywoluje tooli w odpowiedniej kolejnosci, klient MCP nie autoryzuje, error_codes ginace dla LLM
 
-## 7 elementow kanonu
+## 8 elementow kanonu
 
 ### 1. `FastMCP(instructions=...)` z procedural orchestration
 
@@ -249,6 +256,52 @@ wszystko przechodzi, i test, ktory to przypina.
 
 Wzorzec zaadaptowany z `flintai/cli/telemetry.py` w `sandbox-quantum/flintai-cli`
 (Apache-2.0 z Commons Clause, wylacznie idea, zero kodu).
+
+### 8. Zdolnosc = trzy role albo wcale (definicja / dostawca / konsument)
+
+Dzis konektor floty ma trzy rzeczy zlepione w jednym module: **co** potrafi (interfejs
+wyszukiwania, pobierania, eksportu), **jak** to robi (klient HTTP do SAOS, parser CBOSA,
+zapytanie SPARQL) i **kto** z tego korzysta (tool MCP widoczny dla modelu). Dziala, dopoki
+jest jeden backend. Przy drugim (cache offline obok zrodla na zywo, SQLite obok Postgresa,
+sandbox zamiast lokalnego fs) zaczyna sie fork konektora.
+
+Element 8 rozdziela to na trzy role i mowi: **jedna rola to nie zdolnosc**. Nowa zdolnosc
+projektuje sie w komplecie, nawet gdy dostawca jest na razie jeden.
+
+- **Definicja** - interfejs i kontrakt: sygnatury, typy wejscia/wyjscia, kody bledow
+  (element 6), trojstan `ok|degraded|failed` z pelnym mianownikiem. Zero I/O.
+- **Dostawca** - implementacja kontraktu dla jednego backendu. `SaosLiveProvider`,
+  `SaosCacheProvider`, `SaosFixtureProvider` (do testow bez sieci). Kazdy przechodzi TEN SAM
+  zestaw testow kontraktu.
+- **Konsument** - tool MCP (albo skill, albo CLI), ktory zna wylacznie definicje. Nie
+  importuje dostawcy; dostaje go przez konfiguracje.
+
+```python
+# definicja - orzecznictwo/definition.py (zero I/O)
+class OrzecznictwoProvider(Protocol):
+    async def szukaj(self, zapytanie: str, limit: int) -> WynikSzukania: ...
+    async def pobierz(self, sygnatura: str) -> Orzeczenie | ToolError: ...
+
+# dostawcy - orzecznictwo/providers/{saos_live,saos_cache,fixture}.py
+# konsument - orzecznictwo/tools.py: zna tylko OrzecznictwoProvider
+
+# tests/test_orzecznictwo_kontrakt.py - jeden zestaw, kazdy dostawca go przechodzi
+@pytest.mark.parametrize("provider", [SaosLiveProvider, SaosCacheProvider, FixtureProvider])
+def test_pobierz_nieznana_sygnature_daje_not_found(provider): ...
+```
+
+Co to daje floty: podmiana `saos_live` na `saos_cache` w `cordis.yml`/konfigu przesuwa
+za jednym ruchem wszystkie toole, ktore z tej zdolnosci korzystaja. „PATRON na SQLite" i
+„PATRON na Postgres" staja sie podmiana dostawcy, nie forkiem. A dostawca-fixture daje testy
+konektora bez sieci i bez bana na zrodle ([[feedback_bulk_harvest_asymetria_ryzyka_tempa]]).
+
+Anty-wzorzec, ktory to unaocznia: dwa toole MCP z wlasnym klientem HTTP do tego samego
+zrodla, kazdy z innym retry, innym throttlem i innym formatem bledu. To sa dwa dostawcy bez
+definicji, wiec nie da sie ich zamienic ani przetestowac jednym zestawem.
+
+Wzorzec zaadaptowany z „capability seam" w `deepseek-ai/deepseek-harness` (MIT, wylacznie
+idea, zero kodu): tam Service Definition / Service Provider / Consumer, i ta sama regula -
+„a package may combine roles, but one role alone is not a seam".
 
 ## Templatey gotowe do skopiowania
 

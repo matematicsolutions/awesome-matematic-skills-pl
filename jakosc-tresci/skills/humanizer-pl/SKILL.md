@@ -1,6 +1,6 @@
 ---
 name: humanizer-pl
-version: 1.1.0
+version: 1.2.0
 description: |
   Usuwa wzorce AI-slop z polskiego tekstu - sprawia, ze czyta sie naturalnie i ludzko.
   Polska adaptacja blader/humanizer (MIT). Uzywaj do edycji/przegladu polskich tresci
@@ -12,14 +12,23 @@ description: |
   zakres emocji).
 license: MIT
 attribution:
-  source: blader/humanizer
-  url: https://github.com/blader/humanizer
-  license: MIT
-  relationship: adaptation
-  note: >
-    Źródło samo bazuje na Wikipedia „Signs of AI writing” (WikiProject AI Cleanup).
-    Polska adaptacja 29 wzorców, odwrócony wzorzec cudzysłowów, dodany wzorzec kalk
-    anglicyzmów. Odpowiednik EN: humanizer-en.
+  - source: blader/humanizer
+    url: https://github.com/blader/humanizer
+    license: MIT
+    relationship: adaptation
+    note: >
+      Źródło samo bazuje na Wikipedia „Signs of AI writing” (WikiProject AI Cleanup).
+      Polska adaptacja 29 wzorców, odwrócony wzorzec cudzysłowów, dodany wzorzec kalk
+      anglicyzmów. Odpowiednik EN: humanizer-en.
+  - source: deepseek-ai/deepseek-harness
+    url: https://github.com/deepseek-ai/deepseek-harness
+    license: MIT
+    relationship: pattern-only
+    note: >
+      Tryb dokumentacja (wzorce 35-42 i reguła „zachowaj kompletną propozycję"): adaptacja
+      ich slop-checklisty dla dokumentacji technicznej i standardu prozy (docs/AGENTS.md,
+      .agents/skills/dsh-prose-standard). Zero tekstu stamtąd, wzorce i przykłady polskie
+      napisane od zera.
 compatibility: claude-code
 allowed-tools:
   - Read
@@ -243,6 +252,64 @@ Detektory tekstu AI nie czytaja "sensu" - mierza wymierne cechy lingwistyczne. H
 
 ---
 
+## TRYB DOKUMENTACJA (README, SKILL.md, ADR, komentarze, notatki decyzji)
+
+Wzorce 1-34 sa o prozie dla czlowieka. Dokumentacja techniczna ma wlasny slop, ktory
+humanizer prozy przepuszcza, bo zdania sa poprawne, tylko dokument jest zly. Uruchamiaj
+ten tryb, gdy plik to README, SKILL.md, ADR, notatka decyzji, komentarz w kodzie albo
+instrukcja dla agenta.
+
+### 35. Ta sama regula w wiecej niz jednym miejscu
+**Objaw:** identyczna zasada w README, SKILL.md i komentarzu, kazda w innej wersji. Przy zmianie jedna sie zestarzeje.
+**Reguła:** jeden fakt ma jeden dom. Grepnij charakterystyczna fraze; zostaw jedno miejsce, reszte zamien na link.
+
+### 36. Narracja historii zamiast stanu
+**Slowa-alarmy:** wczesniej, teraz, juz nie, kiedys, przemianowane, przeniesione, po refaktorze, w PR #.
+**Problem:** dokument opisuje droge, nie stan. Czytelnik za pol roku nie wie, co jest aktualne.
+**Zle:** Wczesniej bramka byla w `scripts/`, teraz przeniesiona do `tools/` po refaktorze z lipca.
+**Dobrze:** Bramka: `tools/braingraph_format.py`. Historia zmian: git.
+
+### 37. Adnotacje statusu w prozie
+**Slowa-alarmy:** (zaimplementowane!), TODO w tekscie glownym, „w przyszlosci", „planowane", „na razie".
+**Problem:** status gnije szybciej niz zdanie, w ktorym stoi. Nosnikiem statusu jest kod i manifest, nie akapit.
+
+### 38. Reczne inwentarze tego, co generuje zrodlo
+**Objaw:** lista plikow, tabel, testow, pakietow przepisana do prozy. Zestarzeje sie przy pierwszej zmianie.
+**Reguła:** jesli zrodlo albo generator jest autorytatywny, linkuj do niego. Liczby w tekscie tylko z pomiarem i data.
+
+### 39. Transkrypt rozumowania zamiast kontraktu
+**Objaw:** komentarz albo sekcja opowiada krok po kroku, jak autor doszedl do rozwiazania, dowodzi oczywistych galezi, referuje odrzucone lokalne warianty.
+**Problem:** czytelnik potrzebuje zobowiazania (co wchodzi, co wychodzi, co sie dzieje przy bledzie, kto jest wlascicielem), nie sciezki dojscia. Sciezka idzie do notatki decyzji, kontrakt zostaje przy kodzie.
+**Zle:** Najpierw probowalem regexem, ale nie lapal ogonkow, wiec dodalem NFKC, a potem okazalo sie, ze...
+**Dobrze:** Normalizacja NFKC przed dopasowaniem: bez niej „ł" i „l" sa rozne dla regexu. Alternatywy: [[notatka]].
+
+### 40. Emfaza inflacyjna
+**Objaw:** pogrubienie, KAPITALIKI albo „krytycznie" w co drugim zdaniu. Gdy wszystko jest wazne, nic nie jest.
+**Reguła:** emfaza tylko dla klauzuli, ktora zmienia zachowanie (modalnosc, gwarancja negatywna, wyjatek).
+
+### 41. Spec-speak w opisie tego, co juz dziala
+**Slowa-alarmy:** powinien, powinno, bedzie, planujemy, kryteria akceptacji, plan migracji - w dokumencie opisujacym wdrozone zachowanie.
+**Problem:** notatka o decyzji juz podjetej mowi w trybie warunkowym, wiec czytelnik nie wie, czy to jest, czy ma byc.
+**Reguła:** wdrozone = czas terazniejszy, tryb oznajmujacy. Propozycja = osobny dokument ze statusem `proposed`.
+
+### 42. Slowo-worek zamiast nazwy rzeczy
+**Slowa do sprawdzenia (nie zakazane):** kontrakt, granica, ksztalt, powierzchnia, warstwa, bramka, mechanizm.
+**Reguła:** zanim uzyjesz, zapytaj, czy dokladniejszy termin nie nazywa tego lepiej: „pola odpowiedzi" zamiast „ksztalt odpowiedzi", „walidacja JSON" zamiast „granica walidacji", „eksporty ESM" zamiast „ksztalt modulu". Zostaw slowo, gdy naprawde nazywa dokladny przedmiot (kontrakt = zobowiazanie miedzy stronami; granica = literalna granica procesu, sieci, bezpieczenstwa).
+
+### Zachowaj kompletna propozycje - regula skracania
+
+Przed skroceniem dowolnego fragmentu dokumentacji wypisz kazda propozycje, ktora niesie:
+aktor i dzialanie; warunek, moment i kolejnosc; modalnosc (musi / moze / nigdy); gwarancje
+negatywna i wyjatek; wlasnosc, skutek uboczny, tryb awarii, konsekwencje. Tnij przymiotniki,
+powtorzenia i narracje tylko wtedy, gdy KAZDA propozycja przezyje i calosc jest jasniejsza.
+**Mniejsza liczba slow sama w sobie nie jest poprawa.** To jest bezpiecznik na kompaktacje,
+ktora gubi tresc.
+
+Trzy przypadki, w ktorych trzeba DOPISAC, nie wyciac: kontrakt widoczny dla wywolujacego
+(zwroty, wyjatki, skutki uboczne, wlasnosc, czas), niejawna zaleznosc albo kolejnosc, ktorej
+kod nie pokazuje, oraz uzasadnienie, bez ktorego ktos „uprosci" kod w zla strone. Wtedy
+zdanie wiecej jest tansze niz regresja.
+
 ## DUSZA I CHARAKTER
 
 Unikanie wzorcow AI to polowa roboty. Sterylny, bezgłosowy tekst zdradza AI tak samo jak slop. Dobry tekst ma czlowieka za soba.
@@ -274,5 +341,6 @@ Polska adaptacja blader/humanizer (https://github.com/blader/humanizer, MIT). Or
 
 ## Dziennik szlifu
 
+- v1.2.0 (2026-08-17) - dodany TRYB DOKUMENTACJA (#35-#42): jeden dom na fakt, narracja historii, adnotacje statusu, reczne inwentarze, transkrypt rozumowania, emfaza inflacyjna, spec-speak w opisie wdrozonego, slowa-worki; plus regula skracania „zachowaj kompletna propozycje”. Komplementarny do wzorcow prozy 1-34.
 - v1.1.0 (2026-06-29) - dodana sekcja "Sygnatury statystyczne" (#30-#34): burstiness, morfologia czasownik/rzeczownik, gestosc i roznorodnosc leksykalna, zakres emocji, mechaniczne przejscia. Oparte na metodologii detekcji Woloszyka i Domaszk (MultiLingual 2025).
 - v1.0.0 (2026-05-18) - pierwsze postawienie. Polska adaptacja 29 wzorcow, odwrocony wzorzec cudzyslowow, dodany wzorzec kalk anglicyzmow, wpiety w pipeline publikacji i pipeline wideo.
