@@ -37,6 +37,16 @@ sedziego monotonicznego. Druga: cztery wzorce procesu z deepseek-harness (MIT, p
   z suma kontrolna, IBAN, e-mail, klucze API, Bearer -> `*` znak w znak; oryginal i bbox
   nietkniete, wiec offsety pasuja). Testy 83 -> 122 zielone.
 
+- `adversarial-legal-review-pl` v1.3.0 - **scalenie blizniakow**: petla rewizji z gwarancja
+  "nigdy gorsza wersja" (wersjonowanie draftow, `wynik_zbiorczy`, `v_najlepsza`, cofniecie po
+  regresji, wczesne wyjscie na plateau, limit rund per stawka), poziomy dostepu recenzentow
+  (izolowany / wzbogacony), stany koncowe i zasada "zawsze dostarcz". Do dzis PL i EN
+  rozwijaly sie osobno: PL mial funkcje werdyktu i panel dissent, EN mial ograniczona
+  samorewizje - kazdy byl ubozszy o wzorzec drugiego. Limit "2 rundy + eskalacja" z v1.1.0
+  zastapiony (gwarancja regresji pokrywa ten przypadek). Sekcja o PromptDefense skrocona do
+  odsylacza - walidator istnieje jako `matematic-prompt-defense-pl`. Ledger legal-accuracy:
+  art. 12 i 14 AI Act zweryfikowane u zrodla (EUR-Lex CELEX:32024R1689).
+
 ### Fixed
 
 - `markitdown` - przyklad wsadowy wskazywal `/c/Users/hp/...`; teraz `$USERPROFILE`.

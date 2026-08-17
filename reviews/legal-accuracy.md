@@ -39,3 +39,9 @@ Przeglad 2026-08-07 (backport flag codex z PR #16 mike-workflows).
 Przeglad 2026-08-08 (skrocenie description pod limit 1024 rejestru Smithery Skills; jednostka w zmienionej linii bez zmiany tresci).
 
 - art. 12 - ok - AI Act (rozp. UE 2024/1689) art. 12 "Rejestrowanie zdarzen": systemy AI wysokiego ryzyka musza automatycznie rejestrowac zdarzenia w calym cyklu zycia; etykieta "record-keeping" w description poprawna. Zweryfikowane u zrodla EUR-Lex CELEX:32024R1689 (PL) 2026-08-08.
+## adversarial-legal-review-pl
+
+Przeglad 2026-08-17 (v1.3.0 - port mechanizmow z bliznika EN: petla rewizji z cofnieciem po regresji, poziomy dostepu recenzentow, stany koncowe).
+
+- art. 12 - ok - AI Act (2024/1689) art. 12 ust. 1: "High-risk AI systems shall technically allow for the automatic recording of events (logs) over the lifetime of the system"; ust. 2 wiaze logi z identyfikowalnoscia dzialania. Teza skilla: transkrypt wszystkich wersji v1..vN jako dowod ograniczonej rewizji i ewentualnego cofniecia. Zgodne. Zweryfikowane u zrodla: EUR-Lex CELEX:32024R1689 (HTML skonsolidowany), 2026-08-17.
+- art. 14 - ok - art. 14 ust. 1: system ma byc zaprojektowany tak, "that they can be effectively overseen by natural persons during the period in which they are in use". Teza skilla: decyzja "wyslac mimo wymuszonego wyjscia z blokerami" zostaje przy czlowieku, skill nie wysyla. Zgodne. To samo zrodlo, ta sama data.

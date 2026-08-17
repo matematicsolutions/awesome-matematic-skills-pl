@@ -23,15 +23,17 @@ attribution:
     note: >
       Wzorzec debaty z trójwarstwową weryfikacją oraz panel rozbieżności. Prompty i role
       napisane od zera.
-  - source: microsoft/agent-governance-toolkit
-    url: https://github.com/microsoft/agent-governance-toolkit
+  - source: gregmos/memoforge
+    url: https://github.com/gregmos/memoforge
     license: MIT
-    relationship: pattern-only
+    relationship: clean-room
     note: >
-      Wzorzec PromptDefense: twardy podział na instrukcję systemową i treść niezaufaną.
+      Ograniczona samorewizja z cofnięciem po regresji, poziomy dostępu recenzentów
+      i zasada „zawsze dostarcz". Koncepcje adaptowane clean-room, nie prompty ani kod.
+      Ten sam upstream co bliźniak EN.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.2.0
+  version: 1.3.0
   companion_skills: citation-grounding-pl, legal-ai-audit-bundle, matematic-expert-panel, saos-orzecznictwo
 ---
 
@@ -68,6 +70,24 @@ review zamiast pełnej debaty. Nie pal tokenów na rutynę.
 
 Każda rola to osobny przebieg z czystym mandatem. Pseudonimizuj wejście przez `let-it-be`,
 jeśli dokument zawiera dane objęte tajemnicą zawodową.
+
+### Poziomy dostępu recenzentów (anty-bias)
+
+Recenzenci dzielą się na dwa poziomy o RÓŻNYM dostępie do materiału. To jest celowe, nie
+przypadkowe:
+
+- **IZOLOWANY** (spójność wewnętrzna): recenzent logiki i struktury widzi **wyłącznie
+  bieżący draft** - bez źródeł, bez orzecznictwa. Mandat: czy teza nie przeczy własnemu
+  uzasadnieniu, czy wnioski wynikają z przesłanek, gdzie są luki logiczne. NIE ocenia, czy
+  cytat jest prawdziwy. *Gdyby widział źródła, myliłby „brzmi jak źródło" z „jest spójne
+  wewnętrznie".*
+- **WZBOGACONY** (grounding): attacker (rola 2) i kontrola cytatów (punkt 1 verifiera)
+  widzą źródła i intake, i sięgają po orzecznictwo przeciwne. Mandat: oparcie twierdzeń
+  i autorytet przeciwny.
+
+W trybie jednego modelu grającego wszystkie role izolacja jest **dyscypliną promptu**, nie
+sandboxem - roli IZOLOWANEJ wprost zabroń sięgania po źródła. Twarda izolacja przez osobne
+przebiegi to opcja premium (bramka kosztu, sekcja wyżej).
 
 ### 0. Bramka high-stakes
 Oceń, czy sprawa kwalifikuje (tabela wyżej). Jeśli nie - stop, zaproponuj zwykły review.
@@ -120,21 +140,55 @@ Mechaniczna i merytoryczna kontrola zsyntetyzowanego deliverable:
 9. Ryzyka proceduralne wymienione
 10. Poziom pewności wyrażony jawnie (nie fałszywa stanowczość)
 
-### 4a. Pętla rewizji - twardy limit 2 rund
+### 4a. Pętla rewizji - ograniczona, z gwarancją „nigdy gorsza wersja"
 
-Gdy verifier znajdzie uchybienia, deliverable wraca do poprawy. Ta pętla ma twardy limit:
+Gdy verifier znajdzie uchybienia, deliverable wraca do poprawy i przechodzi atak ponownie.
+Pętla ma twarde limity i jedną gwarancję: **nigdy nie wysyłamy wersji gorszej od najlepszej
+widzianej**.
 
-- **Runda 1**: verifier zgłasza uchybienia → poprawa → ponowna kontrola.
-- **Runda 2**: to samo, ostatni raz.
-- **Trzeci fail NIE jest kolejną iteracją.** Po drugiej nieudanej rewizji następuje
-  obowiązkowa eskalacja do człowieka: raport z listą nierozstrzygniętych zarzutów
-  (numer punktu kontroli, treść zarzutu, co próbowano w rundach 1-2, dlaczego nie
-  przeszło). Żadnego "spróbuję jeszcze raz".
+- **Wersjonowanie:** `draft_v1` (po pierwszej syntezie), `draft_v2`... Każda iteracja to
+  celowane poprawki z rekomendacji synthesizera, potem ponowny atak i weryfikacja.
+- **`wynik_zbiorczy`** (0-100) = średnia z: verifier (X/10 → x10) + spójność (IZOLOWANY,
+  0-100) + grounding (WZBOGACONY, 0-100). Składnik twardy: mechaniczna kontrola cytatów -
+  każde niepowodzenie blokuje niezależnie od wyniku (chroni przed fałszywym cofnięciem na
+  subiektywnej ocenie modelu).
+- **`v_najlepsza`:** po każdej iteracji zapamiętaj draft z najwyższym `wynik_zbiorczy`.
+- **Limit rund per stawka:** wysoka = maks. 3 rundy; tryb szybki = maks. 1.
 
-Powód: nieskończone polerowanie maskuje problem zamiast go rozstrzygać. Jeśli dwie
-rewizje nie domknęły zarzutu, redakcja go nie domknie - spór jest merytoryczny albo
-brakuje dowodu, a takie rzeczy rozstrzyga prawnik, nie kolejny przebieg modelu. Licznik
-rund zapisuj w raporcie (patrz Output) - to część śladu audytowego.
+**Decyzja o wyjściu należy do synthesizera.** Drzewo, w kolejności:
+
+1. **Czysta akceptacja** - wszyscy recenzenci zaakceptowali, 0 blokerów →
+   `zaakceptowano_na_vN`.
+2. **COFNIĘCIE PO REGRESJI (N≥2)** - `wynik_zbiorczy(vN) < wynik_zbiorczy(v_najlepsza)` →
+   odrzuć vN, przywróć `v_najlepsza`, wyjdź jako `wymuszone_wyjscie_na_v<najlepsza>_z_otwartymi`
+   z banerem „runda N pogorszyła deliverable - przywrócono najlepszą wersję".
+3. **Wczesne wyjście na plateau (N≥2)** - wynik ≥ próg (domyślnie 85), ale poprawa < 1,0
+   pkt względem poprzedniej → `zaakceptowano_wczesnie_na_vN` (nie palić tokenów na
+   marginalny zysk).
+4. **Kontynuuj** - są blokery, limit nieosiągnięty, brak regresji i plateau → kolejna runda
+   celowanych poprawek.
+5. **Wymuszone wyjście na limicie** - limit osiągnięty, blokery zostały →
+   `wymuszone_wyjscie_na_limicie` + baner z listą nierozstrzygniętych zarzutów.
+
+Powód limitu: nieskończone polerowanie maskuje problem zamiast go rozstrzygać. Jeśli
+trzy rundy nie domknęły zarzutu, redakcja go nie domknie - spór jest merytoryczny albo
+brakuje dowodu, a to rozstrzyga prawnik, nie kolejny przebieg modelu. Licznik rund
+i stan końcowy zapisuj w raporcie (patrz Output).
+
+### Stany końcowe i zasada „zawsze dostarcz"
+
+**Każde zakończenie MUSI wyprodukować artefakt dla człowieka** (pełny blok recenzji albo
+markdown awaryjny). Nigdy ciche/puste wyjście. Stany końcowe:
+
+`zaakceptowano_na_vN` | `zaakceptowano_wczesnie_na_vN` | `wymuszone_wyjscie_na_v<najlepsza>`
+(regresja) | `wymuszone_wyjscie_na_limicie` | `porazka_z_fallbackiem` (np. brak danych
+źródłowych - dostarcz, co masz, plus powód).
+
+Baner zawsze pokazuje: stan końcowy, którą wersję draftu dostarczono, jakie blokery
+zostały. **Governance:** skill produkuje rekomendację i wersje draftu; NIE wysyła
+dokumentu. Decyzja „wysłać mimo `wymuszone_wyjscie_na_limicie` z blokerami" zostaje przy
+człowieku. Transkrypt wszystkich wersji v1..vN idzie jako załącznik do paczki audytowej -
+dowód ograniczonej rewizji i ewentualnego cofnięcia (AI Act art. 12/14).
 
 ### 4b. Funkcja werdyktu - deterministyczna, z jawnymi wagami
 
@@ -221,10 +275,10 @@ FINDING - rozbieżność panelu (par. 8, kara umowna):
 wchodzi do tabeli synthesizera jak każdy inny: split nierozstrzygnięty = NIEPEWNE
 z wagą 0.25 w funkcji werdyktu (sekcja 4b), więc 2+ takie filary same z siebie
 ściągają wynik do WYŚLIJ_WARUNKOWO. Re-vote panelu NIE liczy się jako runda
-rewizji z sekcji 4a - limit 2 rund dotyczy poprawek deliverable po verifierze,
-a panel ma własny, jeszcze twardszy limit: jedno głosowanie + jedno powtórzenie
-z dowodem. Eskalacja do człowieka to ten sam mechanizm, co przy trzecim failu
-verifiera.
+rewizji z sekcji 4a - limit rund per stawka dotyczy poprawek deliverable po
+verifierze, a panel ma własny, jeszcze twardszy limit: jedno głosowanie + jedno
+powtórzenie z dowodem. Eskalacja do człowieka to ten sam mechanizm, co
+`wymuszone_wyjscie_na_limicie` w drzewie wyjścia.
 
 ## Output
 
@@ -242,16 +296,21 @@ Filary tezy: 5 | Przetrwały: 2 | Osłabione: 1 | Obalone: 1 | NIEPEWNE: 1
 | ...                          | ...              | ...        | ...                        |
 
 Kontrola verifiera: 9/10 OK. Punkt 1 (grounding): 1 cytat 🔴 - warunek krytyczny.
-Rundy rewizji: 1/2 (limit twardy; trzeci fail = eskalacja do człowieka).
+Iteracje: v2 (najlepsza=v2) | Stan końcowy: zaakceptowano_wczesnie_na_v2 | wynik_zbiorczy: 78 → 86 (limit 3 rundy dla stawki wysokiej).
 Funkcja werdyktu: Krok A (krytyczne) TAK - cytat 🔴 → FAIL. Krok B informacyjnie: (1.0+1.0+0.5+0.25+0.0)/5 = 0.55 (< 0.6).
 Poziom pewności po debacie: ŚREDNI (1 filar NIEPEWNY, linia orzecznicza niejednolita w 1 filarze).
 
 Werdykt: FAIL. NIE wysyłaj przed (a) poprawą cytatu 🔴, (b) dodaniem zastrzeżenia do filaru
 obalonego, (c) uzupełnieniem dowodu dla filaru NIEPEWNEGO albo jawnym zastrzeżeniem w tekście.
+
+[baner stanu końcowego - przykłady]
+- wymuszone_wyjscie_na_v1: „Runda 2 obniżyła wynik_zbiorczy (84 → 79) - przywrócono v1. Blokery: 1 cytat 🔴."
+- wymuszone_wyjscie_na_limicie: „3 rundy wyczerpane, blokery zostały: filar III bez odniesienia do orzecznictwa przeciwnego. Dostarczono v3 - decyzja o wysyłce należy do Ciebie."
 ```
 
-Pełny zapis debaty (transcript builder/attacker/synthesizer) zwróć jako załącznik do
-`legal-ai-audit-bundle` - to dowód kontradyktoryjnej weryfikacji.
+Pełny zapis debaty (transcript builder/attacker/synthesizer, wszystkie wersje v1..vN)
+zwróć jako załącznik do `legal-ai-audit-bundle` - to dowód kontradyktoryjnej weryfikacji
+i ograniczonej rewizji.
 
 ## Ochrona danych (RODO)
 
@@ -272,24 +331,14 @@ mapę tego, co przetrwało atak i z jaką pewnością - i na tej podstawie decyd
 (produkt warsztatowy dla zarządu). Ten skill = kontradyktoryjny stress-test JEDNEGO prawnego
 deliverable (teza vs antyteza vs synteza vs weryfikacja). Panel patrzy wszerz, adversarial w głąb.
 
-## Komplementarność z PromptDefense 12-vector (Microsoft AGT)
+## Komplementarność z matematic-prompt-defense-pl
 
-Ten skill atakuje **deliverable** (merytorycznie - czy teza wytrzyma kontrargument). Microsoft AGT
-[`prompt_defense.py`](https://github.com/microsoft/agent-governance-toolkit/blob/main/agent-governance-python/agent-compliance/src/agent_compliance/prompt_defense.py)
-(MIT, snapshot 2026-05-24) atakuje **system prompt** AI (pre-deployment - czy system prompt zawiera
-obronę przed 12 znanymi atakami: role-escape, instruction-override, data-leakage, output-manipulation,
-multilang-bypass, encoding-attacks, context-injection, tool-abuse, jailbreak, persona-hijacking,
-memory-poisoning, output-extraction; mapping na OWASP LLM Top 10). 
-
-Dwa różne narzędzia, dwie różne fazy:
-- Adversarial-legal-review-pl: **PO** napisaniu deliverable, **PRZED** wysłaniem klientowi
-- PromptDefense 12-vector: **PRZED** wdrożeniem nowego use case AI w kancelarii, walidacja
-  czy system prompt zawiera obronę przed znanymi atakami
-
-Razem stanowią dwustopniową bramę: prompt zaprojektowany odpornie (PromptDefense) + deliverable
-przeczytany kontradyktoryjnie (adversarial-legal-review-pl). Cherry-pick wzorca PromptDefense
-do dorobienia jako osobny walidator system promptów kancelarii pod kątem 12 wektorów ataku -
-regex+zero LLM cost (backlog wewnętrzny).
+Ten skill atakuje **deliverable** (czy teza wytrzyma kontrargument, PO napisaniu, PRZED
+wysyłką). [[matematic-prompt-defense-pl]] atakuje **system prompt** (czy zawiera obronę
+przed 12 znanymi wektorami OWASP LLM Top 10, PRZED wdrożeniem use case'u). Razem to
+dwustopniowa brama: prompt zaprojektowany odpornie + deliverable przeczytany
+kontradyktoryjnie. Warstwę agenta z narzędziami i pamięcią (OWASP ASI) pokrywa
+[[agentic-risk-asi-pl]].
 
 ## Atrybucja
 
@@ -309,6 +358,14 @@ eskalacja). Adaptacja od zera: źródła autorytetu polskie i unijne (saos-orzec
 ISAP / eu-sparql-search zamiast CourtListener), wpięcie splitu w werdykt NIEPEWNE i wagę
 0.25 zamiast osobnego rejestru panelistów, limit jednej rundy re-vote.
 
-Referencja komplementarna do PromptDefense (12-vector) z [microsoft/agent-governance-toolkit](https://github.com/microsoft/agent-governance-toolkit)
-(MIT, snapshot 2026-05-24, audyt RODO 🟢 ZIELONY) - tylko jako wskazanie różnicy fazy/scope,
-nie cherry-pick kodu.
+Piąty wzorzec dodany w v1.3.0: ograniczona samorewizja z cofnięciem po regresji (drzewo
+wyjścia, `v_najlepsza`, plateau), poziomy dostępu recenzentów (izolowany/wzbogacony) i zasada
+„zawsze dostarcz" ze stanami końcowymi - adaptacja clean-room z gregmos/memoforge (MIT),
+koncepcje sterowania pętlą i ról, nie prompty ani kod. Ten sam upstream, który od początku
+kredytuje bliźniak adversarial-legal-review-en; port domyka rozjazd bliźniaków. Limit 2 rund
+z v1.1.0 zastąpiony: gwarancja „nigdy gorsza wersja" pokrywa też tamten przypadek, a limit
+rund jest teraz jawnym parametrem per stawka.
+
+Odsyłacz (nie derywacja): PromptDefense z Microsoft Agent Governance Toolkit (MIT) jako
+wskazanie różnicy fazy/scope. Ten skill nie adaptuje stamtąd żadnego wzorca - robi to
+`matematic-prompt-defense-pl`, gdzie siedzi właściwa atrybucja z linkiem do repozytorium.
