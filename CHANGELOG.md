@@ -6,6 +6,18 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.08.24c] - 2026-08-24
+
+### Added
+
+- `matematic-mcp-fastmcp-instructions-pl` - sekcja **"Bramka, ktora nie chodzi w CI, nie
+  chroni niczego"**. Pomiar na flocie: 1 z 38 workflow wydania uruchamial testy przed
+  publikacja na PyPI, a ZERO repo mialo CI na push/PR. Kazda bramka z tego kanonu chronila
+  wylacznie laptopa autora. Kanon wymaga teraz dwoch wyzwalaczy (ci.yml na push/PR oraz krok
+  bramek w release.yml przed budowaniem paczki) i zapisuje, dlaczego smoke testy sa z nich
+  swiadomie wylaczone: wolaja zywe zrodla rzadowe, a awaria portalu ministerstwa nie moze
+  blokowac naszego wydania ani czerwienic CI.
+
 ## [2026.08.24b] - 2026-08-24
 
 Rollout elementu 9 na cala flote (39 konektorow) obnazyl dwie luki w samym elemencie.

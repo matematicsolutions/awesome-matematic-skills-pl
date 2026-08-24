@@ -407,6 +407,35 @@ w hostowanym MCP `vade-mecum` - **zmierzony na zywo 2026-08-24** (initialize -> 
 `tools/call`): 9 rodzin z datami pobrania i 7+ luk z identyfikatorami `BASE-0xx`, kazda
 z instrukcja odwrotu. Idea i ksztalt kontraktu, zero ich kodu.
 
+## Bramka, ktora nie chodzi w CI, nie chroni niczego
+
+Zmierzone na flocie 2026-08-24: **1 z 38 workflow wydania uruchamial testy przed
+publikacja na PyPI, a ZERO repo mialo CI na push/PR.** Kazda bramka opisana w tym
+kanonie - drift test, trojstan, kontrakt `coverage`, asercja audytu - chronila
+wylacznie laptopa autora. Otagowany zepsuty commit szedl prosto do uzytkownikow,
+a zepsuty commit bez tagu lezal na main, dopoki ktos nie wydal.
+
+To jest [[feedback_regula_bez_bramki_nie_trzyma]] o pietro wyzej: **bramka bez CI
+jest regula bez bramki**.
+
+Kazde repo konektora ma miec dwa wyzwalacze:
+
+```yaml
+# ci.yml - na push do main i na kazdy PR
+on: { push: { branches: [main] }, pull_request: }
+# release.yml - krok bramek PRZED budowaniem paczki
+- name: Run gates before publishing
+  run: |
+    python -m pip install -e ".[dev]"
+    python -m pytest tests/ -q -k "not smoke"
+```
+
+`-k "not smoke"` jest swiadome i nalezy do kontraktu: smoke testy wolaja **zywe zrodla
+rzadowe**, a awaria portalu ministerstwa nie jest powodem, zeby blokowac NASZE wydanie
+ani czerwienic CI. Bramki deterministyczne sa. Mieszanie obu w jednym przebiegu daje
+bramke, ktora ludzie naucza sie ignorowac - a wtedy przestaje chronic tak samo
+skutecznie, jak gdyby jej nie bylo.
+
 ## Templatey gotowe do skopiowania
 
 W `examples/`:
