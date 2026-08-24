@@ -6,6 +6,36 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.08.24] - 2026-08-24
+
+Kanon MCP dostaje dziewiaty element, a `redline-docx-pl` przypiety silnik. Oba wpisy
+wyszly z tego samego pomiaru: przegladu ekosystemu LegalTech z 24.08.
+
+### Added
+
+- `matematic-mcp-fastmcp-instructions-pl` - **element 9: tool deklarujacy wlasne pokrycie
+  i wlasne luki** (`coverage` / `pokrycie_bazy`). Kontrakt odpowiedzi ma trzy czesci:
+  mianownik rodzin danych z data pobrania kazdej, zastrzezenie wprost, ze data mowi KIEDY
+  dane pobrano (a nie ze sa nadal aktualne), oraz **wyliczone luki ze stalym identyfikatorem
+  i instrukcja odwrotu**. Bramka obowiazkowa: **pusta lista luk = BLOCK**, bo lista pusta
+  przechodzi zawsze i czyta sie jak czysty wynik; zaden korpus prawny nie jest kompletny,
+  wiec pusta lista znaczy "nie sprawdzilismy", nie "nie ma dziur". Kanon ma 9 elementow.
+  Powod istnienia: wiedza konektora o dziurach zapisana wylacznie w `instructions` jest
+  BIERNA - model musi ja zapamietac i zechciec przekazac, a agent nie ma jak zapytac.
+  Wzorzec wywiedziony z `cobertura_da_base` w `emidio-trancoso/advocacia-aberta` (MIT),
+  zmierzonego na zywo; atrybucja w polu `attribution` skilla, zero ich kodu.
+
+### Changed
+
+- `redline-docx-pl` - **wersja silnika PRZYPIETA: `adeu==1.30.0`**. Wszystkie komendy wolaja
+  `uvx --from adeu==1.30.0 adeu`, nie gole `uvx adeu`. adeu 1.31.0 (2026-08-03) przypiela sie
+  twardo do `fastmcp[apps]==4.0.0b1` - bety frameworka pod spec MCP 2026-07-28 - i kazde
+  wydanie od tamtej pory (do 3.0.0) jest nieosiagalne dla `uvx` bez `--prerelease=allow`.
+  To nie byla awaria: gole `uvx adeu` schodzilo cicho do 1.30.0 i konczylo exit 0, podczas
+  gdy SKILL.md deklarowal 1.7.5 - trzy rozne wersje w jednym skillu, zero sygnalu.
+  Zweryfikowane uruchomieniem (`adeu 1.30.0+1fd5285`, subkomendy `extract`/`apply`/
+  `sanitize`/`diff` odpowiadaja). Podniesienie pinu = swiadoma decyzja, nie efekt uboczny.
+
 ## [2026.08.17] - 2026-08-17
 
 Dwie porcje jednego dnia. Pierwsza: uzgodnienie kopii roboczych z kanonem repo plus wzorzec

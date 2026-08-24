@@ -1,8 +1,18 @@
 ---
 name: matematic-mcp-fastmcp-instructions-pl
-description: Buduj nowy MCP server MateMatic (lub retrofit istniejacego) z 8 elementami (5 zwalidowanych na dograh v1.31.0) - FastMCP(instructions=) z procedural orchestration, drift test, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id dla per-tenant routing, ToolAnnotations dla read-only, stabilne kody bledow + trojstan ok/degraded/failed, allowlista atrybutow telemetrii na granicy emisji, zdolnosc = definicja/dostawca/konsument. Uzywaj gdy zaczynasz nowy MCP server (saos/eu-compliance/anonimizacja/pomoc-prawna/kio/isap/inny), retrofit istniejacego do tego patternu, dodajesz nowy tool do MCP, debugujesz dlaczego LLM nie wywoluje Twoich tooli w odpowiedniej kolejnosci, lub gdy klient MCP (Claude Code/Cursor) nie autoryzuje. Trigger - "nowy MCP", "buduj MCP server", "FastMCP", "instructions MCP", "dryft testu MCP", "Claude Code MCP", "auth MCP", "OTel MCP", "FastMCP setup", "retrofit MCP", "tools MCP audit", "tools MCP nie sa wywolywane".
+description: Buduj nowy MCP server MateMatic (lub retrofit istniejacego) z 9 elementami (5 zwalidowanych na dograh v1.31.0) - FastMCP(instructions=) z procedural orchestration, drift test, dwukanalowy auth X-API-Key LUB Bearer, OTel atrybut org_id dla per-tenant routing, ToolAnnotations dla read-only, stabilne kody bledow + trojstan ok/degraded/failed, allowlista atrybutow telemetrii na granicy emisji, zdolnosc = definicja/dostawca/konsument, tool `coverage` deklarujacy wlasne pokrycie ORAZ wlasne luki (pusta lista luk = BLOCK). Uzywaj gdy zaczynasz nowy MCP server (saos/eu-compliance/anonimizacja/pomoc-prawna/kio/isap/inny), retrofit istniejacego do tego patternu, dodajesz nowy tool do MCP, debugujesz dlaczego LLM nie wywoluje Twoich tooli w odpowiedniej kolejnosci, lub gdy klient MCP (Claude Code/Cursor) nie autoryzuje. Trigger - "nowy MCP", "buduj MCP server", "FastMCP", "instructions MCP", "dryft testu MCP", "Claude Code MCP", "auth MCP", "OTel MCP", "FastMCP setup", "retrofit MCP", "tools MCP audit", "tools MCP nie sa wywolywane".
 license: Apache-2.0
 attribution:
+  - source: emidio-trancoso/advocacia-aberta
+    url: https://github.com/emidio-trancoso/advocacia-aberta
+    license: MIT
+    relationship: pattern-only
+    note: >
+      Element 9: ksztalt kontraktu tool-a deklarujacego wlasne pokrycie i wlasne
+      luki, wywiedziony z ich tool-a `cobertura_da_base` (hostowany MCP vade-mecum,
+      zmierzony na zywo 2026-08-24). Wzieta idea i uklad odpowiedzi - rodziny
+      z data pobrania, zastrzezenie waznosci, wyliczone luki z fallbackiem.
+      Zero ich kodu; nazwy pol, bramka i implementacja referencyjna wlasne.
   - source: dograh-hq/dograh
     url: https://github.com/dograh-hq/dograh
     license: BSD-2-Clause
@@ -56,7 +66,7 @@ Wzorzec kanoniczny dla MCP serverow MateMatic. Walidowany empirycznie na [dograh
 - Audit istniejacego MCP server (czy ma 8 elementow)
 - Debug: LLM nie wywoluje tooli w odpowiedniej kolejnosci, klient MCP nie autoryzuje, error_codes ginace dla LLM
 
-## 8 elementow kanonu
+## 9 elementow kanonu
 
 ### 1. `FastMCP(instructions=...)` z procedural orchestration
 
@@ -303,6 +313,78 @@ Wzorzec zaadaptowany z „capability seam" w `deepseek-ai/deepseek-harness` (MIT
 idea, zero kodu): tam Service Definition / Service Provider / Consumer, i ta sama regula -
 „a package may combine roles, but one role alone is not a seam".
 
+### 9. Tool deklarujacy WLASNE POKRYCIE (i wlasne dziury)
+
+Kazdy konektor korpusowy dostaje jeden tool bezargumentowy, ktorego jedynym zadaniem jest
+powiedziec: **co ta baza obejmuje, ile ma rekordow, KIEDY kazda rodzina zostala pobrana
+i czego w niej NIE MA.** Nazwa: `coverage` (EN) / `pokrycie_bazy` (PL). Read-only,
+`ToolAnnotations` jak w elemencie 5.
+
+**Problem, ktory to zamyka.** Dzis wiedza o naszych lukach istnieje - ale jako **proza w
+`instructions`**. Przyklad z `at-eli-mcp`: „Landesrecht not covered - relay the `dataset_note`".
+To wiedza **bierna**: model musi ja przeczytac i zechciec przekazac. Agent nie ma jak
+**zapytac**. Gdy tego nie zrobi, konektor odpowiada pewnie na pytanie o prawo krajowe
+landu i konczy exit 0 - czyli dokladnie
+[[feedback_cicha_niekompletnosc_trzy_mechanizmy]]: najgrozniejsza awaria konczy sie sukcesem.
+Element 9 zamienia wiedze bierna w **wywolywalna**.
+
+**Kontrakt odpowiedzi** - trzy czesci, zadnej nie wolno pominac:
+
+1. **Mianownik** - per rodzina danych: nazwa, tool ktory jej dotyka, liczba rekordow,
+   **data pobrania snapshotu**.
+2. **Zastrzezenie waznosci** - jedno zdanie wprost: data mowi KIEDY pobrano, nie ze
+   tresc jest nadal aktualna.
+3. **Znane luki, wyliczone z osobna** - kazda ma staly identyfikator, opis czego brakuje
+   i **instrukcje odwrotu** („sprawdz na stronie oficjalnej", „siegnij do zrodla X").
+
+```python
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=False))
+async def coverage() -> dict:
+    """Declares what this corpus covers, when each family was captured, and what it does NOT cover."""
+    return {
+        "status": "ok",                      # trojstan z elementu 6: ok | degraded | failed
+        "as_of_note": "Daty mowia KIEDY dane pobrano, nie ze sa nadal aktualne.",
+        "families": [
+            {"name": "Bundesrecht", "tool": "at_search", "records": 23069,
+             "captured_at": "2026-08-21"},
+        ],
+        "known_gaps": [                      # NIGDY pusta lista - patrz bramka nizej
+            {"id": "AT-001", "family": "Landesrecht",
+             "missing": "Prawo krajowe landow nie jest wystawione.",
+             "fallback": "Siegnij do ris.bka.gv.at, sekcja Landesrecht."},
+        ],
+    }
+```
+
+**Bramka (obowiazkowa, inaczej element 9 jest deklaracja):**
+
+```python
+def test_coverage_gaps_never_silently_empty():
+    c = coverage()
+    assert c["families"], "pusty mianownik = bramka bez czego sprawdzac"
+    assert c["known_gaps"], (
+        "PUSTA lista luk = BLOCK. Zaden korpus prawny nie jest kompletny; "
+        "pusta lista znaczy 'nie sprawdzilismy', nie 'nie ma dziur'."
+    )
+    for f in c["families"]:
+        assert f.get("captured_at"), f"rodzina {f['name']} bez daty pobrania"
+```
+
+Pusta `known_gaps` przechodzilaby zawsze i wygladala na czysty wynik - to
+[[feedback_bramka_z_pusta_lista_przechodzi_zawsze]]. Dlatego pusta lista = czerwone,
+nie zielone.
+
+**Dlaczego to jest nasza sprawa, a nie ciekawostka.** Slogan kanonu brzmi
+[[feedback_slogan_ai_ktora_wie]] - „AI, ktora wie, czego nie wie". Element 9 jest jedynym
+miejscem we flocie, gdzie to zdanie staje sie **funkcja**, a nie haslem na stronie.
+Konektor bez niego moze byc technicznie poprawny i jednoczesnie sprzedawac obietnice,
+ktorej nie realizuje.
+
+**Zrodlo wzorca:** `emidio-trancoso/advocacia-aberta` (MIT), tool `cobertura_da_base`
+w hostowanym MCP `vade-mecum` - **zmierzony na zywo 2026-08-24** (initialize -> sesja ->
+`tools/call`): 9 rodzin z datami pobrania i 7+ luk z identyfikatorami `BASE-0xx`, kazda
+z instrukcja odwrotu. Idea i ksztalt kontraktu, zero ich kodu.
+
 ## Templatey gotowe do skopiowania
 
 W `examples/`:
@@ -333,6 +415,8 @@ W Claude Code: "List my <resources> via <name>" - czy LLM wywoluje tool wlasciwy
 | Brak ToolAnnotations na read-only | Klient pyta o approval przy kazdym wywolaniu |
 | Single-channel auth (tylko X-API-Key lub tylko Bearer) | Niektorzy klienci wysylaja drugi - 401 |
 | Brak OTel atrybutow org_id | Brak per-tenant observability w multi-tenant |
+| Wiedza o lukach TYLKO jako proza w `instructions` | Agent nie ma jak zapytac; konektor odpowiada pewnie poza swoim pokryciem (element 9) |
+| `known_gaps: []` w toolu `coverage` | Bramka przechodzi zawsze, wynik wyglada na czysty - pusta lista luk = BLOCK |
 
 ## Walidowane na
 

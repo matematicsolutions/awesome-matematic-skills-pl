@@ -45,7 +45,22 @@ Cala praca lokalnie (uvx, brak chmury). Silnik testowany na polskim .docx 2026-0
 
 ## Wymagania
 
-`uv` (jezeli brak: `pip install uv`). adeu pobiera sie samo przez `uvx adeu` przy pierwszym uzyciu (wersja sprawdzona: 1.7.5).
+`uv` (jezeli brak: `pip install uv`). adeu pobiera sie samo przy pierwszym uzyciu.
+
+> **🔴 WERSJA PRZYPIETA: `adeu==1.30.0` (zmierzone 2026-08-24).** Wszystkie komendy
+> nizej wolaja `uvx --from adeu==1.30.0 adeu`, nie gole `uvx adeu`. Powod nie jest
+> kosmetyczny: **adeu 1.31.0 (2026-08-03) przypiela sie twardo do `fastmcp[apps]==4.0.0b1`**
+> - bety frameworka pod nowy spec MCP 2026-07-28 - i kazde wydanie od tamtej pory
+> (do 3.0.0 z 2026-08-22) jest **nieosiagalne dla `uvx` bez `--prerelease=allow`**.
+> Gole `uvx adeu` nie wybuchalo: cicho rozwiazywalo do 1.30.0 i konczylo exit 0, a
+> SKILL.md deklarowal 1.7.5 - trzy rozne wersje w jednym skillu, zero sygnalu.
+> To ten sam mechanizm co [[feedback_cicha_niekompletnosc_trzy_mechanizmy]] i ta sama
+> regula pinu co przy `@firecrawl/anydoc` w CLAUDE.md.
+>
+> **Podniesienie pinu = swiadoma decyzja**, nie efekt uboczny - i dzis oznacza wejscie
+> na bete FastMCP 4. Nie robimy tego przed freezem PATRON 2.0.0.
+> Powierzchnia CLI 1.30.0 (zweryfikowana): `extract`, `init`, `diff`, `apply`,
+> `accept-all`, `markup`, `sanitize`, `help`.
 
 ## Safety Tiers (KRYTYCZNE)
 
@@ -64,7 +79,7 @@ Przed wykonaniem każdej operacji ustal tier i zastosuj regułę:
 ### 1. Czytaj - .docx do Markdown dla LLM
 
 ```bash
-uvx adeu extract umowa.docx -o umowa.md
+uvx --from adeu==1.30.0 adeu extract umowa.docx -o umowa.md
 ```
 
 Zwraca czysty Markdown (+ opcjonalny Semantic Appendix: defined terms, cross-references,
@@ -153,7 +168,7 @@ negocjacyjne nie moga trafic do pliku wymienianego z kontrahentem.
 ### 3. Aplikuj - natywne Track Changes
 
 ```bash
-uvx adeu apply umowa.docx edits.json -o umowa_redline.docx --author "Kancelaria"
+uvx --from adeu==1.30.0 adeu apply umowa.docx edits.json -o umowa_redline.docx --author "Kancelaria"
 ```
 
 Daje `umowa_redline.docx` ze sledzonymi zmianami i komentarzami. Bez `--author`
@@ -183,7 +198,7 @@ przy przekazaniu draftu czlowiekowi.
 ### 4. Sanitize PRZED wyslaniem - RODO
 
 ```bash
-uvx adeu sanitize umowa_redline.docx -o umowa_clean.docx --keep-markup --author "Kancelaria" --report
+uvx --from adeu==1.30.0 adeu sanitize umowa_redline.docx -o umowa_clean.docx --keep-markup --author "Kancelaria" --report
 ```
 
 Usuwa: `creator`, `last modified by`, template, `rsid`, custom XML parts;
@@ -197,8 +212,8 @@ akceptuje wszystko i zwraca czysty dokument. Konczy werdyktem `Result: CLEAN`.
 ## Pozostale komendy
 
 ```bash
-uvx adeu diff v1.docx v2.docx          # wizualny diff dwoch wersji
-uvx adeu apply --live edits.json       # edycja zywego dokumentu w Word (Windows + MS Word)
+uvx --from adeu==1.30.0 adeu diff v1.docx v2.docx          # wizualny diff dwoch wersji
+uvx --from adeu==1.30.0 adeu apply --live edits.json       # edycja zywego dokumentu w Word (Windows + MS Word)
 ```
 
 ## Integracja z let-it-be (PII PL)

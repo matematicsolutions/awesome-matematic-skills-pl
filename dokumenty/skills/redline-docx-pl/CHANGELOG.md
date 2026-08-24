@@ -1,5 +1,23 @@
 # Changelog - redline-docx-pl
 
+## bez zmiany wersji - 2026-08-24
+
+Wersja silnika PRZYPIETA: `adeu==1.30.0`. Wszystkie komendy wolaja
+`uvx --from adeu==1.30.0 adeu`, nie gole `uvx adeu`.
+
+- **Powod**: adeu 1.31.0 (2026-08-03) przypiela sie twardo do
+  `fastmcp[apps]==4.0.0b1` - bety frameworka pod spec MCP 2026-07-28 - i kazde
+  wydanie od tamtej pory (do 3.0.0 z 2026-08-22) jest nieosiagalne dla `uvx`
+  bez `--prerelease=allow`.
+- **Czego to NIE bylo**: awarii. Gole `uvx adeu` rozwiazywalo sie cicho do
+  1.30.0 i konczylo exit 0, podczas gdy SKILL.md deklarowal 1.7.5. Trzy rozne
+  wersje w jednym skillu (deklarowana / uruchamiana / najnowsza), zero sygnalu.
+- **Zweryfikowane uruchomieniem**: `adeu 1.30.0+1fd5285`; subkomendy `extract`,
+  `apply`, `sanitize`, `diff` odpowiadaja. Powierzchnia CLI 1.30.0: `extract`,
+  `init`, `diff`, `apply`, `accept-all`, `markup`, `sanitize`, `help`.
+- Podniesienie pinu = swiadoma decyzja, nie efekt uboczny; dzis oznacza wejscie
+  na bete FastMCP 4.
+
 ## bez zmiany wersji - 2026-08-05
 
 Pomiar wendorowanego silnika `vendor/docx-engine` (GenOffice, Apache-2.0).
