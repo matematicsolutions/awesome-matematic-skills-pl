@@ -374,6 +374,28 @@ Pusta `known_gaps` przechodzilaby zawsze i wygladala na czysty wynik - to
 [[feedback_bramka_z_pusta_lista_przechodzi_zawsze]]. Dlatego pusta lista = czerwone,
 nie zielone.
 
+**Dwie rzeczy, ktore ten element ma ODZIEDZICZYC po reszcie konektora** (obie zlapane
+pomiarem po rolloucie 2026-08-24, nie przy czytaniu diffa):
+
+1. **Tool `coverage` audytuje jak kazdy inny tool.** INSTRUCTIONS naszych konektorow
+   mowia wprost: „every tool call appends to the audit log". Wypuszczenie toola bez
+   wpisu do dziennika **czyni to zdanie falszywym** - i to na 38 konektorach naraz.
+   Nie jest to niespojnosc kosmetyczna, tylko obietnica bez pokrycia
+   [[feedback_deklaracja_o_architekturze_falszywa_o_demo]]. Do tego bramka, ktora
+   sprawdza, ze wpis **realnie laduje na dysku** (przekieruj katalog audytu zmienna
+   srodowiskowa na `tmp_path` i policz linie), a nie ze w kodzie stoi wywolanie.
+
+2. **Drift test w MOCNYM kierunku.** Slaby kierunek (INSTRUCTIONS nie moga wymieniac
+   nieistniejacego toola) lapie przeterminowana dokumentacje. Mocny kierunek - **kazdy
+   ZAREJESTROWANY tool musi byc wymieniony w INSTRUCTIONS** - lapie cos grozniejszego:
+   zdolnosc, ktora trafila na produkcje bez zmiany zachowania. Tool jest wykrywalny,
+   ale model nie ma powodu po niego siegnac. Dokladnie to stalo sie z elementem 9:
+   narzedzie wyszlo w 38 konektorach, a instrukcje milczaly. Wylapal to JEDEN konektor
+   (`boutique-mcp`), ktory jako jedyny mial ten kierunek. Dzis maja go wszystkie.
+
+   Bramka ma akceptowac obie formy wzmianki - `tool` i `tool(arg=...)` - inaczej
+   produkuje falszywe alarmy na instrukcjach z przykladem wywolania.
+
 **Dlaczego to jest nasza sprawa, a nie ciekawostka.** Slogan kanonu brzmi
 [[feedback_slogan_ai_ktora_wie]] - „AI, ktora wie, czego nie wie". Element 9 jest jedynym
 miejscem we flocie, gdzie to zdanie staje sie **funkcja**, a nie haslem na stronie.
@@ -415,6 +437,8 @@ W Claude Code: "List my <resources> via <name>" - czy LLM wywoluje tool wlasciwy
 | Brak ToolAnnotations na read-only | Klient pyta o approval przy kazdym wywolaniu |
 | Single-channel auth (tylko X-API-Key lub tylko Bearer) | Niektorzy klienci wysylaja drugi - 401 |
 | Brak OTel atrybutow org_id | Brak per-tenant observability w multi-tenant |
+| Tool bez wpisu do dziennika audytu, gdy INSTRUCTIONS obiecuja audyt KAZDEGO wywolania | Zdanie w instrukcjach staje sie falszywe; bramka ma sprawdzac wpis NA DYSKU, nie wywolanie w kodzie |
+| Drift test tylko w slabym kierunku | Tool zarejestrowany, ale niewymieniony w INSTRUCTIONS = zdolnosc bez routingu modelu |
 | Wiedza o lukach TYLKO jako proza w `instructions` | Agent nie ma jak zapytac; konektor odpowiada pewnie poza swoim pokryciem (element 9) |
 | `known_gaps: []` w toolu `coverage` | Bramka przechodzi zawsze, wynik wyglada na czysty - pusta lista luk = BLOCK |
 

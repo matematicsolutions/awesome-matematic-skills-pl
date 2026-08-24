@@ -6,6 +6,24 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.08.24b] - 2026-08-24
+
+Rollout elementu 9 na cala flote (39 konektorow) obnazyl dwie luki w samym elemencie.
+Obie zlapane pomiarem po wydaniu, nie przy czytaniu diffa.
+
+### Changed
+
+- `matematic-mcp-fastmcp-instructions-pl` - element 9 dostaje dwa wymagania dziedziczone
+  po reszcie konektora. **(1) Tool `coverage` audytuje jak kazdy inny tool**: INSTRUCTIONS
+  naszych konektorow mowia "every tool call appends to the audit log", wiec tool bez wpisu
+  **czyni to zdanie falszywym** - na 38 konektorach naraz. Bramka ma sprawdzac wpis REALNIE
+  ZAPISANY NA DYSKU, nie obecnosc wywolania w kodzie. **(2) Drift test w MOCNYM kierunku**:
+  kazdy ZAREJESTROWANY tool musi byc wymieniony w INSTRUCTIONS. Slaby kierunek lapie
+  przeterminowana dokumentacje; mocny lapie zdolnosc wypuszczona bez routingu modelu -
+  tool wykrywalny, ale model nie ma powodu po niego siegnac. Element 9 wpadl dokladnie w te
+  pulapke i wylapal to JEDEN konektor, ktory jako jedyny mial ten kierunek. Bramka musi
+  akceptowac obie formy wzmianki (`tool` i `tool(arg=...)`), inaczej daje falszywe alarmy.
+
 ## [2026.08.24] - 2026-08-24
 
 Kanon MCP dostaje dziewiaty element, a `redline-docx-pl` przypiety silnik. Oba wpisy
