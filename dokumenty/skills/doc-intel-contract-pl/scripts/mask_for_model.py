@@ -38,7 +38,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
-from pii_flags import _RE_DOWOD, _RE_EMAIL, _RE_IBAN_PL, _RE_NIP, _RE_PESEL, _RE_REGON
+from pii_flags import (_RE_DOWOD, _RE_EMAIL, _RE_IBAN_PL, _RE_NIP, _RE_PESEL,
+                       _RE_REGON, _dowod_prawdziwy)
 from pii_flags import _valid_nip, _valid_pesel, _valid_regon
 
 _ZNAK = "*"
@@ -98,7 +99,8 @@ def maskuj(tekst: str) -> WynikMaski:
     for m in _RE_EMAIL.finditer(tekst):
         dodaj("email", m)
     for m in _RE_DOWOD.finditer(tekst):
-        dodaj("dowod", m)
+        if _dowod_prawdziwy(tekst, m):
+            dodaj("dowod", m)
     for m in _RE_KLUCZ_PREFIKS.finditer(tekst):
         dodaj("klucz_api", m, 1)
     for m in _RE_BEARER.finditer(tekst):

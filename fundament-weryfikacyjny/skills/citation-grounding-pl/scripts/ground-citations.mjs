@@ -16,8 +16,29 @@
 import { readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
-const QUOTE_CHARS = /[„""»«’‘'`]/g;
-const DASHES = /[—–]/g;
+// --- Normalizacja: JEDEN DOM reguly ------------------------------------------
+// Tablica prawdy (kontrakt): doc-intel-contract-pl/contract/normalizacja.cases.json
+// Ten sam kontrakt realizuje `evidence.py` po stronie Pythona; oba testy czytaja
+// TEN plik, nie swoje kopie.
+//
+// Do 2026-08-30 kazda strona miala wlasna implementacje i wlasne luki. Tutejsza
+// gubila SZESC z osmiu znakow, ktore polski PDF wstawia naprawde: U+2011 w
+// sygnaturach akt, U+00AD w justowanych akapitach, U+2212, U+200B, U+2026 oraz
+// wejscie zapisane w NFD. Skutek byl gorszy niz przeoczenie: falszywy czerwony
+// na poziomie FRAGMENT, czyli "cytatu nie ma w zrodle" o cytacie, ktory tam
+// jest - zarzut halucynacji postawiony przez blad normalizacji.
+const QUOTE_CHARS = /[„“”‟«»‹›‘’‚‛`´']/g;
+const DASHES = /[‐‑‒–—―−⁃－]/g;
+// Niewidzialne w PDF, obecne w warstwie tekstowej.
+const INVISIBLE = /[​‌‍﻿⁠]/g;
+// Przeniesienie wyrazu: kreska (miekki dywiz WLICZONY) + opcjonalne spacje +
+// lamanie linii. U+00AD renderuje sie wylacznie na lamaniu, wiec TAM znaczy
+// przeniesienie; poza lamaniem jest kasowany jak reszta niewidzialnych.
+const HYPHEN_WRAP = /[-­‐‑‒–—―−⁃－][ \t]*[\r\n][\r\n \t]*/g;
+const SOFT_HYPHEN = /­/g;
+const ELLIPSIS = /…/g;
+// JS nie ma casefold; ostre s trzeba zlozyc jawnie (nazwiska i adresy w aktach).
+const SHARP_S = /[ßẞ]/g;
 
 const POZIOM = { ISTNIENIE: 0, TRESC: 1, FRAGMENT: 2 };
 const POZIOM_NAZWA = ["ISTNIENIE", "TRESC", "FRAGMENT"];
@@ -139,14 +160,22 @@ function zbieznoscFragmentu(normClaim, src) {
   return best;
 }
 
+// Realizuje kontrakt z tablicy prawdy (patrz komentarz przy QUOTE_CHARS).
+// Kolejnosc krokow jest czescia kontraktu: przeniesienie wyrazu MUSI byc
+// rozpoznane, zanim skasujemy miekki dywiz.
 function normalize(s) {
   if (s == null) return "";
   return String(s)
-    .replace(/-\s*\n\s*/g, "") // myslnik przenoszenia na koncu wiersza
-    .replace(QUOTE_CHARS, '"') // ujednolicenie cudzyslowow
-    .replace(DASHES, "-") // ujednolicenie myslnikow
+    .normalize("NFC")            // wejscie w NFD sklada sie do NFC
+    .replace(HYPHEN_WRAP, "")    // przeniesienie wyrazu (PRZED kasowaniem U+00AD)
+    .replace(SOFT_HYPHEN, "")    // miekki dywiz poza lamaniem - kasuj
+    .replace(INVISIBLE, "")      // zerowa szerokosc, BOM, word joiner
+    .replace(QUOTE_CHARS, '"')   // ujednolicenie cudzyslowow
+    .replace(DASHES, "-")        // PELNA rodzina kresek, nie tylko em/en
+    .replace(ELLIPSIS, "...")    // jeden znak vs trzy kropki
+    .replace(SHARP_S, "ss")      // odpowiednik casefold Pythona
     .toLowerCase()
-    .replace(/\s+/g, " ") // zwiniecie bialych znakow
+    .replace(/\s+/g, " ")        // zwiniecie bialych znakow (\s obejmuje NBSP)
     .trim();
 }
 
@@ -381,7 +410,9 @@ function sprawdzIstnienie(anchor, resolved) {
   return { stan: roznice.length === 0 ? "potwierdzona" : "rozbiezna", roznice, uwagi };
 }
 
-export { stronyOverlap, partyTokens, zbieznoscFragmentu, boilerplateTokens };
+// `normalize` wystawiony, zeby bramka konformancji mogla go zmierzyc przeciw
+// wspolnej tablicy prawdy. Regula bez sposobu zmierzenia nie trzyma.
+export { stronyOverlap, partyTokens, zbieznoscFragmentu, boilerplateTokens, normalize };
 
 export function verify(item) {
   const claimType = item.claim_type || (item.quote ? "cytat_doslowny" : "powolanie");

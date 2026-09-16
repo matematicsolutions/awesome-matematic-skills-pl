@@ -16,7 +16,7 @@ pdftotext) + Python stdlib. Wywolania sieciowe = zakazane w warstwie kontraktu.
 ### Article II - Idea, nie waga (MUST)
 Odtwarzamy ARCHITEKTURE / kontrakt wyjscia zainspirowany Mistral OCR 4, NIE
 forkujemy ani nie owijamy zamknietego modelu. Zaden bajt wag/kodu vendora.
-Kardynalna doktryna: skladamy puzzel z wlasnych klockow. [[reference_ocr_output_contract_from_mistral4]]
+Kardynalna doktryna: skladamy puzzel z wlasnych klockow.
 
 ### Article III - Granica governance (MUST NOT)
 Warstwa PRZYGOTOWUJE decyzje (lista "do przegladu przez czlowieka", propozycja
@@ -41,7 +41,7 @@ tyle, ile ma.
 - Klasyfikuje bloki (typed blocks) na tyle, na ile silnik pozwala.
 - Liczy confidence-gating (prog -> kolejka human-review + auto-approve).
 - Flaguje bloki wrazliwe (signature/stamp/PII-suspected).
-- Dostarcza most do [[citation-grounding-pl]] (cytat -> blok+bbox).
+- Dostarcza most do `citation-grounding-pl` (cytat -> blok+bbox).
 
 **Nie robi (anty-zakres):**
 - NIE jest silnikiem OCR (nie zastepuje Chandry).
@@ -51,7 +51,7 @@ tyle, ile ma.
 
 **Wspolpracuje z:**
 - Drabinka PDF w CLAUDE.md (Chandra OCR rung 4, opendataloader rung 3, vision rung 5).
-- [[citation-grounding-pl]] (konsument kontraktu).
+- `citation-grounding-pl` (konsument kontraktu).
 - Granica governance PATRONa / approval cards (confidence-gating -> kolejka).
 
 ## Governance

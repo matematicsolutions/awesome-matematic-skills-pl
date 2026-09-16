@@ -14,7 +14,12 @@ _RE_NIP = re.compile(r"\b\d{3}-?\d{3}-?\d{2}-?\d{2}\b|\b\d{10}\b")
 _RE_REGON = re.compile(r"\b\d{9}\b|\b\d{14}\b")
 _RE_EMAIL = re.compile(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b")
 _RE_IBAN_PL = re.compile(r"\bPL\d{26}\b|\b\d{2}(?:\s?\d{4}){6}\b")
-_RE_DOWOD = re.compile(r"\b[A-Z]{3}\s?\d{6}\b")  # nr dowodu osobistego PL
+_RE_DOWOD = re.compile(r"\b([A-Z]{3})\s?\d{6}\b")  # nr dowodu osobistego PL
+# ten sam ksztalt maja nie-PII (pilot anonimizacji 2026-08-31): numery bazy LEX,
+# kody obszarow Natura 2000 (PLH/PLB) i sygnatury repertoriow po liczebniku
+# rzymskim ("III CRN 100001")
+_DOWOD_WYKLUCZONE_SERIE = {"LEX", "PLH", "PLB"}
+_RE_LICZEBNIK_RZYMSKI_PRZED = re.compile(r"\b[IVXLCDM]+\s+$")
 _RE_PHONE = re.compile(r"\b(?:\+48\s?)?(?:\d{3}[\s-]?){3}\b")
 
 _BLOCK_SENSITIVE = {"signature", "stamp"}
@@ -47,6 +52,13 @@ def _valid_regon(d: str) -> bool:
     return False
 
 
+def _dowod_prawdziwy(text: str, m: re.Match) -> bool:
+    """Odsiew false-positive per-trafienie; realna seria (np. ABC 123456) przechodzi."""
+    if m.group(1) in _DOWOD_WYKLUCZONE_SERIE:
+        return False
+    return not _RE_LICZEBNIK_RZYMSKI_PRZED.search(text, 0, m.start())
+
+
 def detect(text: str) -> list[str]:
     """Zwraca posortowana liste kategorii PII wykrytych w tekscie."""
     hits: set[str] = set()
@@ -63,8 +75,9 @@ def detect(text: str) -> list[str]:
         hits.add("email")
     if _RE_IBAN_PL.search(text):
         hits.add("iban")
-    if _RE_DOWOD.search(text):
-        hits.add("dowod")
+    for m in _RE_DOWOD.finditer(text):
+        if _dowod_prawdziwy(text, m):
+            hits.add("dowod")
     return sorted(hits)
 
 

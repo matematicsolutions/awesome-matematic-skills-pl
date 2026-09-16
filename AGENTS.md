@@ -6,7 +6,7 @@ An [agents.md](https://agents.md) standard file (Linux Foundation / Agentic AI F
 
 This repo is a **curated hub of Agent Skills for law**. Two layers:
 
-- `./skills/` - a bundle of 14 skills installed locally (a directly usable bundle).
+- `<plugin>/skills/` - 45 skills grouped into 8 plugin bundles, each installable with one command.
 - README + `.claude-plugin/marketplace.json` - an awesome list and a plugin marketplace manifest.
 
 This is **not a commercial product** - it is an MIT curatorial canon. Its value is an organized map of AI skills for law that lets law firms and NGOs plug ready-made building blocks into their practice without building them from scratch.
@@ -26,20 +26,20 @@ The hub must be:
 
 ```
 .claude-plugin/
-  marketplace.json     - plugin marketplace manifest (14 entries)
+  marketplace.json     - plugin marketplace manifest (8 plugins)
 .github/
   (issue templates - planned)
-skills/
+<plugin>/skills/
   <name>/
     SKILL.md           - frontmatter + body
     references/        - lazy-loaded documentation
     scripts/           - executable code
     THIRD_PARTY_INSPIRATIONS.md  - per-skill cherry-pick canon (if present)
 scripts/
-  check-marketplace.mjs - consistency validator for marketplace.json vs ./skills/
+  check-marketplace.mjs - consistency validator for marketplace.json vs plugin folders
 examples/
   pipeline-end-to-end.md - how the 6-layer chain works step by step
-README.md              - curated list + bundle of 14 skills
+README.md              - curated list + 45 skills in 8 plugin bundles
 CONTRIBUTING.md        - how to add a skill
 LICENSE                - MIT (curatorial)
 NOTICE                 - per-skill license attribution
@@ -55,8 +55,8 @@ AGENTS.md              - this file
 No compilation.
 
 **Consistency test** = `node scripts/check-marketplace.mjs` - validates that:
-- every entry in `.claude-plugin/marketplace.json` has a matching folder in `./skills/<name>/`
-- every folder in `./skills/` is declared in marketplace.json
+- every entry in `.claude-plugin/marketplace.json` has a matching plugin folder with `<plugin>/.claude-plugin/plugin.json`
+- plugin versions in marketplace.json match each `plugin.json`
 - every SKILL.md has frontmatter with `name`, `description`
 - names in marketplace.json = folder names
 

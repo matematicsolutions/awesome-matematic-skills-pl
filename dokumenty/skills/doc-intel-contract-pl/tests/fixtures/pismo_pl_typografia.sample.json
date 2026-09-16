@@ -1,0 +1,30 @@
+{
+  "_komentarz": "Fixture WIERNY ZJAWISKU, nie tezie. Polskie pismo sadowe z realnymi pulapkami warstwy tekstowej PDF: dywiz nielamliwy U+2011 w sygnaturze, spacja nielamliwa U+00A0 po 'art.', miekki dywiz U+00AD w justowanym akapicie, przeniesienie wyrazu na lamaniu linii, cudzyslowy drukarskie oraz TERMIN NIEDYSTYNKTYWNY ('Sadu Okregowego') powtorzony w 7 blokach - dokladnie ten uklad, w ktorym stary most zwracal pierwsze trafienie jako pewna kotwice.",
+  "pages": [
+    {
+      "page_number": 1,
+      "width": 595,
+      "height": 842,
+      "blocks": [
+        {"type": "Title", "bbox": [50, 40, 545, 80], "text": "POSTANOWIENIE", "confidence": 0.99},
+        {"type": "Text", "bbox": [50, 90, 545, 130], "text": "Sygn. akt II‑CSK 118/24", "confidence": 0.96},
+        {"type": "Text", "bbox": [50, 140, 545, 240], "text": "Sad Okregowy w Warszawie, po rozpoznaniu na posiedzeniu niejawnym sprawy z powodztwa, postanawia oddalic zazalenie na postanowienie Sadu Okregowego z dnia 5 marca 2024 r.", "confidence": 0.97},
+        {"type": "Text", "bbox": [50, 250, 545, 330], "text": "Zgodnie z art. 385 k.p.c. sad drugiej instancji oddala apela-\ncje, jezeli jest ona bezzasadna.", "confidence": 0.95},
+        {"type": "Text", "bbox": [50, 340, 545, 430], "text": "W ocenie Sadu Okregowego zarzut naruszenia prawa material­nego nie zaslugiwal na uwzglednienie.", "confidence": 0.94}
+      ]
+    },
+    {
+      "page_number": 2,
+      "width": 595,
+      "height": 842,
+      "blocks": [
+        {"type": "Text", "bbox": [50, 60, 545, 160], "text": "Skarzacy podnosil, ze „sad naruszyl zasade swobodnej oceny dowodow”, czemu Sad Okregowy nie dal wiary.", "confidence": 0.93},
+        {"type": "Text", "bbox": [50, 170, 545, 250], "text": "Stanowisko Sadu Okregowego znajduje oparcie w utrwalonym orzecznictwie.", "confidence": 0.95},
+        {"type": "Text", "bbox": [50, 260, 545, 340], "text": "Postanowienie Sadu Okregowego jest prawomocne z chwila wydania.", "confidence": 0.96},
+        {"type": "Text", "bbox": [50, 350, 545, 430], "text": "Od orzeczenia Sadu Okregowego nie przysluguje srodek zaskarzenia.", "confidence": 0.95},
+        {"type": "Text", "bbox": [50, 440, 545, 520], "text": "Koszty postepowania obciazaja skarzacego zgodnie z zasada odpowiedzialnosci za wynik sprawy, o czym orzeka Sad Okregowy.", "confidence": 0.94},
+        {"type": "Signature", "bbox": [350, 700, 545, 780], "text": "(podpis nieczytelny)", "confidence": 0.38}
+      ]
+    }
+  ]
+}

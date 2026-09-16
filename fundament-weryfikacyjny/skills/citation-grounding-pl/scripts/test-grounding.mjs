@@ -3,7 +3,10 @@
 // Rubryka PASS/FAIL per przypadek; exit 1 gdy ktorykolwiek FAIL (bramka CI).
 // Pokrywa nowy guard STRONY ("prawdziwy cytat, falszywa teza") + regresje rdzenia v2.
 
-import { verify, stronyOverlap, partyTokens, zbieznoscFragmentu } from "./ground-citations.mjs";
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { verify, stronyOverlap, partyTokens, zbieznoscFragmentu, normalize } from "./ground-citations.mjs";
 
 let pass = 0, fail = 0;
 function check(name, got, want) {
@@ -145,6 +148,47 @@ check("v2.3: nota zawiera uwage o rozproszeniu terminow",
 check("zbieznoscFragmentu >= 0.5 dla zwartego fragmentu",
   zbieznoscFragmentu("klauzula waloryzacyjna w umowie kredytu jest dopuszczalna",
     "sad uznal, ze klauzula waloryzacyjna w umowie kredytu jest dopuszczalna w swietle zasad") >= 0.5, true);
+
+// --- KONFORMANCJA NORMALIZACJI ------------------------------------------------
+// Regula normalizacji ma JEDEN DOM: tablice prawdy w doc-intel-contract-pl.
+// Ten sam plik czyta test Pythona (test_normalizacja_kontrakt.py). Do 2026-08-30
+// kazda strona miala wlasna implementacje - tutejsza gubila SZESC z osmiu znakow,
+// ktore polski PDF wstawia naprawde, przez co poziom FRAGMENT potrafil orzec
+// "cytatu nie ma w zrodle" o cytacie, ktory tam byl.
+// Sciezka wzgledem katalogu skilla, bez sciezek prywatnych. Kolejnosc kandydatow:
+// 1) zmienna NORMALIZACJA_CASES (jawne wskazanie), 2) uklad plaski - skille jako
+// rodzenstwo w jednym katalogu, 3) uklad huba awesome-matematic-skills-pl
+// (<plugin>/skills/<skill>). Zaden nie istnieje = FAIL ponizej, nie pominiecie.
+const SKILL_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const KANDYDACI = [
+  process.env.NORMALIZACJA_CASES,
+  join(SKILL_DIR, "..", "doc-intel-contract-pl", "contract", "normalizacja.cases.json"),
+  join(SKILL_DIR, "..", "..", "..", "dokumenty", "skills", "doc-intel-contract-pl",
+       "contract", "normalizacja.cases.json"),
+].filter(Boolean);
+const TABLICA = KANDYDACI.find((k) => existsSync(k)) || KANDYDACI[KANDYDACI.length - 1];
+let tab = null;
+try {
+  tab = JSON.parse(readFileSync(TABLICA, "utf-8"));
+} catch (e) {
+  // Brak tablicy to FAIL, nie ciche pominiecie: bramka, ktora nie ma na czym
+  // zadzialac, przechodzi zawsze.
+  check(`tablica prawdy normalizacji czytelna (${TABLICA})`,
+        `BLAD: ${e.code || e.message}`, "OK");
+}
+if (tab) {
+  check("tablica prawdy niepusta (mianownik bramki)", tab.przypadki.length > 0, true);
+  let zgodne = 0;
+  const rozjazdy = [];
+  for (const c of tab.przypadki) {
+    const got = normalize(c.wejscie);
+    if (got === c.oczekiwane) zgodne++;
+    else rozjazdy.push(`${c.nazwa}: got=${JSON.stringify(got)} want=${JSON.stringify(c.oczekiwane)}`);
+  }
+  check(`normalizacja zgodna z tablica prawdy v${tab._wersja} (${zgodne}/${tab.przypadki.length})`,
+        zgodne, tab.przypadki.length);
+  for (const r of rozjazdy) console.log(`      ROZJAZD ${r}`);
+}
 
 console.log(`\n${pass}/${pass + fail} PASS`);
 process.exit(fail ? 1 : 0);

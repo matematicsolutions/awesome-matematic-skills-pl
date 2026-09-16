@@ -38,7 +38,7 @@ attribution:
       Guard STRONY oparty na niezgodności nazw metodą Jaccarda (v2.1). Stop-listy własne.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 2.2.0
+  version: 2.4.0
   companion_skills: saos-orzecznictwo, szukaj-orzeczen-v2, eu-sparql-search, legal-ai-audit-bundle, adversarial-legal-review-pl, deliverable-fidelity-pl, legal-request-router-pl
 ---
 
@@ -202,13 +202,34 @@ Częściowa zgodność (`0.30–0.50`) → 🟡 miękka uwaga. Stop-lista odsiew
 ## Reguły normalizacji (co robi skrypt)
 
 Aby uniknąć fałszywych 🔴 z powodu kosmetyki, przed porównaniem skrypt:
-- sprowadza do lowercase, zwija białe znaki, ujednolica cudzysłowy (`„` `"` `»` → `"`) i myślniki (`—` `–` → `-`)
-- usuwa myślniki przenoszenia (`praw-\nnik` → `prawnik`)
+- składa wejście do NFC (źródło zapisane w NFD porównuje się jak zapisane w NFC)
+- sprowadza do lowercase (`ß`/`ẞ` → `ss`, odpowiednik `casefold` Pythona), zwija białe znaki
+- ujednolica **wszystkie** cudzysłowy (`„` `"` `»` `‹` `‚` `'` `´` → `"`) i **całą rodzinę kresek**
+  (`‐` `‑` `‒` `–` `—` `―` `−` `⁃` `－` → `-`), rozwija wielokropek `…` → `...`
+- usuwa znaki niewidzialne w PDF, a obecne w warstwie tekstowej: miękki dywiz `U+00AD`,
+  zerowa szerokość `U+200B`/`U+200C`/`U+200D`, BOM, word joiner
+- usuwa myślniki przenoszenia (`praw-\nnik` → `prawnik`), **miękki dywiz na łamaniu też**
+  (renderuje się wyłącznie tam, więc tam znaczy przeniesienie)
 - traktuje `[...]` / `...` w cytacie jako dozwoloną lukę
 - przy kotwicy: rozwija skróty organów, normalizuje formaty dat, porównuje sygnatury bez kropek
 - przy TREŚCI: wyciąga terminy nośne (≥4 znaki, bez stopwords), liczy pokrycie w źródle (próg 0.7)
 
 Normalizacja NIE zmienia treści merytorycznej - jeśli słowo nośne jest inne, to nadal 🔴.
+
+### Reguła normalizacji ma JEDEN DOM (od 2026-08-30)
+
+Tablica prawdy: `contract/normalizacja.cases.json` w skillu `doc-intel-contract-pl`
+(w tym repo: `dokumenty/skills/doc-intel-contract-pl/`).
+Czytają ją **oba** runtime'y - ten skrypt (Node) i `evidence.py` (Python) po stronie
+`doc-intel-contract-pl`. Zgodność jest bramkowana w obu zestawach testów; zmiana samej
+tablicy zapala oba naraz (sprawdzone mutacją).
+
+Dlaczego to powstało: do 08-30 każda strona miała własną implementację tej samej reguły.
+Tutejsza gubiła **sześć z ośmiu** mierzonych znaków, które polski PDF wstawia naprawdę -
+`U+2011` w sygnaturach akt, `U+00AD` w justowanych akapitach, `U+2212`, `U+200B`, `U+2026`
+oraz wejście w NFD. Skutek był groźniejszy niż przeoczenie: na poziomie **FRAGMENT** skrypt
+orzekał „cytatu nie ma w źródle" o cytacie, który tam był - czyli stawiał zarzut halucynacji,
+którego przyczyną był błąd normalizacji. Ten sam fakt w dwóch domach rozjeżdża się po cichu.
 
 ## Raport (dla użytkownika)
 

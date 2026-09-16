@@ -22,7 +22,7 @@ Dwie pulapki API, zmierzone 2026-08-08 (uwaga przy aktualizacji biblioteki):
 
 Wymiary strony: biblioteka ich NIE wystawia (luka upstream - kandydat na PR).
 Czytamy `/MediaBox` ze zrodla; w PDF-ach ze skompresowanymi strumieniami obiektow
-bywa nieczytelny (zmierzone: 1 z 3 plikow WM). Wtedy `page_size` = null, a adapter
+bywa nieczytelny (zmierzone na realnych plikach). Wtedy `page_size` = null, a adapter
 zgodnie z konwencja skillu daje `bbox=None` + flage - nigdy zgadywanych liczb.
 
 Uzycie:

@@ -41,7 +41,7 @@ ani pieczątki, a bez nich nie ma redakcji RODO.
 ## Użycie
 
 ```bash
-cd ~/.claude/skills/doc-intel-contract-pl
+cd doc-intel-contract-pl   # katalog tego skilla
 
 # krok 0: bramka routingu - czy dokument w ogole da sie przeczytac i czym
 python scripts/routing_gate.py AKTA.pdf --pretty        # exit 0=ok 10=degraded 20=failed

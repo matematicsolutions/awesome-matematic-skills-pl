@@ -6,6 +6,31 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.09.16c] - 2026-09-16
+
+### Added
+
+- `doc-intel-contract-pl` 0.4.0 - modul dowodow (`evidence.py`), kontrakt 1.2.0, wspolny plik
+  przypadkow normalizacji myslnikow i cudzyslowow (`normalizacja.cases.json`), dane testowe
+  wylacznie syntetyczne. Atrybucja wzorca docling-graph.
+- `citation-grounding-pl` 2.4.0 - `references/` i test normalizacji na wspolnym pliku
+  przypadkow z `doc-intel-contract-pl`.
+- `redline-docx-pl` - Krok 0 (sprawdzenie oryginalu) i weryfikacja wynikowych `w:ins`/`w:del`.
+- `matematic-marketplace-installer` - krok `skills-lock.json` (`scripts/write-skills-lock.ps1`).
+- README: wiersze `doc-intel-contract-pl`, `doc-intel-llm-tier-pl` i `waliduj-podpis-pdf-pl`
+  z plakietkami; licznik 45 umiejetnosci.
+- Pluginy: `fundament-weryfikacyjny` 1.3.0, `dokumenty` 1.7.0, `dev-mcp` 1.1.0.
+
+### Fixed
+
+- `matematic-marketplace-installer` - szablon `.bat` szukal skilli w `skills\<slug>` w korzeniu
+  archiwum, a hub trzyma je w `<plugin>\skills\<slug>`; instalator pomijal wszystkie skille.
+  Petla przeszukuje teraz pakiety, manifest zapisuje sciezke z pluginem.
+- `matematic-mcp-fastmcp-instructions-pl`, `matematic-spec-driven` - odeslania do notatek
+  spoza repo zastapione opisem.
+- README: `citation-grounding-pl` podawal wersje 1.0.0. AGENTS.md opisywal stary uklad
+  `./skills/` z 14 skillami.
+
 ## [2026.09.16b] - 2026-09-16
 
 ### Added

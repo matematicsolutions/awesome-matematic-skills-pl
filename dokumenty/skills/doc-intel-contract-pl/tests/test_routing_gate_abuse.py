@@ -5,7 +5,7 @@ limit musi miec fixture, ktora go WYWOLUJE, inaczej limit jest deklaracja, nie
 zabezpieczeniem (regula: "regula bez bramki nie trzyma" - tu w wersji "limit bez
 fixtury nie trzyma").
 
-Fixtury sa generowane w pamieci - zadnych zlosliwych plikow na dysku WM.
+Fixtury sa generowane w pamieci - zadnych zlosliwych plikow na dysku.
 Kazdy test sprawdza JEDEN limit i oczekuje `failed` + nazwy limitu, bo tylko
 nazwany limit da sie pozniej dyskutowac i podniesc.
 """

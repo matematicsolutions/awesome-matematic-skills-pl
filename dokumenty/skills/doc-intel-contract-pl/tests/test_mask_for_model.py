@@ -46,6 +46,20 @@ class MaskaDlugosc(unittest.TestCase):
         self.assertEqual(kat, {"email", "nip", "dowod"})
         self.assertNotIn("kancelaria", w.tekst)
 
+    def test_lex_sygnatura_natura2000_nie_maskowane(self):
+        # znane-zle z pilotu anonimizacji 2026-08-31 - ksztalt serii dowodu, ale nie PII
+        t = "LEX 100002, sygn. akt III CRN 100001, obszar PLH999991"
+        w = M.maskuj(t)
+        self.assertEqual(w.tekst, t)
+        self.assertEqual(w.liczba, 0)
+
+    def test_dowod_obok_sygnatury_maskowany(self):
+        t = "w sprawie III CRN 100001 okazano dowod CBF 445566"
+        w = M.maskuj(t)
+        self.assertEqual([z["kategoria"] for z in w.zamaskowane], ["dowod"])
+        self.assertIn("III CRN 100001", w.tekst)
+        self.assertNotIn("CBF", w.tekst)
+
     def test_klucz_api_i_bearer_i_przypisanie(self):
         t = ('Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.abc.def\n'
              'API_KEY = "sk-live-9f2b71ce4a0011"\n'

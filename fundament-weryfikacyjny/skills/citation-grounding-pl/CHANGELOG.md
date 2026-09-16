@@ -2,6 +2,30 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/), wersjonowanie [SemVer](https://semver.org/).
 
+## [2.4.0] - 2026-08-30
+
+### Fixed
+- **Normalizacja gubiła sześć z ośmiu mierzonych znaków polskiego PDF-a.** `normalize()`
+  znał tylko `—` i `–`, więc przez sito przechodziły: dywiz nielamliwy `U+2011` (sygnatury
+  akt: `II‑CSK 118/24`), miękki dywiz `U+00AD` (wnętrze słów w justowanym akapicie), minus
+  `U+2212`, zerowa szerokość `U+200B`, wielokropek `U+2026` oraz wejście zapisane w NFD.
+  Skutek był groźniejszy niż przeoczenie: na poziomie **FRAGMENT** skrypt orzekał
+  „cytatu nie ma w źródle" o cytacie, który tam był - czyli **stawiał zarzut halucynacji,
+  którego przyczyną był własny błąd normalizacji**. Zmierzone sondą przed poprawką.
+
+### Added
+- **Jeden dom reguły normalizacji.** Tablica prawdy
+  `doc-intel-contract-pl/contract/normalizacja.cases.json` (38 przypadków) jest teraz
+  jedynym źródłem reguły; ten skrypt i `evidence.py` po stronie Pythona są jej
+  czytelnikami, nie dwiema niezależnymi implementacjami. Bramka konformancji w
+  `test-grounding.mjs` (oraz `test_normalizacja_kontrakt.py` po stronie Pythona) mierzy
+  zgodność przy każdym przebiegu. Sprawdzone sześcioma mutacjami - rozjazd po dowolnej
+  stronie, a także zmiana samej tablicy, zapala testy.
+- `normalize` wystawiony w eksportach modułu - reguła bez sposobu zmierzenia nie trzyma.
+- NFC, `ß`/`ẞ` → `ss` (odpowiednik `casefold` Pythona - nazwiska i adresy w aktach),
+  pełna rodzina kresek `U+2010..U+2015`/`U+2212`/`U+2043`/`U+FF0D`, kasowanie znaków
+  niewidzialnych, miękki dywiz na łamaniu traktowany jako przeniesienie wyrazu.
+
 ## [2.3.0] - 2026-07-13
 
 ### Added

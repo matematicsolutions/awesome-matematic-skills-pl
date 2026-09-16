@@ -54,8 +54,8 @@ Cala praca lokalnie (uvx, brak chmury). Silnik testowany na polskim .docx 2026-0
 > (do 3.0.0 z 2026-08-22) jest **nieosiagalne dla `uvx` bez `--prerelease=allow`**.
 > Gole `uvx adeu` nie wybuchalo: cicho rozwiazywalo do 1.30.0 i konczylo exit 0, a
 > SKILL.md deklarowal 1.7.5 - trzy rozne wersje w jednym skillu, zero sygnalu.
-> To ten sam mechanizm co [[feedback_cicha_niekompletnosc_trzy_mechanizmy]] i ta sama
-> regula pinu co przy `@firecrawl/anydoc` w CLAUDE.md.
+> To klasa cichej awarii - narzedzie konczy sie sukcesem, a uruchamia co innego, niz
+> deklaruje dokumentacja. Ta sama regula pinu obowiazuje przy `@firecrawl/anydoc`.
 >
 > **Podniesienie pinu = swiadoma decyzja**, nie efekt uboczny - i dzis oznacza wejscie
 > na bete FastMCP 4. Nie robimy tego przed freezem PATRON 2.0.0.
@@ -74,7 +74,35 @@ Przed wykonaniem każdej operacji ustal tier i zastosuj regułę:
 
 ---
 
-## Workflow (4 kroki)
+## Workflow (5 krokow)
+
+### 0. Zdobadz ORYGINAL (nie rekonstruuj z PDF)
+
+Redline pokazuje **roznice miedzy baza a wersja docelowa**. Baza musi byc plikiem
+edytowalnym **od kontrahenta**. Rekonstrukcja z PDF (pdftotext -> pandoc -> docx)
+wstrzykuje artefakty konwersji - podwojne spacje, inne lamanie akapitow, zgubione
+pogrubienia - ktore w Wordzie wygladaja identycznie jak nasze propozycje
+merytoryczne. Kontrahent nie odrozni jednych od drugich, a "akceptuj wszystkie"
+wciaga nasze artefakty do tresci umowy.
+
+**Masz tylko PDF? Popros o wersje edytowalna.** Jesli naprawde nie da sie jej
+zdobyc - dostarcz liste zmian jako osobne pismo z odeslaniami `§ ust. lit.`,
+NIE jako track changes na podrobionej bazie.
+
+`.odt` / `.doc` -> `.docx` (adeu czyta tylko `.docx`):
+
+```bash
+soffice --headless --convert-to docx --outdir KATALOG PLIK.odt
+```
+
+Windows: `"/c/Program Files/LibreOffice/program/soffice.exe"`. Pandoc do tej
+konwersji **nie nadaje sie** - gubi formatowanie oryginalu, czyli wprowadza ten
+sam szum co rekonstrukcja. Bramka routingu `doc-intel-contract-pl` kieruje `.odt`
+na szczebel `1.5/anydoc`, ale anydoc daje markdown - do redline ta sciezka nie
+prowadzi.
+
+Lekcja z praktyki: redline na bazie zrekonstruowanej z PDF daje w Wordzie szum
+konwersji nieodroznialny od propozycji merytorycznych.
 
 ### 1. Czytaj - .docx do Markdown dla LLM
 
@@ -174,6 +202,21 @@ uvx --from adeu==1.30.0 adeu apply umowa.docx edits.json -o umowa_redline.docx -
 Daje `umowa_redline.docx` ze sledzonymi zmianami i komentarzami. Bez `--author`
 adeu wpisuje nazwe konta systemowego biezacego uzytkownika - **zawsze podawaj
 `--author` jawnie**, zeby nie wyciekla nazwa konta do dokumentu.
+
+**Zweryfikuj strukture niezaleznie od komunikatu narzedzia** - exit 0 i "applied"
+przy kazdej pozycji nie dowodza, ze Word pokaze zmiany jako sledzone:
+
+```bash
+python -c "
+import zipfile,re
+x=zipfile.ZipFile('umowa_redline.docx').read('word/document.xml').decode('utf-8')
+print('w:ins',len(re.findall(r'<w:ins ',x)),'| w:del',len(re.findall(r'<w:del ',x)),'| w:delText',len(re.findall(r'<w:delText',x)))
+"
+```
+
+Usuniety tekst musi siedziec w `w:delText`, nie w `w:t`. Zero `w:ins` przy
+"applied" w logu = zmiany poszly poza mechanizm track changes (tak zachowywal sie
+drugi silnik, patrz sekcja o genoffice nizej).
 
 ### 3a. Skan placeholderow - bramka "czy draft nie wychodzi z dziurami"
 

@@ -2,54 +2,207 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Document Intelligence Output Contract",
   "type": "object",
-  "required": ["doc_id", "contract_version", "source", "blocks", "gating", "meta"],
+  "required": [
+    "doc_id",
+    "contract_version",
+    "source",
+    "blocks",
+    "gating",
+    "meta"
+  ],
   "properties": {
-    "doc_id": { "type": "string" },
-    "contract_version": { "type": "string" },
+    "doc_id": {
+      "type": "string"
+    },
+    "contract_version": {
+      "type": "string"
+    },
     "source": {
       "type": "object",
-      "required": ["engine"],
+      "required": [
+        "engine"
+      ],
       "properties": {
-        "path": { "type": ["string", "null"] },
-        "engine": { "type": "string", "enum": ["opendataloader", "pdftotext", "chandra", "gaius", "vlm-html", "pdf-inspector"] },
-        "engine_variant": { "type": ["string", "null"] },
-        "pages": { "type": ["integer", "null"] }
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "engine": {
+          "type": "string",
+          "enum": [
+            "opendataloader",
+            "pdftotext",
+            "chandra",
+            "gaius",
+            "vlm-html",
+            "pdf-inspector"
+          ]
+        },
+        "engine_variant": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pages": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
       }
     },
     "blocks": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "page", "bbox", "block_type", "text", "confidence", "flags"],
+        "required": [
+          "id",
+          "page",
+          "bbox",
+          "block_type",
+          "text",
+          "confidence",
+          "flags"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "page": { "type": "integer" },
-          "bbox": { "type": ["array", "null"], "items": { "type": "number" } },
+          "id": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "bbox": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "number"
+            }
+          },
           "block_type": {
             "type": "string",
-            "enum": ["title", "paragraph", "table", "list", "equation", "signature", "stamp", "figure", "header", "footer", "unknown"]
+            "enum": [
+              "title",
+              "paragraph",
+              "table",
+              "list",
+              "equation",
+              "signature",
+              "stamp",
+              "figure",
+              "header",
+              "footer",
+              "unknown"
+            ]
           },
-          "text": { "type": "string" },
-          "confidence": { "type": ["number", "null"] },
-          "flags": { "type": "array", "items": { "type": "string" } }
+          "text": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         }
       }
     },
     "gating": {
       "type": "object",
-      "required": ["threshold", "review_required", "auto_approved"],
+      "required": [
+        "threshold",
+        "review_required",
+        "auto_approved",
+        "ungroundable",
+        "verdict",
+        "counts"
+      ],
       "properties": {
-        "threshold": { "type": "number" },
-        "review_required": { "type": "array", "items": { "type": "string" } },
-        "auto_approved": { "type": "array", "items": { "type": "string" } }
+        "threshold": {
+          "type": "number"
+        },
+        "review_required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "auto_approved": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ungroundable": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "bloki bez bbox - nie da sie ich wskazac w dokumencie"
+        },
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "degraded",
+            "failed"
+          ],
+          "description": "trojstan zgodny z routing_gate.py (0/10/20)"
+        },
+        "note": {
+          "type": "string"
+        },
+        "counts": {
+          "type": "object",
+          "required": [
+            "total",
+            "review_required",
+            "auto_approved",
+            "ungroundable"
+          ],
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "review_required": {
+              "type": "integer"
+            },
+            "auto_approved": {
+              "type": "integer"
+            },
+            "ungroundable": {
+              "type": "integer"
+            }
+          },
+          "description": "pelny mianownik - udzial, nie sama liczba"
+        }
       }
     },
-    "redaction_candidates": { "type": "array", "items": { "type": "string" } },
+    "redaction_candidates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "meta": {
       "type": "object",
-      "required": ["created_at"],
+      "required": [
+        "created_at"
+      ],
       "properties": {
-        "created_at": { "type": "string" }
+        "created_at": {
+          "type": "string"
+        }
       }
     }
   }

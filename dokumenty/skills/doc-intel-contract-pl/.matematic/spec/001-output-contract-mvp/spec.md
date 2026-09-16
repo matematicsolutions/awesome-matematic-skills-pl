@@ -46,7 +46,7 @@ oraz `pii_suspected` **zeby** przygotowac liste do redakcji.
 **zeby** grounding wskazywal region, nie tylko string.
 
 **Acceptance Criteria:**
-- [ ] AC3.1: Eksport kontraktu do formatu wejsciowego [[citation-grounding-pl]].
+- [ ] AC3.1: Eksport kontraktu do formatu wejsciowego `citation-grounding-pl`.
 - [ ] AC3.2: Detekcja podpisu/pieczatki: opcjonalny rung-5 (Read/vision) na blokach niskiej pewnosci, jawnie oznaczony `detector: vision` w metadanych.
 
 ## Non-Goals

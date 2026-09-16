@@ -18,7 +18,7 @@ metadata:
 
 # MateMatic Spec-Driven - dev pipeline dla naszych projektow
 
-Spec-Driven Development dla **wewnetrznych** projektow MateMatic. NIE produkt sprzedazowy dla kancelarii (tym jest [[matematic-konstytucja-ai]]). Tutaj: my, dla siebie, do PATRON / KGLF / POAS / skilli / mikroproduktow / aplikacji / serialu.
+Spec-Driven Development dla **wewnetrznych** projektow MateMatic. NIE produkt sprzedazowy dla kancelarii (tym jest `matematic-konstytucja-ai`). Tutaj: my, dla siebie, do PATRON / KGLF / POAS / skilli / mikroproduktow / aplikacji / serialu.
 
 **Source pattern:** github/spec-kit (MIT) v0.8.12 - 4-fazowa methodology Constitution -> Specify -> Plan -> Tasks z marker `[P]` i Constitution Check GATE. Cherry-pick wybranych elementow + adaptacja pod MateMatic project types.
 
@@ -36,10 +36,10 @@ Spec-Driven Development dla **wewnetrznych** projektow MateMatic. NIE produkt sp
 - Audyt istniejacego projektu - czy ma konstytucje? czy ficzer zgadza sie z konstytucja?
 
 ❌ **NIE:**
-- Sprzedaz kancelarii (uzyj [[matematic-konstytucja-ai]])
-- Krotki post LI / aktualnosc BW (uzyj [[edit-article]] albo [[linkedin-voice-wieslaw-mazur]])
+- Sprzedaz kancelarii (uzyj `matematic-konstytucja-ai`)
+- Krotki post LI / aktualnosc BW (uzyj skilla redakcyjnego albo skilla glosu autora na LinkedIn)
 - Pojedynczy bugfix / refactor w juz dzialajacym module
-- MEMO Ej Aj (uzyj [[memo-production-pipeline]])
+- MEMO Ej Aj (uzyj wlasnego pipeline'u produkcji odcinka)
 
 ---
 
@@ -77,8 +77,7 @@ mechanicznie, nie tylko deklaratywnie - wklej i dostosuj gdy pasuje do projektu)
   zewnetrznego protokolu, schematu lub API (np. ELI, wzorzec ADR z dograh, logika
   scrapowania ISAP) MUST miec wlasny ADR dokumentujacy punkt pinowania + cykliczny
   recheck upstream drift." Formalizuje problem ktory juz mielismy nieformalnie -
-  patrz [[feedback_kod_wyprzedza_dokumentacje_drift]] i
-  [[feedback_errata_propagacja_z_rodzica_adr]].
+  bo kod wyprzedza dokumentacje, a errata z ADR-rodzica musi przejsc do ADR-dzieci.
 
 ## Boundaries (granice)
 - Co projekt **robi**
@@ -98,7 +97,7 @@ mechanicznie, nie tylko deklaratywnie - wklej i dostosuj gdy pasuje do projektu)
 **Version:** 0.1.0 | **Ratified:** YYYY-MM-DD | **Last Amended:** YYYY-MM-DD
 ```
 
-**Bramki MateMatic** (zawsze pytaj zanim ratifikujesz konstytucje, per [[feedback_discovery_nie_rekomendacja]]):
+**Bramki MateMatic** (zawsze pytaj zanim ratifikujesz konstytucje - znalezisko nie jest rekomendacja):
 
 1. **Licencja** - jaka licencja projektu? Czy zgadza sie z licencjami zaleznosci?
 2. **ToS / anty-OS** - czy projekt nie omija ToS dostawcow? Czy nie jest brand-toxic?
@@ -278,7 +277,7 @@ Format: `[ID] [P?] [Story] Description`
 
 **Wazne dla MateMatic:**
 
-- Markery `[P]` w `tasks.md` to formalny input dla [[reference_matematic_video_pipeline]] orkiestratora - mowi orchestratorowi ktore subagenty palic rownolegle (zamiast manualnie projektowac graf questow).
+- Markery `[P]` w `tasks.md` to formalny input dla orkiestratora pipeline'u wideo - mowi orchestratorowi ktore subagenty palic rownolegle (zamiast manualnie projektowac graf questow).
 - `US1` jako MVP = zawsze pierwsza ratowalna wartosc, nawet jesli reszta poslizgnie sie.
 - Phase 2 (Foundational) BLOKUJE - to bardzo wazne, nie pomijac, inaczej downstream taski sie sypia (jak w PATRON gdzie wpierw brakowalo Supabase self-host).
 
@@ -373,11 +372,11 @@ tego w `notes/`.
 
 ## Czego ten skill NIE robi
 
-- NIE instaluje specify-cli (to faza B, juz zrobiona w sandboxie - [[reference_spec_kit_install_2026-05-20]]).
+- NIE instaluje specify-cli (to faza B, juz zrobiona w sandboxie).
 - NIE generuje plikow automatycznie - Claude (ty) piszesz `konstytucja.md`/`spec.md`/`plan.md`/`tasks.md` na podstawie templates w tej instrukcji, w rozmowie z Wieslawem.
 - NIE wymaga `.claude/skills/speckit-*` w projekcie - to skill samowystarczalny.
-- NIE zastapuje [[matematic-konstytucja-ai]] - tamten = sprzedaz, ten = wewnetrzny dev.
-- NIE zastapuje [[reference_matematic_video_pipeline]] - tamten = orkiestracja runtime, ten = projekt artefaktow planu. Wspolpraca: `tasks.md` z `[P]` jest INPUTEM dla pipeline'a.
+- NIE zastapuje `matematic-konstytucja-ai` - tamten = sprzedaz, ten = wewnetrzny dev.
+- NIE zastapuje pipeline'u wideo - tamten = orkiestracja runtime, ten = projekt artefaktow planu. Wspolpraca: `tasks.md` z `[P]` jest INPUTEM dla pipeline'a.
 
 ---
 
@@ -385,18 +384,18 @@ tego w `notes/`.
 
 | Skill / proces | Jak wspolpracuje |
 |---|---|
-| [[matematic-konstytucja-ai]] | Brat-blizniak (produkt klient vs dev nasz). Wspolny rdzen, inny target audience. |
-| [[reference_matematic_video_pipeline]] | `tasks.md` -> graf questow orchestratora. `[P]` markery -> fan-out subagentow. |
-| [[matematic-video-governance]] | 4 fazy validation (pre-compose / render / post / distribution) wbudowane w `/mspec-analyze` dla projektow video-pipeline. |
-| [[marko-pl-content]] | Auto-dorzucany jako reviewer w `## Governance` konstytucji projektow tresciowych. |
-| [[anthropic-skills:matematic-reviewer]] | Auto-dorzucany dla projektow kodowych (PATRON / KGLF / POAS). |
-| [[reference_kglf_lokalizacja]] | KGLF jako Reference Implementation - juz ma ADR-y, jest dobrym kandydatem na pierwszy projekt z `.matematic/konstytucja.md` (rozszerzajacy ADR-y SEMVER konstytucja). |
+| `matematic-konstytucja-ai` | Brat-blizniak (produkt klient vs dev nasz). Wspolny rdzen, inny target audience. |
+| pipeline wideo | `tasks.md` -> graf questow orchestratora. `[P]` markery -> fan-out subagentow. |
+| governance pipeline'u wideo | 4 fazy validation (pre-compose / render / post / distribution) wbudowane w `/mspec-analyze` dla projektow video-pipeline. |
+| `marko-pl-content` | Auto-dorzucany jako reviewer w `## Governance` konstytucji projektow tresciowych. |
+| recenzent kodu | Auto-dorzucany dla projektow kodowych (PATRON / KGLF / POAS). |
+| KGLF | KGLF jako Reference Implementation - juz ma ADR-y, jest dobrym kandydatem na pierwszy projekt z `.matematic/konstytucja.md` (rozszerzajacy ADR-y SEMVER konstytucja). |
 
 ---
 
 ## Pierwsze 2 walidacje w boju (rekomendacja)
 
-1. **Nowy konektor SAOS w PATRON** ([[session_summary_2026-05-19_patron]]) - czysty greenfield, dobry test dla `/mspec-spec` + `/mspec-plan` z project type `mcp-server`.
+1. **Nowy konektor SAOS w PATRON** - czysty greenfield, dobry test dla `/mspec-spec` + `/mspec-plan` z project type `mcp-server`.
 2. **Biblioteka EPUB v3** (jesli planujemy 3-ci tom) - prosta domena, test dla project type `MateMatic-mikroprodukt`.
 
 NIE testowac na PATRON core ani KGLF (oba juz maja ADR-y, ryzyko podwojnego trackingu).

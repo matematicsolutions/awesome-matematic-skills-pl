@@ -125,7 +125,7 @@ def check_pdf(path: str) -> dict:
     if usable == 0:
         # Pelny skan. Na tej maszynie brak GPU -> to jest decyzja czlowieka.
         return _verdict(path, "pdf", STATUS_FAILED, reasons, RUNG_OCR,
-                        "pelny skan: warstwy tekstowej NIE MA. Chandra wymaga GPU - eskalacja do WM",
+                        "pelny skan: warstwy tekstowej NIE MA. Chandra wymaga GPU - eskalacja do operatora",
                         total, usable, conf)
 
     if need_ocr:

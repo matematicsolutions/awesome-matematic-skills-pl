@@ -1,7 +1,7 @@
 """Testy regresyjne kontraktu Document Intelligence (US1 MVP).
 
 Uruchom:
-  cd ~/.claude/skills/doc-intel-contract-pl
+  cd doc-intel-contract-pl   # katalog tego skilla
   python -m unittest discover -s tests -v
 """
 import json

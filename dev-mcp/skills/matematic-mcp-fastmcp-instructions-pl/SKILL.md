@@ -303,7 +303,7 @@ def test_pobierz_nieznana_sygnature_daje_not_found(provider): ...
 Co to daje floty: podmiana `saos_live` na `saos_cache` w `cordis.yml`/konfigu przesuwa
 za jednym ruchem wszystkie toole, ktore z tej zdolnosci korzystaja. „PATRON na SQLite" i
 „PATRON na Postgres" staja sie podmiana dostawcy, nie forkiem. A dostawca-fixture daje testy
-konektora bez sieci i bez bana na zrodle ([[feedback_bulk_harvest_asymetria_ryzyka_tempa]]).
+konektora bez sieci i bez bana na zrodle (asymetria ryzyka: przyspieszanie pobierania kosztuje ban na zrodle, zwolnienie kosztuje tylko czas).
 
 Anty-wzorzec, ktory to unaocznia: dwa toole MCP z wlasnym klientem HTTP do tego samego
 zrodla, kazdy z innym retry, innym throttlem i innym formatem bledu. To sa dwa dostawcy bez
@@ -325,7 +325,7 @@ i czego w niej NIE MA.** Nazwa: `coverage` (EN) / `pokrycie_bazy` (PL). Read-onl
 To wiedza **bierna**: model musi ja przeczytac i zechciec przekazac. Agent nie ma jak
 **zapytac**. Gdy tego nie zrobi, konektor odpowiada pewnie na pytanie o prawo krajowe
 landu i konczy exit 0 - czyli dokladnie
-[[feedback_cicha_niekompletnosc_trzy_mechanizmy]]: najgrozniejsza awaria konczy sie sukcesem.
+Zasada cichej niekompletnosci: najgrozniejsza awaria konczy sie sukcesem.
 Element 9 zamienia wiedze bierna w **wywolywalna**.
 
 **Kontrakt odpowiedzi** - trzy czesci, zadnej nie wolno pominac:
@@ -371,7 +371,7 @@ def test_coverage_gaps_never_silently_empty():
 ```
 
 Pusta `known_gaps` przechodzilaby zawsze i wygladala na czysty wynik - to
-[[feedback_bramka_z_pusta_lista_przechodzi_zawsze]]. Dlatego pusta lista = czerwone,
+Bramka z pusta lista przechodzi zawsze. Dlatego pusta lista = czerwone,
 nie zielone.
 
 **Dwie rzeczy, ktore ten element ma ODZIEDZICZYC po reszcie konektora** (obie zlapane
@@ -381,7 +381,7 @@ pomiarem po rolloucie 2026-08-24, nie przy czytaniu diffa):
    mowia wprost: „every tool call appends to the audit log". Wypuszczenie toola bez
    wpisu do dziennika **czyni to zdanie falszywym** - i to na 38 konektorach naraz.
    Nie jest to niespojnosc kosmetyczna, tylko obietnica bez pokrycia
-   [[feedback_deklaracja_o_architekturze_falszywa_o_demo]]. Do tego bramka, ktora
+   deklaracja o architekturze bywa prawdziwa, a o konkretnym przebiegu falszywa. Do tego bramka, ktora
    sprawdza, ze wpis **realnie laduje na dysku** (przekieruj katalog audytu zmienna
    srodowiskowa na `tmp_path` i policz linie), a nie ze w kodzie stoi wywolanie.
 
@@ -397,7 +397,7 @@ pomiarem po rolloucie 2026-08-24, nie przy czytaniu diffa):
    produkuje falszywe alarmy na instrukcjach z przykladem wywolania.
 
 **Dlaczego to jest nasza sprawa, a nie ciekawostka.** Slogan kanonu brzmi
-[[feedback_slogan_ai_ktora_wie]] - „AI, ktora wie, czego nie wie". Element 9 jest jedynym
+Haslo MateMatic - „AI, ktora wie, czego nie wie". Element 9 jest jedynym
 miejscem we flocie, gdzie to zdanie staje sie **funkcja**, a nie haslem na stronie.
 Konektor bez niego moze byc technicznie poprawny i jednoczesnie sprzedawac obietnice,
 ktorej nie realizuje.
@@ -415,7 +415,7 @@ kanonie - drift test, trojstan, kontrakt `coverage`, asercja audytu - chronila
 wylacznie laptopa autora. Otagowany zepsuty commit szedl prosto do uzytkownikow,
 a zepsuty commit bez tagu lezal na main, dopoki ktos nie wydal.
 
-To jest [[feedback_regula_bez_bramki_nie_trzyma]] o pietro wyzej: **bramka bez CI
+To jest zasada „regula bez bramki nie trzyma” o pietro wyzej: **bramka bez CI
 jest regula bez bramki**.
 
 Kazde repo konektora ma miec dwa wyzwalacze:

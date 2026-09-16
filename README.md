@@ -17,7 +17,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w bundlach zachowuja wlasne licencje 
 
 ## Co tu znajdziesz
 
-1. **Bundle domenowe instalowane jedna komenda** - 42 umiejetnosci spietych w 8 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, multi-jurysdykcja UE). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
+1. **Bundle domenowe instalowane jedna komenda** - 45 umiejetnosci spietych w 8 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, multi-jurysdykcja UE). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -59,7 +59,7 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 42 umiejetnosci w 8 bundlach
+## Pakiet - 45 umiejetnosci w 8 bundlach
 
 Wszystkie umiejetnosci sa spiete w pluginy domenowe - instalujesz jedna komenda. Zadna nie lezy juz pojedynczo w `./skills/`.
 
@@ -71,7 +71,7 @@ Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, bez wlasnych p
 |---|---|---|---|
 | [<img src="./assets/badge-legal-request-router-pl.svg" alt="Legal Request Router" width="200" height="60">](./fundament-weryfikacyjny/skills/legal-request-router-pl) | Klasyfikator zadania - decyduje, ktora sciezka weryfikacji uruchomic. Warstwa NAD walidacja. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-intake-sufficiency-pl.svg" alt="Intake Sufficiency" width="200" height="60">](./fundament-weryfikacyjny/skills/intake-sufficiency-pl) | Ocena czy zlecenie/brief MA dosc kontekstu, by zaczac. Generuje pytania do klienta. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-citation-grounding-pl.svg" alt="Citation Grounding" width="200" height="60">](./fundament-weryfikacyjny/skills/citation-grounding-pl) | Mechaniczny weryfikator cytatu - string-match cytatu prawnego w zrodle. Anti-halucynacja. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-citation-grounding-pl.svg" alt="Citation Grounding" width="200" height="60">](./fundament-weryfikacyjny/skills/citation-grounding-pl) | Mechaniczny weryfikator cytatu - string-match cytatu prawnego w zrodle. Anti-halucynacja. | Apache-2.0 | 2.4.0 |
 | [<img src="./assets/badge-adversarial-legal-review-pl.svg" alt="Adversarial Review" width="200" height="60">](./fundament-weryfikacyjny/skills/adversarial-legal-review-pl) | Czerwony zespol dla pisma wysokiej stawki - builder/attacker/synthesizer/verifier. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-deliverable-fidelity-pl.svg" alt="Deliverable Fidelity" width="200" height="60">](./fundament-weryfikacyjny/skills/deliverable-fidelity-pl) | Czy zadna flaga RED nie wypadla z podsumowania - sprawdza wiernosc finalnego pisma do analizy. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-legal-ai-audit-bundle.svg" alt="AI Audit Bundle" width="200" height="60">](./fundament-weryfikacyjny/skills/legal-ai-audit-bundle) | Artefakt audytowy AI Act art. 12 - deliverable + slad + log kosztu + manifest SHA256. | Apache-2.0 | 1.0.0 |
@@ -109,6 +109,9 @@ Operacje na dokumentach, bez konektorow. Instalacja: `/plugin install dokumenty@
 | [<img src="./assets/badge-terminy-procesowe-pl.svg" alt="Terminy procesowe" width="200" height="60">](./dokumenty/skills/terminy-procesowe-pl) | Metodyka terminow procesowych i materialnych (KC/KPC/KPA): pelne wyliczenie krok po kroku z podstawa kazdego kroku, fail-closed, karta terminu DO ZATWIERDZENIA przez pelnomocnika. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-klauzule-kontraktowe-pl.svg" alt="Klauzule Pod Lupa" width="200" height="60">](./dokumenty/skills/klauzule-kontraktowe-pl) | Lista kontrolna 41 kategorii klauzul umownych (taksonomia CUAD zlokalizowana PL/UE) dla jednej umowy - obecna/brak/ryzykowna, z kotwica do przepisu. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-kalkulatory-procesowe-pl.svg" alt="Kalkulatory procesowe" width="200" height="60">](./dokumenty/skills/kalkulatory-procesowe-pl) | Cztery kalkulatory procesu cywilnego (oplata sadowa UKSC, przedawnienie art. 117-125 KC, odsetki w trzech rezimach, WPS art. 19-26 KPC) z protokolem "pobierz zywe parametry przed obliczeniem" i wachta aktow bazowych w CI. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-doc-intel-contract-pl.svg" alt="Doc Intel Contract" width="200" height="60">](./dokumenty/skills/doc-intel-contract-pl) | Normalizuje wyjscie OCR/PDF (opendataloader-pdf, pdftotext, Chandra OCR) do jednego audytowalnego kontraktu {block_type, bbox, text, confidence}: confidence-gating z kolejka dla czlowieka, flagi PII pod redakcje, bbox do groundingu cytatu. Zero LLM, Python stdlib. | MIT | 0.4.0 |
+| [<img src="./assets/badge-doc-intel-llm-tier-pl.svg" alt="Doc Intel LLM Tier" width="200" height="60">](./dokumenty/skills/doc-intel-llm-tier-pl) | Ekstrakcja inferowanych konceptow z umowy, pisma lub wyroku (kara umowna, termin, sad wlasciwy, ryzyka) z zakotwiczeniem kazdego w zdaniu zrodlowym. Wrap na contextgem, domyslnie model lokalny. | MIT | 1.0.0 |
+| [<img src="./assets/badge-waliduj-podpis-pdf-pl.svg" alt="Waliduj Podpis PDF" width="200" height="60">](./dokumenty/skills/waliduj-podpis-pdf-pl) | Sprawdza podpis elektroniczny w przychodzacym PDF: czy plik zmieniono po podpisaniu, kto i kiedy podpisal, znacznik czasu, zakres podpisu. Lokalnie na pyHanko, bez sieci. | MIT | 0.1.0 |
 
 ### Plugin `governance-kancelarii` (governance AI dla kancelarii)
 
@@ -226,7 +229,7 @@ npx skills add matematicsolutions/awesome-matematic-skills-pl --skill citation-g
 /plugin install dev-mcp@matematic-skills-pl                      # narzedzia deweloperskie (advanced)
 ```
 
-Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 42 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
+Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 45 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
 
 ### C. Pojedynczy skill jako symlink do ~/.claude/skills/
 

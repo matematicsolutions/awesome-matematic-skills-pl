@@ -41,9 +41,9 @@ attribution:
       Zaleznosc opcjonalna (PyPI `pdf-inspector`, MIT) uzywana WYLACZNIE przez
       `scripts/routing_gate.py` do mechanicznej klasyfikacji skan-vs-tekst
       (classify_pdf: pdf_type, pages_needing_ocr, confidence 0-1). Sciezka
-      normalizacji pozostaje zero-dep stdlib. Zmierzone 2026-08-08 na aktach WM:
-      pelny skan 14/14 stron wykryty w 8 ms (pewnosc 0.95), 102-stronicowy PDF
-      tekstowy w 22 ms. Zamyka dziure szczebla 4 drabinki, gdzie decyzja
+      normalizacji pozostaje zero-dep stdlib. Zmierzone 2026-08-08 na realnych aktach:
+      pelny skan wykryty w milisekundach (pewnosc 0.95), wielostronicowy PDF
+      tekstowy w kilkudziesieciu ms. Zamyka dziure szczebla 4 drabinki, gdzie decyzja
       "czy to skan" byla dotad ocena oka ludzkiego.
   - source: firecrawl/anydoc
     url: https://github.com/firecrawl/anydoc
@@ -66,9 +66,18 @@ attribution:
       (rung-5): kazdy znak sekretu -> `*`, dlugosc i pozycje reszty identyczne, wiec
       offsety i bbox dalej pasuja do oryginalu. Idea z ich `secret_anonymizer.py`
       (maskowanie kluczy w kodzie); tu regexy PII PL z pii_flags i wlasne. Zero kodu.
+  - source: docling-project/docling-graph
+    url: https://github.com/docling-project/docling-graph
+    license: MIT
+    relationship: pattern-only
+    note: >
+      Warstwa dowodowa `evidence.py` (zasada "fail-empty, never fail-wrong",
+      proweniencja cytatu) oraz kotwica dokumentacji testem
+      (`tests/test_dokumentacja_zakotwiczona.py`, wzorzec ich
+      `tests/test_architecture_doc.py`). Wziete idee, nie zaleznosc; kod od zera.
 metadata:
   author: Wieslaw Mazur / MateMatic
-  version: 0.3.0
+  version: 0.4.0
   scope: warstwa normalizujaca stack OCR/PDF -> kontrakt wyjscia (zero-cloud)
   cost: zero LLM (deterministyczna normalizacja)
   license: MIT
@@ -84,23 +93,33 @@ kontraktu, ktory od razu odpowiada na trzy pytania:
 
 1. **Ktory fragment ma zobaczyc czlowiek?** - confidence-gating (Article III / AI Act art. 14).
 2. **Co zredagowac?** - typed blocks + flagi PII (signature/stamp/PESEL/NIP/IBAN).
-3. **Gdzie w dokumencie jest ten cytat?** - bbox + block_id -> most do [[citation-grounding-pl]].
+3. **Gdzie w dokumencie jest ten cytat?** - bbox + block_id -> most do `citation-grounding-pl`.
 
 Zamkniety jest MODEL Mistral OCR 4, nie idea. Odtwarzamy kontrakt na wlasnym,
-lokalnym, RODO-safe stacku. [[feedback_doktryna_skladanie_puzzli_nie_wynajdywanie_kola]]
+lokalnym, RODO-safe stacku - skladamy puzzle, nie wynajdujemy kola.
 
-## Kontrakt (v1.1.0)
+## Kontrakt (v1.2.0)
+
+Wersja zyje w stalej `contract.CONTRACT_VERSION`; ten naglowek i przyklad ponizej
+sa zakotwiczone testem `tests/test_dokumentacja_zakotwiczona.py` (D1).
 ```json
 {
   "doc_id": "<sha256 wejscia>",
-  "contract_version": "1.1.0",
-  "source": {"path": "...", "engine": "opendataloader|pdftotext|chandra|gaius|vlm-html", "engine_variant": "default|google_doc_ai|null", "pages": N},
+  "contract_version": "1.2.0",
+  "source": {"path": "...", "engine": "opendataloader|pdftotext|chandra|gaius|vlm-html|pdf-inspector", "engine_variant": "default|google_doc_ai|null", "pages": N},
   "blocks": [
     {"id": "b0001", "page": 1, "bbox": [x0,y0,x1,y1]|null,
      "block_type": "title|paragraph|table|list|equation|signature|stamp|figure|header|footer|unknown",
      "text": "...", "confidence": 0.0-1.0|null, "flags": ["partial","pii_suspected","pii:pesel","sensitive_block","signature_suspected",...]}
   ],
-  "gating": {"threshold": 0.85, "review_required": ["b0003"], "auto_approved": ["b0001"]},
+  "gating": {
+    "threshold": 0.85,
+    "review_required": ["b0003"], "auto_approved": ["b0001"],
+    "ungroundable": ["b0007"],
+    "verdict": "ok|degraded|failed",
+    "note": "...",
+    "counts": {"total": 11, "review_required": 1, "auto_approved": 10, "ungroundable": 0}
+  },
   "redaction_candidates": ["b0004"],
   "meta": {"created_at": "ISO-8601"}
 }
@@ -108,9 +127,79 @@ lokalnym, RODO-safe stacku. [[feedback_doktryna_skladanie_puzzli_nie_wynajdywani
 - `bbox` znormalizowany 0-1 (przenosny miedzy DPI). Silnik bez bbox -> `null` + flaga `partial`.
 - `confidence == null` (partial) -> **zawsze** do `review_required` (konserwatywnie; nie wiemy = czlowiek patrzy).
 
+### Gating jest DWUOSIOWY (od 1.2.0)
+
+Do 1.1.0 istniala jedna os - `confidence` silnika. To mieszalo dwa twierdzenia,
+ktore moga sie rozjechac:
+
+| os | pyta o | pole |
+|---|---|---|
+| PEWNOSC | czy silnik jest pewny odczytanych znakow | `review_required` / `auto_approved` |
+| UGRUNTOWANIE | czy blok da sie WSKAZAC w dokumencie (ma bbox) | `ungroundable` |
+
+Blok z `confidence: 0.99` i `bbox: null` jest pewny i **jednoczesnie niecytowalny**:
+nie da sie go podswietlic ani przypiac do strony. Wersja 1.1.0 wpisywala go do
+`auto_approved` i nikt sie nie dowiadywal.
+
+`verdict` jest trojstanowy, slownictwem i kodami wyjscia zgodny z `routing_gate.py`
+(`ok`/`degraded`/`failed` = `0`/`10`/`20`; stala `contract.GATING_EXIT`).
+**Zero blokow = `failed`, nigdy `ok`** - bramka, ktora przy pustym wejsciu mowi
+"nic do przegladu", przepuszcza dokument, ktorego nikt nie przeczytal.
+
+## Warstwa dowodowa cytatu (`scripts/evidence.py`, od 2026-08-30)
+
+Most do groundingu nie mowi juz "znalazlem / nie znalazlem". Kazdy cytat dostaje
+dowod o **dwoch ortogonalnych osiach** plus pelny mianownik trafien.
+
+| `kind` (rodzaj dowodu) | sila | znaczenie |
+|---|---|---|
+| `verbatim` | 4 | wystepuje w bloku bajt w bajt |
+| `normalized` | 3 | wystepuje po normalizacji typograficznej; lokalizacja doslowna, ale **glify zrodla roznia sie od cytatu** |
+| `observed` | 2 | jest w dokumencie, lecz nie w jednym bloku (granica blokow albo zbyt wiele trafien) |
+| `derived` | 0 | brak lokalizacji doslownej; przypisanie do calosci |
+
+| `resolution` (rozdzielczosc) | sila |
+|---|---|
+| `span` (zakres znakowy w bloku) | 4 |
+| `block` | 3 |
+| `page` | 2 |
+| `document` | 1 |
+| `none` | 0 |
+
+Bramka `grounding_bridge.gate()` ma **trzy warunki naraz**: rodzaj, rozdzielczosc
+oraz **jednoznacznosc**. Mocny dowod na piec roznych miejsc nie jest mocnym
+dowodem na jedno - dlatego przy wiecej niz jednym trafieniu `anchor_resolved`
+jest `null`, a wszystkie kandydatury leza w `evidence.anchors`. Wieloznacznosc
+idzie do raportu, nigdy do auto-wyboru.
+
+```bash
+python scripts/grounding_bridge.py kontrakt.json --quotes cytaty.txt --pretty
+python scripts/grounding_bridge.py kontrakt.json --quotes cytaty.txt --min-kind verbatim --min-resolution span
+```
+Exit `10` gdy cokolwiek nie przeszlo bramki (trojstan, nie cisza).
+
+### Czego nauczyl nas polski PDF (zmierzone 2026-08-30)
+
+Wersja 1.x mostu gubila cytaty po cichu, bo jej normalizacja nie znala znakow,
+ktore polski PDF wstawia naprawde:
+
+| znak | gdzie wystepuje | skutek w 1.x |
+|---|---|---|
+| `U+2011` dywiz nielamliwy | sygnatury akt (`II‑CSK 118/24`) | cytat NIE znaleziony |
+| `U+00AD` miekki dywiz | wnetrze slow w justowanym akapicie | cytat NIE znaleziony |
+| `U+2212` minus, `U+200B` zerowa szerokosc | tabele, wklejki | cytat NIE znaleziony |
+| przeniesienie wyrazu (`apela-
+cje`) | lamanie linii | znaleziony, ale bez zakresu |
+
+Do tego `ł`/`Ł` **nie maja dekompozycji NFD**, a reszta polskich liter ma - klasyczne
+"dziala dla osmiu z dziewieciu".
+`evidence.normalize_with_map()` sklada NFC **grupami** (znak bazowy + laczace) i
+zwraca mape offsetow, dzieki czemu zakres wraca na ORYGINALNE glify zrodla.
+Fixture wierny zjawisku: `tests/fixtures/pismo_pl_typografia.sample.json`.
+
 ## Uzycie (CLI)
 ```bash
-cd ~/.claude/skills/doc-intel-contract-pl
+cd doc-intel-contract-pl   # katalog tego skilla
 python scripts/normalize.py --engine opendataloader wyjscie.json --pretty
 python scripts/normalize.py --engine pdftotext dokument.txt --threshold 0.9
 cat wyjscie.json | python scripts/normalize.py --engine opendataloader -
@@ -158,7 +247,7 @@ python scripts/mask_for_model.py < fragment.txt > fragment.dla_modelu.txt
 
 ## Status / roadmap (spec 001)
 - **US1 (MVP, DONE 2026-07-01):** adaptery opendataloader+pdftotext, kontrakt, confidence-gating, walidacja schematu.
-- **US2 (DONE):** flagi PESEL/NIP/REGON (checksum)/IBAN/email/dowod + redaction_candidates; signature/stamp=sensitive_block.
+- **US2 (DONE):** flagi PESEL/NIP/REGON (checksum)/IBAN/email/dowod + redaction_candidates; signature/stamp=sensitive_block. Flaga dowodu z wykluczeniami (pilot anonimizacji 2026-08-31): serie LEX/PLH/PLB oraz trafienie po liczebniku rzymskim (sygnatura repertorium, np. "III CRN 100001") NIE flaguja; to samo odsianie obowiazuje w `mask_for_model.py`.
 - **US3 T030 (DONE):** most `grounding_bridge.py` -> zadanie citation-grounding-pl; lokalizuje cytat w blokach i doklada `anchor_resolved {page,bbox,block_id}` (cytat -> region).
 - **US3 T031 (DONE):** adapter Chandra (layout DOM, bbox 0-1, block conf = MIN linii).
 - **US3 T032 (DONE):** `signature.py` - heurystyka podpisu/pieczatki (dol strony + krotki + low-conf); detektor vision wstrzykiwalny (opt-in). Potwierdzenie wizualne = krok operatora w runtime.
@@ -171,7 +260,21 @@ python scripts/mask_for_model.py < fragment.txt > fragment.dla_modelu.txt
   pieczatka same laduja w redaction_candidates. Do tego `degeneracja.py`:
   detektor zapetlenia generacji, w normalize daje flage `degenerate_tail`
   i ostrzezenie na stderr.
-- **83 testy zielone** (contract+pii+grounding+chandra+chandra2+gaius+signature+vlm-html+degeneracja). Zero-dep Python stdlib.
+- **T036 (DONE 2026-08-30, kontrakt 1.2.0, most 2.0.0):** warstwa dowodowa
+  `evidence.py` - rodzaj dowodu x rozdzielczosc zamiast jednej liczby, mapa
+  offsetow (zakres znakowy wracajacy na ORYGINALNE glify zrodla), bramki
+  dystynktywnosci fail-empty z jawnym `match_count`, gating dwuosiowy z
+  werdyktem trojstanowym. Do tego JEDEN DOM reguly normalizacji
+  (`contract/normalizacja.cases.json`) czytany przez oba runtime'y - Python
+  i `citation-grounding-pl` (Node), gdzie ta sama regula miala wlasna
+  implementacje i **szesc z osmiu** tych samych luk. Inspiracja: warstwa
+  proweniencji docling-graph (MIT/IBM) - wziete idee, nie zaleznosc.
+- **205 testow zielonych** (contract+pii+grounding+chandra+chandra2+gaius+signature+vlm-html+degeneracja+evidence+konformancja+kotwica dokumentacji). Zero-dep Python stdlib.
+- **Bramka kotwicy dokumentacji** (`tests/test_dokumentacja_zakotwiczona.py`):
+  SKILL.md jest CZYTANY i konfrontowany z kodem - wersja kontraktu, enum
+  silnikow, obie tabele sil, kody wyjscia werdyktu, flagi CLI, sciezki plikow
+  i liczba testow. Dziewiec mutacji sprawdzonych na czerwono, zero luk.
+  Dokumentacja nie moze juz zdryfowac po cichu.
 
 **Granica dowodu (stan 2026-08-05).** Testy dowodza, ze parser czyta format
 zgodnie ze specyfikacja - nie dowodza, ze zywy model ta specyfikacje stosuje.
@@ -179,18 +282,20 @@ Fixture `vlm_html.sample.html` napisalismy sami, wiec sprawdza adapter, nie
 posluszenstwo VLM. Fixture `chandra2.sample.json` odwzorowuje format odczytany
 z upstreamu `chandra/output.py`, ale bez przebiegu na realnej Chandrze.
 Zanim silnik `vlm-html` pojdzie na akta, potrzebny jest przebieg bojowy:
-prawdziwy skan, prawdziwy model, porownanie ze zrodlem.
-[[feedback_zgodnosc_formatu_mierz_cudzym_czytnikiem]]
+prawdziwy skan, prawdziwy model, porownanie ze zrodlem - zgodnosc formatu
+mierzy sie cudzym czytnikiem.
 
 Render skanu do obrazow przed silnikiem VLM (flatten AcroForm + dynamiczne DPI,
 pypdfium2 opcjonalnie): przepis w `references/render_skanu_pl.md`. UWAGA:
-walidacja podpisu kwalifikowanego ([[waliduj-podpis-pdf-pl]]) PRZED flatten.
+walidacja podpisu kwalifikowanego (skill `waliduj-podpis-pdf-pl`) PRZED flatten.
 
 Most do groundingu:
 ```bash
 python scripts/normalize.py --engine opendataloader wyjscie.json > kontrakt.json
 python scripts/grounding_bridge.py kontrakt.json --quotes cytaty.txt --pretty
-# -> {items:[{quote, source_text, anchor_resolved:{page,bbox,block_id}}]} do ground-citations.mjs
+# -> {items:[{quote, source_text, anchor_resolved:{page,bbox,block_id,span},
+#             evidence, flags}], summary:{total, located_single, ambiguous,
+#             unlocated, gate_passed}}   -> ground-citations.mjs
 ```
 
 Governance: `.matematic/konstytucja.md` + `.matematic/spec/001-output-contract-mvp/`.

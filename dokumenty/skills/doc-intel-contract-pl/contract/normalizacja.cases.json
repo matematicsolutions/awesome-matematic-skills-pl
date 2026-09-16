@@ -1,0 +1,203 @@
+{
+  "_opis": "JEDEN DOM reguly normalizacji tekstu do porownania cytatu ze zrodlem. Czytany przez OBA runtime'y: doc-intel-contract-pl/scripts/evidence.py (Python) oraz citation-grounding-pl/scripts/ground-citations.mjs (Node). Do 2026-08-30 kazda strona miala wlasna implementacje i wlasne luki - Python gubil U+2011 i U+00AD, JS gubil ich SZESC z osmiu. Ten sam fakt w dwoch domach rozjezdza sie po cichu, wiec dom jest tu, a implementacje sa jego czytelnikami.",
+  "_kontrakt": "Kazda implementacja MUSI zwrocic dokladnie `oczekiwane` dla `wejscie`. Kodowanie: pary sa zapisane doslownie w UTF-8. Test po obu stronach czyta TEN plik - nie kopie.",
+  "_wersja": "1.2.0",
+  "przypadki": [
+    {
+      "nazwa": "pusty",
+      "wejscie": "",
+      "oczekiwane": ""
+    },
+    {
+      "nazwa": "same biale znaki",
+      "wejscie": "   \n\t ",
+      "oczekiwane": ""
+    },
+    {
+      "nazwa": "fold wielkosci liter",
+      "wejscie": "POSTANOWIENIE",
+      "oczekiwane": "postanowienie"
+    },
+    {
+      "nazwa": "fold polskich liter",
+      "wejscie": "ŁÓDŹ ŚCIŚLE SĄD",
+      "oczekiwane": "łódź ściśle sąd"
+    },
+    {
+      "nazwa": "zwijanie bialych znakow",
+      "wejscie": "Sad   Rejonowy\n\n  w Warszawie",
+      "oczekiwane": "sad rejonowy w warszawie"
+    },
+    {
+      "nazwa": "obciecie brzegowych bialych",
+      "wejscie": "  tresc  ",
+      "oczekiwane": "tresc"
+    },
+    {
+      "nazwa": "cudzyslow dolny PL",
+      "wejscie": "„tresc”",
+      "oczekiwane": "\"tresc\""
+    },
+    {
+      "nazwa": "cudzyslow angielski",
+      "wejscie": "“tresc”",
+      "oczekiwane": "\"tresc\""
+    },
+    {
+      "nazwa": "cudzyslow francuski",
+      "wejscie": "«tresc»",
+      "oczekiwane": "\"tresc\""
+    },
+    {
+      "nazwa": "apostrof typograficzny",
+      "wejscie": "d’Artagnan",
+      "oczekiwane": "d\"artagnan"
+    },
+    {
+      "nazwa": "myslnik em U+2014",
+      "wejscie": "art.—1",
+      "oczekiwane": "art.-1"
+    },
+    {
+      "nazwa": "myslnik en U+2013",
+      "wejscie": "art.–1",
+      "oczekiwane": "art.-1"
+    },
+    {
+      "nazwa": "dywiz nielamliwy U+2011",
+      "wejscie": "Rzeszow‑Zachod",
+      "oczekiwane": "rzeszow-zachod"
+    },
+    {
+      "nazwa": "dywiz U+2010",
+      "wejscie": "Rzeszow‐Zachod",
+      "oczekiwane": "rzeszow-zachod"
+    },
+    {
+      "nazwa": "myslnik cyfrowy U+2012",
+      "wejscie": "5‒7",
+      "oczekiwane": "5-7"
+    },
+    {
+      "nazwa": "minus matematyczny U+2212",
+      "wejscie": "−5 stopni",
+      "oczekiwane": "-5 stopni"
+    },
+    {
+      "nazwa": "dywiz pelnej szerokosci U+FF0D",
+      "wejscie": "A－B",
+      "oczekiwane": "a-b"
+    },
+    {
+      "nazwa": "miekki dywiz U+00AD wewnatrz slowa",
+      "wejscie": "postano­wienie",
+      "oczekiwane": "postanowienie"
+    },
+    {
+      "nazwa": "zerowa szerokosc U+200B",
+      "wejscie": "Sad​Rejonowy",
+      "oczekiwane": "sadrejonowy"
+    },
+    {
+      "nazwa": "laczik zerowej szerokosci U+200D",
+      "wejscie": "Sad‍Rejonowy",
+      "oczekiwane": "sadrejonowy"
+    },
+    {
+      "nazwa": "BOM w srodku",
+      "wejscie": "Sad﻿Rejonowy",
+      "oczekiwane": "sadrejonowy"
+    },
+    {
+      "nazwa": "spacja nielamliwa U+00A0",
+      "wejscie": "art. 1 ust. 2",
+      "oczekiwane": "art. 1 ust. 2"
+    },
+    {
+      "nazwa": "wielokropek U+2026",
+      "wejscie": "tresc…",
+      "oczekiwane": "tresc..."
+    },
+    {
+      "nazwa": "przeniesienie wyrazu dywizem",
+      "wejscie": "postano-\nwienie",
+      "oczekiwane": "postanowienie"
+    },
+    {
+      "nazwa": "przeniesienie ze spacjami przed lamaniem",
+      "wejscie": "apela-  \n  cje",
+      "oczekiwane": "apelacje"
+    },
+    {
+      "nazwa": "dywiz srodwyrazowy NIE jest przeniesieniem",
+      "wejscie": "Rzeszow-Zachod",
+      "oczekiwane": "rzeszow-zachod"
+    },
+    {
+      "nazwa": "NFD o-kreska sklada sie do NFC",
+      "wejscie": "ÓDZ",
+      "oczekiwane": "ódz",
+      "_uwaga": "wejscie zapisane w NFD (znak bazowy + laczacy)"
+    },
+    {
+      "nazwa": "NFD e-ogonek sklada sie do NFC",
+      "wejscie": "OKRĘGOWY",
+      "oczekiwane": "okręgowy",
+      "_uwaga": "wejscie zapisane w NFD (znak bazowy + laczacy)"
+    },
+    {
+      "nazwa": "NFD z-kropka sklada sie do NFC",
+      "wejscie": "ŻOLW",
+      "oczekiwane": "żolw",
+      "_uwaga": "wejscie zapisane w NFD (znak bazowy + laczacy)"
+    },
+    {
+      "nazwa": "l-kreska NIE ma dekompozycji i przechodzi sama",
+      "wejscie": "ŁODZI",
+      "oczekiwane": "łodzi"
+    },
+    {
+      "nazwa": "NFD calego wyrazu",
+      "wejscie": "SĄD OKRĘGOWY",
+      "oczekiwane": "sąd okręgowy",
+      "_uwaga": "wejscie zapisane w NFD (znak bazowy + laczacy)"
+    },
+    {
+      "nazwa": "sygnatura z dywizem nielamliwym i NBSP",
+      "wejscie": "II‑CSK 118/24",
+      "oczekiwane": "ii-csk 118/24"
+    },
+    {
+      "nazwa": "zlozony przypadek pisma sadowego",
+      "wejscie": "W ocenie Sądu Okrę­gowego zarzut naruszenia prawa material-\nnego",
+      "oczekiwane": "w ocenie sądu okręgowego zarzut naruszenia prawa materialnego"
+    },
+    {
+      "nazwa": "miekki dywiz NA LAMANIU to przeniesienie",
+      "wejscie": "postano­\nwienie",
+      "oczekiwane": "postanowienie",
+      "_uwaga": "U+00AD renderuje sie TYLKO gdy linia sie tam lamie - to punkt przeniesienia, nie znak do skasowania z zostawieniem lamania"
+    },
+    {
+      "nazwa": "niemieckie ostre s (nazwiska w aktach)",
+      "wejscie": "Straße",
+      "oczekiwane": "strasse",
+      "_uwaga": "casefold, nie lower - JS musi to zrobic jawnie"
+    },
+    {
+      "nazwa": "wersalikowe ostre s U+1E9E",
+      "wejscie": "STRAẞE",
+      "oczekiwane": "strasse"
+    },
+    {
+      "nazwa": "dywiz ze spacja BEZ lamania nie laczy",
+      "wejscie": "apela- cje",
+      "oczekiwane": "apela- cje"
+    },
+    {
+      "nazwa": "dwa lamania po dywizie",
+      "wejscie": "apela-\n\ncje",
+      "oczekiwane": "apelacje"
+    }
+  ]
+}

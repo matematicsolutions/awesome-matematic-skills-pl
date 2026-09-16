@@ -14,7 +14,7 @@
     {
       "name": "fundament-weryfikacyjny",
       "description": "Rdzen weryfikacyjny instaluj-zawsze (11 skilli): routing zadania, ocena wejscia, grounding cytatu, ekstrakcja cytatow, sylogizm/subsumpcja, czerwony zespol, jednoprzebiegowy atak przeciwnika, test zimnego czytelnika (pierwsze wrazenie sedziego), wiernosc deliverable, ocena outputu, paczka audytowa AI Act art. 12. Neutralny jurysdykcyjnie, bez konektorow, bez wlasnych polaczen wychodzacych.",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
       },
@@ -34,7 +34,7 @@
     {
       "name": "dokumenty",
       "description": "Operacje na dokumentach (10 skilli): konwersja PDF/Office->Markdown (markitdown, opendataloader-pdf), redlining .docx z Track Changes (redline-docx-pl), anonimizacja i pseudonimizacja PII (let-it-be), metodyka terminow procesowych z bramka czlowieka (terminy-procesowe-pl), lista kontrolna klauzul umownych (klauzule-kontraktowe-pl), cztery kalkulatory procesowe z zywymi parametrami (kalkulatory-procesowe-pl), groundowana ekstrakcja konceptow prawnych warstwa LLM z zakotwiczeniem cytatu do zdania zrodlowego (doc-intel-llm-tier-pl, wymaga contextgem + modelu lokalnego/EOG; backend chmurowy tylko za jawna flaga), audytowalny kontrakt wyjscia OCR {block_type,bbox,text,confidence} z confidence-gatingiem human-in-the-loop, flagami PII pod redakcje i prompt-kontraktem vlm-html dla dowolnego VLM (doc-intel-contract-pl, zero-dep stdlib). walidacja podpisu elektronicznego w PRZYCHODZACYM PDF - czy plik zmieniono po podpisaniu, kto podpisal, czy podpis obejmuje caly dokument (waliduj-podpis-pdf-pl, pyHanko, wylacznie odczyt - nie podpisuje). Rdzen bez konektorow; doc-intel domyslnie lokalny (Ollama).",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
       },
@@ -54,7 +54,7 @@
     {
       "name": "dev-mcp",
       "description": "Narzedzia deweloperskie MateMatic (4 skille, advanced): spec-driven development, kanon budowy MCP serverow, recenzent PR dla LegalTech AI, generator instalatora marketplace. Bez konektorow.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
       },

@@ -6,7 +6,7 @@ Article I (zero-cloud, zero-dep w normalizacji) nienaruszony.
 
 ## Kolejnosc obowiazkowa
 
-Walidacje podpisu kwalifikowanego ([[waliduj-podpis-pdf-pl]]) rob PRZED
+Walidacje podpisu kwalifikowanego (skill `waliduj-podpis-pdf-pl`) rob PRZED
 flatten, na oryginale pliku. Splaszczenie niszczy podpis kryptograficznie -
 po flatten nie ma juz czego walidowac.
 

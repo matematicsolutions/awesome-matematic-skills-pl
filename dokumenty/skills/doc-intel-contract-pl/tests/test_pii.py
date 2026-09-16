@@ -40,6 +40,33 @@ class TestOtherPII(unittest.TestCase):
         self.assertEqual(P.detect("Sad oddalil wniosek."), [])
 
 
+class TestDowodWykluczenia(unittest.TestCase):
+    """Ksztalt serii dowodu maja tez nie-PII (pilot anonimizacji 2026-08-31):
+    numery bazy LEX, sygnatury repertoriow po liczebniku rzymskim, kody Natura 2000."""
+
+    # znane-zle -> brak flagi
+    def test_numer_bazy_lex_nie_flaguje(self):
+        self.assertNotIn("dowod", P.detect("wyrok SN, LEX 100002"))
+
+    def test_sygnatura_po_liczebniku_rzymskim_nie_flaguje(self):
+        self.assertNotIn("dowod", P.detect("sygn. akt III CRN 100001"))
+
+    def test_kod_natura_2000_nie_flaguje(self):
+        self.assertNotIn("dowod", P.detect("obszar PLH999991"))
+        self.assertNotIn("dowod", P.detect("obszar PLB 999992"))
+
+    # znane-dobre -> flaga zostaje
+    def test_dowod_ze_spacja_flaguje(self):
+        self.assertIn("dowod", P.detect("dowod osobisty ABC 123456"))
+
+    def test_dowod_bez_spacji_flaguje(self):
+        self.assertIn("dowod", P.detect("seria i numer CBF445566"))
+
+    def test_dowod_obok_sygnatury_flaguje(self):
+        # wykluczenie dziala per-trafienie, nie per-tekst
+        self.assertIn("dowod", P.detect("w sprawie III CRN 100001 okazano dowod CBF 445566"))
+
+
 class TestAnnotate(unittest.TestCase):
     def test_pii_block_becomes_candidate(self):
         blocks = [

@@ -11,7 +11,9 @@ import os
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
 
-CONTRACT_VERSION = "1.1.0"  # 1.1.0: +engine vlm-html (prompt-kontrakt VLM)
+CONTRACT_VERSION = "1.2.0"  # 1.2.0: gating dwuosiowy (pewnosc x ugruntowanie)
+#                            + werdykt trojstanowy zgodny z routing_gate
+#                            1.1.0: +engine vlm-html (prompt-kontrakt VLM)
 
 BLOCK_TYPES = {
     "title", "paragraph", "table", "list", "equation",
@@ -45,18 +47,62 @@ def compute_doc_id(raw: bytes) -> str:
 
 
 def _gating(blocks: list[Block], threshold: float) -> dict:
-    """Confidence-gating (Article III human-in-the-loop).
+    """Gating DWUOSIOWY (Article III human-in-the-loop).
 
-    Konserwatywnie: confidence == None (partial) -> review_required
-    (nie wiemy, wiec czlowiek patrzy). >= prog -> auto_approved.
+    Do 1.1.0 istniala jedna os - `confidence` silnika. To mieszalo dwa rozne
+    twierdzenia, ktore moga sie rozjechac:
+
+      os PEWNOSCI    - czy silnik jest pewny ODCZYTANYCH ZNAKOW
+      os UGRUNTOWANIA - czy blok da sie w ogole WSKAZAC w dokumencie (bbox)
+
+    Blok z confidence 0.99 i `bbox: None` jest pewny i jednoczesnie
+    niecytowalny: nie da sie go podswietlic ani przypiac do strony. Stare
+    gating zaliczalo go do `auto_approved` i nikt sie nie dowiadywal.
+
+    Werdykt trojstanowy jest zgodny slownictwem i kodami wyjscia z
+    `routing_gate.py` (ok / degraded / failed, 0 / 10 / 20).
+
+    PUSTA LISTA BLOKOW = `failed`, nigdy `ok`. Bramka, ktora przy zerowym
+    wejsciu mowi "nic do przegladu", przepuszcza dokument, ktorego nikt
+    nie przeczytal.
     """
-    review, auto = [], []
+    review, auto, ungroundable = [], [], []
     for b in blocks:
         if b.confidence is None or b.confidence < threshold:
             review.append(b.id)
         else:
             auto.append(b.id)
-    return {"threshold": threshold, "review_required": review, "auto_approved": auto}
+        if b.bbox is None:
+            ungroundable.append(b.id)
+
+    total = len(blocks)
+    if total == 0:
+        verdict, note = "failed", "zero blokow - nie ma czego przegladac ani cytowac"
+    elif len(ungroundable) == total:
+        verdict, note = "degraded", "zaden blok nie ma bbox - cytat bez regionu dokumentu"
+    elif review or ungroundable:
+        verdict, note = "degraded", "czesc blokow wymaga czlowieka albo nie da sie ich wskazac"
+    else:
+        verdict, note = "ok", "wszystkie bloki pewne i ugruntowane"
+
+    return {
+        "threshold": threshold,
+        "review_required": review,
+        "auto_approved": auto,
+        "ungroundable": ungroundable,
+        "verdict": verdict,
+        "note": note,
+        # pelny mianownik: udzial, nie sama liczba
+        "counts": {
+            "total": total,
+            "review_required": len(review),
+            "auto_approved": len(auto),
+            "ungroundable": len(ungroundable),
+        },
+    }
+
+
+GATING_EXIT = {"ok": 0, "degraded": 10, "failed": 20}
 
 
 def build_contract(

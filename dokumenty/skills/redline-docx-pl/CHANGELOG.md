@@ -1,5 +1,16 @@
 # Changelog - redline-docx-pl
 
+## bez zmiany wersji - 2026-09-16
+
+Parytet z kopia robocza (wprowadzone tam 2026-08-27).
+
+- **Krok 0 workflow: zdobadz ORYGINAL.** Baza redline musi byc plikiem edytowalnym
+  od kontrahenta; rekonstrukcja z PDF (pdftotext -> pandoc -> docx) wstrzykuje
+  artefakty konwersji nieodroznialne od propozycji merytorycznych. Konwersja
+  `.odt`/`.doc` -> `.docx` przez `soffice --headless`, nie pandoc.
+- **Niezalezna weryfikacja struktury** po `apply`: licznik `w:ins` / `w:del` /
+  `w:delText` w `word/document.xml`. Exit 0 i "applied" nie dowodza sledzonych zmian.
+
 ## bez zmiany wersji - 2026-08-24
 
 Wersja silnika PRZYPIETA: `adeu==1.30.0`. Wszystkie komendy wolaja

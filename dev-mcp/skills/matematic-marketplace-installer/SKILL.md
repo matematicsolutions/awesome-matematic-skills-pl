@@ -42,10 +42,11 @@ Sprawdza co jest już zainstalowane w `~/.claude/skills/`.
 
 ## Szablon install-matematic-skills.bat
 
-> **Szablon, nie gotowy plik.** Tryb `/marketplace install` podstawia dwa placeholdery przed zapisem `.bat` na dysk:
+> **Szablon, nie gotowy plik.** Tryb `/marketplace install` podstawia trzy placeholdery przed zapisem `.bat` na dysk:
 >
 > - `__GIT_REF__` -> domyślnie tag najnowszej publikacji z `marketplace.json` (np. `refs/tags/v0.6.0`); klient może wymusić inny przez `--ref main` lub `--ref vX.Y.Z`. Pinowanie do taga = powtarzalna instalacja (audytowalna).
 > - `__SKILL_SLUGS__` -> lista slugów wybranych skilli, oddzielona spacjami (np. `let-it-be redline-docx-pl saos-orzecznictwo`).
+> - `__EXTRACTED_DIR__` -> nazwa katalogu po rozpakowaniu ZIP-a: dla taga `vX.Y.Z` to `awesome-matematic-skills-pl-X.Y.Z`, dla `main` to `awesome-matematic-skills-pl-main`.
 >
 > Surowy szablon poniżej **nie zadziała** uruchomiony bez podstawienia.
 
@@ -67,7 +68,7 @@ if not exist "%SKILLS_DIR%" mkdir "%SKILLS_DIR%"
 set "TMP_DIR=%TEMP%\matematic-install-%RANDOM%"
 mkdir "%TMP_DIR%"
 
-echo [1/3] Pobieranie skilli z MateMatic Marketplace...
+echo [1/4] Pobieranie skilli z MateMatic Marketplace...
 :: __GIT_REF__ = refs/tags/vX.Y.Z (domyślnie najnowszy tag z marketplace.json) lub refs/heads/main (bleeding-edge).
 powershell -Command "Invoke-WebRequest -Uri 'https://github.com/matematicsolutions/awesome-matematic-skills-pl/archive/__GIT_REF__.zip' -OutFile '%TMP_DIR%\skills.zip' -UseBasicParsing"
 
@@ -77,14 +78,16 @@ if not exist "%TMP_DIR%\skills.zip" (
     exit /b 1
 )
 
-echo [2/3] Rozpakowywanie...
+echo [2/4] Rozpakowywanie...
 powershell -Command "Expand-Archive -Path '%TMP_DIR%\skills.zip' -DestinationPath '%TMP_DIR%\extracted' -Force"
 
-echo [3/3] Instalowanie skilli...
+echo [3/4] Instalowanie skilli...
 :: [LISTA SKILLI - generowana dynamicznie]
 :: UWAGA: nazwa katalogu po Expand-Archive zalezy od ref ZIPa - dla taga vX.Y.Z bedzie "awesome-matematic-skills-pl-X.Y.Z", dla main "awesome-matematic-skills-pl-main". Tryb /marketplace install podstawia __EXTRACTED_DIR__.
+:: Skille leza w pakietach: <plugin>\skills\<slug> (np. dokumenty\skills\redline-docx-pl) - szukamy sluga we wszystkich pakietach.
 for %%S in (__SKILL_SLUGS__) do (
-    set "SRC=%TMP_DIR%\extracted\__EXTRACTED_DIR__\skills\%%S"
+    set "SRC="
+    for /d %%P in ("%TMP_DIR%\extracted\__EXTRACTED_DIR__\*") do if exist "%%P\skills\%%S\SKILL.md" set "SRC=%%P\skills\%%S"
     set "DST=%SKILLS_DIR%\%%S"
     if exist "!SRC!" (
         :: UWAGA: rd /s /q usuwa lokalne modyfikacje w skillu. Klient ostrzezony w README-instalacja.txt.
@@ -92,16 +95,23 @@ for %%S in (__SKILL_SLUGS__) do (
         xcopy /e /i /q "!SRC!" "!DST!" >nul
         echo   OK: %%S
     ) else (
-        echo   POMINIETY: %%S (nie znaleziono)
+        echo   POMINIETY: %%S ^(nie znaleziono^)
     )
 )
+
+:: Zapis manifestu integralnosci skills-lock.json (SHA256 per zainstalowany skill) - patrz
+:: sekcja "Integralnosc" ponizej. Self-contained (bez zewnetrznego pliku) - dziala tez u klienta
+:: bez Git/npm. Hashuje TYLKO skille z tej instalacji (__SKILL_SLUGS__), nie cudze skille klienta.
+echo [4/4] Zapis manifestu integralnosci...
+powershell -Command ^
+  "$e=[ordered]@{}; foreach ($s in ('__SKILL_SLUGS__' -split '\s+' | Where-Object { $_ })) { $f = Join-Path '%SKILLS_DIR%' (Join-Path $s 'SKILL.md'); if (Test-Path $f) { $h = (Get-FileHash $f -Algorithm SHA256).Hash.ToLower(); $e[$s] = [ordered]@{ source='matematicsolutions/awesome-matematic-skills-pl'; sourceType='github'; ref='__GIT_REF__'; skillPath=((Get-ChildItem '%TMP_DIR%\extracted\__EXTRACTED_DIR__' -Directory | Where-Object { Test-Path (Join-Path $_.FullName \"skills\$s\SKILL.md\") } | Select-Object -First 1 | ForEach-Object { $_.Name + '/skills/' + $s + '/SKILL.md' })); computedHash=\"sha256:$h\" } } }; $json = ([ordered]@{version=1; skills=$e} | ConvertTo-Json -Depth 6); [System.IO.File]::WriteAllText('%SKILLS_DIR%\..\skills-lock.json', $json, (New-Object System.Text.UTF8Encoding($false)))"
 
 :: Czyszczenie
 rd /s /q "%TMP_DIR%"
 
 echo.
 echo ================================
-echo Instalacja zakonczona!
+echo Instalacja zakonczona.
 echo Uruchom nowa sesje Claude Code.
 echo Skille beda dostepne jako /nazwa-skilla
 echo ================================
@@ -161,3 +171,23 @@ Wsparcie: support@matematic.co
   Workflow generowania `checksums.txt` jest częścią release pipeline MateMatic (`gh release upload vX.Y.Z install-matematic-skills.bat checksums.txt`). Klient dostaje hash spod tej samej autorytatywnej domeny `github.com/matematicsolutions/...` co plik instalacyjny - nie potrzebuje osobnego kanału.
 
   **Ograniczenie znane**: GitHub nie publikuje stabilnej sumy dla automatycznie generowanych `archive/refs/tags/...zip` (regeneruje przy każdym żądaniu). `checksums.txt` dotyczy konkretnie wygenerowanego `install-matematic-skills.bat` (deterministyczny output skilla), nie archiwum całego repo.
+
+## Integralność (`skills-lock.json`)
+
+Wzorzec zapożyczony z `tutti-os/tutti` (skills-lock.json: `source` + `sourceType` +
+`skillPath` + `computedHash` SHA256 per skill). Uzupełnia `checksums.txt`: tamten chroni
+plik `.bat` PRZED uruchomieniem, ten wykrywa, że zainstalowany skill cicho się zmienił
+PO instalacji (wymiar „Supply chain" z `audyt-kodu-25-wymiarow-pl`).
+
+Krok `[4/4]` w szablonie `.bat` liczy SHA256 `SKILL.md` każdego skilla z tej instalacji
+i zapisuje `skills-lock.json` obok katalogu skilli (`%USERPROFILE%\.claude\skills-lock.json`),
+razem z refem, z którego pobrano paczkę. Przy kolejnej instalacji lub audycie można
+porównać hash i wykryć drift (ktoś ręcznie zmienił skill albo źródło podmieniło zawartość
+pod tym samym slugiem), zamiast ufać, że „wygląda tak samo".
+
+To narzędzie do wykrywania, NIE blokada - gdy hash się nie zgadza, poinformuj
+użytkownika, nie przerywaj automatycznie instalacji (kancelaria nie ma kontekstu, żeby
+ocenić, czy drift jest zamierzony).
+
+Ręczne przeliczenie manifestu (np. audyt własnego katalogu skilli):
+[scripts/write-skills-lock.ps1](scripts/write-skills-lock.ps1).
