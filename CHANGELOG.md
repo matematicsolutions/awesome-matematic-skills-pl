@@ -6,6 +6,24 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.09.16] - 2026-09-16
+
+### Added
+
+- `marko-pl-content` 1.1.0 - sekcja **"Pisownia 2026"**. Od 1 stycznia 2026 r. obowiazuja
+  zmiany zasad pisowni Rady Jezyka Polskiego, a model uczony na starszych tekstach pisze po
+  staremu (najczesciej "nie" z imieslowem rozdzielnie). Spell-checker ze starym slownikiem
+  tego nie widzi. Nowy skaner `scripts/skan_pisowni.py`
+  (stdlib, bez sieci) wskazuje kandydatow z `plik:linia` dla punktow 1, 3, 4, 6, 8c, 8e,
+  9a, 10 i 11 komunikatu; punkty 2, 5, 7, 8a i 8d nazywa wprost jako niezmierzone.
+  Kod wyjscia jest trojstanowy, a pusty mianownik (nic nie przeskanowano) to BLOKADA, nie
+  "ok". Kandydat to nie werdykt: wiekszosc kandydatow okazuje sie poprawna
+  (przeciwstawienie "tanie, nie darmowe" zostaje rozdzielnie), dlatego ocena w
+  kontekscie jest krokiem procedury, a sciaga `references/pisownia-2026.md` opisuje wyjatki
+  i znane ograniczenia. Testy: 15, w tym kontrola pozytywna na pietnastu realistycznych bledach.
+- Plugin `jakosc-tresci` 1.0.0 -> 1.1.0.
+
+
 ## [2026.08.24c] - 2026-08-24
 
 ### Added
