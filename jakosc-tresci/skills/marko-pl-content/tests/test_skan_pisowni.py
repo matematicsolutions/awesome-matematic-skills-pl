@@ -69,6 +69,14 @@ def test_zaimek_i_kod_nie_sa_kandydatami():
     assert len(k) == 4
 
 
+def test_przyimek_przed_partykula_z_przymiotnikiem_w_miejscowniku():
+    # "w nie najlepszym momencie" to partykula, nie zaimek - filtr zaimka nie moze tego zjesc
+    k = sp.skanuj([(1, "Raport trafił w nie najlepszym momencie, przy nie opisanych danych.")])
+    assert sorted(w["trafienie"] for w in k) == ["nie najlepszym", "nie opisanych"]
+    # zaimek z przyslowkiem zostaje odsiany
+    assert sp.skanuj([(1, "Odpowiadam na nie szybciej niż zwykle.")]) == []
+
+
 def test_czasownik_o_koncowce_imieslowu_nie_jest_kandydatem():
     # "nikt nie zapamieta" to czasownik, nie imieslow
     assert sp.skanuj([(1, "Nikt się nie obrazi, nikt nie zapamięta.")]) == []

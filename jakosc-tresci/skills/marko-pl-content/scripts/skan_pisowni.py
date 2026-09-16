@@ -57,6 +57,8 @@ anegdota argumenty chroni czyta dlatego estymata klienta komunikaty lista ochron
 skorzysta teksty wykona zadzwoni zapyta zgłasza pogarsza wystarczy wystarcza wynika wymaga
 pamięta zapamięta jedna jednego jeden jedno żadna żadne żadnego ona ono ani sama samo same tyle wiele tak
 """.split())
+PRZYPADEK_ZALEZNY = re.compile(r"(?:ym|ymi|ych|ej|im|imi|ich)$")
+PRZYSLOWEK = re.compile(rf"(?:naj)?(?:{PRZYSL_WYZSZY}|{PRZYSL})|[{L}]+iej")
 PRZYIMEK_PRZED_ZAIMKIEM = re.compile(r"\b(?:na|za|przez|o|w|we|po|ponad|pod|nad|przed|między|dla)\s+$", re.I)
 
 REGULY: list[tuple[str, str, re.Pattern]] = [
@@ -172,7 +174,13 @@ def skanuj(segmenty: list[tuple[int, str]]) -> list[dict]:
             po = tekst[m.end():m.end() + 80]
             if nazwa.startswith(("R4", "R11")):
                 slowo = m.group(1).lower()
-                if slowo in NIE_PRZYMIOTNIK or PRZYIMEK_PRZED_ZAIMKIEM.search(przed):
+                if slowo in NIE_PRZYMIOTNIK:
+                    continue
+                # "na nie szybciej" to zaimek (biernik), ale "w nie najlepszym momencie" to
+                # partykula - zaimek w bierniku nie stoi przed przymiotnikiem w miejscowniku
+                # ani narzedniku, wiec te koncowki wylaczaja filtr zaimka
+                przymiotnik_zalezny = PRZYPADEK_ZALEZNY.search(slowo) and not PRZYSLOWEK.fullmatch(slowo)
+                if PRZYIMEK_PRZED_ZAIMKIEM.search(przed) and not przymiotnik_zalezny:
                     continue
             zajete.add(m.start())
             kontekst = re.sub(r"\s+", " ", przed[-60:] + "[[" + m.group(0) + "]]" + po[:60]).strip()

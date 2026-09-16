@@ -6,6 +6,27 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.09.16b] - 2026-09-16
+
+### Added
+
+- `humanizer-pl` 1.3.0 - wzorzec **#43 "Pisownia sprzed reformy 2026"**. Humanizer przepisuje
+  tekst, wiec bez tej reguly zostawial stara forme albo wprowadzal ja sam ("nie" z imieslowem
+  rozdzielnie, przedrostek z lacznikiem). Regula jest samowystarczalna, bo skill instaluje sie
+  tez osobno; nazywa wyjatki, w ktorych rozdzielnie zostaje (przeciwstawienie, przeczenie
+  orzeczenia, zaimek), zeby nie laczyc na sile. Pelna sciaga i skaner - w `marko-pl-content`.
+- Plugin `jakosc-tresci` 1.1.0 -> 1.2.0.
+
+### Fixed
+
+- `marko-pl-content` 1.1.1 - skaner pisowni gubil "nie" po przyimku, gdy nastepowal przymiotnik
+  ("trafil w nie najlepszym momencie"): filtr zaimka ("odpowiadam na nie szybciej") bral
+  "w nie" za zaimek. Zaimek w bierniku nie stoi przed przymiotnikiem w miejscowniku ani
+  narzedniku, wiec te koncowki wylaczaja teraz filtr; przyslowki dalej sa odsiewane. Zlapane
+  na przykladzie z nowego wzorca humanizera. Test 16.
+- README: wiersz `humanizer-pl` podawal 34 wzorce i wersje 1.1.0; plik mial juz 42 wzorce
+  i wersje 1.2.0.
+
 ## [2026.09.16] - 2026-09-16
 
 ### Added
