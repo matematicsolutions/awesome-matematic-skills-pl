@@ -251,7 +251,7 @@ ln -s "$(pwd)/fundament-weryfikacyjny/skills/citation-grounding-pl" ~/.claude/sk
 
 1. **Polskie organy maja wlasna semantyke.** UODO nie jest tylko ICO/CNIL. KIO ma wlasny tryb 23-dniowy. NSA orzeka kasacyjnie inaczej niz Bundesverwaltungsgericht. Globalny „GDPR + NDA review" tego nie pokrywa.
 2. **Tajemnica zawodowa.** Art. 6 PrAdw + art. 3 RadcPrU + tajemnica notarialna + tajemnica komornicza. Wysylka cloud do US bez SCC = naruszenie. Nasze skille **nie dodaja wlasnych kanalow wychodzacych** - co trafia do modelu, decyduje Twoja konfiguracja, a dokladna granice tej deklaracji spisuje [TRUST.md](TRUST.md). Pelna lokalnosc = model lokalny (np. Ollama).
-3. **AI Act art. 12 + art. 13.** Obowiazek prowadzenia rejestru zdarzen (art. 12) i transparency duty (art. 13). [legal-ai-audit-bundle](./fundament-weryfikacyjny/skills/legal-ai-audit-bundle) pakuje to natywnie. Zachodnie huby dopiero o tym dyskutuja.
+3. **Slad do sprawdzenia.** [legal-ai-audit-bundle](./fundament-weryfikacyjny/skills/legal-ai-audit-bundle) pakuje wynik, slad rozumowania i raport cytatow - taki zapis, jakiego art. 12 i 13 AI Act wymagaja od systemow wysokiego ryzyka, przydatny takze tam, gdzie ten obowiazek nie powstaje.
 4. **Polski jezyk.** Modele LLM popelniaja inne bledy w polszczyznie (kalki anglicyzmow, naduzycie em-dash, hedging). Hub zawiera narzedzia do wykrywania i poprawy tych wzorcow przed publikacja.
 
 ---
