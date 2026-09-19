@@ -38,7 +38,7 @@ attribution:
       Guard STRONY oparty na niezgodności nazw metodą Jaccarda (v2.1). Stop-listy własne.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 2.4.0
+  version: 2.5.0
   companion_skills: saos-orzecznictwo, szukaj-orzeczen-v2, eu-sparql-search, legal-ai-audit-bundle, adversarial-legal-review-pl, deliverable-fidelity-pl, legal-request-router-pl
 ---
 
@@ -145,8 +145,11 @@ oznacz je `claim_type` i poddaj weryfikacji na właściwym poziomie. Bez cudzys�
    Skrypt liczy osiągnięty poziom, porównuje z wymaganym, kalibruje. Exit 1 = twarda blokada.
 
 5. **Klasyfikuj wynik** (skrypt robi to automatycznie):
-   - 🟢 `ZWERYFIKOWANY` - osiągnięty poziom ≥ wymagany (podaje offset dla FRAGMENT)
-   - 🟡 `ZMODYFIKOWANY` - cytat znaleziony z drobną różnicą (interpunkcja, diakrytyki) - diff
+   - 🟢 `ZWERYFIKOWANY` - osiągnięty poziom ≥ wymagany. Dla FRAGMENT podaje `zakres` {start, end}
+     w oryginalnym `source_text` (indeksy JS, koniec wyłączny), `offset` = `zakres.start`,
+     `segmenty` dla cytatu z luką `[...]` i `fragment_zrodla` - dosłowny wycinek źródła do wglądu
+   - 🟡 `ZMODYFIKOWANY` - cytat znaleziony z drobną różnicą (interpunkcja, diakrytyki) - diff;
+     `fragmenty_zrodla` pokazują najbliższe miejsce w źródle dla każdego segmentu
    - 🟡 `WYMAGA_OSADU` - poziom TREŚĆ: terminy nośne obecne, substancję potwierdza człowiek / paraphrase-judge
    - 🟠 `KALIBRACJA` - osiągnięto niżej niż twierdzono (cytat dosłowny nieobecny, temat pokryty) - złagodź tezę
    - 🔴 `NIEZWERYFIKOWANY` - brak trafienia / rozbieżna kotwica = potencjalna halucynacja, BLOKUJ

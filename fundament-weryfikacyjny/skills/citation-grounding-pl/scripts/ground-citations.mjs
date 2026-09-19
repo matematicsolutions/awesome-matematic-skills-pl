@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// citation-grounding-pl v2.3 - mechaniczny weryfikator cytatu z GRADIENTEM weryfikacji (zero-dep ESM).
+// citation-grounding-pl v2.5 - mechaniczny weryfikator cytatu z GRADIENTEM weryfikacji (zero-dep ESM).
 // Usage: node ground-citations.mjs <task.json>
 //
 // Gradient (adaptacja Existence/Content/Paragraph z jeannesulzer/international-criminal-tribunals-skills, CC BY 4.0):
@@ -27,18 +27,16 @@ import { pathToFileURL } from "node:url";
 // wejscie zapisane w NFD. Skutek byl gorszy niz przeoczenie: falszywy czerwony
 // na poziomie FRAGMENT, czyli "cytatu nie ma w zrodle" o cytacie, ktory tam
 // jest - zarzut halucynacji postawiony przez blad normalizacji.
-const QUOTE_CHARS = /[„“”‟«»‹›‘’‚‛`´']/g;
-const DASHES = /[‐‑‒–—―−⁃－]/g;
-// Niewidzialne w PDF, obecne w warstwie tekstowej.
-const INVISIBLE = /[​‌‍﻿⁠]/g;
+const QUOTE_CHAR = /^[„“”‟«»‹›‘’‚‛`´']$/;
+const DASH_CHAR = /^[‐‑‒–—―−⁃－]$/;
+// Niewidzialne w PDF (zerowa szerokosc, BOM, word joiner) i miekki dywiz - kasowane (DROP).
 // Przeniesienie wyrazu: kreska (miekki dywiz WLICZONY) + opcjonalne spacje +
 // lamanie linii. U+00AD renderuje sie wylacznie na lamaniu, wiec TAM znaczy
 // przeniesienie; poza lamaniem jest kasowany jak reszta niewidzialnych.
-const HYPHEN_WRAP = /[-­‐‑‒–—―−⁃－][ \t]*[\r\n][\r\n \t]*/g;
-const SOFT_HYPHEN = /­/g;
-const ELLIPSIS = /…/g;
 // JS nie ma casefold; ostre s trzeba zlozyc jawnie (nazwiska i adresy w aktach).
-const SHARP_S = /[ßẞ]/g;
+const HYPHENS = new Set(["-", "­", "‐", "‑", "‒", "–", "—", "―", "−", "⁃", "－"]);
+const DROP = new Set(["­", "​", "‌", "‍", "﻿", "⁠"]);
+const COMBINING = /\p{M}/u;
 
 const POZIOM = { ISTNIENIE: 0, TRESC: 1, FRAGMENT: 2 };
 const POZIOM_NAZWA = ["ISTNIENIE", "TRESC", "FRAGMENT"];
@@ -160,23 +158,95 @@ function zbieznoscFragmentu(normClaim, src) {
   return best;
 }
 
-// Realizuje kontrakt z tablicy prawdy (patrz komentarz przy QUOTE_CHARS).
+// Realizuje kontrakt z tablicy prawdy (patrz komentarz przy QUOTE_CHAR).
 // Kolejnosc krokow jest czescia kontraktu: przeniesienie wyrazu MUSI byc
 // rozpoznane, zanim skasujemy miekki dywiz.
+//
+// v2.5: normalizacja Z MAPA POZYCJI - port `normalize_with_map` z evidence.py.
+// Do v2.4 `offset` byl liczony w tekscie ZNORMALIZOWANYM (male litery, zwiniete
+// spacje, sklejone przeniesienia), wiec wskazywal inne miejsce niz cytat w
+// oryginale - pinpoint, ktory nie trafia. Teraz znak znormalizowany o indeksie k
+// powstal ze znakow [start[k], end[k]) oryginalu (indeksy JS, jednostki UTF-16).
+// `normalize` jest nakladka na te funkcje: jeden dom reguly, jedna tablica prawdy.
+function mapChar(ch) {
+  if (DROP.has(ch)) return "";
+  if (QUOTE_CHAR.test(ch)) return '"';
+  if (DASH_CHAR.test(ch)) return "-";
+  if (ch === "…") return "...";
+  if (ch === "ß" || ch === "ẞ") return "ss";
+  return ch;
+}
+
+function normalizeWithMap(s) {
+  const text = s == null ? "" : String(s);
+  let norm = "";
+  const start = [], end = [];
+  const n = text.length;
+  let i = 0;
+  let pendingSpace = -1; // zwijanie bialych znakow: pozycja pierwszego z serii
+
+  const emit = (chars, a, b) => {
+    for (const c of chars) {
+      for (let u = 0; u < c.length; u++) { norm += c[u]; start.push(a); end.push(b); }
+    }
+  };
+
+  while (i < n) {
+    // 1) grupa: punkt kodowy + nastepujace znaki laczace -> NFC (wejscie NFD)
+    let j = i + (text.codePointAt(i) > 0xffff ? 2 : 1);
+    while (j < n && COMBINING.test(String.fromCodePoint(text.codePointAt(j)))) {
+      j += text.codePointAt(j) > 0xffff ? 2 : 1;
+    }
+    const group = text.slice(i, j).normalize("NFC");
+
+    // 2) przeniesienie wyrazu: kreska + (spacje/taby) + lamanie linii -> kasuj cale, BEZ spacji
+    if (group.length === 1 && HYPHENS.has(group)) {
+      let k = j;
+      while (k < n && (text[k] === " " || text[k] === "\t")) k++;
+      if (k < n && (text[k] === "\r" || text[k] === "\n")) {
+        while (k < n && /[\r\n \t]/.test(text[k])) k++;
+        pendingSpace = -1;
+        i = k;
+        continue;
+      }
+    }
+
+    let piece = "";
+    for (const ch of group) piece += mapChar(ch);
+    if (piece === "") { i = j; continue; }
+
+    // 3) biale znaki (\s obejmuje NBSP): jedna spacja, wiodace i koncowe pomijamy
+    if (/^\s+$/.test(piece)) {
+      if (norm.length > 0 && pendingSpace === -1) pendingSpace = i;
+      i = j;
+      continue;
+    }
+    if (pendingSpace !== -1) { emit(" ", pendingSpace, pendingSpace + 1); pendingSpace = -1; }
+
+    // 4) male litery - rozszerzenie dlugosci dopuszczone, wszystkie znaki wskazuja te sama grupe
+    emit(piece.toLowerCase(), i, j);
+    i = j;
+  }
+  return { norm, start, end };
+}
+
 function normalize(s) {
   if (s == null) return "";
-  return String(s)
-    .normalize("NFC")            // wejscie w NFD sklada sie do NFC
-    .replace(HYPHEN_WRAP, "")    // przeniesienie wyrazu (PRZED kasowaniem U+00AD)
-    .replace(SOFT_HYPHEN, "")    // miekki dywiz poza lamaniem - kasuj
-    .replace(INVISIBLE, "")      // zerowa szerokosc, BOM, word joiner
-    .replace(QUOTE_CHARS, '"')   // ujednolicenie cudzyslowow
-    .replace(DASHES, "-")        // PELNA rodzina kresek, nie tylko em/en
-    .replace(ELLIPSIS, "...")    // jeden znak vs trzy kropki
-    .replace(SHARP_S, "ss")      // odpowiednik casefold Pythona
-    .toLowerCase()
-    .replace(/\s+/g, " ")        // zwiniecie bialych znakow (\s obejmuje NBSP)
-    .trim();
+  return normalizeWithMap(s).norm;
+}
+
+// Zakres [a, b) tekstu znormalizowanego -> zakres w ORYGINALE.
+function naOryginal(mapa, a, b) {
+  if (a < 0 || b <= a || b > mapa.start.length) return null;
+  return { start: mapa.start[a], end: mapa.end[b - 1] };
+}
+
+// Doslowny fragment zrodla do wgladu czlowieka (wzorzec: cytat przypiety do miejsca).
+const FRAGMENT_MAX = 400;
+function fragmentZrodla(tekst, zakres) {
+  if (!zakres) return null;
+  const f = tekst.slice(zakres.start, zakres.end);
+  return f.length > FRAGMENT_MAX ? f.slice(0, FRAGMENT_MAX) + " [...ucieto]" : f;
 }
 
 // "II CSK 123/19" -> "ii csk 123/19" (do porownania kotwic; tnie kropki i nadmiar spacji)
@@ -310,24 +380,30 @@ function bestApprox(segment, source) {
 }
 
 // --- POZIOM FRAGMENT: string-match cytatu (rdzen v1) ---
-function sprawdzFragment(quote, src) {
+// `mapa` = normalizeWithMap(source_text): zakresy wracaja w ORYGINALE, nie w tekscie znormalizowanym.
+function sprawdzFragment(quote, mapa) {
+  const src = mapa.norm;
   const segments = splitGaps(normalize(quote));
   if (segments.length === 0) return { dopasowanie: "brak", offset: -1 };
-  let cursor = 0, firstOffset = -1, exact = true;
+  let cursor = 0, exact = true;
+  const zakresy = [];
   for (const seg of segments) {
     const idx = src.indexOf(seg, cursor);
     if (idx === -1) { exact = false; break; }
-    if (firstOffset === -1) firstOffset = idx;
+    zakresy.push(naOryginal(mapa, idx, idx + seg.length));
     cursor = idx + seg.length;
   }
-  if (exact) return { dopasowanie: "dokladne", offset: firstOffset };
+  if (exact) {
+    const zakres = { start: zakresy[0].start, end: zakresy[zakresy.length - 1].end };
+    return { dopasowanie: "dokladne", offset: zakres.start, zakres, segmenty: zakresy };
+  }
 
   let worstRatio = 0, detail = [];
   for (const seg of segments) {
     const { dist, at } = bestApprox(seg, src);
     const ratio = seg.length > 0 ? dist / seg.length : 1;
     worstRatio = Math.max(worstRatio, ratio);
-    detail.push({ seg: seg.slice(0, 60), dist, at });
+    detail.push({ seg: seg.slice(0, 60), dist, zakres: at >= 0 ? naOryginal(mapa, at, Math.min(at + seg.length, src.length)) : null });
   }
   if (worstRatio <= 0.15) return { dopasowanie: "przyblizone", offset: -1, detail };
   return { dopasowanie: "brak", offset: -1, detail };
@@ -412,7 +488,7 @@ function sprawdzIstnienie(anchor, resolved) {
 
 // `normalize` wystawiony, zeby bramka konformancji mogla go zmierzyc przeciw
 // wspolnej tablicy prawdy. Regula bez sposobu zmierzenia nie trzyma.
-export { stronyOverlap, partyTokens, zbieznoscFragmentu, boilerplateTokens, normalize };
+export { stronyOverlap, partyTokens, zbieznoscFragmentu, boilerplateTokens, normalize, normalizeWithMap };
 
 export function verify(item) {
   const claimType = item.claim_type || (item.quote ? "cytat_doslowny" : "powolanie");
@@ -426,8 +502,10 @@ export function verify(item) {
   }
   const out = { id: item.id, source_id: item.source_id, claim_type: claimType, wymagany_poziom: POZIOM_NAZWA[wymagany] };
 
-  const maTekst = item.source_text != null && normalize(item.source_text).length > 0;
-  const src = maTekst ? normalize(item.source_text) : "";
+  const oryginal = item.source_text == null ? "" : String(item.source_text);
+  const mapa = normalizeWithMap(oryginal);
+  const maTekst = mapa.norm.length > 0;
+  const src = mapa.norm;
 
   // 1. ISTNIENIE
   const ist = sprawdzIstnienie(item.anchor, item.anchor_resolved);
@@ -439,7 +517,7 @@ export function verify(item) {
 
   // 2. FRAGMENT (gdy jest cytat)
   let frag = null;
-  if (item.quote && maTekst) frag = sprawdzFragment(item.quote, src);
+  if (item.quote && maTekst) frag = sprawdzFragment(item.quote, mapa);
 
   // 3. TRESC (gdy jest twierdzenie/parafraza i tekst)
   let tresc = null;
@@ -476,10 +554,17 @@ export function verify(item) {
 
   if (wymagany === POZIOM.FRAGMENT) {
     if (frag && frag.dopasowanie === "dokladne") {
-      out.status = "ZWERYFIKOWANY"; out.offset = frag.offset; return out;
+      // offset/zakres w ORYGINALNYM source_text (indeksy JS, UTF-16), koniec wylaczny.
+      out.status = "ZWERYFIKOWANY"; out.offset = frag.offset; out.zakres = frag.zakres;
+      if (frag.segmenty.length > 1) out.segmenty = frag.segmenty;
+      out.fragment_zrodla = fragmentZrodla(oryginal, frag.zakres);
+      return out;
     }
     if (frag && frag.dopasowanie === "przyblizone") {
-      out.status = "ZMODYFIKOWANY"; out.note = "drobne roznice (interpunkcja/uciecie) - patrz diff"; out.detail = frag.detail; return out;
+      out.status = "ZMODYFIKOWANY"; out.note = "drobne roznice (interpunkcja/uciecie) - patrz diff"; out.detail = frag.detail;
+      // Najblizsze miejsce w zrodle dla kazdego segmentu - czlowiek porownuje z cytatem.
+      out.fragmenty_zrodla = frag.detail.map((d) => fragmentZrodla(oryginal, d.zakres));
+      return out;
     }
     // cytat nieznaleziony - ale czy dokument w ogole mowi o rzeczy (TRESC)?
     // v2.3: prog na pokryciu WAZONYM - obecnosc samych fraz szablonowych nie ratuje
@@ -496,7 +581,11 @@ export function verify(item) {
         `${Math.round(tresc.pokrycie * 100)}%, surowe ${Math.round(tresc.pokrycieSurowe * 100)}%) - potencjalna halucynacja, BLOKADA`
       : "brak cytatu i brak pokrycia terminow - potencjalna halucynacja, BLOKADA";
     out.detail = frag ? frag.detail : { powod: "brak tekstu/quote" };
-    if (tresc) out.detail = { ...((typeof out.detail === "object" && out.detail) || {}), terminy_szablonowe: tresc.boilerplate, zbieznosc_fragmentu: tresc.zbieznosc };
+    // detail z FRAGMENT to TABLICA segmentow - rozsmarowana spreadem dawala klucze "0", "1".
+    if (tresc) {
+      const baza = Array.isArray(out.detail) ? { segmenty: out.detail } : (out.detail || {});
+      out.detail = { ...baza, terminy_szablonowe: tresc.boilerplate, zbieznosc_fragmentu: tresc.zbieznosc };
+    }
     return out;
   }
 

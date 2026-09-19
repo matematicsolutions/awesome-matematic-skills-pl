@@ -6,7 +6,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { verify, stronyOverlap, partyTokens, zbieznoscFragmentu, normalize } from "./ground-citations.mjs";
+import { verify, stronyOverlap, partyTokens, zbieznoscFragmentu, normalize, normalizeWithMap } from "./ground-citations.mjs";
 
 let pass = 0, fail = 0;
 function check(name, got, want) {
@@ -188,6 +188,52 @@ if (tab) {
   check(`normalizacja zgodna z tablica prawdy v${tab._wersja} (${zgodne}/${tab.przypadki.length})`,
         zgodne, tab.przypadki.length);
   for (const r of rozjazdy) console.log(`      ROZJAZD ${r}`);
+}
+
+// --- ZAKRES W ORYGINALE (v2.5) --------------------------------------------------
+// Do v2.4 `offset` byl liczony w tekscie ZNORMALIZOWANYM: po wiodacych spacjach,
+// podwojnych odstepach czy przeniesieniu wyrazu wskazywal INNE miejsce niz cytat.
+// Kazdy test sprawdza wycinek ORYGINALU pod zwroconym zakresem, nie sam fakt zwrotu.
+const ZRODLO_Z = "WYROK\n\n   Sąd  Najwyższy   zważył,  że  umowa jest nie-\nważna w całości.  Dalej: „klauzula waloryzacyjna” jest abuzywna.";
+const rz = verify({ id: "Z1", source_id: "t", quote: "umowa jest nieważna w całości", source_text: ZRODLO_Z });
+check("zakres: ZWERYFIKOWANY", rz.status, "ZWERYFIKOWANY");
+check("zakres: wycinek oryginalu == cytat po normalizacji",
+  normalize(ZRODLO_Z.slice(rz.zakres.start, rz.zakres.end)), normalize("umowa jest nieważna w całości"));
+check("zakres: offset wskazuje poczatek cytatu w ORYGINALE (nie w tekscie znormalizowanym)",
+  ZRODLO_Z.slice(rz.offset, rz.offset + 5), "umowa");
+check("zakres: fragment_zrodla niesie przeniesienie wyrazu z oryginalu",
+  rz.fragment_zrodla, "umowa jest nie-\nważna w całości");
+
+const rg = verify({ id: "Z2", source_id: "t", quote: "Sąd Najwyższy zważył [...] jest abuzywna", source_text: ZRODLO_Z });
+check("zakres: cytat z luka [...] -> dwa segmenty", rg.segmenty && rg.segmenty.length, 2);
+check("zakres: drugi segment trafia w oryginal",
+  ZRODLO_Z.slice(rg.segmenty[1].start, rg.segmenty[1].end), "jest abuzywna");
+
+const NFD = "Orzeczenie: Sąd uchylił wyrok.";
+const rn = verify({ id: "Z3", source_id: "t", quote: "Sąd uchylił", source_text: NFD });
+check("zakres: zrodlo w NFD - zakres obejmuje znak laczacy",
+  NFD.slice(rn.zakres.start, rn.zakres.end), "Sąd uchylił");
+
+const rp = verify({ id: "Z4", source_id: "t", quote: "klauzula waloryzacyjna jest abuzywne", source_text: ZRODLO_Z });
+check("zakres: przyblizone -> ZMODYFIKOWANY z fragmentem zrodla", rp.status, "ZMODYFIKOWANY");
+check("zakres: przyblizone - fragment wskazuje wlasciwe miejsce",
+  /klauzula waloryzacyjna/.test(rp.fragmenty_zrodla[0] || ""), true);
+
+const rb = verify({ id: "Z5", source_id: "t", quote: "zmyslony cytat o czyms", source_text: "Sad zwazyl, ze umowa jest wazna." });
+check("blokada: segmenty w detail.segmenty (nie klucze '0','1')",
+  Array.isArray(rb.detail.segmenty) && !("0" in rb.detail), true);
+
+// Niezmiennik mapy na calej tablicy prawdy: pelny zakres mapy odtwarza caly tekst znormalizowany.
+if (tab) {
+  let zgodneMapy = 0;
+  for (const c of tab.przypadki) {
+    const m = normalizeWithMap(c.wejscie);
+    const ok = m.start.length === m.norm.length && m.end.length === m.norm.length &&
+      (m.norm.length === 0 || normalize(c.wejscie.slice(m.start[0], m.end[m.norm.length - 1])) === m.norm);
+    if (ok) zgodneMapy++;
+  }
+  check(`mapa pozycji spojna na tablicy prawdy (${zgodneMapy}/${tab.przypadki.length})`,
+        zgodneMapy, tab.przypadki.length);
 }
 
 console.log(`\n${pass}/${pass + fail} PASS`);

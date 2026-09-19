@@ -2,6 +2,34 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/), wersjonowanie [SemVer](https://semver.org/).
 
+## [2.5.0] - 2026-09-19
+
+### Fixed
+- **`offset` wskazywał inne miejsce niż cytat.** Pozycja była liczona w tekście
+  znormalizowanym (małe litery, zwinięte spacje, sklejone przeniesienia wyrazów), a nie
+  w oryginale. Wystarczył podwójny odstęp albo przeniesienie wyrazu przed cytatem, żeby
+  wynik ZWERYFIKOWANY podawał pozycję kilka znaków przed cytatem. Odbiorca, który
+  wycinał tekst pod tą pozycją, dostawał fragment innego zdania. W przykładzie z testów
+  stara wersja myliła się o 9 znaków, nowa trafia.
+- Przy statusie NIEZWERYFIKOWANY lista segmentów w `detail` zamieniała się w obiekt
+  z kluczami `"0"`, `"1"`. Teraz leży pod `detail.segmenty`.
+
+### Added
+- **Normalizacja z mapą pozycji** (`normalizeWithMap`) - odpowiednik `normalize_with_map`
+  z `evidence.py`. `normalize` korzysta teraz z tej samej funkcji, więc tablica prawdy
+  (38/38) sprawdza jedną implementację.
+- W wyniku dla poziomu FRAGMENT: `zakres` {start, end} w oryginalnym `source_text`,
+  `segmenty` dla cytatu z luką `[...]` i `fragment_zrodla` (dosłowny wycinek, maksymalnie
+  400 znaków). Dla statusu ZMODYFIKOWANY: `zakres` w `detail` i `fragmenty_zrodla`.
+  Człowiek widzi fragment źródła, który sprawdził skrypt.
+- 11 testów zakresu i wyniku (przeniesienie wyrazu, luka `[...]`, źródło w NFD, dopasowanie
+  przybliżone, kształt `detail` przy blokadzie, spójność mapy na całej tablicy prawdy).
+
+### Known limitations
+- Indeksy są w jednostkach UTF-16 (JS), a `evidence.py` liczy w punktach kodowych.
+  Różnica dotyczy tylko znaków spoza BMP (emoji, rzadkie symbole). Przekazując zakres
+  między Node a Pythonem, trzeba ją uwzględnić.
+
 ## [2.4.0] - 2026-08-30
 
 ### Fixed
