@@ -6,12 +6,22 @@ allowed-tools: [Read, Write, Glob]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: github/spec-kit
+  url: https://github.com/github/spec-kit
+  license: MIT
+  relationship: adaptation
+  note: >
+    Wersja v0.8.12.dev0: 4-fazowa metodyka Konstytucja -> Specyfikacja -> Plan ->
+    Zadania, marker [P] dla zadan parallel-safe oraz Constitution Check GATE.
+    Adaptacja: ton polski, project-types MateMatic (claude-skill, video-pipeline,
+    desktop-app, mcp-server, mikroprodukt) i 4 wlasne bramki
+    (licencja / ToS-antyOS / jakosc / strategia).
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 0.1.0
   ratified: 2026-05-20
   project: MateMatic Internal Dev Pipeline
-  source_pattern: github/spec-kit (MIT) v0.8.12.dev0 - 4-phase methodology, marker [P], Constitution Check GATE
   related_skill: matematic-konstytucja-ai (sprzedazowy produkt dla kancelarii, NIE myl)
   delivery_format: pliki markdown w katalogu projektu (.matematic/spec/<feature>/)
 ---

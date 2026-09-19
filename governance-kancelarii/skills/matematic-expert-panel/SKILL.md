@@ -6,11 +6,20 @@ allowed-tools: [Read, Write]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  source: SuperClaude-Org/SuperClaude_Framework
+  url: https://github.com/SuperClaude-Org/SuperClaude_Framework
+  license: MIT
+  relationship: adaptation
+  note: >
+    Cherry-pick trybu Business Panel (9 modeli person, scoring, decision matrix)
+    i adaptacja na kancelarie prawne: zamiast generycznych person biznesowych
+    7 perspektyw rolnych organizacji prawnej. NIE pelna instalacja frameworka -
+    nadpisalaby nasz custom stack.
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 1.0.0
   project: MateMatic Expert Panel Product
-  source_pattern: SuperClaude-Org/SuperClaude_Framework (MIT) - Business Panel mode only
   format: 90-min warsztat live (online lub on-site)
   pricing_range: 5-15k PLN per warsztat (single case)
   output_format: live warsztat + raport pozegnal markdown/PDF

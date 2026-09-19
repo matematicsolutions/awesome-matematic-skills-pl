@@ -17,14 +17,22 @@ data-residency: local
 requires-human-approval: false
 pii-egress: none
 attribution:
-  source: FudanDISC/DISC-LawLLM (Fudan DISC Lab)
-  url: https://github.com/FudanDISC/DISC-LawLLM
-  license: Apache-2.0
-  relationship: clean-room
-  note: >
-    Metoda dwuwarstwowa (obiektywne dopasowanie plus subiektywna rubryka LLM-as-judge,
-    skala 1-5) oparta na DISC-Law-Eval. Chińskie dane egzaminacyjne i model-sędzia
-    porzucone; rubryka, wymiary i kotwice PL napisane od zera.
+  - source: FudanDISC/DISC-LawLLM (Fudan DISC Lab)
+    url: https://github.com/FudanDISC/DISC-LawLLM
+    license: Apache-2.0
+    relationship: clean-room
+    note: >
+      Metoda dwuwarstwowa (obiektywne dopasowanie plus subiektywna rubryka LLM-as-judge,
+      skala 1-5) oparta na DISC-Law-Eval. Chińskie dane egzaminacyjne i model-sędzia
+      porzucone; rubryka, wymiary i kotwice PL napisane od zera.
+  - source: AnttiHero/lavern
+    license: Apache-2.0
+    relationship: pattern-only
+    note: >
+      Wzorzec dodany w v1.1.0: NIEPEWNE jako ocena pierwszej klasy wraz z zakazem
+      wymuszonej trójki. Podkategorie (NIEWYSTARCZAJĄCY_DOWÓD /
+      DOKUMENT_NIEJEDNOZNACZNY), reguły decyzji i polska semantyka - od zera.
+      Warstwa nieobecna w output-scoring-en, stąd rozjazd kredytów między bliźniakami.
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.2.0

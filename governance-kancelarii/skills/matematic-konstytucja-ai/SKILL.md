@@ -6,11 +6,48 @@ allowed-tools: [Read, Write]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+attribution:
+  - source: github/spec-kit
+    url: https://github.com/github/spec-kit
+    license: MIT
+    relationship: adaptation
+    note: >
+      Wylacznie pattern konstytucji (constitution -> spec -> plan -> tasks) i
+      forma artykulow jako niezmiennych imperatywow MUST / MUST NOT / SHOULD.
+      Adaptacja pod B2B services dla kancelarii w Polsce; NIE pelna instalacja.
+  - source: microsoft/agent-governance-toolkit
+    url: https://github.com/microsoft/agent-governance-toolkit
+    license: MIT
+    relationship: adaptation
+    note: >
+      Snapshot 2026-05-24. Pattern Shadow AI Discovery (skanowanie
+      nieautoryzowanych narzedzi AI w kancelarii), mapping
+      docs/OWASP-COMPLIANCE.md na OWASP Top 10 for Agentic Applications (2026)
+      oraz spec AGENT-SRE-GOVERNANCE-1.0 (RFC 2119) - ten ostatni jako
+      inspiracja, nie kopia: SRE jest dla 100+ agentow, kancelaria ma 1-5
+      use case'ow.
+  - source: hshadab/preflight-mike
+    url: https://github.com/hshadab/preflight-mike
+    license: MIT
+    relationship: adaptation
+    note: >
+      Snapshot 2026-05-24, autor Houman Shadab (Stanford CodeX Fellow). Wzor 5
+      polityk deploymentu legal AI z docs/mikeoss-legal-ai.md; polskie
+      sformulowanie, adaptacja na realia kancelaryjne PL i bramka iteracyjna -
+      od zera.
+  - source: ICME (docs.icme.io)
+    url: https://docs.icme.io
+    license: proprietary
+    relationship: pattern-only
+    note: >
+      Snapshot 2026-05-24. Wziety sam pomysl polityki traktowanej jak kod
+      (kompilowana i testowana przed deploymentem) oraz uklad endpointow
+      scenarios/feedback/refinePolicy/runPolicyTests jako wzor iteratora.
+      ICME NIE jest wpinane jako zaleznosc.
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 1.0.0
   project: MateMatic AI Governance Product
-  source_pattern: github/spec-kit (MIT) - constitution pattern only
   output_format: markdown + PDF
   target_audience: kancelarie 10-200 prawnikow
   pricing_range: 15-40k PLN (single deployment), 60-150k PLN (multi-kancelaria framework license)
