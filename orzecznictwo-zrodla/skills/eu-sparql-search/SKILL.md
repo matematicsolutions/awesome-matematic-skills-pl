@@ -8,7 +8,9 @@ description: >
   specific languages or formats, or build SPARQL queries against
   https://publications.europa.eu/webapi/rdf/sparql. Also trigger when the user asks
   about EU law programmatically, wants to query Cellar metadata, or mentions CDM
-  ontology, EUR-Lex, EU publications, or SPARQL + EU/legislation.
+  ontology, EUR-Lex, EU publications, or SPARQL + EU/legislation. Unlike the
+  verification and drafting skills, this one reaches out: your query goes to the EU
+  Publications Office endpoint, so phrase it in terms of the law, not of your matter.
 license: Apache-2.0
 allowed-tools: [WebFetch, Read]
 data-residency: local
