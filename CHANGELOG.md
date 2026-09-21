@@ -6,6 +6,14 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.09.21c] - 2026-09-21
+
+### Fixed
+
+- `akta-przeszukiwalne-pl` 0.1.1 - raport, znaczniki stron i komunikaty z polskimi znakami
+  (bylo "sprawdz oryginal", "Ten sam tekst w roznych plikach"). Wznowienie wyniku z 0.1.0
+  nadal rozpoznaje stary znacznik strony nieczytelnej.
+
 ## [2026.09.21b] - 2026-09-21
 
 ### Added

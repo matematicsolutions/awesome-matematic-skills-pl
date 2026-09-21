@@ -18,7 +18,7 @@ attribution:
       zyje kanon wraz z pomiarem i piecioma bezpiecznikami na ciche pulapki biblioteki.
 metadata:
   author: Wieslaw Mazur / MateMatic
-  version: 0.1.0
+  version: 0.1.1
   license: MIT
   cost: zero LLM, zero chmury (OCR lokalny)
   companion_skills: doc-intel-contract-pl, citation-grounding-pl

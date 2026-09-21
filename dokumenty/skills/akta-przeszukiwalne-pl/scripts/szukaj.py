@@ -18,9 +18,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DB = os.path.join(HERE, 'indeks.sqlite')
 PAGE_RE = re.compile(r'^===== (?:strona|page|página) (\d+) =====$', re.M)
 MSG = {
-    'pol': dict(built='indeks: {f} plikow, {p} stron -> {db}', empty='BLAD: zero plikow ({f}) albo stron ({p}) - indeks pusty',
+    'pol': dict(built='indeks: {f} plików, {p} stron -> {db}', empty='BŁĄD: zero plików ({f}) albo stron ({p}) - indeks pusty',
                 noidx='brak indeksu - uruchom: python szukaj.py --buduj', noq='puste zapytanie', page='s.',
-                hits='[{n} trafien{lim}]', lim=' (limit)'),
+                hits='[{n} trafień{lim}]', lim=' (limit)'),
     'eng': dict(built='index: {f} files, {p} pages -> {db}', empty='ERROR: zero files ({f}) or pages ({p}) - empty index',
                 noidx='no index - run: python szukaj.py --buduj', noq='empty query', page='p.',
                 hits='[{n} hits{lim}]', lim=' (limit)'),

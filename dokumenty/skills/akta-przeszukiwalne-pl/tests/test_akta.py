@@ -67,7 +67,7 @@ def test_ta_sama_tresc_w_innym_pliku_jest_nazwana(tmp_path, monkeypatch):
     rc, out, _ = _run(tmp_path, monkeypatch, spec, [("postanowienie.pdf", "a"), ("wniosek.pdf", "b")])
     raport = (out / "RAPORT.md").read_text(encoding="utf-8")
     assert rc == 10
-    assert "Ten sam tekst w roznych plikach" in raport and "ta sama tresc co" in raport
+    assert "Ten sam tekst w różnych plikach" in raport and "ta sama treść co" in raport
 
 
 def test_duplikat_bajtowy_czytany_raz(tmp_path, monkeypatch):
@@ -91,7 +91,7 @@ def test_obciecie_stron_to_blokada_a_nie_sukces(tmp_path, monkeypatch):
     rc, out, _ = _run(tmp_path, monkeypatch, spec, [("teczka.pdf", "a")])
     txt = (out / "teczka.txt").read_text(encoding="utf-8")
     assert rc == 20
-    assert "# KOMPLET" not in txt and txt.count("[STRONA POMINIETA") == 2
+    assert "# KOMPLET" not in txt and txt.count("[STRONA POMINIĘTA") == 2
 
 
 def test_wznowienie_pomija_gotowe_i_powtarza_niekompletne(tmp_path, monkeypatch):
@@ -243,3 +243,18 @@ def test_znaczniki_stron_wszystkich_jezykow_rozpoznawane():
         line = f"===== {t['page']} 7 ====="
         assert akta.PAGE_SPLIT.search(line), (lang, "akta.PAGE_SPLIT")
         assert page_re.search(line), (lang, "szukaj.PAGE_RE")
+
+
+def test_wznowienie_liczy_stary_znacznik_strony_nieczytelnej(tmp_path, monkeypatch):
+    """Wynik z 0.1.0 (znacznik bez polskich znakow) wznowiony nowym kodem nadal pokazuje
+    strone nieczytelna w raporcie - zmiana napisu nie moze jej ukryc."""
+    spec = {"a": (["strona jeden", ""], 2)}
+    rc, out, _ = _run(tmp_path, monkeypatch, spec, [("pismo.pdf", "a")])
+    f = out / "pismo.txt"
+    f.write_text(f.read_text(encoding="utf-8").replace("[STRONA NIECZYTELNA - sprawdź oryginał]",
+                                                      "[STRONA NIECZYTELNA - sprawdz oryginal]"), encoding="utf-8")
+    ext2 = FakeExt(spec)
+    monkeypatch.setattr(akta, "load_extractor", lambda t: ext2)
+    assert akta.run(str(tmp_path / "akta"), str(out), None, "pol") == 10
+    assert ext2.calls == 0, "gotowy dokument pominiety"
+    assert "| 2 |" in (out / "RAPORT.md").read_text(encoding="utf-8")

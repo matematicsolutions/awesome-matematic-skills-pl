@@ -31,6 +31,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 OK, UWAGI, BLOKADA = "ok", "uwagi", "blokada"
+# Znaczniki z wersji sprzed polskich znakow w raporcie (0.1.0 z 21.09) - wznowienie starego wyniku
+# nadal liczy takie strony jako nieczytelne.
+LEGACY_UNREADABLE = ("[STRONA NIECZYTELNA - sprawdz oryginal]",)
 EXIT = {OK: 0, UWAGI: 10, BLOKADA: 20}
 HEADER_SHA = re.compile(r"^# sha256 ([0-9a-f]{64})$", re.M)
 PAGE_SPLIT = re.compile(r"^===== (?:strona|page|página) \d+ =====$", re.M)
@@ -38,26 +41,26 @@ PAGE_SPLIT = re.compile(r"^===== (?:strona|page|página) \d+ =====$", re.M)
 T = {
     "pol": dict(
         page="strona", suffix="-tekst", report="RAPORT.md", complete="# KOMPLET",
-        unreadable="[STRONA NIECZYTELNA - sprawdz oryginal]", missing="[STRONA POMINIETA PRZEZ PARSER]",
-        note="OCR lokalny: liteparse {v}, 300 dpi, jezyk pol. Tekst sluzy do WYSZUKIWANIA - cytat porownaj z oryginalem.",
-        e_notdir="BLAD: {p} nie jest katalogiem",
-        e_inside="BLAD: katalog wyniku nie moze lezec w folderze akt - oryginaly zostaja nietkniete",
-        e_nopdf="BLAD: zero plikow PDF w {p} - nie ma czego przeczytac",
-        e_dll=("BLAD: Windows zablokowal biblioteke OCR (niepodpisane pliki pdfium.dll / _liteparse.pyd).\n"
-               "Najczestsza przyczyna: Smart App Control (Zabezpieczenia Windows -> Kontrola aplikacji i przegladarki).\n"
-               "Decyzje o zmianie ustawien podejmuje wlasciciel komputera."),
-        e_missing=("BLAD: brak biblioteki OCR. Zainstaluj:  python -m pip install liteparse==2.14.6\n"
+        unreadable="[STRONA NIECZYTELNA - sprawdź oryginał]", missing="[STRONA POMINIĘTA PRZEZ PARSER]",
+        note="OCR lokalny: liteparse {v}, 300 dpi, język pol. Tekst służy do WYSZUKIWANIA - cytat porównaj z oryginałem.",
+        e_notdir="BŁĄD: {p} nie jest katalogiem",
+        e_inside="BŁĄD: katalog wyniku nie może leżeć w folderze akt - oryginały zostają nietknięte",
+        e_nopdf="BŁĄD: zero plików PDF w {p} - nie ma czego przeczytać",
+        e_dll=("BŁĄD: Windows zablokował bibliotekę OCR (niepodpisane pliki pdfium.dll / _liteparse.pyd).\n"
+               "Najczęstsza przyczyna: Smart App Control (Zabezpieczenia Windows -> Kontrola aplikacji i przeglądarki).\n"
+               "Decyzję o zmianie ustawień podejmuje właściciel komputera."),
+        e_missing=("BŁĄD: brak biblioteki OCR. Zainstaluj:  python -m pip install liteparse==2.14.6\n"
                    "(python -m pip, nie samo pip - Smart App Control blokuje pip.exe)"),
-        r_title="# Raport: akta przeszukiwalne", r_src="Zrodlo", r_state="Stan",
-        r_warn="Tekst z OCR sluzy do wyszukiwania. Przed zacytowaniem porownaj fragment z oryginalem PDF.",
+        r_title="# Raport: akta przeszukiwalne", r_src="Źródło", r_state="Stan",
+        r_warn="Tekst z OCR służy do wyszukiwania. Przed zacytowaniem porównaj fragment z oryginałem PDF.",
         r_cols="| plik | stan | stron | strony nieczytelne | § naprawiony |",
-        r_dup="duplikat pliku", r_err="BLAD",
-        r_same_h="## Ten sam tekst w roznych plikach",
-        r_same_p=("Pliki roznia sie bajtami, ale maja IDENTYCZNY tekst. Czesto to ten sam dokument zapisany dwa razy - "
-                  "albo plik o mylacej nazwie, a dokumentu z nazwy w aktach brakuje. Sprawdz."),
-        r_same="ta sama tresc co", r_native="## Pliki z warstwa tekstowa (bez OCR)",
-        r_noidx="**Indeks wyszukiwarki NIE zostal zbudowany** - uruchom `python szukaj.py --buduj`.",
-        r_search="## Wyszukiwanie\n\n    python szukaj.py \"opinia bieglej\"\n    python szukaj.py \"art 190a\" --dokladnie\n",
+        r_dup="duplikat pliku", r_err="BŁĄD",
+        r_same_h="## Ten sam tekst w różnych plikach",
+        r_same_p=("Pliki różnią się bajtami, ale mają IDENTYCZNY tekst. Często to ten sam dokument zapisany dwa razy - "
+                  "albo plik o mylącej nazwie, a dokumentu z nazwy w aktach brakuje. Sprawdź."),
+        r_same="ta sama treść co", r_native="## Pliki z warstwą tekstową (bez OCR)",
+        r_noidx="**Indeks wyszukiwarki NIE został zbudowany** - uruchom `python szukaj.py --buduj`.",
+        r_search="## Wyszukiwanie\n\n    python szukaj.py \"opinia biegłej\"\n    python szukaj.py \"art 190a\" --dokladnie\n",
         states={OK: "OK", UWAGI: "UWAGI", BLOKADA: "BLOKADA"},
         rows={"gotowy": "gotowy", "wznowiony": "wznowiony", "niekompletny": "NIEKOMPLETNY"}),
     "eng": dict(
@@ -245,7 +248,7 @@ def run(src: str, out: str, tessdata: str | None, lang: str | None = None) -> in
         t0 = time.perf_counter()
         if done_sha == digest:
             row = {"plik": rel, "wynik": name, "stan": "wznowiony", "stron": len(pages),
-                   "nieczytelne": [i for i, p in enumerate(pages, 1) if p == t["unreadable"]],
+                   "nieczytelne": [i for i, p in enumerate(pages, 1) if p in (t["unreadable"], *LEGACY_UNREADABLE)],
                    "paragraf": None, "ocr": None}
         else:
             ext = ext or load_extractor(t)
