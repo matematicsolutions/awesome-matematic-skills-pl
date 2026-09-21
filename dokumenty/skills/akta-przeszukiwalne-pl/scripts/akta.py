@@ -3,12 +3,12 @@ stron + wyszukiwarka + raport. Wszystko lokalnie: OCR na CPU (LiteParse + Tesser
 
     python scripts/akta.py FOLDER                       # wynik obok: FOLDER-tekst/ (EN: FOLDER-text/)
     python scripts/akta.py FOLDER --wynik KATALOG       # alias: --out
-    python scripts/akta.py FOLDER --jezyk eng           # alias: --lang; domyslnie z scripts/DEFAULT_LANG
+    python scripts/akta.py FOLDER --jezyk eng           # alias: --lang (pol | eng | por); domyslnie z scripts/DEFAULT_LANG
     python scripts/akta.py FOLDER --tessdata KATALOG    # przypiete modele OCR (praca offline)
 
 Ten sam kod sluzy bliźniakom akta-przeszukiwalne-pl i searchable-case-files-en; rozni je tylko
 plik scripts/DEFAULT_LANG. Jezyk decyduje o modelu OCR, jezyku raportu i o naprawie znaku
-paragrafu: `$` przed liczba -> `§` TYLKO dla `pol` (w angielskich aktach `$ 5,000` to kwota).
+paragrafu: `$` przed liczba -> `§` TYLKO dla `pol` (w aktach EN i PT `$ 5,000` / `R$ 5.000` to kwota).
 
 Oryginaly nie sa zmieniane. Wynik: <dokument>.txt, RAPORT.md / REPORT.md, szukaj.py + indeks.sqlite.
 Przerwany przebieg mozna wznowic - gotowe dokumenty sa pomijane.
@@ -33,7 +33,7 @@ sys.path.insert(0, HERE)
 OK, UWAGI, BLOKADA = "ok", "uwagi", "blokada"
 EXIT = {OK: 0, UWAGI: 10, BLOKADA: 20}
 HEADER_SHA = re.compile(r"^# sha256 ([0-9a-f]{64})$", re.M)
-PAGE_SPLIT = re.compile(r"^===== (?:strona|page) \d+ =====$", re.M)
+PAGE_SPLIT = re.compile(r"^===== (?:strona|page|página) \d+ =====$", re.M)
 
 T = {
     "pol": dict(
@@ -84,6 +84,30 @@ T = {
         r_search="## Search\n\n    python szukaj.py \"expert report\"\n    python szukaj.py \"section 12\" --prefix\n",
         states={OK: "OK", UWAGI: "NOTES", BLOKADA: "BLOCKED"},
         rows={"gotowy": "done", "wznowiony": "resumed", "niekompletny": "INCOMPLETE"}),
+    "por": dict(
+        page="página", suffix="-texto", report="RELATORIO.md", complete="# COMPLETO",
+        unreadable="[PÁGINA ILEGÍVEL - confira o original]", missing="[PÁGINA IGNORADA PELO PARSER]",
+        note="OCR local: liteparse {v}, 300 dpi, idioma por. O texto serve para PESQUISA - confira toda citação com o original.",
+        e_notdir="ERRO: {p} não é uma pasta",
+        e_inside="ERRO: a pasta de saída não pode ficar dentro da pasta dos autos - os originais ficam intactos",
+        e_nopdf="ERRO: nenhum PDF em {p} - nada para ler",
+        e_dll=("ERRO: o Windows bloqueou a biblioteca de OCR (arquivos não assinados pdfium.dll / _liteparse.pyd).\n"
+               "Causa mais comum: Smart App Control (Segurança do Windows -> Controle de aplicativos e navegador).\n"
+               "Alterar essa configuração é decisão do dono do computador."),
+        e_missing=("ERRO: biblioteca de OCR não instalada. Instale:  python -m pip install liteparse==2.14.6\n"
+                   "(use python -m pip, não só pip - o Smart App Control bloqueia o pip.exe)"),
+        r_title="# Relatório: autos pesquisáveis", r_src="Origem", r_state="Status",
+        r_warn="O texto do OCR serve para pesquisa. Antes de citar, confira o trecho com o PDF original.",
+        r_cols="| arquivo | status | páginas | páginas ilegíveis | § corrigido |",
+        r_dup="arquivo duplicado", r_err="ERRO",
+        r_same_h="## Mesmo texto em arquivos diferentes",
+        r_same_p=("Os arquivos diferem nos bytes, mas têm texto IDÊNTICO. Muitas vezes é o mesmo documento salvo duas vezes - "
+                  "ou um arquivo com nome enganoso, e o documento que o nome promete não está nos autos. Confira."),
+        r_same="mesmo texto que", r_native="## Arquivos com camada de texto (sem OCR)",
+        r_noidx="**O índice de busca NÃO foi criado** - rode `python szukaj.py --buduj`.",
+        r_search="## Busca\n\n    python szukaj.py \"laudo pericial\"\n    python szukaj.py \"contrato\" --prefix\n",
+        states={OK: "OK", UWAGI: "OBSERVAÇÕES", BLOKADA: "BLOQUEADO"},
+        rows={"gotowy": "pronto", "wznowiony": "retomado", "niekompletny": "INCOMPLETO"}),
 }
 
 # `$` przed liczba w OCR `pol` to zle odczytany `§` (pomiar: 28/28 na wyroku SN).
@@ -293,7 +317,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("folder", help="folder z aktami / case folder (PDF, takze skany)")
     ap.add_argument("--wynik", "--out", dest="wynik", help="katalog wyniku / output folder")
-    ap.add_argument("--jezyk", "--lang", dest="jezyk", choices=sorted(T), help="pol | eng")
+    ap.add_argument("--jezyk", "--lang", dest="jezyk", choices=sorted(T), help="pol | eng | por")
     ap.add_argument("--tessdata", help="przypiety katalog modeli OCR *.traineddata")
     a = ap.parse_args(argv)
     try:

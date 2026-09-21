@@ -1,6 +1,6 @@
 """Wyszukiwarka po tekscie akt z OCR / search the OCR'd case files - lokalnie, SQLite FTS5, zero zaleznosci.
 
-    python szukaj.py --buduj [--lang pol|eng]   # indeks z *.txt w tym katalogu / build the index
+    python szukaj.py --buduj [--lang pol|eng|por]  # indeks z *.txt w tym katalogu / build the index
     python szukaj.py "opinia bieglej"           # fraza, kolejnosc slow dowolna / any word order
     python szukaj.py "biegl" --dokladnie        # PL: bez dopasowania odmiany
     python szukaj.py "contract" --prefix        # EN: dopasuj tez contracts, contractor
@@ -8,7 +8,7 @@
 Zwraca plik, strone, fragment. Wielkosc liter i znaki diakrytyczne nie maja znaczenia
 ("lodz" znajdzie "Łódź"): skladamy je sami, bo FTS5 `remove_diacritics` NIE sklada litery "ł".
 Jezyk zapisany w indeksie decyduje o odmianie: `pol` ucina 2 znaki koncowki od 6 liter
-("bieglej" -> "biegl*"), `eng` szuka dokladnych slow (chyba ze --prefix).
+("bieglej" -> "biegl*"), `eng` i `por` szukaja dokladnych slow (chyba ze --prefix).
 Tekst zapytania idzie do MATCH jako frazy w cudzyslowie - surowy tekst w MATCH to skladnia.
 Tekst pochodzi z OCR: przed cytowaniem porownaj z oryginalem PDF.
 """
@@ -16,7 +16,7 @@ import argparse, glob, os, re, sqlite3, sys, unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DB = os.path.join(HERE, 'indeks.sqlite')
-PAGE_RE = re.compile(r'^===== (?:strona|page) (\d+) =====$', re.M)
+PAGE_RE = re.compile(r'^===== (?:strona|page|página) (\d+) =====$', re.M)
 MSG = {
     'pol': dict(built='indeks: {f} plikow, {p} stron -> {db}', empty='BLAD: zero plikow ({f}) albo stron ({p}) - indeks pusty',
                 noidx='brak indeksu - uruchom: python szukaj.py --buduj', noq='puste zapytanie', page='s.',
@@ -24,6 +24,9 @@ MSG = {
     'eng': dict(built='index: {f} files, {p} pages -> {db}', empty='ERROR: zero files ({f}) or pages ({p}) - empty index',
                 noidx='no index - run: python szukaj.py --buduj', noq='empty query', page='p.',
                 hits='[{n} hits{lim}]', lim=' (limit)'),
+    'por': dict(built='índice: {f} arquivos, {p} páginas -> {db}', empty='ERRO: zero arquivos ({f}) ou páginas ({p}) - índice vazio',
+                noidx='sem índice - rode: python szukaj.py --buduj', noq='consulta vazia', page='p.',
+                hits='[{n} resultados{lim}]', lim=' (limite)'),
 }
 
 
@@ -60,7 +63,7 @@ def build(lang: str):
 def term(w: str, lang: str, exact: bool, prefix: bool) -> str:
     if lang == 'pol' and not exact and len(w) >= 4:
         return '"' + (w[:max(4, len(w) - 2)] if len(w) >= 6 else w) + '"*'
-    if lang == 'eng' and prefix and len(w) >= 3:
+    if lang in ('eng', 'por') and prefix and len(w) >= 3:
         return '"' + w + '"*'
     return '"' + w + '"'
 

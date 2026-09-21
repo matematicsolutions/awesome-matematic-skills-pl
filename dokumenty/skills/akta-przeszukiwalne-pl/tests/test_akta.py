@@ -218,3 +218,28 @@ def test_blizniaki_maja_identyczny_kod():
     for f in ("akta.py", "szukaj.py", "liteparse_extract.py"):
         a, b = (open(os.path.join(d, f), encoding="utf-8").read().replace("\r\n", "\n") for d in other)
         assert a == b, f"{f} rozjechal sie miedzy blizniakami"
+
+
+# --- Portugues (por): model OCR por, raport pt-BR, bez naprawy `$` -------------
+
+def test_por_raport_po_portugalsku_i_kwoty_nietkniete(tmp_path, monkeypatch):
+    spec = {"a": (["O valor é R$ 5.000 e $ 3 de taxa", "segunda página"], 2)}
+    rc, out, ext = _run(tmp_path, monkeypatch, spec, [("peticao.pdf", "a")], lang="por")
+    txt = (out / "peticao.txt").read_text(encoding="utf-8")
+    assert ext.lang == "por" and "R$ 5.000" in txt and "$ 3" in txt and "§" not in txt
+    assert "===== página 2 =====" in txt and "# COMPLETO" in txt
+    assert (out / "RELATORIO.md").exists()
+    r = subprocess.run([sys.executable, str(out / "szukaj.py"), "pagina"], capture_output=True, text=True, encoding="utf-8")
+    assert "p. 2" in r.stdout, "indeks musi rozpoznac znacznik 'página'"
+
+
+def test_znaczniki_stron_wszystkich_jezykow_rozpoznawane():
+    """Kazdy jezyk z akta.T musi miec znacznik strony rozpoznawany przez akta.py i szukaj.py -
+    inaczej indeks jest pusty, a wznowienie nie dziala (zlapane przy dodaniu por, 09-21)."""
+    import re as _re
+    src = open(os.path.join(SCRIPTS, "szukaj.py"), encoding="utf-8").read()
+    page_re = _re.compile(_re.search(r"PAGE_RE = re\.compile\(r'(.+?)', re\.M\)", src).group(1), _re.M)
+    for lang, t in akta.T.items():
+        line = f"===== {t['page']} 7 ====="
+        assert akta.PAGE_SPLIT.search(line), (lang, "akta.PAGE_SPLIT")
+        assert page_re.search(line), (lang, "szukaj.PAGE_RE")

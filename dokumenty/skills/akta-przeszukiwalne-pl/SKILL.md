@@ -40,9 +40,9 @@ python szukaj.py "opinia bieglej"
 ```
 
 Pierwsze uruchomienie pobiera polski model OCR (ok. 12 MB, tessdata_best, Apache-2.0).
-Praca offline: pobierz model raz i podaj katalog `--tessdata`. Akta po angielsku:
-`--jezyk eng` (wtedy bez naprawy `$`, bo w angielskich pismach to kwota). Wersja
-angielska skilla: `searchable-case-files-en`.
+Praca offline: pobierz model raz i podaj katalog `--tessdata`. Jezyk wybierasz wedlug
+DOKUMENTOW: akta po angielsku `--jezyk eng`, po portugalsku `--jezyk por` (w obu bez
+naprawy `$`, bo tam to kwota). Wersja angielska skilla: `searchable-case-files-en`.
 
 ## Co powstaje (obok folderu akt; oryginaly nietkniete)
 
