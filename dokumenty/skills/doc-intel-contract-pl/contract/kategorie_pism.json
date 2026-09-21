@@ -1,0 +1,29 @@
+{
+  "_opis": "Kategorie pism w teczce akt dla scripts/split_packet.py. Wzorzec regul z jerryjliu/docjev (Apache-2.0): stabilne id + opis CELU pisma. heading_patterns dopasowuja poczatek krotkiej linii naglowka (po usunieciu sygnatury). start_requires_sygnatura: naglowek otwiera nowe pismo tylko z 'Sygn. akt' na gorze strony - chroni przed sekcja UZASADNIENIE wewnatrz wyroku. Kolejnosc ma znaczenie: pierwsza pasujaca kategoria wygrywa.",
+  "categories": [
+    {"id": "wyrok", "description": "Rozstrzygniecie sprawy co do istoty, z sentencja.",
+     "heading_patterns": ["wyrok\\b"]},
+    {"id": "uzasadnienie", "description": "Pisemne motywy rozstrzygniecia, sporzadzone odrebnie od sentencji.",
+     "heading_patterns": ["uzasadnienie\\b"], "start_requires_sygnatura": true},
+    {"id": "postanowienie", "description": "Rozstrzygniecie kwestii procesowej lub sprawy w postepowaniu nieprocesowym.",
+     "heading_patterns": ["postanowienie\\b"]},
+    {"id": "uchwala", "description": "Uchwala skladu sadu rozstrzygajaca zagadnienie prawne.",
+     "heading_patterns": ["uchwa[lł]a\\b"]},
+    {"id": "zarzadzenie", "description": "Czynnosc przewodniczacego lub referendarza w toku sprawy.",
+     "heading_patterns": ["zarz[aą]dzenie\\b"]},
+    {"id": "protokol", "description": "Zapis przebiegu rozprawy, posiedzenia lub czynnosci.",
+     "heading_patterns": ["protok[oó][lł]\\b"]},
+    {"id": "akt_oskarzenia", "description": "Pismo oskarzyciela wnoszace sprawe karna do sadu.",
+     "heading_patterns": ["akt\\s+oskar[zż]enia\\b"]},
+    {"id": "srodek_zaskarzenia", "description": "Apelacja, zazalenie, kasacja, skarga - pismo zaskarzajace orzeczenie.",
+     "heading_patterns": ["apelacja\\b", "za[zż]alenie\\b", "kasacja\\b", "skarga\\s+kasacyjna\\b", "sprzeciw\\b"]},
+    {"id": "pozew_wniosek", "description": "Pismo wszczynajace lub wnoszace o czynnosc: pozew, wniosek, odpowiedz.",
+     "heading_patterns": ["pozew\\b", "wniosek\\b", "odpowied[zź]\\s+na\\b", "pismo\\s+procesowe\\b"]},
+    {"id": "opinia_bieglego", "description": "Opinia bieglego lub instytutu naukowego.",
+     "heading_patterns": ["opinia\\b"]},
+    {"id": "pelnomocnictwo", "description": "Umocowanie pelnomocnika lub obroncy.",
+     "heading_patterns": ["pe[lł]nomocnictwo\\b", "upowa[zż]nienie\\b"]},
+    {"id": "notatka", "description": "Notatka urzedowa lub sluzbowa.",
+     "heading_patterns": ["notatka\\b"]}
+  ]
+}

@@ -38,6 +38,18 @@ RUNG_ANYDOC = "1.5/anydoc"
 RUNG_MARKITDOWN = "2/markitdown"
 RUNG_OPENDATALOADER = "3/opendataloader-pdf"
 RUNG_OCR = "4/chandra-ocr"
+RUNG_OCR_CPU = "4/liteparse-ocr-cpu"
+
+
+def _ocr_cpu_available() -> bool:
+    """Czy jest OCR na CPU (liteparse). find_spec - bez ladowania biblioteki natywnej.
+
+    Zmienna DOC_INTEL_NO_CPU_OCR=1 wylacza szczebel (test sciezki bez OCR i
+    maszyny, na ktorych OCR ma byc swiadomie decyzja czlowieka)."""
+    if os.environ.get("DOC_INTEL_NO_CPU_OCR") == "1":
+        return False
+    import importlib.util  # noqa: PLC0415
+    return importlib.util.find_spec("liteparse") is not None
 RUNG_VISION = "5/Read (vision)"
 
 # Formaty, ktorych szczeble 1-3 NIE otwieraja, a anydoc otwiera (zmierzone:
@@ -123,15 +135,26 @@ def check_pdf(path: str) -> dict:
         })
 
     if usable == 0:
-        # Pelny skan. Na tej maszynie brak GPU -> to jest decyzja czlowieka.
+        if _ocr_cpu_available():
+            # Pelny skan, ale OCR na CPU jest zainstalowany (pomiar 09-21: ~2 s/str.,
+            # CER 0,5% na czystym skanie 300 dpi, 3,5% na zdegradowanym). Tekst z OCR
+            # wolno czytac, NIE wolno cytowac bez weryfikacji -> degraded, nie ok.
+            return _verdict(path, "pdf", STATUS_DEGRADED, reasons, RUNG_OCR_CPU,
+                            "pelny skan -> liteparse_extract.py | normalize.py --engine liteparse. "
+                            "Tekst z OCR: cytuj dopiero po weryfikacji (kolejka review_required)",
+                            total, usable, conf)
+        # Pelny skan bez OCR na CPU; Chandra wymaga GPU -> decyzja czlowieka.
         return _verdict(path, "pdf", STATUS_FAILED, reasons, RUNG_OCR,
-                        "pelny skan: warstwy tekstowej NIE MA. Chandra wymaga GPU - eskalacja do operatora",
+                        "pelny skan: warstwy tekstowej NIE MA. Chandra wymaga GPU - eskalacja do operatora "
+                        "albo pip install liteparse==2.14.6 (OCR na CPU)",
                         total, usable, conf)
 
     if need_ocr:
         # Najgrozniejszy przypadek i ten, ktorego dzis nikt nie lapie: dokument
         # mieszany wyglada na kompletny po kazdym konwerterze tekstowym.
+        ocr_hint = (f" Strony do OCR -> {RUNG_OCR_CPU}." if _ocr_cpu_available() else "")
         return _verdict(path, "pdf", STATUS_DEGRADED, reasons, RUNG_OPENDATALOADER,
+                        ocr_hint.strip() + (" " if ocr_hint else "") +
                         f"dokument MIESZANY: {usable} stron ekstrahowalnych, {len(need_ocr)} do OCR. "
                         "Kazde wyjscie tekstowe bedzie NIEPELNE - nie cytuj bez domkniecia skanow",
                         total, usable, conf)

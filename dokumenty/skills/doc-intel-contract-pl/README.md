@@ -25,6 +25,7 @@ jednego i od razu odpowiada na trzy pytania audytu LegalTech:
 | `vlm-html` | dowolny VLM z promptem `references/prompt_vlm_ocr_pl.md` | bbox + nasze etykiety (w tym podpis i pieczątka), bez confidence |
 | `gaius` | OCR PATRONa, Gaius-Lex `/api/v1/ocr/poll` | tekst + wariant silnika (default / google_doc_ai) |
 | `pdf-inspector` | `scripts/pdfi_extract.py` (PDF tekstowy) | bbox + confidence + font/bold + **maszynowy powód OCR per strona** |
+| `liteparse` | `scripts/liteparse_extract.py` (skan, OCR na CPU) | bbox + pewność OCR per słowo + mianownik stron + naprawa `§` z flagą |
 | `pdftotext` | pdftotext (plain) | tekst (partial, bez bbox) |
 
 Silnik, który nie dostarcza bbox lub confidence, degraduje się łagodnie: pole
@@ -45,6 +46,12 @@ cd doc-intel-contract-pl   # katalog tego skilla
 
 # krok 0: bramka routingu - czy dokument w ogole da sie przeczytac i czym
 python scripts/routing_gate.py AKTA.pdf --pretty        # exit 0=ok 10=degraded 20=failed
+
+# skan -> OCR na CPU (liteparse) -> kontrakt
+python scripts/liteparse_extract.py SKAN.pdf > skan.json && python scripts/normalize.py --engine liteparse skan.json
+
+# teczka -> pisma (lokalnie, bez LLM), opcjonalnie PDF per pismo
+python scripts/split_packet.py TECZKA.pdf --pretty --eksport wynik/
 
 # PDF tekstowy -> kontrakt z bbox, bez schodzenia na OCR
 python scripts/pdfi_extract.py AKTA.pdf | python scripts/normalize.py --engine pdf-inspector -
@@ -75,7 +82,7 @@ konstytucji projektu).
 python -m unittest discover -s tests -v
 ```
 
-57 testów, zero zależności (Python 3.11+ stdlib). Zero sieci, zero LLM w ścieżce
+229 testów; ścieżka normalizacji bez zależności (Python 3.11+ stdlib). Zero sieci, zero LLM w ścieżce
 normalizacji.
 
 ## Governance i spec

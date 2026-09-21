@@ -6,6 +6,18 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.09.21] - 2026-09-21
+
+### Added
+
+- `doc-intel-contract-pl` 0.5.0 - OCR skanow na CPU (`liteparse_extract.py`, `--engine liteparse`,
+  LiteParse Apache-2.0) z bezpiecznikami na piec cichych pulapek biblioteki; bramka routingu
+  kieruje pelny skan na ten szczebel zamiast eskalacji. Lokalny podzial teczki na pisma
+  (`split_packet.py`, wzorzec DocJev Apache-2.0): decyzja per strona z jawnymi sygnalami,
+  kazda strona dokladnie raz. Pomiar na danych publicznych, dane testowe syntetyczne.
+- NOTICE: `run-llama/liteparse` i `jerryjliu/docjev` (38 projektow zrodlowych).
+- Plugin `dokumenty` 1.8.0.
+
 ## [2026.09.16c] - 2026-09-16
 
 ### Added

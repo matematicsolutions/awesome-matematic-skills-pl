@@ -123,3 +123,41 @@ def test_pdf_smieciowy_daje_failed_a_nie_wyjatek(tmp_path):
     p.write_bytes(b"%PDF-1.7\nto nie jest prawdziwy pdf\n")
     v = rg.check(str(p))
     assert v["status"] == rg.STATUS_FAILED
+
+
+# --- Szczebel OCR na CPU (liteparse, 2026-09-21) -----------------------------
+
+class _FakeClassification:
+    page_count = 3
+    pages_needing_ocr = [0, 1, 2]   # 0-indeksowane jak w pdf-inspector
+    confidence = 0.95
+    pdf_type = "scanned"
+
+
+def _fake_scan(monkeypatch, tmp_path, cpu_ocr: bool):
+    import types
+    fake = types.ModuleType("pdf_inspector")
+    fake.classify_pdf = lambda p: _FakeClassification()
+    monkeypatch.setitem(sys.modules, "pdf_inspector", fake)
+    monkeypatch.setattr(rg, "_ocr_cpu_available", lambda: cpu_ocr)
+    f = tmp_path / "skan.pdf"
+    f.write_bytes(b"%PDF-1.4 fake")
+    return rg.check(str(f))
+
+
+def test_pelny_skan_z_ocr_na_cpu_idzie_na_szczebel_liteparse(monkeypatch, tmp_path):
+    v = _fake_scan(monkeypatch, tmp_path, cpu_ocr=True)
+    assert v["status"] == "degraded", "tekst z OCR: czytac tak, cytowac po weryfikacji"
+    assert v["route"]["rung"] == rg.RUNG_OCR_CPU
+
+
+def test_pelny_skan_bez_ocr_na_cpu_nadal_failed(monkeypatch, tmp_path):
+    """Kontrola czerwona: bez liteparse nic sie nie zmienia - eskalacja, nie zgadywanie."""
+    v = _fake_scan(monkeypatch, tmp_path, cpu_ocr=False)
+    assert v["status"] == "failed"
+    assert v["route"]["rung"] == rg.RUNG_OCR
+
+
+def test_zmienna_wylacza_szczebel_cpu(monkeypatch):
+    monkeypatch.setenv("DOC_INTEL_NO_CPU_OCR", "1")
+    assert rg._ocr_cpu_available() is False

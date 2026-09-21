@@ -37,7 +37,8 @@
             "chandra",
             "gaius",
             "vlm-html",
-            "pdf-inspector"
+            "pdf-inspector",
+            "liteparse"
           ]
         },
         "engine_variant": {

@@ -23,6 +23,7 @@ from adapters import chandra as chd  # noqa: E402
 from adapters import gaius as gai  # noqa: E402
 from adapters import vlm_html as vlm  # noqa: E402
 from adapters import pdf_inspector as pdfi  # noqa: E402
+from adapters import liteparse as ltp  # noqa: E402
 import degeneracja  # noqa: E402
 import pii_flags  # noqa: E402
 import signature  # noqa: E402
@@ -44,11 +45,12 @@ def main(argv=None) -> int:
     ap.add_argument("input", help="plik wejsciowy lub '-' dla stdin")
     ap.add_argument("--engine", required=True,
                     choices=["opendataloader", "pdftotext", "chandra", "gaius", "vlm-html",
-                             "pdf-inspector"],
+                             "pdf-inspector", "liteparse"],
                     help="silnik zrodlowy (gaius = OCR PATRONa /ocr/poll; "
                          "vlm-html = dowolny VLM z prompt-kontraktem "
                          "references/prompt_vlm_ocr_pl.md; pdf-inspector = JSON "
-                         "z scripts/pdfi_extract.py, szczebel 1.5)")
+                         "z scripts/pdfi_extract.py, szczebel 1.5; liteparse = JSON "
+                         "z scripts/liteparse_extract.py, OCR skanow na CPU)")
     ap.add_argument("--threshold", type=float, default=0.85,
                     help="prog confidence-gating (domyslnie 0.85)")
     ap.add_argument("--pretty", action="store_true", help="wyjscie z wcieciami")
@@ -99,6 +101,18 @@ def main(argv=None) -> int:
                 print("OSTRZEZENIE: nieznane wymiary strony (nieczytelny /MediaBox) "
                       "- bloki bez bbox, GROUNDING CYTATU niedostepny dla tego dokumentu",
                       file=sys.stderr)
+        elif args.engine == "liteparse":
+            data = json.loads(raw.decode("utf-8"))
+            blocks = ltp.to_blocks(data)
+            got, total = ltp.coverage(data)
+            pages = total
+            if got != total:
+                # Biblioteka domyslnie obcina do 1000 stron bez bledu (09-21).
+                print(f"OSTRZEZENIE: zwrocono {got} z {total} stron - brakujace sa w kontrakcie "
+                      f"jako bloki `missing_page`, wynik NIEPELNY", file=sys.stderr)
+            unreadable = sum(1 for b in blocks if "unreadable" in b.flags)
+            if unreadable:
+                print(f"OSTRZEZENIE: {unreadable} stron z obrazem i bez odczytanego tekstu", file=sys.stderr)
         elif args.engine == "vlm-html":
             text = raw.decode("utf-8", errors="replace")
             blocks = vlm.to_blocks(text)

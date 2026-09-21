@@ -2,7 +2,8 @@
 name: doc-intel-contract-pl
 description: >
   Normalizuje wyjscie darmowego RODO-safe stacku OCR/PDF (opendataloader-pdf,
-  pdftotext, Chandra OCR, OCR PATRONa/Gaius-Lex) do jednego audytowalnego kontraktu
+  pdftotext, Chandra OCR, LiteParse - OCR skanow na CPU, OCR PATRONa/Gaius-Lex)
+  do jednego audytowalnego kontraktu
   {block_type, bbox, text, confidence} inspirowanego architektura Mistral OCR 4
   (idea, nie wagi - model zamkniety=SKIP). Daje trzy rzeczy naraz: confidence-gating
   (region niskiej pewnosci -> kolejka human-in-the-loop, reszta auto-approve),
@@ -12,7 +13,9 @@ description: >
   Python stdlib. Uzywaj gdy: "znormalizuj OCR", "kontrakt dokumentu", "ktore
   bloki do przegladu", "confidence gating", "przygotuj redakcje PII", "bbox do
   cytatu", "wyjscie opendataloader do JSON", "human-in-the-loop dla skanu".
-  Komplementarny do citation-grounding-pl (konsument kontraktu) i drabinki PDF.
+  Dzieli teczke akt na pisma lokalnie (split_packet.py, bez LLM). "podziel teczke",
+  "rozbij akta na pisma", "OCR skanu bez GPU". Komplementarny do citation-grounding-pl
+  (konsument kontraktu) i drabinki PDF.
 attribution:
   - source: Mistral OCR 4 (Mistral AI)
     url: https://mistral.ai/news/mistral-ocr
@@ -45,6 +48,31 @@ attribution:
       pelny skan wykryty w milisekundach (pewnosc 0.95), wielostronicowy PDF
       tekstowy w kilkudziesieciu ms. Zamyka dziure szczebla 4 drabinki, gdzie decyzja
       "czy to skan" byla dotad ocena oka ludzkiego.
+  - source: run-llama/liteparse
+    url: https://github.com/run-llama/liteparse
+    license: Apache-2.0
+    relationship: dependency
+    note: >
+      Zaleznosc opcjonalna (PyPI `liteparse`, przypieta 2.14.6) uzywana WYLACZNIE
+      przez `scripts/liteparse_extract.py` - szczebel OCR skanow na CPU (Tesseract
+      w srodku, bez chmury). Zmierzone 2026-09-21: CER 0,5% na skanie 300 dpi
+      publicznego wyroku SN, 3,5% na zdegradowanym, ogonki 431/431, ~2 s/str. na
+      CPU. Piec pulapek wpisanych w ekstraktor jako
+      bezpieczniki (limit 1000 stron obcinajacy po cichu, markdown wycinajacy
+      sygnature, DPI, pobieranie modelu w locie, `§` czytany jako `$`). Modele
+      jezyka (tessdata_best, Apache-2.0) przypinane `--tessdata`.
+  - source: jerryjliu/docjev
+    url: https://github.com/jerryjliu/docjev
+    license: Apache-2.0
+    relationship: pattern-only
+    note: >
+      NIE jest zaleznoscia. Wzorzec dla `scripts/split_packet.py`: podzial teczki
+      jako decyzja dla kazdej strony osobno (kategoria + "czy strona N zaczyna nowe pismo"), a nie
+      prosba o liste segmentow; niezmiennik "kazda strona dokladnie raz"; pusty
+      odczyt to nie pusta strona; reguly kategorii jako id + opis celu pisma.
+      DocJev pyta Jeva (hostowany model decyzyjny TypeSafe) - u nas silnik jest
+      lokalny i deterministyczny,
+      bo tekst akt nie moze opuscic maszyny kancelarii. Kod napisany od zera.
   - source: firecrawl/anydoc
     url: https://github.com/firecrawl/anydoc
     license: MIT
@@ -77,7 +105,7 @@ attribution:
       `tests/test_architecture_doc.py`). Wziete idee, nie zaleznosc; kod od zera.
 metadata:
   author: Wieslaw Mazur / MateMatic
-  version: 0.4.0
+  version: 0.5.0
   scope: warstwa normalizujaca stack OCR/PDF -> kontrakt wyjscia (zero-cloud)
   cost: zero LLM (deterministyczna normalizacja)
   license: MIT
@@ -106,7 +134,7 @@ sa zakotwiczone testem `tests/test_dokumentacja_zakotwiczona.py` (D1).
 {
   "doc_id": "<sha256 wejscia>",
   "contract_version": "1.2.0",
-  "source": {"path": "...", "engine": "opendataloader|pdftotext|chandra|gaius|vlm-html|pdf-inspector", "engine_variant": "default|google_doc_ai|null", "pages": N},
+  "source": {"path": "...", "engine": "opendataloader|pdftotext|chandra|gaius|vlm-html|pdf-inspector|liteparse", "engine_variant": "default|google_doc_ai|null", "pages": N},
   "blocks": [
     {"id": "b0001", "page": 1, "bbox": [x0,y0,x1,y1]|null,
      "block_type": "title|paragraph|table|list|equation|signature|stamp|figure|header|footer|unknown",
@@ -217,16 +245,58 @@ python scripts/routing_gate.py *.pdf *.docx --quiet   # tylko to, co nie jest ok
 Lapie trzy rzeczy, ktorych zaden konwerter nie zglasza:
 - **PDF mieszany** (czesc stron to skany) - kazde wyjscie tekstowe bedzie NIEPELNE,
   a wyglada na kompletne. Status `degraded` + numery stron do OCR.
-- **Pelny skan** - `failed`, eskalacja (Chandra wymaga GPU, ktorego tu nie ma).
+- **Pelny skan** - z zainstalowanym `liteparse`: `degraded` + szczebel
+  `4/liteparse-ocr-cpu` (tekst z OCR czytac tak, cytowac po weryfikacji). Bez niego:
+  `failed`, eskalacja (Chandra wymaga GPU). `DOC_INTEL_NO_CPU_OCR=1` wylacza szczebel.
 - **Uszkodzona czesc OOXML** - konwerter pominie ja bez slowa (zmierzone na anydoc:
   uszkodzony `chart1.xml` = exit 0, stderr pusty, znika cala tabela). Bramka nazywa
   czesc PRZED konwersja.
 
 PDF wymaga `pip install pdf-inspector` (MIT). Jego brak = `failed`, nigdy ciche `ok`.
 
+## Skany na CPU - `liteparse_extract.py` + `--engine liteparse`
+```bash
+python scripts/liteparse_extract.py SKAN.pdf --tessdata KATALOG_TESSDATA > skan.json   # exit 20 = niekompletny
+python scripts/normalize.py --engine liteparse skan.json --pretty
+```
+Ekstraktor porownuje `total_pages` z liczba zwroconych stron (biblioteka domyslnie
+obcina do 1000 stron bez bledu - na dluzszym PDF jedynym sladem jest `total_pages`). Adapter:
+brakujaca strona = blok `missing_page`, raster bez tekstu = `unreadable`, `$` przed
+liczba w OCR = `§` z flaga `repaired_paragraf`, pewnosc bloku = 10. percentyl
+pewnosci slow (+ `weak_word`), tekst natywny = pewnosc `null` + `native_text`.
+Bloki ukladu biblioteki uzywane tylko wtedy, gdy nie gubia zadnej litery ani cyfry
+strony (`residual_alnum`); inaczej wlasne grupowanie + `layout_blocks_lossy`.
+
+## Podzial teczki na pisma - `split_packet.py`
+```bash
+python scripts/split_packet.py TECZKA.pdf --pretty                 # exit 0/10/20
+python scripts/split_packet.py strony.json --reguly contract/kategorie_pism.json
+python scripts/split_packet.py TECZKA.pdf --eksport wynik/         # PDF per pismo, hash zrodla sprawdzany
+```
+Lokalnie, bez LLM. Decyzja per strona z jawnymi sygnalami (naglowek typu pisma,
+formula "W imieniu RP", sygnatura w pierwszej linii, zmiana sygnatury, numer
+strony, kontynuacja zdania, blok podpisow) - dowod w `page_decisions` jest
+prawdziwy, bo silnik jest deterministyczny. Niezmienniki: kazda strona dokladnie
+raz, pusta strona nie otwiera pisma, strona nieczytelna = `failed`, dwa sasiednie
+pisma tej samej kategorii = dwa segmenty. Decyzje blisko progu i naglowki bez
+sygnatury ida do przegladu (`degraded`).
+
+Pomiar 2026-09-21 na teczkach zlozonych z publicznych orzeczen (granice znane z
+konstrukcji; strojenie na dev, raport na odlozonym test): patrz "Status / roadmap".
+Granica dowodu: teczki sa syntetyczne (tekst orzeczen dzielony na strony), bez
+szumu OCR i bez pism stron (pozwy, pelnomocnictwa) - to nie jest pomiar na
+prawdziwej teczce. **Na zeskanowanych aktach silnik mocno zaniza liczbe pism**
+(przebieg 2026-09-21): protokoly, notatki i pisma organow nie maja struktury
+orzeczenia, wiec sygnaly z tej listy na nich nie odpalaja. Wynik na aktach to
+szkic granic do przejrzenia, nie podzial.
+
+Pokrycie liczy sie od mianownika ZRODLA: sciezka PDF bierze `total_pages` z
+`liteparse_extract.py`, a `split(pages, rules, total_pages=N)` daje `failed`,
+gdy parser zwrocil mniej stron, niz ma plik.
+
 ## Miejsce w drabince PDF
 Ten skill jest warstwa PO silniku OCR, PRZED groundingiem/redakcja:
-`routing_gate -> (pdftotext|anydoc|opendataloader|Chandra) -> doc-intel-contract-pl -> {gating do czlowieka | redaction_candidates | citation-grounding-pl}`
+`routing_gate -> (pdftotext|anydoc|opendataloader|liteparse|Chandra) -> [split_packet] -> doc-intel-contract-pl -> {gating do czlowieka | redaction_candidates | citation-grounding-pl}`
 
 ## Granica governance (Article III)
 Skill PRZYGOTOWUJE: kolejke `review_required`, liste `redaction_candidates`,
@@ -269,7 +339,24 @@ python scripts/mask_for_model.py < fragment.txt > fragment.dla_modelu.txt
   i `citation-grounding-pl` (Node), gdzie ta sama regula miala wlasna
   implementacje i **szesc z osmiu** tych samych luk. Inspiracja: warstwa
   proweniencji docling-graph (MIT/IBM) - wziete idee, nie zaleznosc.
-- **205 testow zielonych** (contract+pii+grounding+chandra+chandra2+gaius+signature+vlm-html+degeneracja+evidence+konformancja+kotwica dokumentacji). Zero-dep Python stdlib.
+- **229 testow zielonych** (contract+pii+grounding+chandra+chandra2+gaius+signature+vlm-html+degeneracja+evidence+konformancja+kotwica dokumentacji+liteparse+split_packet). Sciezka normalizacji zero-dep Python stdlib; `liteparse` tylko w ekstraktorze.
+- **Pomiar OCR 2026-09-21 (liteparse, publiczny wyrok SN).** Odsetek blednych znakow:
+  0,5% (skan 300 dpi), 1,3% (bez jawnego DPI), 3,5% (skan pogorszony). Znak `§`
+  odzyskany 28/28, zero falszywych trafien.
+- **Pomiar podzialu teczek 2026-09-21.** Teczki zlozone z publicznych orzeczen,
+  30 na wariant, zbior test odlozony od strojenia. Dokladnie podzielone 80/90
+  (skrzynka mieszana 28/30, sasiednie pisma tej samej kategorii 25/30, wyrok +
+  uzasadnienie tej samej sprawy 27/30). Precyzja granic 0,95-1,0, czulosc 0,94-1,0.
+- **Porownanie z Jevem 2026-09-21** (hostowany model, ktorego uzywa DocJev), te same
+  90 teczek, nasze kategorie i polskie orzeczenia - nie reguly i dane autora DocJev.
+  Samo pytanie "czy strona zaczyna nowe pismo": 63/90 dokladnie, precyzja 0,99,
+  czulosc 0,91 (2 falszywe granice na 1720 kontynuacji). Z regula DocJev "segment on
+  a category change or source-document boundary": 0/90 - kategoria strony myli sie
+  (strony wyrokow oznaczone jako uzasadnienie), a kazda pomylka tnie teczke. Wniosek
+  dla tego skilla: granice z pytania o granice, kategoria raz na pismo. Koszt 0,15 USD.
+- **Czego pomiar nie dowodzi.** Zbior test uzyto dwa razy (druga wersja po jednej
+  poprawce z testu jednostkowego; obie daly 80/90). Z blednych podzialow 3/10 wyszly
+  ze statusem `ok`, wiec trojstan nie lapie jeszcze wszystkich wlasnych pomylek.
 - **Bramka kotwicy dokumentacji** (`tests/test_dokumentacja_zakotwiczona.py`):
   SKILL.md jest CZYTANY i konfrontowany z kodem - wersja kontraktu, enum
   silnikow, obie tabele sil, kody wyjscia werdyktu, flagi CLI, sciezki plikow
