@@ -18,7 +18,7 @@ attribution:
       zyje kanon wraz z pomiarem i piecioma bezpiecznikami na ciche pulapki biblioteki.
 metadata:
   author: Wieslaw Mazur / MateMatic
-  version: 0.1.1
+  version: 0.1.2
   license: MIT
   cost: zero LLM, zero chmury (OCR lokalny)
   companion_skills: doc-intel-contract-pl, citation-grounding-pl
@@ -34,10 +34,15 @@ strone, wiec kazde trafienie mozna od razu sprawdzic w oryginale.
 
 ```bash
 python -m pip install liteparse==2.14.6
+python scripts/akta.py --sprawdz
 python scripts/akta.py "C:/Sprawy/II K 123-24/akta"
 cd "C:/Sprawy/II K 123-24/akta-tekst"
 python szukaj.py "opinia bieglej"
 ```
+
+`--sprawdz` w kilka sekund ocenia środowisko: Python, bibliotekę OCR (czy Windows pozwala ją
+załadować), Smart App Control (tylko odczyt), model języka i miejsce na dysku. Wynik: OK, UWAGI
+albo BLOKADA (kod 0/10/20). Warto go uruchomić, zanim zacznie się pracę na dużych aktach.
 
 Pierwsze uruchomienie pobiera polski model OCR (ok. 12 MB, tessdata_best, Apache-2.0).
 Praca offline: pobierz model raz i podaj katalog `--tessdata`. Jezyk wybierasz wedlug

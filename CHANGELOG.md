@@ -6,6 +6,14 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.09.21d] - 2026-09-21
+
+### Added
+
+- `akta-przeszukiwalne-pl` 0.1.2 - `--sprawdz`: kontrola srodowiska przed praca (Python, biblioteka
+  OCR z testem dymnym, Smart App Control tylko do odczytu, model jezyka, miejsce na dysku), trojstan
+  0/10/20. Wzorzec `doctor --smoke` z jerryjliu/docjev.
+
 ## [2026.09.21c] - 2026-09-21
 
 ### Fixed

@@ -5,6 +5,7 @@ stron + wyszukiwarka + raport. Wszystko lokalnie: OCR na CPU (LiteParse + Tesser
     python scripts/akta.py FOLDER --wynik KATALOG       # alias: --out
     python scripts/akta.py FOLDER --jezyk eng           # alias: --lang (pol | eng | por); domyslnie z scripts/DEFAULT_LANG
     python scripts/akta.py FOLDER --tessdata KATALOG    # przypiete modele OCR (praca offline)
+    python scripts/akta.py --sprawdz [--jezyk eng]      # kontrola srodowiska przed praca (alias: --check)
 
 Ten sam kod sluzy bliźniakom akta-przeszukiwalne-pl i searchable-case-files-en; rozni je tylko
 plik scripts/DEFAULT_LANG. Jezyk decyduje o modelu OCR, jezyku raportu i o naprawie znaku
@@ -316,9 +317,149 @@ def write_report(out: str, src: str, rows: list, index_rc: int, t: dict) -> str:
     return status
 
 
+# --- Kontrola srodowiska przed praca (--sprawdz), wzorzec `doctor --smoke` z jerryjliu/docjev --------
+
+D = {
+    "pol": dict(head="Kontrola środowiska (akta przeszukiwalne)", py="Python", lib="biblioteka OCR", smoke="test dymny",
+                sac="Smart App Control", model="model języka {l}", disk="miejsce na dysku",
+                py_bad="wymagany Python 3.10 lub nowszy, jest {v}", lib_ok="liteparse {v}",
+                lib_dll="Windows zablokował bibliotekę OCR - najczęściej Smart App Control",
+                lib_none="brak - zainstaluj: python -m pip install liteparse==2.14.6",
+                smoke_ok="biblioteka ładuje się i czyta PDF", smoke_bad="biblioteka nie przeczytała testowego PDF: {e}",
+                sac_on="włączony; test dymny przeszedł, więc tu nie przeszkadza",
+                sac_on_bad="włączony - prawdopodobna przyczyna blokady; decyzja o ustawieniu należy do właściciela komputera",
+                sac_eval="w trybie oceny - może zacząć blokować", sac_off="wyłączony", sac_na="nie dotyczy (to nie Windows)",
+                model_ok="jest ({p})", model_dl="brak - pobierze się przy pierwszym użyciu (12-15 MB, potrzebny internet)",
+                model_pin="brak w przypiętym katalogu {p} - bez internetu OCR nie ruszy",
+                disk_ok="{g} GB wolne", disk_low="tylko {g} GB wolne - przy dużych aktach może zabraknąć",
+                verdict={OK: "Stan: OK - można zaczynać.", UWAGI: "Stan: UWAGI - można zaczynać, przeczytaj uwagi.",
+                         BLOKADA: "Stan: BLOKADA - najpierw usuń przyczynę."}),
+    "eng": dict(head="Environment check (searchable case files)", py="Python", lib="OCR library", smoke="smoke test",
+                sac="Smart App Control", model="language model {l}", disk="disk space",
+                py_bad="Python 3.10 or newer required, found {v}", lib_ok="liteparse {v}",
+                lib_dll="Windows blocked the OCR library - most often Smart App Control",
+                lib_none="missing - install: python -m pip install liteparse==2.14.6",
+                smoke_ok="the library loads and reads a PDF", smoke_bad="the library could not read the test PDF: {e}",
+                sac_on="on; the smoke test passed, so it does not interfere here",
+                sac_on_bad="on - the likely cause of the block; the setting is the computer owner's decision",
+                sac_eval="in evaluation mode - it may start blocking", sac_off="off", sac_na="not applicable (not Windows)",
+                model_ok="present ({p})", model_dl="missing - downloads on first use (12-15 MB, needs internet)",
+                model_pin="missing from the pinned folder {p} - OCR will not start offline",
+                disk_ok="{g} GB free", disk_low="only {g} GB free - may run out on large case files",
+                verdict={OK: "Status: OK - ready to start.", UWAGI: "Status: NOTES - you can start, read the notes.",
+                         BLOKADA: "Status: BLOCKED - fix the cause first."}),
+    "por": dict(head="Verificação do ambiente (autos pesquisáveis)", py="Python", lib="biblioteca de OCR", smoke="teste rápido",
+                sac="Smart App Control", model="modelo de idioma {l}", disk="espaço em disco",
+                py_bad="é preciso Python 3.10 ou mais novo, encontrado {v}", lib_ok="liteparse {v}",
+                lib_dll="o Windows bloqueou a biblioteca de OCR - em geral pelo Smart App Control",
+                lib_none="ausente - instale: python -m pip install liteparse==2.14.6",
+                smoke_ok="a biblioteca carrega e lê um PDF", smoke_bad="a biblioteca não leu o PDF de teste: {e}",
+                sac_on="ativado; o teste rápido passou, então aqui não atrapalha",
+                sac_on_bad="ativado - causa provável do bloqueio; a configuração é decisão do dono do computador",
+                sac_eval="em modo de avaliação - pode começar a bloquear", sac_off="desativado", sac_na="não se aplica (não é Windows)",
+                model_ok="presente ({p})", model_dl="ausente - será baixado no primeiro uso (12-15 MB, precisa de internet)",
+                model_pin="ausente na pasta fixada {p} - sem internet o OCR não inicia",
+                disk_ok="{g} GB livres", disk_low="só {g} GB livres - pode faltar em autos grandes",
+                verdict={OK: "Status: OK - pode começar.", UWAGI: "Status: OBSERVAÇÕES - pode começar, leia as observações.",
+                         BLOKADA: "Status: BLOQUEADO - resolva a causa primeiro."}),
+}
+
+
+def _minimal_pdf() -> bytes:
+    """Jednostronicowy PDF z tekstem, zbudowany bajt po bajcie - test bez sieci i bez plikow."""
+    objs = [b"<< /Type /Catalog /Pages 2 0 R >>", b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+            b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 300 200] /Contents 4 0 R "
+            b"/Resources << /Font << /F1 5 0 R >> >> >>", None,
+            b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"]
+    stream = b"BT /F1 18 Tf 40 100 Td (akta test 123) Tj ET"
+    objs[3] = b"<< /Length %d >>\nstream\n" % len(stream) + stream + b"\nendstream"
+    out, offs = bytearray(b"%PDF-1.4\n"), []
+    for i, o in enumerate(objs, 1):
+        offs.append(len(out))
+        out += b"%d 0 obj\n" % i + o + b"\nendobj\n"
+    xref = len(out)
+    out += b"xref\n0 %d\n0000000000 65535 f \n" % (len(objs) + 1)
+    out += b"".join(b"%010d 00000 n \n" % o for o in offs)
+    out += b"trailer\n<< /Size %d /Root 1 0 R >>\nstartxref\n%d\n%%%%EOF\n" % (len(objs) + 1, xref)
+    return bytes(out)
+
+
+def sac_state() -> int | None:
+    """Smart App Control: 0 = wylaczony, 1 = wlaczony, 2 = tryb oceny, None = nie Windows / nieczytelne.
+    Tylko ODCZYT rejestru - skill niczego nie zmienia w ustawieniach bezpieczenstwa."""
+    if os.name != "nt":
+        return None
+    try:
+        import winreg  # noqa: PLC0415
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Control\CI\Policy") as k:
+            return int(winreg.QueryValueEx(k, "VerifiedAndReputablePolicyState")[0])
+    except OSError:
+        return None
+
+
+def doctor(lang: str, tessdata: str | None, where: str = ".") -> int:
+    d = D[lang]
+    rows = []
+    v = sys.version_info
+    rows.append((d["py"], OK if v >= (3, 10) else BLOKADA,
+                 f"{v.major}.{v.minor}.{v.micro}" if v >= (3, 10) else d["py_bad"].format(v=f"{v.major}.{v.minor}")))
+    lib = None
+    try:
+        import liteparse as lib  # noqa: PLC0415
+        from importlib.metadata import version  # noqa: PLC0415
+        rows.append((d["lib"], OK, d["lib_ok"].format(v=version("liteparse"))))
+    except ImportError as exc:
+        rows.append((d["lib"], BLOKADA, d["lib_dll"] if "dll" in str(exc).lower() else d["lib_none"]))
+    smoke_ok = False
+    if lib is not None:
+        import tempfile  # noqa: PLC0415
+        fd, tmp = tempfile.mkstemp(suffix=".pdf")
+        try:
+            with os.fdopen(fd, "wb") as fh:
+                fh.write(_minimal_pdf())
+            r = lib.LiteParse(ocr_enabled=False, quiet=True).parse(tmp)
+            smoke_ok = "akta test 123" in "".join(p.text for p in r.pages)
+            rows.append((d["smoke"], OK if smoke_ok else BLOKADA, d["smoke_ok"] if smoke_ok else d["smoke_bad"].format(e="-")))
+        except Exception as exc:  # noqa: BLE001
+            rows.append((d["smoke"], BLOKADA, d["smoke_bad"].format(e=type(exc).__name__)))
+        finally:
+            os.remove(tmp)
+    sac = sac_state()
+    lib_blocked = any(r[0] == d["lib"] and r[1] == BLOKADA for r in rows) or (lib is not None and not smoke_ok)
+    if sac is None:
+        rows.append((d["sac"], OK, d["sac_na"] if os.name != "nt" else "-"))
+    elif sac == 1:
+        rows.append((d["sac"], BLOKADA if lib_blocked else OK, d["sac_on_bad"] if lib_blocked else d["sac_on"]))
+    elif sac == 2:
+        rows.append((d["sac"], UWAGI, d["sac_eval"]))
+    else:
+        rows.append((d["sac"], OK, d["sac_off"]))
+    name = f"{lang}.traineddata"
+    if tessdata:
+        p = os.path.join(tessdata, name)
+        rows.append((d["model"].format(l=lang), OK if os.path.exists(p) else UWAGI,
+                     d["model_ok"].format(p=p) if os.path.exists(p) else d["model_pin"].format(p=tessdata)))
+    else:
+        base = os.environ.get("APPDATA") or os.path.expanduser("~/.local/share")
+        p = os.path.join(base, "tesseract-rs", "tessdata", name)
+        rows.append((d["model"].format(l=lang), OK if os.path.exists(p) else UWAGI,
+                     d["model_ok"].format(p=p) if os.path.exists(p) else d["model_dl"]))
+    free = shutil.disk_usage(os.path.abspath(where)).free / 1e9
+    rows.append((d["disk"], OK if free >= 1 else UWAGI, (d["disk_ok"] if free >= 1 else d["disk_low"]).format(g=f"{free:.1f}")))
+    status = BLOKADA if any(r[1] == BLOKADA for r in rows) else (UWAGI if any(r[1] == UWAGI for r in rows) else OK)
+    mark = {OK: "[OK]", UWAGI: "[!] ", BLOKADA: "[X] "}
+    print(d["head"])
+    for label, st, detail in rows:
+        print(f"  {mark[st]} {label}: {detail}")
+    print(d["verdict"][status])
+    return EXIT[status]
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("folder", help="folder z aktami / case folder (PDF, takze skany)")
+    ap.add_argument("folder", nargs="?", help="folder z aktami / case folder (PDF, takze skany)")
+    ap.add_argument("--sprawdz", "--check", dest="sprawdz", action="store_true",
+                    help="kontrola srodowiska przed praca / environment check (0/10/20)")
     ap.add_argument("--wynik", "--out", dest="wynik", help="katalog wyniku / output folder")
     ap.add_argument("--jezyk", "--lang", dest="jezyk", choices=sorted(T), help="pol | eng | por")
     ap.add_argument("--tessdata", help="przypiety katalog modeli OCR *.traineddata")
@@ -328,6 +469,10 @@ def main(argv=None) -> int:
     except (AttributeError, ValueError):
         pass
     lang = a.jezyk or default_lang()
+    if a.sprawdz:
+        return doctor(lang, a.tessdata or os.environ.get("DOC_INTEL_TESSDATA"), a.wynik or a.folder or ".")
+    if not a.folder:
+        ap.error("podaj folder z aktami / give the case folder")
     out = a.wynik or os.path.abspath(a.folder).rstrip("\\/") + T[lang]["suffix"]
     return run(a.folder, out, a.tessdata or os.environ.get("DOC_INTEL_TESSDATA"), lang)
 

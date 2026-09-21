@@ -258,3 +258,55 @@ def test_wznowienie_liczy_stary_znacznik_strony_nieczytelnej(tmp_path, monkeypat
     assert akta.run(str(tmp_path / "akta"), str(out), None, "pol") == 10
     assert ext2.calls == 0, "gotowy dokument pominiety"
     assert "| 2 |" in (out / "RAPORT.md").read_text(encoding="utf-8")
+
+
+# --- Kontrola srodowiska (--sprawdz) --------------------------------------------
+
+def test_sprawdz_ok_na_tej_maszynie(capsys, tmp_path):
+    pytest.importorskip("liteparse")
+    rc = akta.doctor("pol", None, str(tmp_path))
+    out = capsys.readouterr().out
+    assert rc in (0, 10) and "test dymny" in out and "[X]" not in out
+
+
+def test_sprawdz_blokada_dll_przy_wlaczonym_sac(monkeypatch, capsys, tmp_path):
+    real_import = __builtins__["__import__"] if isinstance(__builtins__, dict) else __builtins__.__import__
+
+    def imp(name, *a, **k):
+        if name == "liteparse":
+            raise ImportError("DLL load failed while importing _liteparse: An Application Control policy has blocked this file")
+        return real_import(name, *a, **k)
+    monkeypatch.setattr("builtins.__import__", imp)
+    monkeypatch.setattr(akta, "sac_state", lambda: 1)
+    rc = akta.doctor("eng", None, str(tmp_path))
+    out = capsys.readouterr().out
+    assert rc == 20
+    assert "Windows blocked the OCR library" in out and "likely cause of the block" in out
+
+
+def test_sprawdz_sac_wlaczony_ale_nie_szkodzi_i_tryb_oceny(monkeypatch, capsys, tmp_path):
+    pytest.importorskip("liteparse")
+    monkeypatch.setattr(akta, "sac_state", lambda: 1)
+    assert akta.doctor("pol", None, str(tmp_path)) in (0, 10)
+    assert "test dymny przeszedł" in capsys.readouterr().out
+    monkeypatch.setattr(akta, "sac_state", lambda: 2)
+    assert akta.doctor("pol", None, str(tmp_path)) == 10
+
+
+def test_sprawdz_brak_modelu_w_przypietym_katalogu_to_uwaga(capsys, tmp_path):
+    pytest.importorskip("liteparse")
+    rc = akta.doctor("por", str(tmp_path), str(tmp_path))
+    out = capsys.readouterr().out
+    assert rc == 10 and "ausente na pasta fixada" in out
+
+
+def test_minimalny_pdf_jest_poprawny():
+    lp = pytest.importorskip("liteparse")
+    import tempfile
+    fd, p = tempfile.mkstemp(suffix=".pdf")
+    with os.fdopen(fd, "wb") as fh:
+        fh.write(akta._minimal_pdf())
+    try:
+        assert "akta test 123" in lp.LiteParse(ocr_enabled=False, quiet=True).parse(p).pages[0].text
+    finally:
+        os.remove(p)
