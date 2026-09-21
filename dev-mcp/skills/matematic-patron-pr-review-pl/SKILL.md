@@ -60,11 +60,26 @@ Recenzent PR/diffow PATRON - polskiego LegalTech AI agenta dla kancelarii. Cherr
    - Local branch: `git diff origin/main...HEAD`
    - Pre-commit: `git diff HEAD`
 2. Bucketuj zmienione pliki do sekcji nizej
-3. **Czytaj aktualny kod jako source of truth** przed finalizacja findings:
+3. **Zasieg zmiany (blast radius), zanim ocenisz.** Pliki, ktore wolaja zmieniony
+   symbol, a ktorych NIE MA w diffie, dopisz do przegladu - tam zyja regresje
+   (zmieniona sygnatura helpera org scoping psuje route, ktorej diff nie dotyka).
+   - **Podstawa: `git grep -lw <symbol>`** dla kazdej zmienionej funkcji, typu i eksportu
+     (osobno w plikach testow - to sa testy do uruchomienia).
+   - **Dodatek, jesli masz serwer MCP `codegraph` z indeksem:** `codegraph_impact`
+     (depth 2) daje warstwe przechodnia - kto wola tych, ktorzy wolaja - bez recznej
+     iteracji grepa. Przed zapytaniem `codegraph sync <repo>`: stary indeks klamie po cichu.
+   - **Graf NIE zastepuje grepa.** Nie widzi wywolan z funkcji anonimowych, a w Express
+     to wlasnie route handlery `router.get("/", async (req, res) => ...)` i testy `it(...)`.
+     Zmierzone na repo TS i Python: graf widzial 2-36% plikow wolajacych, ktore znalazl
+     grep, i zero ponad grep. `No callers found` z grafu to NIE jest dowod braku zaleznosci.
+     `codegraph affected` (testy dotkniete zmiana) znalazl wlasny test w 0 z 37 par - nie uzywaj.
+   - Stan raportuj jawnie: `zasieg: N plikow poza diffem (grep M, graf K)` /
+     `zasieg: 0` (tylko gdy GREP daje 0) / `graf: BRAK INDEKSU` (sam grep).
+4. **Czytaj aktualny kod jako source of truth** przed finalizacja findings:
    - `AGENTS.md` (root + per-package) - org scoping i worker sync
    - Dotknieci modele, db clients, routes, services, migrations
-4. Run TYLKO sekcje istotne dla zmienionych plikow
-5. Raportuj `<plik>:<linia> -> <problem> -> <correct pattern>`
+5. Run TYLKO sekcje istotne dla zmienionych plikow ORAZ plikow z zasiegu (krok 3)
+6. Raportuj `<plik>:<linia> -> <problem> -> <correct pattern>`
 
 ## Freshness rule (KRYTYCZNE)
 
