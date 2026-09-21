@@ -1,0 +1,36 @@
+MIT License
+
+Copyright (c) 2026 MateMatic (Wieslaw Mazur)
+
+This skill ("doc-intel-llm-tier-pl") is a WRAP over a third-party library:
+
+    contextgem - https://github.com/shcherbak-ai/contextgem
+    Licensed under the Apache License 2.0.
+
+contextgem is a runtime dependency (pip install contextgem), not vendored here. Its
+Apache-2.0 license governs that library. MateMatic contributions in this skill (the
+CLI wrapper, the doc-intel-contract mapping, the governance backend gate, the Polish
+legal concept templates, and all documentation) are licensed under MIT below.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+NOTE: LLM-inferred extraction can be wrong. This Software is a support tool, not
+legal advice. Verify every extracted concept against its source (citation-grounding-pl)
+before relying on it. For client data, use a local/EEA backend only (never a cloud
+model that transfers data outside the EEA).

@@ -6,6 +6,20 @@ Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
 
+## [2026.09.21b] - 2026-09-21
+
+### Added
+
+- `akta-przeszukiwalne-pl` 0.1.0 - folder akt (takze skany) -> tekst z numerami stron, lokalna
+  wyszukiwarka (polskie znaki, odmiana) i raport: strony nieczytelne, duplikaty plikow i pliki
+  o identycznej tresci pod roznymi nazwami. OCR na CPU (LiteParse), tekst akt nie opuszcza
+  komputera. Ekstraktor to kopia z `doc-intel-contract-pl`, parytet pilnowany testem.
+- Plugin `dokumenty` 1.9.0 (11 skilli); README: 46 umiejetnosci.
+
+### Fixed
+
+- README: wiersz `doc-intel-contract-pl` pokazywal 0.4.0 po wydaniu 0.5.0.
+
 ## [2026.09.21] - 2026-09-21
 
 ### Added

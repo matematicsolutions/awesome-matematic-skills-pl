@@ -17,7 +17,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w bundlach zachowuja wlasne licencje 
 
 ## Co tu znajdziesz
 
-1. **Bundle domenowe instalowane jedna komenda** - 45 umiejetnosci spietych w 8 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, multi-jurysdykcja UE). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
+1. **Bundle domenowe instalowane jedna komenda** - 46 umiejetnosci spietych w 8 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, multi-jurysdykcja UE). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -59,7 +59,7 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 45 umiejetnosci w 8 bundlach
+## Pakiet - 46 umiejetnosci w 8 bundlach
 
 Wszystkie umiejetnosci sa spiete w pluginy domenowe - instalujesz jedna komenda. Zadna nie lezy juz pojedynczo w `./skills/`.
 
@@ -109,7 +109,8 @@ Operacje na dokumentach, bez konektorow. Instalacja: `/plugin install dokumenty@
 | [<img src="./assets/badge-terminy-procesowe-pl.svg" alt="Terminy procesowe" width="200" height="60">](./dokumenty/skills/terminy-procesowe-pl) | Metodyka terminow procesowych i materialnych (KC/KPC/KPA): pelne wyliczenie krok po kroku z podstawa kazdego kroku, fail-closed, karta terminu DO ZATWIERDZENIA przez pelnomocnika. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-klauzule-kontraktowe-pl.svg" alt="Klauzule Pod Lupa" width="200" height="60">](./dokumenty/skills/klauzule-kontraktowe-pl) | Lista kontrolna 41 kategorii klauzul umownych (taksonomia CUAD zlokalizowana PL/UE) dla jednej umowy - obecna/brak/ryzykowna, z kotwica do przepisu. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-kalkulatory-procesowe-pl.svg" alt="Kalkulatory procesowe" width="200" height="60">](./dokumenty/skills/kalkulatory-procesowe-pl) | Cztery kalkulatory procesu cywilnego (oplata sadowa UKSC, przedawnienie art. 117-125 KC, odsetki w trzech rezimach, WPS art. 19-26 KPC) z protokolem "pobierz zywe parametry przed obliczeniem" i wachta aktow bazowych w CI. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-doc-intel-contract-pl.svg" alt="Doc Intel Contract" width="200" height="60">](./dokumenty/skills/doc-intel-contract-pl) | Normalizuje wyjscie OCR/PDF (opendataloader-pdf, pdftotext, Chandra OCR) do jednego audytowalnego kontraktu {block_type, bbox, text, confidence}: confidence-gating z kolejka dla czlowieka, flagi PII pod redakcje, bbox do groundingu cytatu. Zero LLM, Python stdlib. | MIT | 0.4.0 |
+| [<img src="./assets/badge-doc-intel-contract-pl.svg" alt="Doc Intel Contract" width="200" height="60">](./dokumenty/skills/doc-intel-contract-pl) | Normalizuje wyjscie OCR/PDF (opendataloader-pdf, pdftotext, Chandra OCR, LiteParse) do jednego audytowalnego kontraktu {block_type, bbox, text, confidence}: confidence-gating z kolejka dla czlowieka, flagi PII pod redakcje, bbox do groundingu cytatu. OCR skanow na CPU i lokalny podzial teczki na pisma. Zero LLM. | MIT | 0.5.0 |
+| [<img src="./assets/badge-akta-przeszukiwalne-pl.svg" alt="Akta przeszukiwalne" width="200" height="60">](./dokumenty/skills/akta-przeszukiwalne-pl) | Folder akt (takze skany) -> tekst z numerami stron, lokalna wyszukiwarka (polskie znaki i odmiana) i raport: strony nieczytelne, duplikaty plikow i pliki o identycznej tresci pod roznymi nazwami. OCR na CPU, tekst akt nie opuszcza komputera. | MIT | 0.1.0 |
 | [<img src="./assets/badge-doc-intel-llm-tier-pl.svg" alt="Doc Intel LLM Tier" width="200" height="60">](./dokumenty/skills/doc-intel-llm-tier-pl) | Ekstrakcja inferowanych konceptow z umowy, pisma lub wyroku (kara umowna, termin, sad wlasciwy, ryzyka) z zakotwiczeniem kazdego w zdaniu zrodlowym. Wrap na contextgem, domyslnie model lokalny. | MIT | 1.0.0 |
 | [<img src="./assets/badge-waliduj-podpis-pdf-pl.svg" alt="Waliduj Podpis PDF" width="200" height="60">](./dokumenty/skills/waliduj-podpis-pdf-pl) | Sprawdza podpis elektroniczny w przychodzacym PDF: czy plik zmieniono po podpisaniu, kto i kiedy podpisal, znacznik czasu, zakres podpisu. Lokalnie na pyHanko, bez sieci. | MIT | 0.1.0 |
 
@@ -198,7 +199,7 @@ Pakiet wyzej to warstwa walidacji outputu i narzedzia konwersji. Pelny ekosystem
 
 Trzy drogi. **A** (`npx skills`) dziala w **dowolnym agencie** wspierajacym format Agent Skills (Cursor, OpenAI Codex, Windsurf, Gemini CLI, Claude Code) i instaluje pojedyncze skille. **B** to natywny marketplace Claude Code - instaluje calymi bundlami, z zachowaniem granic pluginu i jego inline `CLAUDE.md`. **C** to reczny symlink jednego skilla.
 
-**Co zainstalowac.** Kancelaria zaczyna od `fundament-weryfikacyjny` (rdzen walidacji) i `orzecznictwo-zrodla` (zrodla PL/UE), a `dokumenty`, `governance-kancelarii`, `jakosc-tresci` i `ochrona-danych` dobiera wedlug potrzeb. Bundle `dev-mcp` to warsztat dla deweloperow - pomin go, jesli nie budujesz skilli ani serwerow MCP. Caly hub jedna komenda (`npx skills add ...` bez `--skill`) wciaga wszystkie 45 skilli naraz; wiekszosc kancelarii woli `--skill` albo `/plugin install` wybranych bundli.
+**Co zainstalowac.** Kancelaria zaczyna od `fundament-weryfikacyjny` (rdzen walidacji) i `orzecznictwo-zrodla` (zrodla PL/UE), a `dokumenty`, `governance-kancelarii`, `jakosc-tresci` i `ochrona-danych` dobiera wedlug potrzeb. Bundle `dev-mcp` to warsztat dla deweloperow - pomin go, jesli nie budujesz skilli ani serwerow MCP. Caly hub jedna komenda (`npx skills add ...` bez `--skill`) wciaga wszystkie 46 skilli naraz; wiekszosc kancelarii woli `--skill` albo `/plugin install` wybranych bundli.
 
 ### A. Dowolny agent - `npx skills` (cross-agent)
 
@@ -229,7 +230,7 @@ npx skills add matematicsolutions/awesome-matematic-skills-pl --skill citation-g
 /plugin install dev-mcp@matematic-skills-pl                      # narzedzia deweloperskie (advanced)
 ```
 
-Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 45 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
+Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 46 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
 
 ### C. Pojedynczy skill jako symlink do ~/.claude/skills/
 
