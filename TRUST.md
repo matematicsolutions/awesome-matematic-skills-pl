@@ -53,6 +53,29 @@ zależy od jego dostawcy, nie od nas. Przy modelu chmurowym nie wklejaj
 danych identyfikujących albo najpierw zanonimizuj - do tego jest skill
 `let-it-be` w bundle `dokumenty`.
 
+## Licencji nie cofniemy
+
+Te skille są otwarte i otwarte zostaną. To decyzja zamknięta, nie okres próbny,
+i mówimy to wprost, bo spotykany wariant alternatywny wygląda inaczej: licencja
+source-available zastrzegająca prawo do cofnięcia zgody później. Kancelaria nie
+zbuduje procesu na zgodzie, którą da się wycofać.
+
+Wynikają z tego dwie rzeczy sprawdzalne, nie obiecane. To, co już zainstalowałeś,
+zostaje u Ciebie na licencji, na której to dostałeś; żadna późniejsza zmiana tutaj
+nie sięga wstecz. I możesz zrobić forka całego huba, co jest jedyną gwarancją
+działającą nawet wtedy, gdy nam przestanie się chcieć.
+
+Nie udajemy, że to filantropia. Nasza praca trudna do skopiowania nie leży w tych
+plikach, tylko w korpusach, konektorach do źródeł i pomiarach za nimi. Zamknięcie
+licencji dałoby nam w praktyce niewiele, bo skill niesie głównie metodę: rubrykę,
+próg i kolejność kroków. Każdy może to przeczytać i napisać po swojemu, a żaden
+zapis licencyjny tego nie powstrzyma.
+
+Jeden warunek otwiera tę sprawę z powrotem: gdyby któryś skill przestał być metodą
+i zaczął nieść korpus, dane albo pomiar nie do odtworzenia bez naszej pracy, ten
+konkretny komponent dostanie własną licencję i powiemy o tym jawnie. Dziś żaden
+skill w tym hubie nie jest w tej sytuacji.
+
 ## Brama człowieka
 
 Nic, co tu powstaje, nie jest poradą prawną. Każdy wynik traktuj jak draft,
