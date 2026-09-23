@@ -1,0 +1,56 @@
+name: Bramki
+
+# Repo ma bramki atrybucji, dokladnosci prawnej i preflightu, ale zadna z nich nie byla
+# wolana automatycznie - dzialaly tylko wtedy, gdy ktos pamietal je uruchomic.
+# check-marketplace ma wlasny workflow i nie jest tu powtarzany.
+#
+# Dwa szczegoly, ktore latwo przeoczyc, oba z klasy "zielone, bo nie ma na czym zadzialac":
+#  - fetch-depth: 0, bo legal-accuracy-gate wybiera baze z merge-base wobec origin/main.
+#    Przy plytkim klonie nie znajdzie bazy, zglosi zero zmienionych plikow i przejdzie
+#    z niewlasciwego powodu.
+#  - blizniacze repo EN jest pobierane, bo attribution-gate porownuje oba huby i bez
+#    blizniaka konczy sie zerem, porownawszy sie z niczym.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  bramki:
+    runs-on: ubuntu-latest
+    name: Atrybucja, dokladnosc prawna, preflight
+
+    steps:
+      - name: Pobierz to repo
+        uses: actions/checkout@v4
+        with:
+          path: pl
+          fetch-depth: 0
+
+      - name: Pobierz blizniacze repo EN (do kontroli krzyzowej atrybucji)
+        uses: actions/checkout@v4
+        with:
+          repository: matematicsolutions/awesome-matematic-skills-en
+          path: en
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Kazda bramka osobnym krokiem: polaczone wywolanie pokazaloby jedno czerwone
+      # swiatlo i ukrylo, ktora bramka je zapalila.
+
+      - name: Bramka atrybucji (z kontrola krzyzowa blizniaka)
+        working-directory: pl
+        run: python scripts/attribution-gate.py --twin ../en
+
+      - name: Bramka dokladnosci prawnej
+        working-directory: pl
+        run: python scripts/legal-accuracy-gate.py
+
+      - name: Preflight
+        working-directory: pl
+        run: python scripts/preflight.py
