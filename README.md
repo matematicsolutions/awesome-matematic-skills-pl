@@ -1,7 +1,7 @@
 # awesome-matematic-skills-pl
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-42-blue.svg)](#pakiet---42-umiejetnosci-w-8-bundlach)
+[![Skills](https://img.shields.io/badge/skills-46-blue.svg)](#pakiet---46-umiejetnosci-w-8-bundlach)
 [![Plugin](https://img.shields.io/badge/Claude%20Code-plugin%20marketplace-orange.svg)](.claude-plugin/marketplace.json)
 [![skills.sh](https://skills.sh/b/matematicsolutions/awesome-matematic-skills-pl)](https://skills.sh/matematicsolutions/awesome-matematic-skills-pl)
 [![AGENTS.md](https://img.shields.io/badge/AGENTS.md-Linux%20Foundation-black.svg)](AGENTS.md)
