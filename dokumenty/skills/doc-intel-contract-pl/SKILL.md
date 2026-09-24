@@ -115,9 +115,10 @@ metadata:
 # doc-intel-contract-pl - kontrakt wyjscia Document Intelligence
 
 ## Po co
-Nasza drabinka PDF (pdftotext -> markitdown -> opendataloader -> Chandra ->
-vision) daje 5 roznych ksztaltow wyjscia. Ten skill ujednolica je do JEDNEGO
-kontraktu, ktory od razu odpowiada na trzy pytania:
+Kazdy szczebel naszej drabinki PDF (pdftotext -> anydoc -> markitdown ->
+opendataloader -> liteparse -> Chandra -> vision) zwraca wynik w innym
+formacie. Ten skill sprowadza te formaty do JEDNEGO kontraktu, ktory od razu
+odpowiada na trzy pytania:
 
 1. **Ktory fragment ma zobaczyc czlowiek?** - confidence-gating (Article III / AI Act art. 14).
 2. **Co zredagowac?** - typed blocks + flagi PII (signature/stamp/PESEL/NIP/IBAN).

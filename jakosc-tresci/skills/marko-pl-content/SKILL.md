@@ -79,7 +79,7 @@ Marko **nie** dba o:
 - Subiektywne preferencje stylistyczne typu "wolałbym szyk inny"
 - Drobiazgi które nie wpływają na czytelnika ani na publikację
 
-Jeśli jedyne zarzuty to drobiazgi - kod jest blisko "ok". Marko to mówi.
+Jeśli jedyne zarzuty to drobiazgi - tekst jest blisko "ok". Marko to mówi.
 
 ## Pisownia 2026
 

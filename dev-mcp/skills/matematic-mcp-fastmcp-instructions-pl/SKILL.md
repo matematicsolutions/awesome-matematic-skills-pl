@@ -63,7 +63,7 @@ Wzorzec kanoniczny dla MCP serverow MateMatic. Walidowany empirycznie na [dograh
 
 - Nowy MCP server MateMatic od pierwszego commita
 - Retrofit istniejacych (saos-orzecznictwo, mcp-eu-compliance, matematic-anonimizacja-pl, mcp-pomoc-prawna-pl, sejm-eli-mcp, mcp-uodo, mcp-kio) - do konca Q3 2026
-- Audit istniejacego MCP server (czy ma 8 elementow)
+- Audit istniejacego MCP server (czy ma 9 elementow)
 - Debug: LLM nie wywoluje tooli w odpowiedniej kolejnosci, klient MCP nie autoryzuje, error_codes ginace dla LLM
 
 ## 9 elementow kanonu
@@ -74,7 +74,7 @@ Instrukcje wstrzykiwane do system promptu kazdego klienta MCP. LLM widzi je PRZE
 
 **Tresc:**
 - Call order (ktora kolejnosc wywolywac tools)
-- Error handling (jak iteorwac po failed tool call)
+- Error handling (jak iterowac po failed tool call)
 - Hard constraints (czego NIE robic)
 - Field conventions (kanoniczne nazwy, format ID)
 - Style (preferencje przy wyborze toolow gdy wiele rozwiazan)
@@ -324,8 +324,8 @@ i czego w niej NIE MA.** Nazwa: `coverage` (EN) / `pokrycie_bazy` (PL). Read-onl
 `instructions`**. Przyklad z `at-eli-mcp`: „Landesrecht not covered - relay the `dataset_note`".
 To wiedza **bierna**: model musi ja przeczytac i zechciec przekazac. Agent nie ma jak
 **zapytac**. Gdy tego nie zrobi, konektor odpowiada pewnie na pytanie o prawo krajowe
-landu i konczy exit 0 - czyli dokladnie
-Zasada cichej niekompletnosci: najgrozniejsza awaria konczy sie sukcesem.
+landu i konczy exit 0 - dokladnie to, przed czym ostrzega zasada cichej
+niekompletnosci: najgrozniejsza awaria konczy sie sukcesem.
 Element 9 zamienia wiedze bierna w **wywolywalna**.
 
 **Kontrakt odpowiedzi** - trzy czesci, zadnej nie wolno pominac:
@@ -370,8 +370,8 @@ def test_coverage_gaps_never_silently_empty():
         assert f.get("captured_at"), f"rodzina {f['name']} bez daty pobrania"
 ```
 
-Pusta `known_gaps` przechodzilaby zawsze i wygladala na czysty wynik - to
-Bramka z pusta lista przechodzi zawsze. Dlatego pusta lista = czerwone,
+Pusta `known_gaps` przechodzilaby zawsze i wygladala na czysty wynik - klasyczna
+bramka z pusta lista, ktora przechodzi zawsze. Dlatego pusta lista = czerwone,
 nie zielone.
 
 **Dwie rzeczy, ktore ten element ma ODZIEDZICZYC po reszcie konektora** (obie zlapane
@@ -380,7 +380,7 @@ pomiarem po rolloucie 2026-08-24, nie przy czytaniu diffa):
 1. **Tool `coverage` audytuje jak kazdy inny tool.** INSTRUCTIONS naszych konektorow
    mowia wprost: „every tool call appends to the audit log". Wypuszczenie toola bez
    wpisu do dziennika **czyni to zdanie falszywym** - i to na 38 konektorach naraz.
-   Nie jest to niespojnosc kosmetyczna, tylko obietnica bez pokrycia
+   Nie jest to niespojnosc kosmetyczna, tylko obietnica bez pokrycia:
    deklaracja o architekturze bywa prawdziwa, a o konkretnym przebiegu falszywa. Do tego bramka, ktora
    sprawdza, ze wpis **realnie laduje na dysku** (przekieruj katalog audytu zmienna
    srodowiskowa na `tmp_path` i policz linie), a nie ze w kodzie stoi wywolanie.
@@ -396,8 +396,8 @@ pomiarem po rolloucie 2026-08-24, nie przy czytaniu diffa):
    Bramka ma akceptowac obie formy wzmianki - `tool` i `tool(arg=...)` - inaczej
    produkuje falszywe alarmy na instrukcjach z przykladem wywolania.
 
-**Dlaczego to jest nasza sprawa, a nie ciekawostka.** Slogan kanonu brzmi
-Haslo MateMatic - „AI, ktora wie, czego nie wie". Element 9 jest jedynym
+**Dlaczego to jest nasza sprawa, a nie ciekawostka.** Haslo MateMatic brzmi
+„AI, ktora wie, czego nie wie". Element 9 jest jedynym
 miejscem we flocie, gdzie to zdanie staje sie **funkcja**, a nie haslem na stronie.
 Konektor bez niego moze byc technicznie poprawny i jednoczesnie sprzedawac obietnice,
 ktorej nie realizuje.
