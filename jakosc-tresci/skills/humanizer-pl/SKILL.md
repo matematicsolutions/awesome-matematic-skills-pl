@@ -1,15 +1,15 @@
 ---
 name: humanizer-pl
-version: 1.3.0
+version: 1.4.0
 description: |
   Usuwa wzorce AI-slop z polskiego tekstu - sprawia, ze czyta sie naturalnie i ludzko.
-  Polska adaptacja blader/humanizer (MIT). Uzywaj do edycji/przegladu polskich tresci
-  MateMatic: TOM-y Bazy Wiedzy, aktualnosci matematic.co, posty LinkedIn, scenariusze
-  serialu, copy podstron. Wykrywa: inflacje znaczeniowa, slop-slownictwo PL, imieslowy
-  pozornej glebi, vague attributions, naduzycie em-dash, regule trojki, hedging,
-  artefakty czatbota, kalki anglicyzmow, pisownie sprzed reformy RJP 2026 oraz sygnatury statystyczne mierzone przez
-  detektory AI (burstiness, gestosc i roznorodnosc leksykalna, dystrybucja czesci mowy,
-  zakres emocji).
+  Polska adaptacja blader/humanizer (MIT). Uzywaj do edycji/przegladu polskich tresci:
+  artykuly, aktualnosci, posty LinkedIn, scenariusze, copy stron, dokumentacja.
+  Wykrywa: inflacje znaczeniowa, slop-slownictwo PL, imieslowy pozornej glebi,
+  vague attributions, naduzycie em-dash, regule trojki, hedging, artefakty czatbota,
+  kalki anglicyzmow, pisownie sprzed reformy RJP 2026 oraz sygnatury statystyczne
+  mierzone przez detektory AI (burstiness, gestosc i roznorodnosc leksykalna,
+  dystrybucja czesci mowy, zakres emocji).
 license: MIT
 attribution:
   - source: blader/humanizer
@@ -46,28 +46,31 @@ pii-egress: none
 
 Jestes redaktorem polskiego tekstu. Wykrywasz i usuwasz sygnaly pisania generowanego przez AI, zeby tekst brzmial naturalnie i ludzko. To polska adaptacja blader/humanizer - oryginal jest anglocentryczny, ta wersja niesie polskie listy slow i polska typografie.
 
-**Brand-safety:** to pass JAKOSCI / anty-slop, NIE narzedzie do "ukrywania AI". MateMatic uczy transparentnosci AI - cel to lepsza proza, nie omijanie detektorow.
+**Brand-safety:** to pass JAKOSCI / anty-slop, NIE narzedzie do "ukrywania AI". Cel to lepsza proza, nie omijanie detektorow.
+
+## Styl domowy (domyslny, do nadpisania)
+
+Kilka regul ponizej to STYL DOMOWY, nie prawda o polszczyznie: jeden rodzaj kreski (#14) i glos opisany w #33 oraz w sekcji "Dusza i charakter". Domyslnie: tylko lacznik "-" zamiast "—" i "–"; glos spokojny, precyzyjny, z subtelna ironia intelektualna. Jesli autor, projekt albo wydawca ma wlasny przewodnik stylu, probke tekstu lub skill glosowy - wygrywa on, a reguly domowe odpuszczasz. Wzorcow slop (slownictwo, struktura, artefakty czatbota) to nie dotyczy: te stosujesz zawsze.
 
 ## Twoje zadanie
 
 1. **Wykryj wzorce AI** - przeskanuj tekst wedlug listy ponizej.
 2. **Przepisz problematyczne fragmenty** - zamien AI-izmy na naturalne polskie.
 3. **Zachowaj sens** - rdzen przekazu nietkniety.
-4. **Zachowaj glos** - dopasuj ton (dla tresci Wieslawa/MateMatic: spokojny, precyzyjny, refleksyjny, z subtelna ironia intelektualna).
+4. **Zachowaj glos** - dopasuj ton autora; bez wskazowek trzymaj sie stylu domowego.
 5. **Dodaj duszę** - nie tylko usun zle wzorce, wstrzyknij charakter.
 6. **Pass koncowy** - zapytaj: "Co tu wciaz zdradza AI?" Odpowiedz krotko, potem popraw resztki.
 
-## Miejsce w pipeline MateMatic
+## Miejsce w procesie
 
-`draft .md` -> **humanizer-pl** -> `marko-pl-content` (werdykt) -> poprawki -> publikacja.
+`draft .md` -> **humanizer-pl** -> recenzja (np. `marko-pl-content`, jesli go masz) -> poprawki -> publikacja.
 
-- humanizer-pl dziala WCZESNIE, na surowym drafcie - PRZED skillem glosowym (`linkedin-voice-wieslaw-mazur`), zeby nie walczyc z dostrojonym glosem.
-- Marko WSKAZUJE problemy `plik:linia`, humanizer-pl NAPRAWIA. Role komplementarne.
-- W pipeline wideo: scenariusz od `scenograf` przechodzi humanizer-pl przed bramka Marko.
+- humanizer-pl dziala WCZESNIE, na surowym drafcie - PRZED skillem glosowym autora, jesli taki jest, zeby nie walczyc z dostrojonym glosem.
+- Recenzent WSKAZUJE problemy `plik:linia`, humanizer-pl NAPRAWIA. Role komplementarne.
 
 ## Kalibracja glosu (opcjonalna)
 
-Jezeli dostajesz probke pisania (wczesniejsze teksty autora) - przeanalizuj ja przed przepisaniem: dlugosc zdan, poziom slownictwa, jak zaczyna akapity, nawyki interpunkcyjne, powracajace frazy. Dla tresci Wieslawa: zamiast generycznego glosu siegnij po `linkedin-voice-wieslaw-mazur` / `anthropic-skills:wieslaw-mazur-brand` jako referencje glosu.
+Jezeli dostajesz probke pisania (wczesniejsze teksty autora) - przeanalizuj ja przed przepisaniem: dlugosc zdan, poziom slownictwa, jak zaczyna akapity, nawyki interpunkcyjne, powracajace frazy. Jesli autor ma skill glosowy albo przewodnik stylu, uzyj go jako referencji zamiast generycznego glosu.
 
 ---
 
@@ -144,7 +147,7 @@ Jezeli dostajesz probke pisania (wczesniejsze teksty autora) - przeanalizuj ja p
 ## WZORCE STYLU I TYPOGRAFII
 
 ### 14. Naduzycie em-dash
-**Problem:** AI naduzywa em-dash (—) i poltrupelka (–). REGUŁA MateMatic (`feedback_typografia_myslnik`): we wszystkich tekstach uzywaj WYLACZNIE lacznika "-", NIGDY "—" ani "–". Wiekszosc przypadkow przepisz na przecinek, kropke lub nawias.
+**Problem:** AI naduzywa em-dash (—) i poltrupelka (–). Styl domowy: we wszystkich tekstach uzywaj WYLACZNIE lacznika "-", NIGDY "—" ani "–" (wlasny przewodnik stylu autora moze to zmienic). Wiekszosc przypadkow przepisz na przecinek, kropke lub nawias.
 **Zle:** Termin promuja instytucje — nie ludzie — mimo ze dokumenty mowia inaczej.
 **Dobrze:** Termin promuja instytucje, nie ludzie, mimo ze dokumenty mowia inaczej.
 
@@ -243,7 +246,7 @@ Detektory tekstu AI nie czytaja "sensu" - mierza wymierne cechy lingwistyczne. H
 
 ### 33. Zakres emocji - nie tylko pozytywnie
 **Problem:** AI ciagnie do tonu rownego i pozytywnego; ludzie wyrazaja szerszy zakres, w tym sceptycyzm, irytacje i watpliwosc (Muñoz-Ortiz i in. 2024).
-**Reguła:** dla tresci Wieslawa/MateMatic dopusc krytyke i chlodny dystans. "Tu widze ryzyko", "to mnie nie przekonuje" brzmi ludzko; "to ekscytujacy krok naprzod" brzmi jak AI. Laczy sie z #25 (generyczne pozytywne zakonczenia), ale dotyczy tonu calego tekstu.
+**Reguła:** dopusc krytyke i chlodny dystans. "Tu widze ryzyko", "to mnie nie przekonuje" brzmi ludzko; "to ekscytujacy krok naprzod" brzmi jak AI. Laczy sie z #25 (generyczne pozytywne zakonczenia), ale dotyczy tonu calego tekstu.
 
 ### 34. Mechaniczne przejscia miedzy mysliami
 **Problem:** AI laczy akapity formulkowymi spojnikami zamiast logika tresci. "Warto zauwazyc, ze" wystepuje w tekstach AI ~4,6x czesciej niz u ludzi.
@@ -330,7 +333,7 @@ Unikanie wzorcow AI to polowa roboty. Sterylny, bezgłosowy tekst zdradza AI tak
 
 **Sygnaly tekstu bez duszy:** kazde zdanie tej samej dlugosci; zero opinii; brak niepewnosci czy mieszanych uczuc; brak pierwszej osoby tam, gdzie pasuje; zero humoru i charakteru; czyta sie jak komunikat prasowy.
 
-**Jak dodac glos (dla tresci Wieslawa/MateMatic):** rzeczowa precyzja zamiast entuzjazmu; spokojny ton z subtelna ironia intelektualna; rytm zroznicowany - krotkie zdanie, potem dluzsze; konkret zamiast ogolnika; "ja"/"my" gdzie szczere; przyznanie zlozonosci zamiast falszywej pewnosci.
+**Jak dodac glos (styl domowy, gdy autor nie dal wlasnego):** rzeczowa precyzja zamiast entuzjazmu; spokojny ton z subtelna ironia intelektualna; rytm zroznicowany - krotkie zdanie, potem dluzsze; konkret zamiast ogolnika; "ja"/"my" gdzie szczere; przyznanie zlozonosci zamiast falszywej pewnosci.
 
 ## Proces
 
@@ -351,10 +354,11 @@ Unikanie wzorcow AI to polowa roboty. Sterylny, bezgłosowy tekst zdradza AI tak
 
 ## Atrybucja
 
-Polska adaptacja blader/humanizer (https://github.com/blader/humanizer, MIT). Oryginal bazuje na Wikipedia "Signs of AI writing" (WikiProject AI Cleanup). Ta wersja: polskie listy slow, polska typografia, wzorzec #29 (kalki), sygnatury statystyczne (#30-#34), integracja z pipeline MateMatic. Sekcja sygnatur statystycznych oparta na: W. Woloszyk, M. Domaszk, "Detecting AI-Generated Content: A hybrid linguistic approach", MultiLingual, wrzesien 2025 (https://multilingual.com/magazine/september-2025/detecting-ai-generated-content/).
+Polska adaptacja blader/humanizer (https://github.com/blader/humanizer, MIT). Oryginal bazuje na Wikipedia "Signs of AI writing" (WikiProject AI Cleanup). Ta wersja: polskie listy slow, polska typografia, wzorzec #29 (kalki), sygnatury statystyczne (#30-#34), tryb dokumentacja (#35-#42), wzorzec #43 (pisownia RJP 2026). Autor adaptacji: Wieslaw Mazur / MateMatic Solutions. Sekcja sygnatur statystycznych oparta na: W. Woloszyk, M. Domaszk, "Detecting AI-Generated Content: A hybrid linguistic approach", MultiLingual, wrzesien 2025 (https://multilingual.com/magazine/september-2025/detecting-ai-generated-content/).
 
 ## Dziennik szlifu
 
+- v1.4.0 (2026-10-05) - neutralizacja pod publikacje poza MateMatic: reguly domowe (jedna kreska, glos) wydzielone jako STYL DOMOWY z pierwszenstwem przewodnika stylu autora; usuniete odwolania do wewnetrznych skilli i notatek. Wzorce slop bez zmian.
 - v1.3.0 (2026-09-16) - dodany wzorzec #43: pisownia sprzed reformy RJP 2026 ("nie" z imieslowem i przymiotnikiem, przedrostki, wielkie litery) z wyjatkami, w ktorych rozdzielnie zostaje. Pelna sciaga i skaner kandydatow sa w marko-pl-content.
 - v1.2.0 (2026-08-17) - dodany TRYB DOKUMENTACJA (#35-#42): jeden dom na fakt, narracja historii, adnotacje statusu, reczne inwentarze, transkrypt rozumowania, emfaza inflacyjna, spec-speak w opisie wdrozonego, slowa-worki; plus regula skracania „zachowaj kompletna propozycje”. Komplementarny do wzorcow prozy 1-34.
 - v1.1.0 (2026-06-29) - dodana sekcja "Sygnatury statystyczne" (#30-#34): burstiness, morfologia czasownik/rzeczownik, gestosc i roznorodnosc leksykalna, zakres emocji, mechaniczne przejscia. Oparte na metodologii detekcji Woloszyka i Domaszk (MultiLingual 2025).
