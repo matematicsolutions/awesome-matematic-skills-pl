@@ -1,6 +1,6 @@
 ---
 name: humanizer-pl
-version: 1.4.0
+version: 1.4.1
 description: |
   Usuwa wzorce AI-slop z polskiego tekstu - sprawia, ze czyta sie naturalnie i ludzko.
   Polska adaptacja blader/humanizer (MIT). Uzywaj do edycji/przegladu polskich tresci:
@@ -32,8 +32,6 @@ attribution:
 compatibility: claude-code
 allowed-tools:
   - Read
-  - Write
-  - Edit
   - Grep
   - Glob
   - AskUserQuestion
@@ -358,6 +356,7 @@ Polska adaptacja blader/humanizer (https://github.com/blader/humanizer, MIT). Or
 
 ## Dziennik szlifu
 
+- v1.4.1 (2026-10-05) - z `allowed-tools` usuniete Write i Edit: skill nie zatwierdza z gory zapisu plikow, Claude pyta uzytkownika o zgode przy kazdej zmianie pliku (uwaga skanera katalogu Claude ALLOWED_TOOLS_UNSCOPED_WRITE).
 - v1.4.0 (2026-10-05) - neutralizacja pod publikacje poza MateMatic: reguly domowe (jedna kreska, glos) wydzielone jako STYL DOMOWY z pierwszenstwem przewodnika stylu autora; usuniete odwolania do wewnetrznych skilli i notatek. Wzorce slop bez zmian.
 - v1.3.0 (2026-09-16) - dodany wzorzec #43: pisownia sprzed reformy RJP 2026 ("nie" z imieslowem i przymiotnikiem, przedrostki, wielkie litery) z wyjatkami, w ktorych rozdzielnie zostaje. Pelna sciaga i skaner kandydatow sa w marko-pl-content.
 - v1.2.0 (2026-08-17) - dodany TRYB DOKUMENTACJA (#35-#42): jeden dom na fakt, narracja historii, adnotacje statusu, reczne inwentarze, transkrypt rozumowania, emfaza inflacyjna, spec-speak w opisie wdrozonego, slowa-worki; plus regula skracania „zachowaj kompletna propozycje”. Komplementarny do wzorcow prozy 1-34.
