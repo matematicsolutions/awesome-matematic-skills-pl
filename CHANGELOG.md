@@ -22,6 +22,12 @@ Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
   eli:DU/1964/93) i wpisany do `reviews/legal-accuracy.md` dla 11 skilli.
 
 
+### Changed
+
+- `marko-pl-content` 1.2.0: opis i typy tresci bez odniesien do serwisu MateMatic (skill dziala
+  na dowolnych polskich tekstach), styl domu (krotki myslnik) ustepuje wlasnemu przewodnikowi
+  stylu uzytkownika, `allowed-tools` dopuszcza z gory tylko `git diff` i `git status`.
+
 ## [2026.09.21d] - 2026-09-21
 
 ### Added
