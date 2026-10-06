@@ -1,6 +1,6 @@
 # Standard cytatu i tagów pewności
 
-Wspólny standard dla wszystkich skilli w tym repo. Każdy plugin odwołuje się do niego w swoim `CLAUDE.md`. Cel: pewność źródła widać na pierwszy rzut oka, a model nie zmyśla sygnatur.
+Wspólny standard dla wszystkich skilli w tym repo. Rdzeń standardu (tagi pewności) jest wpisany we wspólne reguły wtyczek `fundament-weryfikacyjny` i `orzecznictwo-zrodla`, skopiowane do każdego ich skilla. Cel: pewność źródła widać na pierwszy rzut oka, a model nie zmyśla sygnatur.
 
 ## Trzy klasy pewności
 

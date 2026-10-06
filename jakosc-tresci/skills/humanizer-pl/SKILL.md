@@ -362,3 +362,21 @@ Polska adaptacja blader/humanizer (https://github.com/blader/humanizer, MIT). Or
 - v1.2.0 (2026-08-17) - dodany TRYB DOKUMENTACJA (#35-#42): jeden dom na fakt, narracja historii, adnotacje statusu, reczne inwentarze, transkrypt rozumowania, emfaza inflacyjna, spec-speak w opisie wdrozonego, slowa-worki; plus regula skracania „zachowaj kompletna propozycje”. Komplementarny do wzorcow prozy 1-34.
 - v1.1.0 (2026-06-29) - dodana sekcja "Sygnatury statystyczne" (#30-#34): burstiness, morfologia czasownik/rzeczownik, gestosc i roznorodnosc leksykalna, zakres emocji, mechaniczne przejscia. Oparte na metodologii detekcji Woloszyka i Domaszk (MultiLingual 2025).
 - v1.0.0 (2026-05-18) - pierwsze postawienie. Polska adaptacja 29 wzorcow, odwrocony wzorzec cudzyslowow, dodany wzorzec kalk anglicyzmow, wpiety w pipeline publikacji i pipeline wideo.
+
+<!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
+## Wspólne reguły wtyczki jakosc-tresci (Jakość treści)
+
+Te reguły obowiązują w każdym skillu tej wtyczki, także gdy sam skill milczy. Są skopiowane do każdego skilla, więc działają zarówno po instalacji całej wtyczki, jak i pojedynczego skilla.
+
+Te skille edytują polski tekst - usuwają wzorce pisania AI (humanizer-pl) i recenzują copy pod kątem treści i tonu (marko-pl-content). To narzędzia redakcyjne, nie porada prawna i nie źródło faktów.
+
+### Reguły
+
+- **Zero zmyślania.** Skille zmieniają słowa i strukturę, nigdy faktów, liczb, cytatów ani źródeł. Jeśli teza nie ma źródła, naprawą jest podanie źródła, nie pewniejsze sformułowanie.
+- **Brand-safety.** Humanizer poprawia prozę; nie jest narzędziem do omijania detektorów AI. MateMatic uczy transparentności AI - celem jest lepszy tekst, nie ukrywanie, że użyto AI.
+- **Bramka człowieka.** Wynik to draft. Zanim pójdzie na zewnątrz, sprawdza go człowiek.
+
+### Zakres pluginu
+
+Neutralny jurysdykcyjnie i tematycznie. Bez konektorów, nic nie wysyła na zewnątrz. Do weryfikacji prawnej (grounding, czerwony zespół, scoring) użyj pluginu `fundament-weryfikacyjny`.
+<!-- shared-rules:end -->

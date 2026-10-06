@@ -10,7 +10,7 @@ z kolei odwzorowuje `anthropics/claude-for-legal`.
 ```
 <dziedzina>/
 ├── .claude-plugin/plugin.json    # nazwa kebab-case, semver, opis bez "cyfra,cyfra"
-├── CLAUDE.md                     # SIATKA BEZPIECZEŃSTWA (varaverkko) - patrz niżej
+├── SHARED-RULES.md               # SIATKA BEZPIECZEŃSTWA (varaverkko) - patrz niżej
 ├── .mcp.json                     # konektory, których skille faktycznie używają (minimum!)
 ├── skills/<nazwa>/SKILL.md       # 2-4 skille, każdy = jeden workflow
 │   └── references/*.md           # doktryna ładowana na żądanie, nie do frontmatteru
@@ -20,8 +20,11 @@ z kolei odwzorowuje `anthropics/claude-for-legal`.
 
 ## Reguły, które czynią plugin dobrym
 
-1. **SKILL.md mówi CO robić; CLAUDE.md pluginu jest siatką bezpieczeństwa.** Jeśli
-   poprawny wynik skilla zależy od tego, że guardrail z CLAUDE.md ratuje błąd - wada
+1. **SKILL.md mówi CO robić; SHARED-RULES.md pluginu jest siatką bezpieczeństwa.**
+   `CLAUDE.md` w katalogu pluginu NIE ładuje się po instalacji, dlatego siatka siedzi
+   w `SHARED-RULES.md`, a `scripts/shared-rules-sync.py --write` kopiuje ją na koniec
+   każdego SKILL.md (bez kroku `--write` bramka daje BLOKADĘ). Jeśli
+   poprawny wynik skilla zależy od tego, że guardrail z siatki ratuje błąd - wada
    jest w skillu; przenieś wiedzę do skilla. Siatka to polisa, nie mechanizm główny.
 2. **Substancja ze źródła, nie z pamięci** - skill dziedzinowy wskazuje konektor
    (SAOS / ISAP / eu-sparql) i tabelę podstaw prawnych; ustawy, na których się opiera,
@@ -43,7 +46,7 @@ z kolei odwzorowuje `anthropics/claude-for-legal`.
 ## Checklist nowego plugina (bramka przed merge)
 
 - [ ] `plugin.json` zgodny z manifestem (`node scripts/check-marketplace.mjs` zielony)
-- [ ] CLAUDE.md pluginu obecny i **trackowany w git** (`.gitignore` ma `/CLAUDE.md`, nie `CLAUDE.md`)
+- [ ] SHARED-RULES.md pluginu obecny, a `python scripts/shared-rules-sync.py` zielony (blok w każdym SKILL.md)
 - [ ] skille przechodzą `skill-audit --marketplace`
 - [ ] ustawy cytowane przez skille dopisane do `seuranta/ustawy.json`
 - [ ] przykłady: placeholdery NN/RR albo realne sprawy z oznaczeniem i źródłem

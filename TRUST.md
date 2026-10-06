@@ -36,7 +36,8 @@ Każdą z poniższych deklaracji można sprawdzić, czytając pliki samego skill
   połączeń; dostają daty albo listy klauzul, nie akta sprawy.
 - **Draft, nie akt.** Zawiadomienie UODO, wysyłka odpowiedzi na wniosek,
   złożenie pisma, podpis: skill przygotowuje dokument, akt wykonuje
-  człowiek. Ta granica jest zapisana per bundle w jego `CLAUDE.md`.
+  człowiek. Ta granica jest zapisana w każdym skillu, we wspólnych
+  regułach jego wtyczki na końcu `SKILL.md`.
 
 ## Co znaczą pola frontmattera
 

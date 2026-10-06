@@ -45,3 +45,64 @@ Przeglad 2026-08-17 (v1.3.0 - port mechanizmow z bliznika EN: petla rewizji z co
 
 - art. 12 - ok - AI Act (2024/1689) art. 12 ust. 1: "High-risk AI systems shall technically allow for the automatic recording of events (logs) over the lifetime of the system"; ust. 2 wiaze logi z identyfikowalnoscia dzialania. Teza skilla: transkrypt wszystkich wersji v1..vN jako dowod ograniczonej rewizji i ewentualnego cofniecia. Zgodne. Zweryfikowane u zrodla: EUR-Lex CELEX:32024R1689 (HTML skonsolidowany), 2026-08-17.
 - art. 14 - ok - art. 14 ust. 1: system ma byc zaprojektowany tak, "that they can be effectively overseen by natural persons during the period in which they are in use". Teza skilla: decyzja "wyslac mimo wymuszonego wyjscia z blokerami" zostaje przy czlowieku, skill nie wysyla. Zgodne. To samo zrodlo, ta sama data.
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## atak-przeciwnika-pl
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## citation-grounding-pl
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## deliverable-fidelity-pl
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## ekstraktor-cytatow-pl
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## intake-sufficiency-pl
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## legal-ai-audit-bundle
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## legal-request-router-pl
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## ocena-outputu-pl
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## pierwsze-wrazenie-sedziego-pl
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.
+
+## subsumpcja-pl
+
+Przeglad 2026-10-06 (dodany blok wspolnych regul wtyczki).
+
+- art. 415 - ok - wystepuje tylko jako przyklad formatu tagu Zweryfikowane, `(kodeks cywilny art. 415)`, we wspolnych regulach wtyczki fundament-weryfikacyjny (SHARED-RULES.md, skopiowane do kazdego skilla 2026-10-06). Sprawdzone u zrodla 2026-10-06 w Repertorium (verify_citations): eli:DU/1964/93, "Ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny", art. 415, status no_known_changes_after_date, snapshot pl-2026-08. Przyklad nie przypisuje przepisowi zadnej tresci poza jego istnieniem i numerem.

@@ -5,6 +5,22 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.06] - 2026-10-06
+
+### Fixed
+
+- Wspolne reguly wtyczek docieraja do uzytkownika. Claude Code nie laduje `CLAUDE.md` z katalogu
+  wtyczki (mowi to `claude plugin validate` i kontrola katalogu Claude), wiec siatka bezpieczenstwa
+  kazdego bundla nie trafiala do nikogo - ani po `/plugin install`, ani przy pojedynczym skillu.
+  Reguly kazdej wtyczki mieszkaja teraz w `SHARED-RULES.md`, a `scripts/shared-rules-sync.py`
+  kopiuje je na koniec kazdego `SKILL.md` i daje BLOKADE przy kazdym rozjezdzie. Blok niesie
+  46 skilli w 7 bundlach; `multi-jurysdykcja-ue` ma same konektory i czeka na osobna poprawke.
+- README, TRUST.md i `references/` nie twierdza juz, ze reguly niesie `CLAUDE.md` wtyczki.
+  Wzorzec nowej wtyczki (`references/format-plugina-dziedzinowego.md`) wymaga `SHARED-RULES.md`
+  i zielonej bramki synchronizacji.
+- Przyklad `(kodeks cywilny art. 415)` w regulach fundamentu sprawdzony u zrodla (Repertorium,
+  eli:DU/1964/93) i wpisany do `reviews/legal-accuracy.md` dla 11 skilli.
+
 
 ## [2026.09.21d] - 2026-09-21
 

@@ -157,3 +157,29 @@ Taksonomia 41 kategorii klauzul oparta na **CUAD (Contract Understanding Atticus
 The Atticus Project, na licencji **CC BY 4.0**. Źródło: https://www.atticusprojectai.org/cuad.
 Opisy kategorii po polsku, kotwice do prawa polskiego (KC, prawo autorskie, KP) oraz logika
 red-flag są oryginalnym opracowaniem MateMatic - interpretacja MateMatic, nie stanowisko NRA ani KRRP.
+
+<!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
+## Wspólne reguły wtyczki dokumenty (Dokumenty)
+
+Te reguły obowiązują w każdym skillu tej wtyczki, także gdy sam skill milczy. Są skopiowane do każdego skilla, więc działają zarówno po instalacji całej wtyczki, jak i pojedynczego skilla.
+
+Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimizację danych osobowych. Część operacji dotyka danych wrażliwych, więc reguła ochrony danych jest tu pierwsza.
+
+### Ochrona danych
+
+- **Anonimizacja przed wysyłką** - gdy dokument zawiera dane osobowe, oczyść je lokalnie (skill `let-it-be`), zanim treść trafi do modelu. Dane osobowe nie powinny wychodzić do API. To zasada minimalizacji (RODO).
+- **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
+- **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
+
+### Operacje nieodwracalne
+
+Niektóre operacje są nieodwracalne (anonimizacja w trybie nieodwracalnym, zaakceptowanie wszystkich zmian w .docx). Skille oznaczają je jawnie - wykonuj je dopiero po potwierdzeniu przez człowieka.
+
+### Bramka człowieka
+
+Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to uprawniony człowiek. Plugin przygotowuje plik, nie wykonuje aktu wysyłki.
+
+### Zakres pluginu
+
+Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja). Nie ocenia treści prawnej ani nie weryfikuje cytatu - tę warstwę daje plugin "fundament weryfikacyjny".
+<!-- shared-rules:end -->
