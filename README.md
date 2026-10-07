@@ -17,7 +17,7 @@ Licencja kuratorska: **MIT** (umiejetnosci w bundlach zachowuja wlasne licencje 
 
 ## Co tu znajdziesz
 
-1. **Bundle domenowe instalowane jedna komenda** - 46 umiejetnosci spietych w 8 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, multi-jurysdykcja UE). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
+1. **Bundle domenowe instalowane jedna komenda** - 48 umiejetnosci spietych w 8 pluginow wedlug funkcji (fundament weryfikacyjny, orzecznictwo + zrodla, dokumenty, governance kancelarii, jakosc tresci, ochrona danych RODO, dev, multi-jurysdykcja UE). Kazdy instalujesz jednym `npx skills add matematicsolutions/awesome-matematic-skills-pl` (dowolny agent) albo `/plugin install` (natywnie w Claude Code); konektory MCP polskich zrodel instaluja sie razem z bundlem orzecznictwa.
 2. **Awesome list** - linki do pokrewnych repo produktowych w ekosystemie MateMatic: 6 konektorow MCP, 5 pluginow Claude Code dla praktyki PL, lokalny agent Patron, audyt gotowosci Readiness, przewodniki Praxis.
 3. **Standard frontmatter** dla skilli PL (autor, wersja CalVer, licencja per-skill, companion_skills, inspiration) - patrz [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -59,7 +59,7 @@ Plugin Claude Code [matematic-legal-verify-pl](https://github.com/matematicsolut
 
 ---
 
-## Pakiet - 46 umiejetnosci w 8 bundlach
+## Pakiet - 48 umiejetnosci w 8 bundlach
 
 Wszystkie umiejetnosci sa spiete w pluginy domenowe - instalujesz jedna komenda. Zadna nie lezy juz pojedynczo w `./skills/`.
 
@@ -111,6 +111,7 @@ Operacje na dokumentach, bez konektorow. Instalacja: `/plugin install dokumenty@
 | [<img src="./assets/badge-kalkulatory-procesowe-pl.svg" alt="Kalkulatory procesowe" width="200" height="60">](./dokumenty/skills/kalkulatory-procesowe-pl) | Cztery kalkulatory procesu cywilnego (oplata sadowa UKSC, przedawnienie art. 117-125 KC, odsetki w trzech rezimach, WPS art. 19-26 KPC) z protokolem "pobierz zywe parametry przed obliczeniem" i wachta aktow bazowych w CI. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-doc-intel-contract-pl.svg" alt="Doc Intel Contract" width="200" height="60">](./dokumenty/skills/doc-intel-contract-pl) | Normalizuje wyjscie OCR/PDF (opendataloader-pdf, pdftotext, Chandra OCR, LiteParse) do jednego audytowalnego kontraktu {block_type, bbox, text, confidence}: confidence-gating z kolejka dla czlowieka, flagi PII pod redakcje, bbox do groundingu cytatu. OCR skanow na CPU i lokalny podzial teczki na pisma. Zero LLM. | MIT | 0.5.0 |
 | [<img src="./assets/badge-akta-przeszukiwalne-pl.svg" alt="Akta przeszukiwalne" width="200" height="60">](./dokumenty/skills/akta-przeszukiwalne-pl) | Folder akt (takze skany) -> tekst z numerami stron, lokalna wyszukiwarka (polskie znaki i odmiana) i raport: strony nieczytelne, duplikaty plikow i pliki o identycznej tresci pod roznymi nazwami. OCR na CPU, tekst akt nie opuszcza komputera. | MIT | 0.1.2 |
+| [<img src="./assets/badge-chronologia-stanowiska-pl.svg" alt="Chronologia i stanowiska" width="200" height="60">](./dokumenty/skills/chronologia-stanowiska-pl) | Z tekstu akt chronologia zdarzen (rozdzielone daty zdarzenia, dokumentu, doreczenia, wplywu) albo zestawienie stanowisk stron: element roszczenia, twierdzenie, stanowisko przeciwnika, dowody, luka. Deterministyczna bramka sprawdza, czy kazdy cytat stoi na wskazanej stronie akt; pusta lista to BLOKADA. | Apache-2.0 | 0.1.0 |
 | [<img src="./assets/badge-doc-intel-llm-tier-pl.svg" alt="Doc Intel LLM Tier" width="200" height="60">](./dokumenty/skills/doc-intel-llm-tier-pl) | Ekstrakcja inferowanych konceptow z umowy, pisma lub wyroku (kara umowna, termin, sad wlasciwy, ryzyka) z zakotwiczeniem kazdego w zdaniu zrodlowym. Wrap na contextgem, domyslnie model lokalny. | MIT | 1.0.0 |
 | [<img src="./assets/badge-waliduj-podpis-pdf-pl.svg" alt="Waliduj Podpis PDF" width="200" height="60">](./dokumenty/skills/waliduj-podpis-pdf-pl) | Sprawdza podpis elektroniczny w przychodzacym PDF: czy plik zmieniono po podpisaniu, kto i kiedy podpisal, znacznik czasu, zakres podpisu. Lokalnie na pyHanko, bez sieci. | MIT | 0.1.0 |
 
@@ -125,6 +126,7 @@ Generatory governance i operacyjne, bez konektorow. Instalacja: `/plugin install
 | [<img src="./assets/badge-matematic-workspace-backup.svg" alt="Workspace Backup" width="200" height="60">](./governance-kancelarii/skills/matematic-workspace-backup) | Szyfrowany backup Google Workspace przez gogcli + age + prywatne repo Git. Adresuje RODO art. 32 (ciaglosc, ochrona przed lockoutem). | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-ai-act-triage-pl.svg" alt="AI Act Triage" width="200" height="60">](./governance-kancelarii/skills/ai-act-triage-pl) | Triage AI Act (2024/1689): definicja systemu AI, zakazy art. 5, wysokie ryzyko (zal. I/III + filtr art. 6 ust. 3), GPAI, przejrzystosc art. 50, rola podmiotu, sygnal FRIA art. 27. Konczy karta klasyfikacji - wejscie do Konstytucji AI. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-tajemnica-preflight-pl.svg" alt="Tajemnica Preflight" width="200" height="60">](./governance-kancelarii/skills/tajemnica-preflight-pl) | Preflight przed wyslaniem tresci prawnej do zewnetrznego AI: pasmo SAFE/CAUTION/STOP (tajemnica adwokacka/radcowska, RODO, tajemnica przedsiebiorstwa, work-product) + draft redakcji do zatwierdzenia. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-kyc-kancelaria-pl.svg" alt="KYC kancelarii" width="200" height="60">](./governance-kancelarii/skills/kyc-kancelaria-pl) | Teczka KYC/AML klienta-spolki: odpis KRS i biala lista VAT (wychodzi tylko numer), listy sankcyjne ONZ, UE i MSWiA dopasowywane lokalnie, zgodnosc beneficjentow z wydrukiem CRBR, 13 regul z trojstanem. Niczego nie zatwierdza - decyduje czlowiek. CRBR na razie recznie. | Apache-2.0 | 0.1.0 |
 
 ### Plugin `jakosc-tresci` (jakosc tekstu polskiego)
 
@@ -230,7 +232,7 @@ npx skills add matematicsolutions/awesome-matematic-skills-pl --skill citation-g
 /plugin install dev-mcp@matematic-skills-pl                      # narzedzia deweloperskie (advanced)
 ```
 
-Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 46 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
+Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 48 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
 
 ### C. Pojedynczy skill jako symlink do ~/.claude/skills/
 

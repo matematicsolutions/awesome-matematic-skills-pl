@@ -1,0 +1,12 @@
+{"odpis": {"rodzaj": "Aktualny",
+ "naglowekA": {"rejestr": "RejP", "numerKRS": "0000999001", "stanZDnia": "01.10.2026"},
+ "dane": {
+  "dzial1": {"danePodmiotu": {"formaPrawna": "SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ", "nazwa": "DELTA TESTOWA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+     "identyfikatory": {"nip": "0000000001", "regon": "000000001"}},
+   "wspolnicySpzoo": [{"nazwisko": {"nazwiskoICzlon": "Ż***"}, "imiona": {"imie": "Ł*****"}, "identyfikator": {"pesel": "8**********"}}]},
+  "dzial2": {"reprezentacja": {"nazwaOrganu": "ZARZĄD", "sposobReprezentacji": "DWAJ CZŁONKOWIE ZARZĄDU DZIAŁAJĄCY ŁĄCZNIE",
+     "sklad": [{"nazwisko": {"nazwiskoICzlon": "F*******"}, "imiona": {"imie": "A***"}, "identyfikator": {"pesel": "7**********"}, "funkcjaWOrganie": "PREZES ZARZĄDU", "czyZawieszona": false},
+               {"nazwisko": {"nazwiskoICzlon": "P**********"}, "imiona": {"imie": "B*****"}, "identyfikator": {"pesel": "6**********"}, "funkcjaWOrganie": "CZŁONEK ZARZĄDU", "czyZawieszona": false},
+               {"nazwisko": {"nazwiskoICzlon": "Z*********"}, "imiona": {"imie": "C*****"}, "identyfikator": {"pesel": "5**********"}, "funkcjaWOrganie": "CZŁONEK ZARZĄDU", "czyZawieszona": true}]},
+   "prokurenci": [{"nazwisko": {"nazwiskoICzlon": "P**********"}, "imiona": {"imie": "D*****"}, "identyfikator": {"pesel": "9**********"}, "rodzajProkury": "PROKURA SAMOISTNA"}]},
+  "dzial6": {}}}}

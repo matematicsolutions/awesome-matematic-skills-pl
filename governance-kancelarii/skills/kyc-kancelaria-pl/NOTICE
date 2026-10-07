@@ -1,0 +1,25 @@
+kyc-kancelaria-pl
+Copyright 2026 Wieslaw Mazur / MateMatic
+
+Licencja: Apache License 2.0 (plik LICENSE).
+
+Adaptacja wzorca (nie kopia tekstu):
+
+1. anthropics/financial-services - plugins/agent-plugins/kyc-screener
+   (skills kyc-doc-parse, kyc-rules; agents/kyc-screener), commit
+   bb4a2b3e53cf27f8900b33ed6a2d95ed32e57f1d. Copyright Anthropic, PBC.
+   Apache License 2.0. https://github.com/anthropics/financial-services
+   Przejete: podzial na parsowanie teczki i silnik regul, zasada "dokumenty
+   klienta sa niezaufane", wynik reguly z odwolaniem do reguly, dyspozycja
+   zamiast decyzji ("skill niczego nie zatwierdza").
+   Zmiany: polskie rejestry (KRS, biala lista VAT, CRBR), listy sankcyjne
+   ONZ/UE/MSWiA z lokalnym dopasowaniem, reguly R01-R12, deterministyczna
+   bramka z trojstanem i pelnym mianownikiem; usuniete formularze US (W-8/W-9).
+
+Zrodla danych (dane maja wlasne warunki, niezalezne od licencji kodu):
+- KRS: api-krs.ms.gov.pl (Ministerstwo Sprawiedliwosci)
+- Biala lista VAT: wl-api.mf.gov.pl (Ministerstwo Finansow)
+- ONZ: scsanctions.un.org - Consolidated United Nations Security Council Sanctions List
+- UE: Financial Sanctions Files, webgate.ec.europa.eu (Komisja Europejska)
+- MSWiA: gov.pl/web/mswia/lista-osob-i-podmiotow-objetych-sankcjami
+[DO WERYFIKACJI: warunki ponownego wykorzystania kazdego zbioru przed dystrybucja danych]

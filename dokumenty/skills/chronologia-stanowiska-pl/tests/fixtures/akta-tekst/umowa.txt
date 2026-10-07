@@ -1,0 +1,5 @@
+===== strona 1 =====
+UMOWA DOSTAWY nr 7/2024 (dane fikcyjne - fixture testowy)
+zawarta w dniu 15 stycznia 2024 r. pomiędzy Alfa Sp. z o.o. (Dostawca) a Beta S.A. (Zamawiający).
+§ 3. Dostawca dostarczy 200 palet towaru w terminie do dnia 31 marca 2024 r.
+§ 5. Za każdy dzień zwłoki w dostawie Dostawca zapłaci karę umowną w wysokości 0,2% wartości dostawy.

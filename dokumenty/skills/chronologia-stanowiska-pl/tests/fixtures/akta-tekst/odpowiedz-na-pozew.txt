@@ -1,0 +1,6 @@
+===== strona 1 =====
+ODPOWIEDŹ NA POZEW (dane fikcyjne - fixture testowy)
+Pozwany przyznaje, że strony zawarły umowę dostawy nr 7/2024.
+===== strona 2 =====
+Pozwany zaprzecza, aby opóźnienie wynikło z okoliczności, za które ponosi odpowiedzialność.
+Opóźnienie spowodowała blokada przejścia granicznego, o której powód był informowany telefonicznie.

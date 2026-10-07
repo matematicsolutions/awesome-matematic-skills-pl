@@ -1,0 +1,9 @@
+===== strona 1 =====
+POZEW o zapłatę (dane fikcyjne - fixture testowy)
+Powód: Beta S.A. Pozwany: Alfa Sp. z o.o.
+===== strona 2 =====
+Uzasadnienie. Strony zawarły w dniu 15 stycznia 2024 r. umowę dostawy nr 7/2024.
+Pozwany dostarczył w terminie jedynie 120 palet z 200 zamówionych.
+Pozostałe 80 palet pozwany dostarczył dopiero w dniu 30 kwietnia 2024 r., z opóźnieniem 30 dni.
+===== strona 3 =====
+Na dowód: umowa dostawy nr 7/2024, wezwanie z dnia 5 kwietnia 2024 r., protokół odbioru z dnia 30 kwietnia 2024 r.

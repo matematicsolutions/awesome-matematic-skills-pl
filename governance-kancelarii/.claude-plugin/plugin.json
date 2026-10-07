@@ -1,7 +1,7 @@
 {
   "name": "governance-kancelarii",
-  "description": "Governance AI dla kancelarii: Konstytucja AI (matematic-konstytucja-ai), warsztat decyzyjny Expert Panel, szyfrowany backup Google Workspace (matematic-workspace-backup, RODO art. 32). Generatory dokumentow, bez konektorow.",
-  "version": "1.2.0",
+  "description": "Governance AI dla kancelarii: Konstytucja AI (matematic-konstytucja-ai), warsztat decyzyjny Expert Panel, szyfrowany backup Google Workspace (matematic-workspace-backup, RODO art. 32), teczka KYC/AML klienta-spolki z przesiewem sankcyjnym lokalnie (kyc-kancelaria-pl). Generatory dokumentow; kyc-kancelaria-pl odpytuje publiczne rejestry (tylko KRS/NIP).",
+  "version": "1.3.0",
   "author": { "name": "Wieslaw Mazur / MateMatic Solutions" },
   "homepage": "https://github.com/matematicsolutions/awesome-matematic-skills-pl",
   "license": "Apache-2.0",

@@ -1,0 +1,60 @@
+chronologia-stanowiska-pl
+Copyright 2026 Wieslaw Mazur / MateMatic
+
+Licencja: Apache License 2.0 (plik LICENSE).
+
+Ten skill jest adaptacja (tlumaczenie na polski, przeniesienie do polskiej procedury,
+nowa struktura i wlasna bramka lokatorow) ponizszych prac. Tekst nie jest kopia
+zadnej z nich; wzorce i struktura zostaly przejete i zmienione.
+
+1. anthropics/claude-for-legal - litigation-legal/skills/chronology oraz
+   litigation-legal/skills/claim-chart, commit d541734b08e67aae330a362b256d1eb6808a08f5.
+   Copyright Anthropic, PBC. Apache License 2.0.
+   https://github.com/anthropics/claude-for-legal
+   Przejete: tryby i struktura chronologii, bramka postawy tajemnicy A/B/C, flagi
+   tajemnicy per wpis, wagi zdarzen wedlug perspektywy strony, wariant stanu
+   faktycznego i wariant dla swiadka, wersjonowanie; z claim-chart: mapa element x
+   dowody za/przeciw x stan, lista luk jako glowny wynik, neutralizacja formul w CSV.
+   Zmiany: polska procedura, usuniete odwolania do prawa USA (Bates, FRE, Iqbal/Twombly),
+   bez bibliotek przeslanek (nie zaszywamy prawa), wynik weryfikowany skryptem.
+
+2. b1rdmania/chronology (Andrew Bird), commit 628e807da8da1c594e915543095ab8b0e26393f0.
+   Apache License 2.0. https://github.com/b1rdmania/chronology
+   Przejete: zasada przypisania kazdego wpisu do dokumentu zrodlowego i bramka
+   dopuszczalnosci uzycia materialu przed ekstrakcja. Zmiany: zamiast CPR 31.22 -
+   pytanie o material z innego postepowania / postepowania przygotowawczego, z
+   markerem [DO WERYFIKACJI].
+
+3. legalquants/lq-skills - skills/building-chronologies, commit 70ebcea.
+   Apache License 2.0. https://github.com/legalquants/lq-skills
+   Przejete: pasmo pewnosci daty, rozdzielenie daty zdarzenia i daty dokumentu,
+   zasada "luki sa czescia wyniku".
+
+4. rohasnagpal/legal-ai-skills - chronology-builder i pleadings-analyst, commit 20fbad1.
+   MIT License, Copyright (c) 2026 Rohas Nagpal:
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+   Przejete: rozdzielenie rodzajow dat (zdarzenia, nadania, doreczenia, wplywu),
+   status wpisu (dowod, relacja, twierdzenie strony, ustalenie sadu), klasyfikacja
+   stanowiska przeciwnika (przyznanie, zaprzeczenie, brak stanowiska).
+
+Wlasne (MateMatic): scripts/bramka_lokatorow.py - deterministyczna kontrola, czy
+cytat stoi na wskazanej stronie akt, trojstan OK/UWAGI/BLOKADA z pelnym mianownikiem;
+spiecie z lokalnym OCR akt (akta-przeszukiwalne-pl); fikcyjne akta testowe.

@@ -1,0 +1,12 @@
+{
+  "_opis": "Siatka regul kancelarii. Plik zaufany - edytuje go osoba odpowiedzialna za AML w kancelarii, nie model. Skopiuj jako reguly.json i dostosuj.",
+  "wersja": "domyslna-0.1.0",
+  "max_wiek_list_dni": 1,
+  "max_wiek_rejestrow_dni": 7,
+  "statusy_vat_ok": ["Czynny", "Zwolniony"],
+  "kraje_wysokiego_ryzyka": [],
+  "_kraje_wysokiego_ryzyka": "Kody ISO-2. Celowo puste: liste ustala kancelaria [DO WERYFIKACJI: wykaz panstw wysokiego ryzyka - aktualne zrodlo urzedowe].",
+  "wymagane_dokumenty": {
+    "spolka": ["zlecenie_lub_pelnomocnictwo", "oswiadczenie_beneficjenci", "oswiadczenie_pep", "wydruk_crbr", "dokument_tozsamosci_dzialajacego"]
+  }
+}

@@ -5,6 +5,26 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.07] - 2026-10-07
+
+### Added
+
+- `chronologia-stanowiska-pl` 0.1.0 (plugin `dokumenty` 1.10.0) - z tekstu akt (wynik
+  `akta-przeszukiwalne-pl`) chronologia zdarzen albo zestawienie stanowisk stron: element
+  roszczenia, twierdzenie, stanowisko przeciwnika, dowody za i przeciw, luka. Rozdziela date
+  zdarzenia, dokumentu, nadania, doreczenia i wplywu. `scripts/bramka_lokatorow.py` sprawdza
+  bez LLM, czy kazdy cytat stoi na wskazanej stronie akt (OK / UWAGI / BLOKADA, pusta lista =
+  BLOKADA), a eksport CSV neutralizuje formuly. Adaptacja czterech otwartych skilli (Apache-2.0
+  i MIT, atrybucja w NOTICE skilla); 20 testow na fikcyjnych aktach.
+- `kyc-kancelaria-pl` 0.1.0 (plugin `governance-kancelarii` 1.3.0) - teczka KYC/AML
+  klienta-spolki: odpis KRS i biala lista VAT (wychodzi tylko numer KRS albo NIP), listy
+  sankcyjne ONZ, UE i MSWiA pobierane w calosci i dopasowywane lokalnie, zgodnosc beneficjentow
+  z wydrukiem CRBR, 13 regul z pelnym mianownikiem. Niczego nie zatwierdza - kieruje do
+  czlowieka. Publiczne API KRS maskuje dane osob, wiec pelne dane przychodza z odpisu PDF i sa
+  sprawdzane z maska (R13); osoba bez pelnych danych jest liczona jako nieprzesiana. Usluga SOAP
+  CRBR zwracala blad serwera przy sondzie - wydruk CRBR dostarcza prawnik. Wzorzec
+  anthropics/financial-services (Apache-2.0); 25 testow na fikcyjnych danych.
+
 ## [2026.10.06] - 2026-10-06
 
 ### Fixed

@@ -1,0 +1,42 @@
+{
+  "rodzaj": "chronologia",
+  "sprawa": "fixture-beta-v-alfa (dane fikcyjne)",
+  "perspektywa": "powod",
+  "postawa_tajemnicy": "B",
+  "wpisy": [
+    {
+      "id": "Z1", "data": "2024-01-15", "pewnosc_daty": "dokladna", "rodzaj_daty": "zdarzenia",
+      "kto": "Alfa i Beta", "zdarzenie": "Strony zawieraja umowe dostawy nr 7/2024 (200 palet do 31.03.2024).",
+      "waga": "istotne", "status": "dowod_bezposredni", "tajemnica": "ok", "pochodzenie": "akta",
+      "zrodla": [
+        {"plik": "umowa.pdf", "strona": 1, "cytat": "zawarta w dniu 15 stycznia 2024 r."},
+        {"plik": "odpowiedz-na-pozew.txt", "strona": 1, "cytat": "Pozwany przyznaje, że strony zawarły umowę dostawy"}
+      ]
+    },
+    {
+      "id": "Z2", "data": "2024-03-31", "pewnosc_daty": "dokladna", "rodzaj_daty": "zdarzenia",
+      "kto": "Alfa", "zdarzenie": "Uplywa umowny termin dostawy; dostarczono 120 z 200 palet.",
+      "waga": "kluczowe", "status": "twierdzenie_strony", "tajemnica": "ok", "pochodzenie": "akta",
+      "zrodla": [
+        {"plik": "umowa.txt", "strona": 1, "cytat": "w terminie do dnia 31 marca 2024 r."},
+        {"plik": "pozew.txt", "strona": 2, "cytat": "dostarczył w terminie jedynie 120 palet"}
+      ]
+    },
+    {
+      "id": "Z3", "data": "2024-04-05", "pewnosc_daty": "dokladna", "rodzaj_daty": "dokumentu",
+      "kto": "Beta", "zdarzenie": "Beta wzywa Alfe do dostarczenia brakujacych 80 palet.",
+      "waga": "istotne", "status": "dowod_bezposredni", "tajemnica": "ok", "pochodzenie": "akta",
+      "zrodla": [
+        {"plik": "korespondencja.txt", "strona": 1, "cytat": "Wzywamy do niezwłocznego dostarczenia brakujących 80 palet"}
+      ]
+    },
+    {
+      "id": "Z4", "data": "2024-04-30", "pewnosc_daty": "dokladna", "rodzaj_daty": "zdarzenia",
+      "kto": "Alfa", "zdarzenie": "Alfa dostarcza pozostale 80 palet (wg powoda 30 dni po terminie).",
+      "waga": "kluczowe", "status": "twierdzenie_strony", "tajemnica": "ok", "pochodzenie": "akta",
+      "zrodla": [
+        {"plik": "pozew.txt", "strona": 2, "cytat": "dostarczył dopiero w dniu 30 kwietnia 2024 r."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "rodzaj": "zestawienie",
+  "sprawa": "fixture-beta-v-alfa (dane fikcyjne)",
+  "perspektywa": "powod",
+  "postawa_tajemnicy": "A",
+  "roszczenie": "zaplata kary umownej za zwloke w dostawie [DO WERYFIKACJI: podstawa prawna - wskazuje prawnik]",
+  "elementy": [
+    {
+      "id": "E1", "element": "Zawarcie umowy z kara umowna za zwloke",
+      "twierdzenia": [{"plik": "pozew.txt", "strona": 2, "cytat": "Strony zawarły w dniu 15 stycznia 2024 r. umowę dostawy"}],
+      "stanowisko_przeciwnika": "przyznanie",
+      "zrodla_stanowiska": [{"plik": "odpowiedz-na-pozew.txt", "strona": 1, "cytat": "Pozwany przyznaje, że strony zawarły umowę dostawy"}],
+      "dowody_za": [{"plik": "umowa.txt", "strona": 1, "cytat": "zapłaci karę umowną w wysokości 0,2% wartości dostawy"}],
+      "dowody_przeciw": [],
+      "stan": "wykazane"
+    },
+    {
+      "id": "E2", "element": "Zwloka w dostawie (opoznienie z przyczyn, za ktore dluznik odpowiada)",
+      "twierdzenia": [{"plik": "pozew.txt", "strona": 2, "cytat": "z opóźnieniem 30 dni"}],
+      "stanowisko_przeciwnika": "zaprzeczenie",
+      "zrodla_stanowiska": [{"plik": "odpowiedz-na-pozew.txt", "strona": 2, "cytat": "Pozwany zaprzecza, aby opóźnienie wynikło z okoliczności"}],
+      "dowody_za": [{"plik": "korespondencja.txt", "strona": 1, "cytat": "których nie otrzymaliśmy w terminie umownym"}],
+      "dowody_przeciw": [{"plik": "odpowiedz-na-pozew.txt", "strona": 2, "cytat": "Opóźnienie spowodowała blokada przejścia granicznego"}],
+      "stan": "sporne"
+    },
+    {
+      "id": "E3", "element": "Data faktycznej dostawy pozostalych 80 palet",
+      "twierdzenia": [{"plik": "pozew.txt", "strona": 2, "cytat": "dostarczył dopiero w dniu 30 kwietnia 2024 r."}],
+      "stanowisko_przeciwnika": "brak_stanowiska",
+      "zrodla_stanowiska": [],
+      "dowody_za": [],
+      "dowody_przeciw": [],
+      "stan": "luka"
+    }
+  ]
+}
