@@ -160,5 +160,5 @@ Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to upra
 
 ### Zakres pluginu
 
-Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja). Nie ocenia treści prawnej ani nie weryfikuje cytatu - tę warstwę daje plugin "fundament weryfikacyjny".
+Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
 <!-- shared-rules:end -->

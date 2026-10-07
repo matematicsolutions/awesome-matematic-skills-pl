@@ -23,7 +23,7 @@ import sys
 import unicodedata
 from pathlib import Path
 
-WERSJA = "0.1.0"
+WERSJA = "0.1.1"
 OK, UWAGI, BLOKADA = 0, 10, 20
 NAZWA_STANU = {OK: "OK", UWAGI: "UWAGI", BLOKADA: "BLOKADA"}
 
@@ -171,6 +171,9 @@ def _data(wpis: dict, wid: str, w: Wynik) -> None:
         w.dodaj(UWAGI, wid, "DT04", "pewnosc 'dokladna', ale data nie jest pelnym dniem")
     if pewnosc == "przedzial" and len(czesci) != 2:
         w.dodaj(UWAGI, wid, "DT05", "pewnosc 'przedzial', ale data nie ma postaci A/B")
+    if pewnosc in ("przedzial", "przyblizona"):
+        # przedzial albo data przyblizona bywa wyznaczona przez model, a nie przepisana z akt
+        w.dodaj(UWAGI, wid, "DT06", f"data niepewna ('{pewnosc}') - sprawdz, czy wynika z akt, czy zostala wyznaczona")
 
 
 def _zrodla_lub_pochodzenie(wpis: dict, pole: str, akta: dict, wid: str, w: Wynik) -> None:
@@ -184,6 +187,8 @@ def _zrodla_lub_pochodzenie(wpis: dict, pole: str, akta: dict, wid: str, w: Wyni
         return
     for i, z in enumerate(zrodla):
         sprawdz_zrodlo(z, akta, wid, w, f"{pole}[{i}]")
+    if pochodzenie != "akta":
+        w.dodaj(UWAGI, wid, "ZR12", f"pochodzenie '{pochodzenie}' - fakt spoza akt nigdy nie przechodzi jako OK, nawet z kotwica")
 
 
 def sprawdz_chronologie(dane: dict, akta: dict, w: Wynik) -> list[dict]:
@@ -200,8 +205,10 @@ def sprawdz_chronologie(dane: dict, akta: dict, w: Wynik) -> list[dict]:
         if postawa == "B":
             _enum(wpis, "tajemnica", wid, w)
         _zrodla_lub_pochodzenie(wpis, "zrodla", akta, wid, w)
+        if wpis.get("status") == "wniosek" and not (wpis.get("uwagi") or "").strip():
+            w.dodaj(UWAGI, wid, "WN01", "status 'wniosek' bez uzasadnienia w polu 'uwagi'")
     kluczowe = sum(1 for x in wpisy if x.get("waga") == "kluczowe")
-    if len(wpisy) >= 10 and kluczowe > len(wpisy) / 2:
+    if len(wpisy) >= 4 and kluczowe > len(wpisy) / 2:
         w.dodaj(UWAGI, "*", "WG01", f"{kluczowe} z {len(wpisy)} wpisow 'kluczowe' - gdy wszystko jest kluczowe, nic nie jest")
     return wpisy
 

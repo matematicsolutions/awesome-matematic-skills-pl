@@ -66,8 +66,10 @@ def norm(u):
 
 
 def sh(*args):
+    # git diff zwraca UTF-8; bez jawnego kodowania Windows czyta cp1250 i bramka pada
+    # na polskim cudzyslowie (stdout=None -> AttributeError zamiast wyniku)
     return subprocess.run(["git", "-C", ROOT] + list(args),
-                          capture_output=True, text=True)
+                          capture_output=True, text=True, encoding="utf-8", errors="replace")
 
 
 def pick_base(explicit):

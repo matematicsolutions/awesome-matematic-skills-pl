@@ -5,6 +5,23 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.07b] - 2026-10-07
+
+### Fixed
+
+- `chronologia-stanowiska-pl` 0.1.1 (plugin `dokumenty` 1.10.1) i `kyc-kancelaria-pl` 0.1.1
+  (plugin `governance-kancelarii` 1.3.1) - poprawki z testu czystej instalacji (agent bez
+  kontekstu, sam SKILL.md, zipy pobrane z Boutique) i z uruchomienia w claude.ai. Chronologia:
+  bramka egzekwuje teraz to, co obiecuje SKILL.md - fakt spoza akt nawet z kotwica, data
+  przedzialowa albo przyblizona i `wniosek` bez uzasadnienia daja UWAGI, prog wiekszosci
+  kluczowych dziala od czterech wpisow. KYC: brak nazwy w dokumentach prosi o uzupelnienie
+  zamiast eskalacji, `null` w teczce nie wywraca bramki, kazda awaria oceny to BLOKADA (nigdy
+  kod spoza trojstanu), licznik rozdziela nazwy i osoby. SKILL.md obu skilli mowi, gdzie dzialaja:
+  w claude.ai piaskownica odcina rejestry, wiec KYC uczciwie zglasza BLOKADE.
+- Wspolne reguly `dokumenty`: zakres wtyczki obejmuje akta i chronologie; zdanie, ze wtyczka nie
+  sprawdza cytatu, przeczylo bramce lokatorow - teraz rozroznia cytat wobec zrodla prawa
+  (fundament weryfikacyjny) od cytatu wobec strony akt.
+
 ## [2026.10.07] - 2026-10-07
 
 ### Added

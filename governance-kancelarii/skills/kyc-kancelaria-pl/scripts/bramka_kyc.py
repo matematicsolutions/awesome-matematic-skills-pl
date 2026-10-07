@@ -21,7 +21,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from rejestry import normalizuj, pasuje_do_maski, szukaj, zamaskowane  # noqa: E402
 
-WERSJA = "0.1.0"
+WERSJA = "0.1.1"
 OK, UWAGI, BLOKADA = 0, 10, 20
 NAZWA = {OK: "OK", UWAGI: "UWAGI", BLOKADA: "BLOKADA"}
 LISTY = ("ONZ", "UE", "MSWiA")
@@ -105,9 +105,15 @@ def ocen(klient: dict, rejestry: dict, sankcje: dict, reguly: dict, dzis: dt.dat
         o.dodaj("R01", "Odpis aktualny KRS pobrany", "spelniona", OK, f"KRS {krs['krs']}, stan z dnia {krs.get('stan_z_dnia')}")
 
     # R02 - zgodnosc deklaracji z KRS
-    if krs.get("krs"):
-        zgodny_nr = str(dekl.get("krs", "")).zfill(10) == str(krs["krs"])
-        zgodna_nazwa = normalizuj(dekl.get("nazwa", ""), True) == normalizuj(krs.get("nazwa", ""), True)
+    if krs.get("krs") and not (dekl.get("nazwa") or "").strip():
+        # brak nazwy w dokumentach to brak, nie niezgodnosc - prosba o uzupelnienie, nie eskalacja
+        zgodny_nr = str(dekl.get("krs") or "").zfill(10) == str(krs["krs"])
+        o.dodaj("R02", "Nazwa i numer KRS z dokumentow zgodne z rejestrem", "nd", UWAGI,
+                f"numer {'zgodny' if zgodny_nr else 'NIEZGODNY'}; brak nazwy w dokumentach klienta - uzupelnij",
+                "uzupelnij_dokumenty" if zgodny_nr else "eskalacja")
+    elif krs.get("krs"):
+        zgodny_nr = str(dekl.get("krs") or "").zfill(10) == str(krs["krs"])
+        zgodna_nazwa = normalizuj(dekl.get("nazwa"), True) == normalizuj(krs.get("nazwa"), True)
         if zgodny_nr and zgodna_nazwa:
             o.dodaj("R02", "Nazwa i numer KRS z dokumentow zgodne z rejestrem", "spelniona", OK, "zgodne")
         else:
@@ -328,7 +334,8 @@ def ocen(klient: dict, rejestry: dict, sankcje: dict, reguly: dict, dzis: dt.dat
         dyspozycja = "uzupelnij"
     else:
         dyspozycja = "bez_zastrzezen"
-    return o, {"dyspozycja": dyspozycja, "trafienia": trafienia, "osob_przesianych": len(unikalne),
+    return o, {"dyspozycja": dyspozycja, "trafienia": trafienia, "nazw_przesianych": len(unikalne),
+               "w_tym_osob": sum(1 for _, _, pod in unikalne.values() if not pod),
                "osob_nieprzesianych": nieprzesiane}
 
 
@@ -350,18 +357,22 @@ def main(argv=None) -> int:
         print(f"BLOKADA: nie da sie wczytac wejscia: {type(e).__name__}")
         return BLOKADA
     dzis = dt.date.fromisoformat(a.dzis) if a.dzis else dt.date.today()
-    o, extra = ocen(klient, rejestry, sankcje, reguly, dzis)
+    try:
+        o, extra = ocen(klient, rejestry, sankcje, reguly, dzis)
+    except Exception as e:  # noqa: BLE001 - awaria bramki to BLOKADA, nigdy kod spoza trojstanu
+        print(f"BLOKADA: bramka nie mogla ocenic teczki ({type(e).__name__}) - sprawdz format klient.json")
+        return BLOKADA
     out = a.out or a.klient.parent
     out.mkdir(parents=True, exist_ok=True)
     wynik = {"wersja": WERSJA, "data_oceny": dzis.isoformat(), "stan": NAZWA[o.stan], "dyspozycja": extra["dyspozycja"],
              "reguly": [{k: v for k, v in w.items() if k != "_stan"} for w in o.wiersze],
-             "trafienia_sankcyjne": extra["trafienia"], "osob_przesianych": extra["osob_przesianych"],
+             "trafienia_sankcyjne": extra["trafienia"], "nazw_przesianych": extra["nazw_przesianych"], "w_tym_osob": extra["w_tym_osob"],
              "osob_nieprzesianych": extra["osob_nieprzesianych"],
              "uwaga": "Bramka nie zatwierdza klienta. Decyzje podejmuje osoba odpowiedzialna w kancelarii."}
     (out / "wynik-kyc.json").write_text(json.dumps(wynik, ensure_ascii=False, indent=1), encoding="utf-8")
     md = [f"# Wynik KYC (bramka v{WERSJA}) - {dzis.isoformat()}", "",
           "[SZKIC AI - nie jest decyzja o przyjeciu klienta; decyduje osoba odpowiedzialna w kancelarii]", "",
-          f"STAN: {wynik['stan']} | dyspozycja: {wynik['dyspozycja']} | osob przesianych: {extra['osob_przesianych']}", "",
+          f"STAN: {wynik['stan']} | dyspozycja: {wynik['dyspozycja']} | przesiane nazwy: {extra['nazw_przesianych']} (w tym osob {extra['w_tym_osob']})", "",
           "| Regula | Opis | Wynik | Stan | Dowod |", "|---|---|---|---|---|"]
     md += [f"| {w['regula']} | {w['opis']} | {w['wynik']} | {w['stan']} | {w['dowod'].replace('|', '/')} |" for w in o.wiersze]
     if extra["trafienia"]:
@@ -375,7 +386,7 @@ def main(argv=None) -> int:
         r = [w["regula"] for w in o.wiersze if w["_stan"] == s]
         if r:
             print(f"{NAZWA[s]}: {', '.join(r)}")
-    print(f"Przesiew: {extra['osob_przesianych']} nazw, nieprzesiane {extra['osob_nieprzesianych']}, trafien {len(extra['trafienia'])}")
+    print(f"Przesiew: {extra['nazw_przesianych']} nazw (w tym osob {extra['w_tym_osob']}), nieprzesiane osoby {extra['osob_nieprzesianych']}, trafien {len(extra['trafienia'])}")
     print(f"Dyspozycja: {extra['dyspozycja']} (decyduje czlowiek)")
     print(f"Raport: {out / 'wynik-kyc.md'}")
     print(f"STAN: {NAZWA[o.stan]}")

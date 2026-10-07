@@ -50,8 +50,8 @@ def _pobierz(url: str, timeout: int = 90) -> bytes:
 
 # --- normalizacja nazw --------------------------------------------------
 
-def normalizuj(nazwa: str, podmiot: bool = False) -> str:
-    s = nazwa.replace("ł", "l").replace("Ł", "L")
+def normalizuj(nazwa: str | None, podmiot: bool = False) -> str:
+    s = (nazwa or "").replace("ł", "l").replace("Ł", "L")
     s = "".join(c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c))
     s = re.sub(r"[^\w\s]", " ", s.lower())
     tokeny = [t for t in s.split() if t]
@@ -70,7 +70,7 @@ def _osoba_krs(o: dict) -> str:
     return " ".join(c for c in czesci if c)
 
 
-def zamaskowane(nazwa: str) -> bool:
+def zamaskowane(nazwa: str | None) -> bool:
     """Publiczne API KRS maskuje dane osob: zostaje pierwsza litera, reszta to '*'."""
     return "*" in (nazwa or "")
 
@@ -79,6 +79,7 @@ def pasuje_do_maski(pelne: str, maska: str) -> bool:
     """Czy pelne imie i nazwisko pasuja do maski KRS (pierwsza litera + dlugosc kazdego czlonu)."""
     def klucze(s, separator):
         return sorted((normalizuj(t[0]), len(t)) for t in re.split(separator, s.strip()) if t)
+    pelne, maska = pelne or "", maska or ""
     if not pelne.strip() or not maska.strip():
         return False
     cel = klucze(maska, r"\s+")

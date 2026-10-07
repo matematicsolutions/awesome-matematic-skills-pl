@@ -33,7 +33,7 @@ attribution:
     note: skille chronology-builder i pleadings-analyst, commit 20fbad1
 metadata:
   author: Wieslaw Mazur / MateMatic
-  version: 0.1.0
+  version: 0.1.1
   license: Apache-2.0
   cost: bramka bez LLM i bez sieci (stdlib); budowa wpisów - model w sesji
   companion_skills: akta-przeszukiwalne-pl, citation-grounding-pl, adversarial-legal-review-pl
@@ -51,15 +51,16 @@ Wynik jest szkicem: `[SZKIC AI - wymaga analizy i nadzoru uprawnionego prawnika]
 ## Krok 0 - tekst akt
 
 Skill czyta katalog `akta-tekst` z `akta-przeszukiwalne-pl` (pliki `.txt` z nagłówkami
-`===== strona N =====`). Nie ma go? Najpierw uruchom skill `akta-przeszukiwalne-pl`
-(z jego katalogu):
+`===== strona N =====`). Akta masz już jako tekst z nagłówkami stron? Pomiń ten krok.
+Masz PDF-y albo skany? Najpierw osobny skill `akta-przeszukiwalne-pl` - poniższe polecenie
+uruchamia się w JEGO katalogu, nie w tym:
 
 ```bash
 python scripts/akta.py "<folder akt>"
 ```
 
-Przeczytaj `RAPORT.md`: strony nieczytelne i pliki o identycznej treści to pierwsze luki
-chronologii, zanim powstanie choć jeden wpis.
+Jeśli powstał `RAPORT.md`, przeczytaj go: strony nieczytelne i pliki o identycznej treści
+to pierwsze luki chronologii, zanim powstanie choć jeden wpis.
 
 ## Krok 1 - bramka użycia materiału (zawsze, przed ekstrakcją)
 
@@ -95,9 +96,13 @@ Postawa trafia do nagłówka wyniku jako ślad pochodzenia.
    **dokumentu**, **nadania** (stempel), **doręczenia**, **wpływu** (prezentata sądu),
    **posiedzenia**. Nie zamieniaj szacunku, przedziału ani „na początku kwietnia” w pewną
    datę: `pewnosc_daty` to `dokladna | miesiac | rok | przedzial | przyblizona | sporna`.
+   Format pola `data`: `RRRR-MM-DD`, `RRRR-MM`, `RRRR` albo przedział `RRRR-MM-DD/RRRR-MM-DD`.
+   Zdarzenie bez daty w aktach nie trafia na oś czasu - wpisz je w Luki. Jeśli datę
+   wyznaczasz sam (np. przedział z dat sąsiednich zdarzeń), oznacz `przedzial` albo
+   `przyblizona` i opisz wyznaczenie w polu `uwagi`; bramka da wtedy zawsze UWAGI (DT06).
 3. **Status wpisu.** `dowod_bezposredni` (dokument z epoki), `relacja` (świadek, notatka),
    `twierdzenie_strony` (pismo procesowe), `ustalenie_sadu`, `zdarzenie_procesowe`,
-   `wniosek` (wywnioskowane - tylko z wyraźnym uzasadnieniem w uwagach). Twierdzenie
+   `wniosek` (wywnioskowane - tylko z uzasadnieniem w polu `uwagi`; bez niego UWAGI). Twierdzenie
    strony to nie dowód: nie podnoś go do rangi faktu.
 4. **Kotwica.** Każde źródło: `plik`, `strona` i `cytat` - dosłowny fragment, min. 3 słowa,
    przepisany z tekstu akt, nie streszczony. Jedno zdarzenie z trzech dokumentów = jeden
@@ -107,7 +112,8 @@ Postawa trafia do nagłówka wyniku jako ślad pochodzenia.
    `wiedza_modelu` / `internet`. Bramka przepuści je jako UWAGI, nigdy jako OK.
 6. **Waga** (według perspektywy): `kluczowe` - zdarzenie, które przesuwa ocenę sądu;
    `istotne` - kontekst i wzorzec; `tlo`. W wątpliwości wyżej nie wchodzisz: niższa waga
-   i `[DO WERYFIKACJI: waga]`. Gdy ponad połowa wpisów jest kluczowa, nic nie jest.
+   i `[DO WERYFIKACJI: waga]`. Gdy ponad połowa wpisów jest kluczowa (przy co najmniej
+   czterech), nic nie jest - bramka da UWAGI.
 7. **Sprzeczności zostają.** Dwa dokumenty, dwie daty - dwa wpisy, `pewnosc_daty: sporna`,
    obie kotwice. Rozstrzyga prawnik.
 
@@ -139,8 +145,11 @@ Zapisz wynik maszynowy obok tekstu akt, np. `akta-tekst/../chronologia.json`:
  "wpisy": [{"id": "Z1", "data": "2024-01-15", "pewnosc_daty": "dokladna",
    "rodzaj_daty": "zdarzenia", "kto": "...", "zdarzenie": "...", "waga": "istotne",
    "status": "dowod_bezposredni", "tajemnica": "ok", "pochodzenie": "akta",
-   "zrodla": [{"plik": "umowa.pdf", "strona": 1, "cytat": "dosłowny fragment z akt"}]}]}
+   "zrodla": [{"plik": "umowa.txt", "strona": 1, "cytat": "dosłowny fragment z akt"}]}]}
 ```
+
+`plik` to nazwa pliku tekstu akt; `umowa.txt` i `umowa.pdf` są dla bramki tym samym plikiem.
+Pole `tajemnica` jest wymagane przy postawie B; przy postawie A można je pominąć.
 
 Zestawienie: `"rodzaj": "zestawienie"`, lista `elementy` z polami `id, element,
 twierdzenia, stanowisko_przeciwnika, zrodla_stanowiska, dowody_za, dowody_przeciw, stan`.
@@ -155,7 +164,7 @@ python scripts/bramka_lokatorow.py chronologia.json akta-tekst --csv chronologia
 | Kod | Stan | Co robisz |
 |---|---|---|
 | 0 | OK | każdy wpis zakotwiczony; wolno pokazać wynik |
-| 10 | UWAGI | strona nieczytelna, cytat zgodny tylko bez polskich znaków, fakt spoza akt - pokaż, ale z listą wpisów do sprawdzenia w oryginale |
+| 10 | UWAGI | strona nieczytelna, cytat zgodny tylko bez polskich znaków, fakt spoza akt (także z kotwicą), data niepewna albo wyznaczona, `wniosek` bez uzasadnienia, ponad połowa wpisów kluczowa - pokaż, ale z listą wpisów do sprawdzenia w oryginale |
 | 20 | BLOKADA | cytatu nie ma na wskazanej stronie, brak pliku, zła data, pusta lista - **popraw wpisy i uruchom ponownie**; nie pokazuj wyniku jako gotowego |
 
 Przy kodzie ZR08 raport podaje stronę, na której cytat naprawdę stoi - popraw lokator,
@@ -193,6 +202,12 @@ zdanie: *Skill nie rozstrzyga. Elementy wykazane: [...], sporne: [...], luki: [.
 
 Wersjonowanie: kolejna budowa czyta poprzedni JSON, podaje różnicę (nowe, zmienione,
 usunięte z powodem) i podnosi numer wersji.
+
+## Gdzie działa (sprawdzone 07.10.2026)
+
+- Aplikacja claude.ai po wgraniu zipa z Boutique: skill się włącza, bramka działa w
+  piaskownicy (sama biblioteka standardowa Pythona, bez sieci).
+- Claude Code i PATRON na komputerze kancelarii: działa, razem z lokalnym OCR akt.
 
 ## Czego ten skill nie robi
 
@@ -243,5 +258,5 @@ Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to upra
 
 ### Zakres pluginu
 
-Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja). Nie ocenia treści prawnej ani nie weryfikuje cytatu - tę warstwę daje plugin "fundament weryfikacyjny".
+Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
 <!-- shared-rules:end -->

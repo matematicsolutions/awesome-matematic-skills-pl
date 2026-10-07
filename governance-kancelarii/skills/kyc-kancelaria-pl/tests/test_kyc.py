@@ -99,7 +99,8 @@ def test_czysty_klient_bez_zastrzezen():
     o, extra, stany = _ocen()
     assert o.stan == b.OK and extra["dyspozycja"] == "bez_zastrzezen"
     assert sorted(stany) == [f"R{i:02d}" for i in range(1, 14)], "kazda regula w raporcie, takze zdane"
-    assert extra["osob_nieprzesianych"] == 0 and extra["osob_przesianych"] >= 6
+    assert extra["osob_nieprzesianych"] == 0 and extra["nazw_przesianych"] >= 6
+    assert extra["w_tym_osob"] == extra["nazw_przesianych"] - 1, "klient-spolka to nie osoba"
 
 
 # --- maskowanie KRS: brak pelnych danych to NIE przesiew ---
@@ -220,6 +221,34 @@ def test_brak_crbr_uzupelnij():
     k = _klient(); k["crbr"] = None; k["dokumenty_otrzymane"].remove("wydruk_crbr")
     o, extra, stany = _ocen(klient=k)
     assert stany["R07"] == b.UWAGI and stany["R11"] == b.UWAGI and extra["dyspozycja"] == "uzupelnij"
+
+
+# --- defekty z testu czystej instalacji (07.10) ---
+
+def test_brak_nazwy_to_uzupelnij_nie_eskalacja():
+    k = _klient(); k["klient"]["nazwa"] = ""
+    o, extra, stany = _ocen(klient=k)
+    assert stany["R02"] == b.UWAGI and extra["dyspozycja"] == "uzupelnij"
+
+
+def test_nazwa_null_nie_wywraca_bramki(tmp_path, capsys):
+    k = _klient(); k["klient"]["nazwa"] = None
+    for n, d in (("klient.json", k), ("rejestry.json", _rejestry()), ("sankcje.json", _sankcje()), ("reguly.json", _reguly())):
+        (tmp_path / n).write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
+    rc = b.main(["--klient", str(tmp_path / "klient.json"), "--rejestry", str(tmp_path / "rejestry.json"),
+                 "--sankcje", str(tmp_path / "sankcje.json"), "--reguly", str(tmp_path / "reguly.json"), "--dzis", "2026-10-02"])
+    assert rc in (b.OK, b.UWAGI, b.BLOKADA)
+
+
+def test_awaria_w_ocenie_to_blokada_nie_kod_1(tmp_path, monkeypatch):
+    for n, d in (("klient.json", _klient()), ("rejestry.json", _rejestry()), ("sankcje.json", _sankcje()), ("reguly.json", _reguly())):
+        (tmp_path / n).write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
+    def wybuch(*a, **k):
+        raise KeyError("x")
+    monkeypatch.setattr(b, "ocen", wybuch)
+    rc = b.main(["--klient", str(tmp_path / "klient.json"), "--rejestry", str(tmp_path / "rejestry.json"),
+                 "--sankcje", str(tmp_path / "sankcje.json"), "--reguly", str(tmp_path / "reguly.json"), "--dzis", "2026-10-02"])
+    assert rc == b.BLOKADA
 
 
 # --- CLI: na ekran tylko liczby ---

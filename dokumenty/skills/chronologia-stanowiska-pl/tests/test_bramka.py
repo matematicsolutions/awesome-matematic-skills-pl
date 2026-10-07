@@ -152,6 +152,38 @@ def test_luka_z_dowodem_uwagi(tmp_path):
     assert rc == b.UWAGI and "ST02" in _kody(p)
 
 
+# --- obietnice SKILL.md egzekwowane przez bramke (znalezione w tescie z czystej instalacji) ---
+
+def test_fakt_spoza_akt_z_kotwica_nigdy_ok(tmp_path):
+    d = _wczytaj("chronologia.json"); d["wpisy"][0]["pochodzenie"] = "wiedza_modelu"
+    rc, p = _uruchom(tmp_path, d)
+    assert rc == b.UWAGI and "ZR12" in _kody(p)
+
+
+def test_wiekszosc_kluczowych_uwagi_od_czterech_wpisow(tmp_path):
+    d = _wczytaj("chronologia.json")
+    for x in d["wpisy"]:
+        x["waga"] = "kluczowe"
+    rc, p = _uruchom(tmp_path, d)
+    assert rc == b.UWAGI and "WG01" in _kody(p)
+
+
+def test_wniosek_bez_uzasadnienia_uwagi(tmp_path):
+    d = _wczytaj("chronologia.json"); d["wpisy"][2]["status"] = "wniosek"
+    rc, p = _uruchom(tmp_path, d)
+    assert rc == b.UWAGI and "WN01" in _kody(p)
+    d["wpisy"][2]["uwagi"] = "wezwanie wynika z tresci pisma"
+    rc, p = _uruchom(tmp_path, d)
+    assert rc == b.OK
+
+
+def test_przedzial_dat_zawsze_do_sprawdzenia(tmp_path):
+    d = _wczytaj("chronologia.json")
+    d["wpisy"][3]["data"] = "2024-04-01/2024-04-30"; d["wpisy"][3]["pewnosc_daty"] = "przedzial"
+    rc, p = _uruchom(tmp_path, d)
+    assert rc == b.UWAGI and "DT06" in _kody(p)
+
+
 # --- CSV: cytat z akt przeciwnika nie moze stac sie formula ---
 
 def test_csv_neutralizuje_formuly(tmp_path):

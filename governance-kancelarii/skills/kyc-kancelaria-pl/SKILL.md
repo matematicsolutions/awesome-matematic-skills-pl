@@ -19,7 +19,7 @@ attribution:
     note: kyc-screener (kyc-doc-parse, kyc-rules), commit bb4a2b3
 metadata:
   author: Wieslaw Mazur / MateMatic
-  version: 0.1.0
+  version: 0.1.1
   license: Apache-2.0
   cost: zero LLM w rejestrach i bramce; rejestry publiczne bez kluczy (KRS, wl-api MF, ONZ, UE, MSWiA)
   companion_skills: krs-grounding-pl, akta-przeszukiwalne-pl, legal-ai-audit-bundle
@@ -88,6 +88,11 @@ Z dokumentów klienta i wydruku CRBR. Pole puste, gdy dokumentu brak - **nie zga
  "inne_osoby_do_przesiewu": []}
 ```
 
+Braki zapisuj jawnie: brak wydruku CRBR to `"crbr": null`, brak oświadczenia PEP to
+`"pep": {"oswiadczenie_zlozone": false}`, brak oświadczenia o beneficjentach to
+`"oswiadczenie_beneficjenci": {"zlozone": false}`, a nazwy spółki, której nie ma w dokumentach,
+nie przepisuj z KRS - zostaw pustą (R02 poprosi o uzupełnienie).
+
 Numerów dokumentów tożsamości i PESEL-i do teczki nie przepisuj - bramka ich nie
 potrzebuje. Wzór: `tests/test_kyc.py` (funkcja `_klient`).
 
@@ -125,7 +130,7 @@ imion albo bardzo bliska pisownia - do ręcznego sprawdzenia.
 
 ```
 [SZKIC AI - nie jest decyzją o przyjęciu klienta; decyduje osoba odpowiedzialna w kancelarii]
-Klient · KRS · data oceny · STAN · dyspozycja · osób przesianych · osób NIEPRZESIANYCH
+Klient · KRS · data oceny · STAN · dyspozycja · przesiane nazwy (w tym osób) · osób NIEPRZESIANYCH
 Tabela R01-R13 (wynik, stan, dowód)
 Trafienia sankcyjne (osoba, rola, lista, id, rodzaj) - jeśli są
 Czego brakuje do decyzji: lista dokumentów i pytań do klienta
@@ -140,6 +145,17 @@ do paczki audytowej (`legal-ai-audit-bundle`).
 Skopiuj `reguly-domyslne.json` do teczki albo wspólnego katalogu i uzupełnij:
 `kraje_wysokiego_ryzyka` (celowo puste - listy krajów nie zaszywamy w kodzie),
 `wymagane_dokumenty`, `statusy_vat_ok`, wiek list i rejestrów.
+
+## Gdzie działa (sprawdzone 07.10.2026)
+
+- Komputer kancelarii (Claude Code, PATRON, zwykły Python): działa w całości - KRS, biała
+  lista i trzy listy sankcyjne pobierane na żywo.
+- Aplikacja claude.ai po wgraniu zipa: piaskownica kodu domyślnie wpuszcza tylko menedżery
+  pakietów. KRS, MF, ONZ, UE i gov.pl odpowiadają tam odmową 403, więc skill zgłasza BLOKADĘ
+  („nie można ocenić”) i niczego nie ocenia. Żeby działał w claude.ai, administrator konta
+  musiałby dopisać do listy dozwolonych domen: `api-krs.ms.gov.pl`, `wl-api.mf.gov.pl`,
+  `scsanctions.un.org`, `webgate.ec.europa.eu`, `www.gov.pl` - to decyzja bezpieczeństwa
+  kancelarii, nie skilla.
 
 ## Czego ten skill nie robi
 
