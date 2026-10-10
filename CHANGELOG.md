@@ -5,6 +5,19 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.10d] - 2026-10-10
+
+### Fixed
+
+- `citation-grounding-pl` 2.6.0 (`fundament-weryfikacyjny` 1.3.1): pusta lista cytatow
+  (`items: []` albo brak pola) dawala `blokada: false` i kod wyjscia 0 - bramka bez
+  niczego do sprawdzenia oglaszala sukces. Teraz BLOKADA z polem `powod`; test CLI
+  widziany na czerwono przed poprawka, po niej 36/36.
+- `eu-sparql-search` (`orzecznictwo-zrodla` 2.0.1): usunieta rada, by przy bledzie
+  certyfikatu wylaczyc weryfikacje TLS (`CERT_NONE`). Bez weryfikacji kazda siec po
+  drodze moze podsunac sfalszowany tekst aktu. Zamiast tego: ponow, odswiez `certifi`,
+  a jesli dalej nie dziala - stop i zgloszenie, ze zrodlo jest nieosiagalne.
+
 ## [2026.10.10c] - 2026-10-10
 
 ### Removed

@@ -2,6 +2,19 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/), wersjonowanie [SemVer](https://semver.org/).
 
+## [2.6.0] - 2026-10-10
+
+### Fixed
+- **Pusta lista cytatów przechodziła na zielono.** Zadanie z `items: []` albo bez pola
+  `items` dawało `total: 0`, `blokada: false` i kod wyjścia 0 - bramka, która nie miała
+  czego sprawdzić, ogłaszała sukces. Zero sprawdzonych cytatów nie jest dowodem, że cytaty
+  są dobre. Teraz to BLOKADA z polem `powod` i kodem wyjścia 1.
+
+### Added
+- Test CLI w `test-grounding.mjs`: oba warianty pustej listy (`items: []`, brak pola)
+  muszą dać `blokada: true` i kod wyjścia różny od 0. Widziany na czerwono przed poprawką
+  (4 FAIL), po poprawce 36/36 PASS.
+
 ## [2.5.0] - 2026-09-19
 
 ### Fixed

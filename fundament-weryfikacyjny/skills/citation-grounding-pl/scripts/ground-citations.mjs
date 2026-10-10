@@ -653,9 +653,14 @@ function main() {
     brak_zrodla: liczba("BRAK_ZRODLA"),
   };
   // BLOKADA twarda: halucynacja lub brak zrodla. KALIBRACJA/WYMAGA_OSADU = decyzja czlowieka (miekka).
-  const blokada = summary.niezweryfikowane > 0 || summary.brak_zrodla > 0;
+  // Pusta lista to tez BLOKADA: zero sprawdzonych cytatow nie jest dowodem, ze cytaty sa dobre.
+  const pusta = results.length === 0;
+  const blokada = pusta || summary.niezweryfikowane > 0 || summary.brak_zrodla > 0;
   const wymaga_decyzji = summary.kalibracja > 0 || summary.wymaga_osadu > 0;
-  console.log(JSON.stringify({ summary, blokada, wymaga_decyzji, results }, null, 2));
+  const powod = pusta
+    ? (Array.isArray(task.items) ? "pusta lista cytatow (items: []) - nic nie zweryfikowano" : "brak pola items w zadaniu - nic nie zweryfikowano")
+    : undefined;
+  console.log(JSON.stringify({ summary, blokada, ...(powod ? { powod } : {}), wymaga_decyzji, results }, null, 2));
   process.exit(blokada ? 1 : 0);
 }
 

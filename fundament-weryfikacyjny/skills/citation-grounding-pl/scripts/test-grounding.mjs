@@ -236,5 +236,27 @@ if (tab) {
         zgodneMapy, tab.przypadki.length);
 }
 
+// --- PUSTA LISTA = BLOKADA (v2.6) ----------------------------------------------
+// Do v2.5 zadanie bez cytatow (items: [] albo brak pola) dawalo total=0, blokada=false
+// i exit 0: bramka, ktora nie ma na czym zadzialac, przechodzila na zielono.
+// Test woła CLI tak jak uzytkownik, bo werdykt i kod wyjscia liczy main(), nie verify().
+{
+  const { spawnSync } = await import("node:child_process");
+  const { mkdtempSync, writeFileSync, rmSync } = await import("node:fs");
+  const { tmpdir } = await import("node:os");
+  const SKRYPT = join(dirname(fileURLToPath(import.meta.url)), "ground-citations.mjs");
+  const tmp = mkdtempSync(join(tmpdir(), "grounding-pusta-"));
+  for (const [nazwa, zadanie] of [["items: []", { items: [] }], ["brak pola items", {}]]) {
+    const plik = join(tmp, "zadanie.json");
+    writeFileSync(plik, JSON.stringify(zadanie));
+    const r = spawnSync(process.execPath, [SKRYPT, plik], { encoding: "utf8" });
+    let wynik = {};
+    try { wynik = JSON.parse(r.stdout); } catch { /* zly JSON = FAIL ponizej */ }
+    check(`pusta lista (${nazwa}) -> blokada=true`, wynik.blokada, true);
+    check(`pusta lista (${nazwa}) -> exit != 0`, r.status !== 0, true);
+  }
+  rmSync(tmp, { recursive: true, force: true });
+}
+
 console.log(`\n${pass}/${pass + fail} PASS`);
 process.exit(fail ? 1 : 0);

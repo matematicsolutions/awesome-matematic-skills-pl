@@ -344,14 +344,10 @@ for r in results:
     print(r["celex"]["value"])
 ```
 
-If SSL certificate errors occur (transient), disable verification:
-```python
-import ssl
-ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
-# pass context=ctx to urlopen
-```
+If SSL certificate errors occur, **do NOT disable verification** (`CERT_NONE` / `check_hostname = False`). Without it any network in the path can hand you forged legislation text that looks authentic. Instead:
+- retry once after a short pause (transient errors clear on their own);
+- if it persists, the local CA bundle is usually outdated: `pip install -U certifi` and pass `ssl.create_default_context(cafile=certifi.where())` to `urlopen`;
+- if it still fails, STOP and report the source as unreachable - an unverified answer about EU law is worse than no answer.
 
 ### Fetching document content from Cellar
 

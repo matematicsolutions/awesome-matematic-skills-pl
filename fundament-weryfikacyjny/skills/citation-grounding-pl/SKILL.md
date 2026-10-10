@@ -38,7 +38,7 @@ attribution:
       Guard STRONY oparty na niezgodności nazw metodą Jaccarda (v2.1). Stop-listy własne.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 2.5.0
+  version: 2.6.0
   companion_skills: saos-orzecznictwo, eu-sparql-search, legal-ai-audit-bundle, adversarial-legal-review-pl, deliverable-fidelity-pl, legal-request-router-pl
 ---
 
