@@ -5,15 +5,18 @@ A processor contract (DPA) MUST bind the processor to the eight obligations in G
 Art. 28(3)(a)-(h). This tool takes the clauses you found present and reports which mandatory
 ones are MISSING - so the redline targets exactly the gaps.
 
-The eight mandatory clauses (pass present ones via --present, keys a..h):
+The eight mandatory clauses (list the present ones with --present, keys a..h):
   a - process only on the controller's documented instructions (incl. transfers)
   b - confidentiality of authorised persons
   c - security measures (Art. 32)
   d - sub-processor conditions (authorisation + flow-down)
   e - assist with data subject rights (Chapter III)
   f - assist with Art. 32-36 (security, breaches, DPIA)
-  g - delete or return the data at the end
+  g - at the controller's choice, delete or return the data at the end (and delete copies)
   h - make available information and allow audits/inspections
+
+Short labels only - the full conditions (legal-requirement exception in (a), the duty to flag an
+infringing instruction under (h)) are in the skill's SKILL.md, quoted from Art. 28(3).
 
 Usage:
   python dpa_clause_check.py --present a,b,c,g
@@ -50,8 +53,11 @@ def check(present: list[str]) -> dict:
         "present": [{k: CLAUSES[k]} for k in have],
         "missing": [{k: CLAUSES[k]} for k in missing],
         "missing_count": len(missing),
-        "note": ("Wszystkie 8 klauzul obecne - sprawdz tez przedmiot/czas/cel (Art. 28(3) zd. 1) "
-                 "i transfery rozdz. V. / All 8 present - also check subject/duration/purpose and Ch. V transfers."
+        "note": ("Wszystkie 8 klauzul obecne - sprawdz tez przedmiot, czas, charakter i cel, rodzaj "
+                 "danych, kategorie osob oraz obowiazki i prawa administratora (Art. 28(3) zd. 1) "
+                 "i transfery rozdz. V. / All 8 present - also check subject-matter, duration, nature "
+                 "and purpose, type of data, categories of data subjects and the controller's "
+                 "obligations and rights (Art. 28(3) sentence 1), and Ch. V transfers."
                  if complete else
                  "Brakujace klauzule = cel redline. Umowa bez nich narusza Art. 28. "
                  "/ Missing clauses are the redline target; a DPA without them breaches Art. 28."),

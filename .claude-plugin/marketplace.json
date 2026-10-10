@@ -84,7 +84,7 @@
     {
       "name": "ochrona-danych",
       "description": "Operacje RODO i cyber dla kancelarii i IOD (5 skilli): ocena skutkow DPIA (art. 35-36), obsluga naruszenia w 72h (art. 33-34), zadania osob DSAR (art. 12, 15-22), rejestr czynnosci RoPA i przeglad umow powierzenia DPA (art. 30, 28), triage NIS2/KSC (zakres, 10 srodkow art. 21, zegar raportowania). Grounding cytatu decyzji UODO zyje w orzecznictwo-zrodla (uodo-grounding-pl). Ugruntowane w artykulach RODO/NIS2 i wytycznych EROD/UODO. Bez konektorow, bez wlasnych polaczen wychodzacych.",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
       },

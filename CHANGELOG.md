@@ -5,6 +5,35 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.10] - 2026-10-10
+
+### Fixed
+
+- `ochrona-danych` 1.2.0: kazda jednostka redakcyjna w czterech skillach RODO i ich skryptach
+  (48 jednostek) sprawdzona wobec polskiego tekstu RODO z EUR-Lex, rozporzadzenia 1182/71,
+  wytycznych EROD 9/2022, WP248 rev.01 i wykazu Prezesa UODO (M.P. 2019 poz. 666), wpisana do
+  `reviews/legal-accuracy.md`. Wrocily pominiete warunki: zgloszenie naruszenia "bez zbednej
+  zwloki - w miare mozliwosci, nie pozniej niz w terminie 72 godzin" (72h to granica, nie cel);
+  odpowiedz na zadanie bez zbednej zwloki, najpozniej w miesiac; art. 35 ust. 3 lit. a wymaga
+  decyzji o skutkach prawnych lub podobnie istotnych, nie samego profilowania; pozycje art. 30
+  ust. 1 lit. e-g z warunkami "gdy ma to zastosowanie" i "jezeli jest to mozliwe". Uzupelnione
+  listy: piec wylaczen z art. 17 ust. 3, IOD "lub inny punkt kontaktowy", przedstawiciel
+  administratora, obowiazki i prawa administratora w art. 28 ust. 3, wyjatek z art. 28 ust. 3
+  lit. a, usuniecie kopii i sygnalizacja polecenia naruszajacego przepisy, czynnik ryzyka
+  "cechy szczegolne administratora".
+- `rodo-dsar-pl`: "ewidentnie nieuzasadnione lub nadmierne" zamiast "ewidentnie bezzasadne" -
+  brzmienie art. 12 ust. 5.
+- `rodo-dpia-pl`: wykaz Prezesa UODO opisany zgodnie z komunikatem (kryteria, co do zasady dwa,
+  przyklady ilustracyjne), a nie jako lista operacji "zawsze wymagajacych DPIA"; WP248
+  przypisane Grupie Roboczej Art. 29, nie EROD.
+- Kalkulatory terminow mowia, co licza: granice, z zapasem, z nazwanym brakiem art. 3 ust. 1 i
+  ust. 4 rozporzadzenia 1182/71.
+
+### Changed
+
+- `ochrona-danych`: `Bash` usuniety z `allowed-tools` w czterech skillach RODO; Claude Code pyta
+  przed uruchomieniem kazdego kalkulatora.
+
 ## [2026.10.07b] - 2026-10-07
 
 ### Fixed

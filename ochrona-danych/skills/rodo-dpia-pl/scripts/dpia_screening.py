@@ -2,14 +2,15 @@
 """DPIA screening - deterministic threshold test for GDPR/RODO Art. 35. Offline, zero deps.
 
 Decides whether a Data Protection Impact Assessment is REQUIRED, based on:
-- the EDPB WP248 rev.01 nine criteria (rule of thumb: >=2 met => DPIA), and
+- the nine criteria of WP248 rev.01 (Article 29 Working Party; rule of thumb: >=2 met => DPIA
+  in most cases, sometimes one is enough), and
 - the Art. 35(3) mandatory cases (any one => DPIA).
 
 This is a clerical screening aid. A "not required" result is NOT a clearance - the controller
 still documents the reasoning, and a single strong criterion can warrant a DPIA. The legal call
 stays with the controller / DPO.
 
-The nine EDPB criteria (pass the keys that apply via --criteria):
+The nine WP248 criteria (give the keys that apply with --criteria):
   evaluation        - evaluation or scoring (incl. profiling and predicting)
   automated         - automated decision-making with legal/significant effect (Art. 22)
   monitoring        - systematic monitoring
@@ -20,8 +21,9 @@ The nine EDPB criteria (pass the keys that apply via --criteria):
   innovation        - innovative use / new technology (AI, IoT, biometrics)
   blocking          - processing that prevents a right or use of a service/contract
 
-Art. 35(3) mandatory cases (pass via --mandatory):
-  systematic_eval   - systematic and extensive evaluation incl. profiling (35(3)(a))
+Art. 35(3) mandatory cases (give them with --mandatory):
+  systematic_eval   - systematic and extensive automated evaluation incl. profiling, with decisions
+                      producing legal or similarly significant effects (35(3)(a))
   special_largescale- large-scale special-category or criminal data (35(3)(b))
   public_monitoring - large-scale systematic monitoring of a public area (35(3)(c))
 
@@ -49,7 +51,7 @@ NINE = {
     "blocking": "uniemozliwienie realizacji prawa lub uslugi / preventing a right or service",
 }
 MANDATORY = {
-    "systematic_eval": "Art. 35(3)(a) - systematyczna kompleksowa ocena (profilowanie)",
+    "systematic_eval": "Art. 35(3)(a) - systematyczna kompleksowa ocena (profilowanie), na ktorej opieraja sie decyzje o skutkach prawnych lub podobnie istotnych / automated evaluation with decisions of legal or similarly significant effect",
     "special_largescale": "Art. 35(3)(b) - dane szczegolne/karne na duza skale",
     "public_monitoring": "Art. 35(3)(c) - monitoring miejsc publicznych na duza skale",
 }
@@ -88,11 +90,11 @@ def _split(s: str | None) -> list[str]:
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description="DPIA screening (Art. 35)")
-    p.add_argument("--criteria", help="comma-separated EDPB criteria keys")
+    p.add_argument("--criteria", help="comma-separated WP248 criteria keys")
     p.add_argument("--mandatory", help="comma-separated Art. 35(3) case keys")
     args = p.parse_args(argv)
     if not args.criteria and not args.mandatory:
-        p.error("pass --criteria and/or --mandatory (see --help for keys)")
+        p.error("give --criteria and/or --mandatory (see --help for keys)")
     print(json.dumps(screen(_split(args.criteria), _split(args.mandatory)), ensure_ascii=False, indent=2))
     return 0
 

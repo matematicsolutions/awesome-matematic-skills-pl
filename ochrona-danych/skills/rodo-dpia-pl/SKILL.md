@@ -2,21 +2,21 @@
 name: rodo-dpia-pl
 description: >
   Ocena skutków dla ochrony danych (DPIA / OSOD) po polsku, krok po kroku w oparciu o art. 35-36
-  RODO, wytyczne EROD (WP248 rev.01) i komunikaty Prezesa UODO. Prowadzi przez: test czy DPIA jest
-  WYMAGANE (9 kryteriów EROD, reguła co najmniej dwóch kryteriów, wykaz operacji UODO), strukturę
+  RODO, wytyczne Grupy Roboczej Art. 29 (WP248 rev.01) i wykaz Prezesa UODO. Prowadzi przez: test czy
+  DPIA jest WYMAGANE (9 kryteriów WP248, reguła co najmniej dwóch kryteriów, wykaz UODO), strukturę
   OSOD wg art. 35 ust. 7 (opis, niezbędność i proporcjonalność, ocena ryzyka, środki) oraz decyzję
   o uprzednich konsultacjach z UODO wg art. 36. Składa draft OSOD i rejestr decyzji; decyzję
   administratora i wniosek do UODO zostawia człowiekowi. Nie dodaje konektorów i sam niczego nie wysyła; wklejony opis systemu trafia do modelu, który masz skonfigurowany.
   Używaj gdy: "czy potrzebuję DPIA", "ocena skutków RODO", "OSOD dla profilowania/monitoringu/AI",
   "art. 35 RODO", "uprzednie konsultacje UODO", "DPIA dla nowego systemu".
 license: Apache-2.0
-allowed-tools: [Bash, Read]
+allowed-tools: [Read]
 data-residency: local
 requires-human-approval: true
 pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.1.0
+  version: 1.2.0
   companion_skills: uodo-grounding-pl, rodo-ropa-dpa-pl, klauzule-kontraktowe-pl, legal-ai-audit-bundle
   parity: gdpr-dpia-en
 ---
@@ -32,18 +32,28 @@ wdrożyć system) należy do administratora. Każde powołanie na decyzję/karę
 
 ## Krok 1 - Czy DPIA jest WYMAGANE (próg art. 35 ust. 1)
 
-DPIA jest obowiązkowe, gdy przetwarzanie **może powodować wysokie ryzyko**. Trzy ścieżki:
+DPIA jest obowiązkowe, **przed rozpoczęciem przetwarzania**, gdy przetwarzanie **może powodować
+wysokie ryzyko**. Trzy ścieżki:
 
-1. **Wykaz Prezesa UODO** (art. 35 ust. 4) - komunikat z rodzajami operacji zawsze wymagających
-   DPIA (m.in. monitoring na dużą skalę, profilowanie z istotnym skutkiem, dane biometryczne,
-   przetwarzanie danych szczególnych kategorii na dużą skalę). Sprawdź aktualny wykaz na uodo.gov.pl.
-2. **9 kryteriów EROD (WP248)** - reguła kciuka: **>=2 kryteria spełnione => DPIA**. Kryteria:
-   ocena/scoring, automatyczne decyzje z istotnym skutkiem (art. 22), systematyczny monitoring,
-   dane szczególne/wysoce osobiste, dane na dużą skalę, łączenie/zestawianie zbiorów, osoby
-   wymagające szczególnej opieki (dzieci, pracownicy), nowe technologie (AI, IoT), uniemożliwienie
-   realizacji prawa/usługi.
-3. **Art. 35 ust. 3** - obligatoryjne przypadki: systematyczna i kompleksowa ocena (profilowanie),
-   dane szczególne/karne na dużą skalę, systematyczny monitoring miejsc publicznych na dużą skalę.
+1. **Wykaz Prezesa UODO** (art. 35 ust. 4; komunikat z 17 czerwca 2019 r., M.P. poz. 666) - lista
+   kryteriów z przykładami, oparta na WP248: co do zasady przetwarzanie spełniające **co najmniej dwa**
+   kryteria wymaga DPIA, w niektórych przypadkach wystarczy jedno. Kryteria obejmują m.in. ocenę i
+   profilowanie, zautomatyzowane decyzje, systematyczny monitoring miejsc dostępnych publicznie z
+   rozpoznawaniem cech (bez zwykłego monitoringu wizyjnego nagrywanego na potrzeby incydentów), dane
+   szczególnych kategorii, dane biometryczne i genetyczne. Przykłady w wykazie są ilustracyjne.
+2. **9 kryteriów WP248** (Grupa Robocza Art. 29, WP248 rev.01) - reguła kciuka: **>=2 kryteria
+   spełnione => DPIA w większości przypadków**, czasem wystarczy jedno. Kryteria: ocena/scoring,
+   zautomatyzowane decyzje o skutkach prawnych lub podobnie istotnych (art. 22), systematyczny
+   monitoring, dane szczególne/wysoce osobiste, dane na dużą skalę, łączenie/zestawianie zbiorów,
+   osoby wymagające szczególnej opieki (dzieci, pracownicy), innowacyjne zastosowanie rozwiązań
+   technologicznych lub organizacyjnych (przykłady z WP248: łączenie odcisków palców z rozpoznawaniem
+   twarzy, Internet rzeczy), przetwarzanie uniemożliwiające realizację prawa lub korzystanie z
+   usługi albo umowy.
+3. **Art. 35 ust. 3** - obligatoryjne przypadki: a) systematyczna, kompleksowa ocena czynników
+   osobowych oparta na zautomatyzowanym przetwarzaniu, w tym profilowaniu, **która jest podstawą
+   decyzji wywołujących skutki prawne lub w podobny sposób znacząco wpływających na osobę**;
+   b) dane szczególnych kategorii (art. 9 ust. 1) lub dotyczące wyroków skazujących (art. 10) na
+   dużą skalę; c) systematyczny monitoring miejsc dostępnych publicznie na dużą skalę.
 
 Wynik: `DPIA_wymagane: tak/nie/zalecane` + uzasadnienie per kryterium.
 
@@ -58,13 +68,15 @@ Draft musi zawierać cztery filary:
 - **d) Środki** zaradcze i zabezpieczenia (techniczne i organizacyjne) redukujące ryzyko + ryzyko
   szczątkowe.
 
-Opinia IOD (jeśli powołany) i konsultacja z osobami, których dane dotyczą (gdy stosowne) -
-udokumentuj wg art. 35 ust. 2 i ust. 9.
+Opinia IOD (jeżeli został wyznaczony) i, w stosownych przypadkach, opinie osób, których dane
+dotyczą, lub ich przedstawicieli - udokumentuj wg art. 35 ust. 2 i ust. 9.
 
 ## Krok 3 - Uprzednie konsultacje (art. 36)
 
 Jeśli **ryzyko szczątkowe pozostaje WYSOKIE mimo środków** => administrator MA OBOWIĄZEK
-skonsultować się z Prezesem UODO PRZED rozpoczęciem przetwarzania. Skill przygotowuje draft
+skonsultować się z Prezesem UODO PRZED rozpoczęciem przetwarzania (art. 36 ust. 1 w odczytaniu
+WP248: konsultacja jest wymagana zawsze, gdy administrator nie znajduje środków wystarczających do
+ograniczenia ryzyka do akceptowalnego poziomu). Skill przygotowuje draft
 wystąpienia (zakres z art. 36 ust. 3), ale **wniosek składa człowiek** (granica governance).
 
 ## Narzędzie - przesiew progu (deterministyczny, offline)
@@ -76,7 +88,7 @@ python scripts/dpia_screening.py --criteria evaluation,sensitive,largescale
 python scripts/dpia_screening.py --mandatory public_monitoring
 ```
 
-Zwraca `verdict` (required / recommended / not_required) wg reguły EROD >=2 oraz przypadków art. 35 ust. 3. To przesiew, nie zwolnienie - decyzję dokumentuje administrator.
+Zwraca `verdict` (required / recommended / not_required) wg reguły WP248 >=2 oraz przypadków art. 35 ust. 3. To przesiew, nie zwolnienie - decyzję dokumentuje administrator.
 
 ## Granica governance
 

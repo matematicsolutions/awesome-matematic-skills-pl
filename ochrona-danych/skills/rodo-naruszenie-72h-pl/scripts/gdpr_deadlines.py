@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 """GDPR / RODO deadline calculator - deterministic, offline, zero dependencies.
 
-Computes the two time limits that matter operationally, the way EU law actually counts them:
+Computes the outer time limits of the two GDPR clocks. Both duties also run "without undue
+delay", so the computed date is the latest acceptable moment, not the target. Both results err
+early, never late:
 
-- **Breach notification (Art. 33)** - 72 hours from AWARENESS (the moment the controller
-  became aware), not from the event. Hour-based.
+- **Breach notification (Art. 33(1))** - 72 hours from AWARENESS (the moment the controller
+  became aware), not from the event. Computed as awareness + 72h; under Regulation (EEC,
+  Euratom) No 1182/71 art. 3(1) the hour of awareness itself would not count.
 - **Data subject request / DSAR (Art. 12(3))** - one month from RECEIPT, extendable by two
-  further months. Month-based, counted per Regulation (EEC, Euratom) No 1182/71 art. 3(2)(c):
+  further months. Month arithmetic per Regulation (EEC, Euratom) No 1182/71 art. 3(2)(c):
   a period in months ends on the day of the last month bearing the same number as the start
   day; if that month has no such day, it ends on the last day of that month
-  (e.g. receipt 31 Jan -> one month -> 28/29 Feb).
+  (e.g. receipt 31 Jan -> one month -> 28/29 Feb). Not applied: art. 3(4), which moves a
+  period ending on a Saturday, Sunday or public holiday to the next working day.
 
 Usage:
     python gdpr_deadlines.py breach  --from "2026-06-30T14:30"
@@ -46,10 +50,12 @@ def breach_deadline(awareness: datetime) -> dict:
         "basis": "RODO/GDPR art. 33(1) - 72h od stwierdzenia / from awareness",
         "awareness": awareness.isoformat(),
         "deadline_72h": deadline.isoformat(),
-        "note": "PL: zegar startuje od STWIERDZENIA naruszenia, nie od zdarzenia; po terminie "
-                "zglos z wyjasnieniem opoznienia (art. 33 ust. 1 zd. 2). "
-                "EN: the clock starts on AWARENESS, not the event; if late, notify with reasons "
-                "for the delay (art. 33(1) sent. 2).",
+        "note": "PL: zegar startuje od STWIERDZENIA naruszenia, nie od zdarzenia; zglos bez "
+                "zbednej zwloki - 72h to granica, nie cel; po 72h zglos z wyjasnieniem opoznienia "
+                "(art. 33 ust. 1 zd. 2). "
+                "EN: the clock starts on AWARENESS, not the event; notify without undue delay - "
+                "72h is the outer limit, not the target; after 72h, notify with reasons for the "
+                "delay (art. 33(1) sent. 2).",
     }
 
 
@@ -63,10 +69,12 @@ def dsar_deadline(receipt: datetime, extend: bool) -> dict:
     }
     if extend:
         out["deadline_extended_3_months"] = add_months(receipt, 3).isoformat()
-        out["note"] = ("PL: przedluzenie o max 2 miesiace przy zlozonosci - poinformuj osobe w "
-                       "ciagu PIERWSZEGO miesiaca z przyczyna (art. 12 ust. 3). "
-                       "EN: extension of up to 2 months for complexity - inform the person within "
-                       "the FIRST month with the reason (art. 12(3)).")
+        out["note"] = ("PL: przedluzenie o max 2 miesiace, gdy to konieczne ze wzgledu na "
+                       "skomplikowany charakter lub liczbe zadan - poinformuj osobe w ciagu "
+                       "PIERWSZEGO miesiaca z podaniem przyczyn opoznienia (art. 12 ust. 3). "
+                       "EN: extension of up to 2 months where necessary, taking into account the "
+                       "complexity and number of the requests - inform the person within the FIRST "
+                       "month, with the reasons for the delay (art. 12(3)).")
     return out
 
 
