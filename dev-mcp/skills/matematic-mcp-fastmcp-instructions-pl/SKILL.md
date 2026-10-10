@@ -495,7 +495,7 @@ W Claude Code: "List my <resources> via <name>" - czy LLM wywoluje tool wlasciwy
 
 - [dograh-hq/dograh](https://github.com/dograh-hq/dograh) - source pattern (BSD-2)
 - [mcp-eu-compliance v0.2.0](https://github.com/matematicsolutions/mcp-eu-compliance/releases/tag/v0.2.0) - pierwszy MCP MateMatic z pelnym kanonem (TS adaptacja Python wzorca)
-- [matematic-patron-pr-review-pl](../matematic-patron-pr-review-pl) - komplementarny skill (review PR repo PATRON)
+- `matematic-patron-pr-review-pl` - komplementarny skill (review PR repo PATRON)
 
 <!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
 ## Wspólne reguły wtyczki dev-mcp (Dev-mcp)

@@ -244,5 +244,5 @@ na zewnatrz domyka to i tak `adeu sanitize`.
 
 ## Powiazania
 
-- [`let-it-be`](../let-it-be) - anonimizacja TRESCI (PII PL); adeu sanitize czysci METADANE pliku.
+- `let-it-be` - anonimizacja TRESCI (PII PL); adeu sanitize czysci METADANE pliku.
   Dwie rozne warstwy, lancuch: let-it-be tresc -> redline -> adeu sanitize metadane.

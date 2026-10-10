@@ -262,7 +262,7 @@ uvx --from adeu==1.30.0 adeu apply --live edits.json       # edycja zywego dokum
 ## Integracja z let-it-be (PII PL)
 
 `sanitize` czysci **metadane** Worda, ale NIE tresc. Do anonimizacji tresci (PESEL,
-NIP, nazwiska w fleksji) najpierw przepusc tekst przez [`let-it-be`](../let-it-be), potem redline:
+NIP, nazwiska w fleksji) najpierw przepusc tekst przez `let-it-be`, potem redline:
 
 1. `let-it-be` -> pseudonimizuj tresc pisma (PII -> tokeny)
 2. praca/redline na zpseudonimizowanej wersji
@@ -291,7 +291,7 @@ wg tierow) i skanera placeholderow: [evolsb/legal-redline-tools](https://github.
 (wzorce PL: `DO UZUPELNIENIA`, `NN/RR`, `dnia __`, kwoty w zl) i pod format
 edits.json adeu zamiast ich wlasnego formatu redlines.
 
-Silnik wendorowany (NIEAKTYWNY): [`vendor/docx-engine/`](vendor/docx-engine/) - `packages/docx-engine`
+Silnik wendorowany (NIEAKTYWNY): [`vendor/docx-engine/`](vendor/docx-engine/README.md) - `packages/docx-engine`
 z [genspark-ai/genoffice](https://github.com/genspark-ai/genoffice) (Apache-2.0, commit `8f52328`),
 redystrybuowany razem z LICENSE i NOTICE zgodnie z sekcjami 4(b) i 4(d) tej licencji.
 

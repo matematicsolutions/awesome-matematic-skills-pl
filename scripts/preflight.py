@@ -111,6 +111,9 @@ for p in mp.get("plugins", []):
                 problems.append(f"{name}/{d}: SKILL.md has no frontmatter")
                 continue
             fm = txt.split("---", 2)[1]
+            if re.search(r"^prywatny:\s*tak\s*$", fm, re.M):
+                problems.append(f"{name}/{d}: skill oznaczony 'prywatny: tak' nie moze trafic do huba publicznego")
+                continue
             m = re.search(r"^description:\s*(.+?)(?=^[\w-]+:\s|\Z)", fm, re.M | re.S)
             if not m:
                 problems.append(f"{name}/{d}: SKILL.md frontmatter has no description")

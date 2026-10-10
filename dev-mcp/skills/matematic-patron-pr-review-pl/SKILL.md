@@ -29,7 +29,7 @@ Recenzent PR/diffow PATRON - polskiego LegalTech AI agenta dla kancelarii. Cherr
 
 **Komplementarny do:**
 - Wewnetrzny pipeline QA MateMatic dla tresci PL (artykuly, copy LI, BW) - ocena czytelnosci i poprawnosci. Ten skill ocenia **diff kodu**.
-- [matematic-konstytucja-ai](../matematic-konstytucja-ai) (w tym hubie) - dokument governance dla klienta. Ten chroni kod produktu.
+- `matematic-konstytucja-ai` (w tym hubie) - dokument governance dla klienta. Ten chroni kod produktu.
 - Self-review pre-commit (6 zasad MateMatic) - poprzedza ten skill, sprawdza ogolne, ten skill nad nimi sprawdza repo-specific risks.
 
 ## Kiedy uzywac
@@ -49,7 +49,7 @@ Recenzent PR/diffow PATRON - polskiego LegalTech AI agenta dla kancelarii. Cherr
 5. **Cache per-worker bez worker sync** - stale state w innych procesach
 6. **UI bypassuje generated SDK** - direct `fetch('/api/v1/...')` zamiast typed client
 7. **Migracja niebezpieczna na produkcji** - NOT NULL bez backfilla, brak downgrade()
-8. **MCP tool reimplementuje auth** zamiast `authenticate_mcp_request()` (patrz [matematic-mcp-fastmcp-instructions-pl](../matematic-mcp-fastmcp-instructions-pl) w tym hubie)
+8. **MCP tool reimplementuje auth** zamiast `authenticate_mcp_request()` (patrz `matematic-mcp-fastmcp-instructions-pl` w tym hubie)
 9. **PII/cytat prawniczy w logach** - naruszenie RODO + tajemnica adwokacka (art. 6 ust. 1 PrAdw + art. 3 ust. 3 RadcPrU)
 10. **Brak audit_log entry** dla operacji decyzyjnej (AI Act art. 12 record-keeping)
 
@@ -219,7 +219,7 @@ Checks:
 
 ## 7. MCP servers (`mcp-servers/**`, `matematicsolutions/mcp-*`)
 
-Reguly z [matematic-mcp-fastmcp-instructions-pl](../matematic-mcp-fastmcp-instructions-pl) - 8 elementow kanonu.
+Reguly z `matematic-mcp-fastmcp-instructions-pl` - 8 elementow kanonu.
 
 Checks:
 - Nowe tools uzywaja `authenticateMcpRequest()` (lub Pythonowy `authenticate_mcp_request()`), NIE reimplementuja API-key validation.
@@ -294,7 +294,7 @@ Checks:
 Checks:
 - Operacja decyzyjna (klasyfikacja dokumentu, rekomendacja, generowanie pisma, anonimizacja) MUSI zapisac do `audit_log` (ADR-0033). Brak entry = finding (AI Act art. 12 record-keeping).
 - PII detection / anonimizacja inline PRZED storage uzytkowych logow ([matematic-anonimizacja-pl](https://github.com/matematicsolutions/matematic-anonimizacja-pl) jako pre-storage filter). Bypass = finding.
-- Cytat z orzeczenia / ustawy w odpowiedzi LLM musi przejsc [citation-grounding-pl](../citation-grounding-pl) (mechaniczna weryfikacja string-match). Jesli kod generuje odpowiedz LLM bez tego layera = finding.
+- Cytat z orzeczenia / ustawy w odpowiedzi LLM musi przejsc `citation-grounding-pl` (mechaniczna weryfikacja string-match). Jesli kod generuje odpowiedz LLM bez tego layera = finding.
 - Pisma procesowe MUSZA przejsc wewnetrzny pipeline QA MateMatic (anti-slop PL + senior review min 2 rundy) przed docx. Kod generujacy .docx bez tej walidacji = finding.
 - Dane z prawdziwych akt klienta (kwoty, sygnatury, inicjaly) w README/aktualnosci/post LI = czerwona linia tajemnicy adwokackiej (art. 6 ust. 1 PrAdw) / radcowskiej (art. 3 ust. 3 RadcPrU). Grep przed push.
 - Nowy retention policy: dane klienta kancelarii max 90 dni in-memory / 7 lat archive (RODO + KPK + KC).
@@ -369,9 +369,9 @@ Cytuj `plik:linia` dla kazdego finding. Pomin to co formatter/linter/IDE i tak z
 
 ## Linki
 
-- [matematic-mcp-fastmcp-instructions-pl](../matematic-mcp-fastmcp-instructions-pl) - kanon MCP (sekcja 7)
-- [citation-grounding-pl](../citation-grounding-pl) - anti-halucynacja cytatu (sekcja 13)
-- [legal-ai-audit-bundle](../legal-ai-audit-bundle) - audit AI Act art. 12 (sekcja 13)
+- `matematic-mcp-fastmcp-instructions-pl` - kanon MCP (sekcja 7)
+- `citation-grounding-pl` - anti-halucynacja cytatu (sekcja 13)
+- `legal-ai-audit-bundle` - audit AI Act art. 12 (sekcja 13)
 - [matematic-anonimizacja-pl](https://github.com/matematicsolutions/matematic-anonimizacja-pl) - PII anonimizacja (sekcja 13)
 - [dograh-hq/dograh](https://github.com/dograh-hq/dograh) - source pattern (BSD-2)
 

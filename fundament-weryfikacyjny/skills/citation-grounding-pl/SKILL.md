@@ -286,7 +286,7 @@ do `legal-ai-audit-bundle` obok deliverable.
   zero-cloud; z repo bierzemy tylko lokalną, jurysdykcyjnie-neutralną heurystykę nazw stron.
 - Kontrakt generacyjny (v2.2): trójklasa znakowania przy generacji (Zweryfikowane / Do sprawdzenia /
   Nie używać, tag przy linii, fail-closed dla klasy 3) - adaptacja „kolmiportainen varmuusmerkintä"
-  z `akunikkola/claude-for-legal-finland` (MIT, `references/viittaustyyli.md`). Stamtąd też lekcja
+  z `akunikkola/claude-for-legal-finland` (MIT, [references/viittaustyyli.md](https://github.com/akunikkola/claude-for-legal-finland/blob/main/references/viittaustyyli.md)). Stamtąd też lekcja
   dyscypliny placeholderów w przykładach (audyt siostrzanego projektu DE: ~58% złych sygnatur).
 - Dyskonto języka szablonowego (v2.3): wzorzec `COMMON_LEGAL_PHRASES` z `AnttiHero/lavern`
   (Apache 2.0, `src/mcp/tools/grounding-verifier.ts`) - trafiona fraza-wytrych liczy się 0.5 zamiast
