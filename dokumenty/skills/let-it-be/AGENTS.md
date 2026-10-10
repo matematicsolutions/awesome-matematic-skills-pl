@@ -17,7 +17,7 @@ Repo prowadzi [MateMatic Solutions](https://matematicsolutions.com). Obowiązuje
 ## Build i test
 
 ```bash
-node --test          # 18 testów, zero zależności, brak kroku budowania
+node --test          # 36 testów, zero zależności, brak kroku budowania
 node bin/cli.mjs --help
 ```
 

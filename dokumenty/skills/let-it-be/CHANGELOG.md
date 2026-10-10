@@ -2,6 +2,20 @@
 
 Format wg [Keep a Changelog](https://keepachangelog.com/pl/1.1.0/), wersjonowanie [SemVer](https://semver.org/lang/pl/).
 
+## [0.2.1] - 2026-10-10
+
+Numer z etykieta i bledna suma kontrolna nie przechodzi juz jawny. Do tej pory regula odrzucala kazdy ciag ze zla suma, wiec PESEL, NIP albo REGON z literowka czy bledem OCR - czesty w skanach akt - zostawal w tekscie niezamaskowany.
+
+### Naprawione
+
+- `pesel-zla-suma`, `nip-zla-suma`, `regon-zla-suma`: gdy tuz przed liczba stoi etykieta "PESEL" / "NIP" / "REGON", numer ze zla suma jest maskowany jako ten sam typ (pewnosc 0.9; `ruleId` z koncowka `-zla-suma` mowi recenzentowi, co sprawdzic). Ciag ze zla suma BEZ etykiety nadal nie jest traktowany jako PESEL - to swiadoma granica (numery spraw, faktur).
+- NIP wykrywany takze w zapisie 123-45-67-890 (wczesniej tylko 123-456-78-90; poprawny NIP w drugim zapisie przechodzil jawny).
+- 4 nowe testy, razem 36. Kontrola pozytywna: na poprzedniej wersji `src/regex.mjs` dwa nowe testy padaja.
+
+### Znane ograniczenie (bez zmian w tej wersji)
+
+- Regula telefonu lapie 9 cyfr takze w srodku dluzszego ciagu cyfr (np. numer faktury) - maskuje wtedy za duzo, nie za malo.
+
 ## [0.2.0] - 2026-07-13
 
 Warstwa odwracalnej redakcji PACZKI dokumentow. Do tej pory `pseudonimizuj` + `odwroc` dzialaly na pojedynczym dokumencie, a kazdy plik dostawal wlasna numeracje ([OSOBA_1] w pozwie i [OSOBA_1] w zeznaniu mogly byc dwiema roznymi osobami).

@@ -66,11 +66,25 @@ const phoneNational = (v) => v.replace(/[\s+-]/g, "").replace(/^48/, "");
 export const PL_EXTRACTION_RULES = [
     // === Identyfikatory PII (checksumy walidowane) ===
     { id: "pesel", type: "PESEL", pattern: /\b\d{11}\b/g, validate: isValidPesel, baseConfidence: 1.0, normalize: (v) => v },
-    { id: "nip", type: "NIP", pattern: /\b\d{3}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}\b/g, validate: isValidNip, baseConfidence: 1.0, normalize: phoneDigits },
+    // NIP w obu zapisach spotykanych w pismach: 123-456-78-90 oraz 123-45-67-890.
+    { id: "nip", type: "NIP", pattern: /\b(?:\d{3}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}|\d{3}[\s-]?\d{2}[\s-]?\d{2}[\s-]?\d{3})\b/g, validate: isValidNip, baseConfidence: 1.0, normalize: phoneDigits },
     { id: "regon", type: "REGON", pattern: /\b(\d{14}|\d{9})\b/g, validate: isValidRegon, baseConfidence: 1.0, normalize: phoneDigits },
     { id: "krs", type: "KRS", pattern: /\bKRS[:\s]*(\d{10})\b/gi, validate: isValidKrsFormat, baseConfidence: 0.95, normalize: (v) => v.replace(/[^\d]/g, "").padStart(10, "0") },
     { id: "email", type: "EMAIL", pattern: EMAIL_RE, baseConfidence: 0.9, normalize: (v) => v.toLowerCase() },
     { id: "phone", type: "PHONE", pattern: PHONE_PL_RE, validate: (v) => phoneNational(v).length === 9, baseConfidence: 0.85, normalize: phoneNational },
+
+    // === Identyfikator z etykieta, ale ze ZLA suma kontrolna: do przegladu, nie do kosza ===
+    // Regula wyzej odrzuca 11 cyfr ze zla suma, bo bez kontekstu to czesciej numer sprawy czy
+    // faktury niz PESEL. Gdy jednak tuz przed liczba stoi "PESEL" / "NIP" / "REGON", zla suma to
+    // najpewniej literowka albo blad OCR - a odrzucenie oznaczaloby, ze dana osobowa wychodzi
+    // niezamaskowana. Taki numer maskujemy jako ten sam typ. Pewnosc 0.9, nie nizej: etykieta
+    // czyni z liczby dana osobowa prawie na pewno (watpliwa jest tylko poprawnosc numeru), a przy
+    // 0.5 przegrywala z regula telefonu (0.85) na 9 cyfrach w srodku - zmierzone w tescie.
+    // ruleId `*-zla-suma` mowi recenzentowi, co sprawdzic. Wzorzec trojstanu sumy: przeglad
+    // anonimizatorow PL 2026-10-10. GRANICA: 11 cyfr ze zla suma BEZ etykiety nadal przechodzi.
+    { id: "pesel-zla-suma", type: "PESEL", pattern: /\bPESEL\b[:\s]*(?:nr\.?\s*)?(\d{11})\b/gi, validate: (v) => !isValidPesel(v), baseConfidence: 0.9, normalize: (v) => v },
+    { id: "nip-zla-suma", type: "NIP", pattern: /\bNIP\b[:\s]*(?:PL\s*)?(\d{3}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}|\d{3}[\s-]?\d{2}[\s-]?\d{2}[\s-]?\d{3})\b/gi, validate: (v) => !isValidNip(v), baseConfidence: 0.9, normalize: phoneDigits },
+    { id: "regon-zla-suma", type: "REGON", pattern: /\bREGON\b[:\s]*(\d{14}|\d{9})\b/gi, validate: (v) => !isValidRegon(v), baseConfidence: 0.9, normalize: phoneDigits },
 
     // === Dane finansowe i dokumenty (checksumy walidowane) ===
     { id: "iban", type: "IBAN", pattern: IBAN_PL_RE, validate: isValidIbanPl, baseConfidence: 1.0, normalize: (v) => { const s = v.replace(/\s/g, "").toUpperCase(); return s.startsWith("PL") ? s : "PL" + s; } },

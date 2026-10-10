@@ -64,6 +64,42 @@ test("detect: minConfidence odsiewa slabe dopasowania", () => {
     assert.ok(tylkoMocne.includes("PESEL"));  // 1.0 zostaje
 });
 
+test("detect: PESEL/NIP/REGON z etykieta i ZLA suma ida do przegladu, nie do kosza", () => {
+    // Literowka albo blad OCR w numerze z etykieta nie moze oznaczac, ze dana wychodzi jawna.
+    const text = "PESEL 44051401358, NIP: 526-025-02-75, REGON 123456784.";
+    const pii = detect(text).entities.filter((e) => e.isPii);
+    const wg = (t) => pii.find((e) => e.type === t);
+    for (const [typ, regula] of [["PESEL", "pesel-zla-suma"], ["NIP", "nip-zla-suma"], ["REGON", "regon-zla-suma"]]) {
+        const e = wg(typ);
+        assert.ok(e, `${typ} ze zla suma zgubiony`);
+        assert.equal(e.ruleId, regula);
+        assert.equal(e.confidence, 0.9);
+    }
+    const { text: wynik } = pseudonimizuj(text);
+    for (const surowe of ["44051401358", "526-025-02-75", "123456784"]) {
+        assert.ok(!wynik.includes(surowe), `${surowe} zostal jawny`);
+    }
+});
+
+test("detect: poprawny numer z etykieta raz, z pelna pewnoscia (bez duplikatu z regula zlej sumy)", () => {
+    const pesele = detect(`PESEL ${PESEL}`).entities.filter((e) => e.type === "PESEL");
+    assert.equal(pesele.length, 1);
+    assert.equal(pesele[0].ruleId, "pesel");
+    assert.equal(pesele[0].confidence, 1.0);
+});
+
+test("detect: 11 cyfr ze zla suma BEZ etykiety nie sa PESEL (granica reguly)", () => {
+    const pii = detect("Faktura nr 44051401358 z dnia 1 marca.").entities.filter((e) => e.type === "PESEL");
+    assert.equal(pii.length, 0);
+});
+
+test("detect: NIP w zapisie 123-45-67-890 wykryty", () => {
+    const nip = detect("NIP 526-02-50-274").entities.filter((e) => e.type === "NIP");
+    assert.equal(nip.length, 1);
+    assert.equal(nip[0].ruleId, "nip");
+    assert.equal(nip[0].normalized, NIP);
+});
+
 test("detect: telefon z prefiksem +48 i bez", () => {
     const a = detect("tel +48 600 700 800").entities.filter((e) => e.type === "PHONE");
     const b = detect("tel 600700800").entities.filter((e) => e.type === "PHONE");
