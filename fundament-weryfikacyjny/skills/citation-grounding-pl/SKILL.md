@@ -7,7 +7,7 @@ description: >
   źródłowym, czy sygnatura jest realna i czy parafraza oddaje stanowisko sądu,
   zamiast wierzyć modelowi "na oko". Przeciwdziała halucynacjom modelu (w tym
   problemowi "prawdziwy-cytat-fałszywa-teza"), RODO-safe (działa lokalnie), spina
-  się z saos-orzecznictwo, szukaj-orzeczen-v2 i eu-sparql-search. Używaj gdy:
+  się z saos-orzecznictwo i eu-sparql-search. Używaj gdy:
   weryfikacja cytatów w opinii prawnej / memo / piśmie procesowym, sprawdzenie czy
   AI nie zmyśliło fragmentu wyroku, przepisu lub sygnatury, czy parafraza nie
   przekręca holdingu, kontrola cytatu przed wysłaniem deliverable do klienta,
@@ -39,7 +39,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 2.5.0
-  companion_skills: saos-orzecznictwo, szukaj-orzeczen-v2, eu-sparql-search, legal-ai-audit-bundle, adversarial-legal-review-pl, deliverable-fidelity-pl, legal-request-router-pl
+  companion_skills: saos-orzecznictwo, eu-sparql-search, legal-ai-audit-bundle, adversarial-legal-review-pl, deliverable-fidelity-pl, legal-request-router-pl
 ---
 
 # Citation Grounding PL - mechaniczny weryfikator cytatu (gradient)
@@ -123,7 +123,7 @@ oznacz je `claim_type` i poddaj weryfikacji na właściwym poziomie. Bez cudzys�
 ## Workflow
 
 1. **Zbierz źródła i rozwiąż kotwice** - tekst dokumentu źródłowego dostępny lokalnie:
-   - Orzeczenia: `saos-orzecznictwo` / `szukaj-orzeczen-v2` (zwracają też datę i organ → kotwica)
+   - Orzeczenia: `saos-orzecznictwo` (zwraca też datę i organ → kotwica)
    - Akty EU: `eu-sparql-search` (CELEX → kotwica)
    - Ustawy PL / umowy / pisma: dostarcza użytkownik (.txt/.md/.docx → markitdown)
    - Gdy bezpośredni fetch zawiedzie, pracuj **drabinkę źródeł**: `references/drabinka-zrodel-pl.md`

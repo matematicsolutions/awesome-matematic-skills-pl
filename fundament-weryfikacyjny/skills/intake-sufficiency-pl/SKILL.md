@@ -74,7 +74,7 @@ Werdykt: **strong** >= 80, **adequate** >= 50, **insufficient** < 50.
    to **premisa do weryfikacji, nie fakt**. Klient moze sie mylic co do prawa, a analiza zbudowana
    na blednej premisie jest bledna w calosci, nawet gdy rozumowanie jest poprawne. Kazda premise:
    - wypisz osobno z tagiem `[premisa klienta - do weryfikacji u zrodla]`,
-   - jesli jest ISTOTNA dla wyniku: zweryfikuj przed startem (SAOS / ISAP / `szukaj-orzeczen-v2` /
+   - jesli jest ISTOTNA dla wyniku: zweryfikuj przed startem (SAOS / ISAP / `saos-orzecznictwo` /
      tekst umowy) albo dodaj do pytan/instrukcji wstepnych jako pierwsze zadanie,
    - jesli weryfikacja ja OBALA: powiedz to wprost i nie kontynuuj na blednym zalozeniu -
      nawet jesli klient przedstawil je stanowczo.

@@ -5,6 +5,21 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.10c] - 2026-10-10
+
+### Removed
+
+- `szukaj-orzeczen-v2` wycofany z bundla `orzecznictwo-zrodla` 2.0.0 (7 skilli zamiast 8).
+  Skill nie byl nasz: kod pochodzi od GSkuza
+  ([GSkuza/ai-polish-text-expert](https://github.com/GSkuza/ai-polish-text-expert), licencja MIT).
+  Opublikowalismy go jako Apache-2.0 bez noty autora i bez tekstu licencji MIT - a MIT wymaga
+  zachowania obu w kazdej kopii. Zamiast poprawiac opis cudzej pracy w naszym katalogu -
+  wycofujemy go. Wyszukiwanie w SAOS pokrywa nasz `saos-orzecznictwo`; odeslania
+  w `citation-grounding-pl`, `intake-sufficiency-pl`, `hierarchia-zrodel-pl`,
+  `struktura-wyroku-pl`, `matematic-marketplace-installer` i przepisie `wachta-orzeczen`
+  kieruja teraz do niego. Usunieto tez wpisy w NOTICE
+  i THIRD_PARTY_INSPIRATIONS oraz odznake.
+
 ## [2026.10.10b] - 2026-10-10
 
 ### Changed

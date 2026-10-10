@@ -239,7 +239,7 @@ polskie, listy sankcyjne i bramka R01-R13 wlasne.
 
 **API**: https://www.saos.org.pl
 **Licencja danych**: CC0 / public domain
-**Relacja**: ZRODLO DANYCH. `saos-orzecznictwo` i `szukaj-orzeczen-v2` uzywaja
+**Relacja**: ZRODLO DANYCH. `saos-orzecznictwo` uzywa
 publicznego REST API SAOS. Dane orzecznictwa = public domain (Art. 4 ustawy
 o prawie autorskim - akty normatywne i orzeczenia organow wladzy nie sa
 przedmiotem prawa autorskiego).

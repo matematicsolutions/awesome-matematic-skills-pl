@@ -1,7 +1,7 @@
 # wachta-orzeczen - przegląd nowego orzecznictwa w pilnowanych tematach
 
 Agent tła, który cyklicznie odpytuje SAOS (przez `mcp-saos` / skill
-`szukaj-orzeczen-v2`) o nowe orzeczenia SN / TK / KIO / sądów powszechnych
+`saos-orzecznictwo`) o nowe orzeczenia SN / TK / KIO / sądów powszechnych
 w zdefiniowanych tematach i składa **przegląd do sprawdzenia** - z linkiem
 źródłowym przy każdej sygnaturze.
 

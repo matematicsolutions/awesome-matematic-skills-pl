@@ -27,7 +27,6 @@ Apache-2.0:
 - deliverable-fidelity-pl
 - legal-ai-audit-bundle
 - saos-orzecznictwo
-- szukaj-orzeczen-v2
 - eu-sparql-search
 - legal-data-hunter-pl
 - opendataloader-pdf
@@ -71,7 +70,7 @@ w katalogu konkretnego skilla jezeli istnieje. Sumarycznie:
   publiczny endpoint) - dla eu-sparql-search.
 
 - Fundacja ePanstwo / SAOS REST API (CC0 / public domain dane) - dla
-  saos-orzecznictwo, szukaj-orzeczen-v2.
+  saos-orzecznictwo.
 
 ----------------------------------------------------------------------
 

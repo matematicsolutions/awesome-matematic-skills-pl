@@ -8,7 +8,7 @@ wymaga poziom twierdzenia.
 
 ## Drabinka dla orzecznictwa PL
 
-1. **SAOS przez `saos-orzecznictwo` / `szukaj-orzeczen-v2`.** Pełna treść + metadane (data, organ,
+1. **SAOS przez `saos-orzecznictwo`.** Pełna treść + metadane (data, organ,
    skład, hasła). To zarazem **resolver kotwicy** (ISTNIENIE) i źródło tekstu (TREŚĆ/FRAGMENT).
    Z metadanych zbuduj `anchor_resolved`.
 2. **Portal Orzeczeń Sądów Powszechnych / strona danego sądu** - gdy orzeczenia nie ma w SAOS

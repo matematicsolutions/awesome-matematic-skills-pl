@@ -145,7 +145,7 @@ INSTALACJA:
     Prawa administratora NIE sa wymagane - skrypt pisze do %USERPROFILE%.)
 4. Poczekaj az pojawi sie "Instalacja zakonczona!"
 5. Uruchom Claude Code od nowa
-6. Sprawdz: wpisz /szukaj-orzeczen "dobro dziecka" - komenda jest dostepna
+6. Sprawdz: zapytaj "znajdz orzeczenia SN o dobru dziecka" - Claude siega po saos-orzecznictwo, wiec skille sa zaladowane
 
 PROBLEMY:
 - Jesli Windows blokuje skrypt: Wlasciwosci pliku -> Odblokuj

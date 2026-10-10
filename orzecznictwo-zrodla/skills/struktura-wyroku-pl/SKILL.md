@@ -28,7 +28,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  companion_skills: saos-orzecznictwo, ekstraktor-cytatow-pl, citation-grounding-pl, szukaj-orzeczen-v2
+  companion_skills: saos-orzecznictwo, ekstraktor-cytatow-pl, citation-grounding-pl
 ---
 
 # Struktura wyroku PL - rozłóż orzeczenie i streść ekstraktywnie
@@ -58,7 +58,7 @@ Segmentuj tekst na poniższe role (nie każde orzeczenie ma wszystkie):
 
 ## Workflow
 
-1. **Wczytaj orzeczenie** (np. z saos-orzecznictwo / szukaj-orzeczen-v2 albo wklejony tekst).
+1. **Wczytaj orzeczenie** (np. z saos-orzecznictwo albo wklejony tekst).
 2. **Segmentuj** na role powyżej - przypisz fragmenty, oznacz role nieobecne.
 3. **Streść ekstraktywnie** - dla każdej istotnej roli wybierz 1-3 zdania KLUCZOWE i zacytuj je
    dosłownie (z offsetem/stroną), nie parafrazuj.

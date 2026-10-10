@@ -28,7 +28,6 @@ $skills = @(
   @{ slug='legal-ai-audit-bundle';       kat='walidacja';    title='AI Audit Bundle';        sub='paczka zgodnosci AI Act art.12' },
   @{ slug='redline-docx-pl';             kat='umowy';        title='Redline DOCX PL';        sub='natywne Track Changes Word' },
   @{ slug='saos-orzecznictwo';           kat='orzecznictwo'; title='SAOS Orzecznictwo';      sub='API systemu SAOS' },
-  @{ slug='szukaj-orzeczen-v2';          kat='orzecznictwo'; title='Szukaj Orzeczen v2';     sub='wyszukiwanie + raport tematyczny' },
   @{ slug='eu-sparql-search';            kat='orzecznictwo'; title='EU SPARQL Search';       sub='EUR-Lex + Cellar + CJEU' },
   @{ slug='legal-data-hunter-pl';        kat='orzecznictwo'; title='Legal Data Hunter';      sub='katalog zrodel prawa PL' },
   @{ slug='webwright-legal-pl';          kat='orzecznictwo'; title='Webwright Legal PL';     sub='MS / SN / TK przez Playwright' },

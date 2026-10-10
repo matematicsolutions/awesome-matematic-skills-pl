@@ -135,7 +135,7 @@ wyraźnie oddzieloną od normy.
    | Warstwa | Konektor |
    |---|---|
    | Ustawy, rozporządzenia, teksty jednolite (ISAP) | sejm-eli-mcp |
-   | Orzecznictwo SN / TK / sądy powszechne / KIO | saos-orzecznictwo + szukaj-orzeczen-v2 |
+   | Orzecznictwo SN / TK / sądy powszechne / KIO | saos-orzecznictwo |
    | Prawo UE, orzecznictwo TSUE (EUR-Lex) | eu-sparql-search |
    | Decyzje i wytyczne UODO | uodo-grounding-pl |
    | Orzecznictwo KIO (zamówienia publiczne) | kio-grounding-pl |
