@@ -49,6 +49,19 @@ Ten projekt powstał metodą cherry-pick MateMatic: bierzemy pattern strukturaln
 - **Co napisane od zera**: `pseudonimizujPaczke` w ESM na wspólnym słowniku, bramka residual rozszerzona na całą paczkę (każdy wynik vs wszystkie oryginały słownika), zdarzenia audit logu per plik.
 - **Czego NIE wzięto (roadmap v2)**: restore `.docx` z zachowaniem tracked changes przez podmianę na poziomie runs - nasz silnik jest dziś tekstowy; odnotowane w CHANGELOG jako v2.
 
+## 5. beerbottle90/arthur-mask - cherry-pick metodyki pomiaru (licencja zastrzeżona)
+
+- **Źródło**: https://github.com/beerbottle90/arthur-mask (katalog `degerlendirme/`)
+- **Licencja**: **ArthurLegal Proprietary Non-Commercial - NIE jest to licencja open source.** Kodu ani treści stamtąd nie wolno kopiować ani redystrybuować. Wzięta została wyłącznie metodyka, czyli sposób postępowania, a ten nie podlega ochronie prawnoautorskiej.
+- **Snapshot**: 2026-09-23.
+- **Co wzięte (metodyka, NIE kod i NIE dane)**:
+  1. zestaw ewaluacyjny ze złotymi spanami inline, jeden fragment na linię,
+  2. rozdział metryki detektora od metryki ścieżki konsumenta (u nas: `ocen.mjs` i `ocen_bramki.mjs`),
+  3. zasada wypalania zestawu - po pomiarze zestaw przestaje nadawać się do strojenia,
+  4. kontrola negatywna jako pełnoprawna metryka obok recallu.
+- **Co napisane od zera**: oba harnessy w ESM pod nasz format wyjścia i nasze etykiety, zestaw `zestaw_ukryty_1.txt` (fikcja napisana na polskie dokumenty procesowe, z identyfikatorami wygenerowanymi przez własne walidatory checksum), definicje metryk i progi.
+- **Czego NIE wzięto**: żadnego fragmentu ich zestawów testowych, żadnego kodu, modeli NER ani zależności (`arthur-mask` opiera się na Presidio, spaCy i GLiNER, co łamie naszą zasadę zero zależności).
+
 ## Zgodność z kanonem cherry-pick MateMatic
 
 - **Snapshot permissive licencji** zachowany (data 2026-05-22 w LICENSE i tutaj).

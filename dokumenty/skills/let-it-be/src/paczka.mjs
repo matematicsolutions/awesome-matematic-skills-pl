@@ -141,8 +141,9 @@ export class SlownikOdwracania {
 export function pseudonimizujPaczke(pliki, opts = {}) {
     const { slownik = new SlownikOdwracania(), ...detectOpts } = opts;
     const wyniki = [];
-    for (const { nazwa, text } of pliki) {
-        const pii = detect(text, detectOpts).entities.filter((e) => e.isPii);
+    for (const { nazwa, text: wejscie } of pliki) {
+        const { entities, text } = detect(wejscie, detectOpts);
+        const pii = entities.filter((e) => e.isPii);
         let out = "";
         let cursor = 0;
         for (const e of pii) {
@@ -150,7 +151,7 @@ export function pseudonimizujPaczke(pliki, opts = {}) {
             cursor = e.end;
         }
         out += text.slice(cursor);
-        const hash = sourceHash(text);
+        const hash = sourceHash(wejscie);
         slownik.pliki[nazwa] = hash;
         wyniki.push({ nazwa, text: out, counts: countByType(pii), sourceHash: hash });
     }

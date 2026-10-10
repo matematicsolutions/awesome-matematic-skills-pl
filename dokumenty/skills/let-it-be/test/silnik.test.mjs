@@ -227,3 +227,158 @@ test("archiwum AES-GCM: round-trip + zle haslo rzuca", () => {
     assert.deepEqual(decryptArchive(blob, "tajne-haslo"), obj);
     assert.throws(() => decryptArchive(blob, "zle-haslo"));
 });
+
+test("OSOBA: polskie wielkie litery i pelne nazwisko z diakrytykami", () => {
+    const osoby = (t) => detect(t).entities.filter((e) => e.type === "OSOBA").map((e) => e.raw);
+    assert.deepEqual(osoby("Świadek Łukasz Nowak zeznał."), ["Łukasz Nowak"]);
+    assert.deepEqual(osoby("Pani Zofia Żółkiewska wniosła."), ["Zofia Żółkiewska"]);
+    assert.deepEqual(osoby("Sławomir Ścibor-Rylski"), ["Sławomir Ścibor-Rylski"]);
+    assert.deepEqual(osoby("Jan Łoś podpisał."), ["Jan Łoś"]);
+    assert.deepEqual(osoby("Anna Kość podpisała."), ["Anna Kość"]);
+});
+
+test("OSOBA: odrzucona para nie zjada imienia nastepnej osoby", () => {
+    const osoby = (t) => detect(t).entities.filter((e) => e.type === "OSOBA").map((e) => e.raw);
+    assert.deepEqual(
+        osoby("Wnioskodawca Anna Nowak oraz Pozwany Jan Kowalski"),
+        ["Anna Nowak", "Jan Kowalski"],
+    );
+    // Kontrola negatywna: bez znanego imienia nadal nic.
+    assert.deepEqual(osoby("Sad Okregowy Wydzial Cywilny"), []);
+});
+
+test("wejscie NFD: detekcja jak dla NFC, zero przecieku po anonimizacji", () => {
+    const nfc = "Pani Zofia Żółkiewska, ul. Świętojańska 12, PESEL 44051401359.";
+    const nfd = nfc.normalize("NFD");
+    assert.notEqual(nfd, nfc);
+    const typy = (t) => detect(t).entities.filter((e) => e.isPii).map((e) => e.type).sort();
+    assert.deepEqual(typy(nfd), typy(nfc));
+    const out = anonimizuj(nfd).text;
+    for (const oryginal of ["Żółkiewska", "Świętojańska"]) {
+        assert.ok(!out.includes(oryginal) && !out.includes(oryginal.normalize("NFD")), oryginal);
+    }
+    // Offsety odnosza sie do tekstu zwroconego przez detect().
+    const { entities, text } = detect(nfd);
+    for (const e of entities) assert.equal(text.slice(e.start, e.end), e.raw);
+});
+
+// --- Propagacja osoby na dalsze wystapienia nazwiska (src/propaguj.mjs) ---
+
+const osobyWykryte = (t) => detect(t).entities.filter((e) => e.type === "OSOBA").map((e) => e.raw);
+
+test("odmiana nazwiska po pierwszym przedstawieniu osoby", () => {
+    const t = "Powodka Anna Zielińska wniosła pozew. Zdaniem Zielińskiej umowa wygasła, a Zielińska zażądała zwrotu.";
+    assert.deepEqual(osobyWykryte(t), ["Anna Zielińska", "Zielińskiej", "Zielińska"]);
+});
+
+test("nazwiska rzeczownikowe z e ruchomym i -owicz", () => {
+    const t = "Świadek Jan Wróbel zeznał. Wróbla przesłuchano ponownie. Pozwany Adam Kaczmarek i Tomasz Adamowicz. Kaczmarkowi doręczono, Adamowicza wezwano.";
+    const o = osobyWykryte(t);
+    for (const f of ["Wróbla", "Kaczmarkowi", "Adamowicza"]) assert.ok(o.includes(f), f);
+});
+
+test("wersaliki i brak ogonków po OCR", () => {
+    const t = "Pozwana Joanna Kowalska. W komparycji: KOWALSKA. Po OCR: Kowalskiej bez ogonkow, Kowalska.";
+    const o = osobyWykryte(t);
+    assert.ok(o.includes("KOWALSKA"));
+    assert.ok(o.includes("Kowalskiej"));
+});
+
+test("nazwisko dwuczłonowe", () => {
+    const t = "Pełnomocnik Maria Nowak-Zielińska. Nowak-Zielińskiej udzielono głosu.";
+    assert.ok(osobyWykryte(t).includes("Nowak-Zielińskiej"));
+});
+
+test("kontrola negatywna: sygnatury, sądy, przepisy i słowa o innym rdzeniu nietknięte", () => {
+    const t = "Anna Zielińska, sygn. akt I C 123/24, art. 415 k.c. Sąd Okręgowy w Zielonej Górze. Zielony pojazd.";
+    assert.deepEqual(osobyWykryte(t), ["Anna Zielińska"]);
+});
+
+test("bez wykrytej osoby nie ma propagacji (nie zgadujemy nazwisk)", () => {
+    assert.deepEqual(osobyWykryte("Zielińska wniosła pozew."), []);
+});
+
+test("odmiany nie przeciekają po anonimizacji, a pseudonimizacja odwraca się co do znaku", () => {
+    const t = "Powód Jan Kowalski. Kowalskiego reprezentuje adwokat. KOWALSKI podpisał.";
+    const a = anonimizuj(t).text;
+    for (const f of ["Kowalski", "Kowalskiego", "KOWALSKI"]) assert.ok(!a.includes(f), f);
+    const p = pseudonimizuj(t);
+    assert.equal(odwroc(p.text, p.map), t);
+});
+
+test("imię w odmianie rozpoznaje osobę, a za nią dalsze wystąpienia nazwiska", () => {
+    const t = "W imieniu powódki Anny Zielińskiej wnoszę o zasądzenie. Pozwanemu Janowi Kowalskiemu doręczono odpis, a Kowalski nie odpowiedział.";
+    const o = osobyWykryte(t);
+    for (const f of ["Anny Zielińskiej", "Janowi Kowalskiemu", "Kowalski"]) assert.ok(o.includes(f), f);
+});
+
+test("nazwisko rzeczownikowe w odmianie przy pierwszym wystąpieniu", () => {
+    const t = "Umowę zawarto z Pawłem Nowakiem. Nowak nie zapłacił, więc Nowaka wezwano.";
+    const o = osobyWykryte(t);
+    for (const f of ["Pawłem Nowakiem", "Nowak", "Nowaka"]) assert.ok(o.includes(f), f);
+});
+
+test("odwrócona kolejność w tabeli: Nazwisko Imię", () => {
+    assert.ok(osobyWykryte("Lp. 1 | Kowalczyk Jan | ul. Polna 5").includes("Kowalczyk Jan"));
+    // dalsze wystąpienie nazwiska z tabeli też maskowane
+    assert.ok(osobyWykryte("Kowalczyk Jan, 1980. Kowalczykowi doręczono wezwanie.").includes("Kowalczykowi"));
+});
+
+test("komparycja wersalikami i dwa imiona", () => {
+    assert.ok(osobyWykryte("JAN KOWALCZYK, zamieszkały w Łodzi.").includes("JAN KOWALCZYK"));
+    assert.ok(osobyWykryte("Stawiła się Anna Maria Nowak, legitymująca się dowodem.").includes("Anna Maria Nowak"));
+    assert.ok(osobyWykryte("ANNA MARIA NOWAK oraz Nowak podpisali.").includes("Nowak"));
+});
+
+test("kontrola negatywna dla wersalików i tabel: tytuły i nagłówki nietknięte", () => {
+    assert.deepEqual(osobyWykryte("UMOWA SPRZEDAŻY. PROTOKÓŁ ZGROMADZENIA WSPÓLNIKÓW. Imię Nazwisko | Adres"), []);
+    assert.deepEqual(osobyWykryte("Sąd Okręgowy w Łodzi, Wydział Cywilny. Kodeks Pracy."), []);
+});
+
+test("odwrócona kolejność tylko w kontekście tabeli, nie na początku zdania", () => {
+    assert.deepEqual(osobyWykryte("Pozwany Jan zeznał, że nie pamięta."), []);
+    assert.deepEqual(osobyWykryte("Świadek Anna odmówiła odpowiedzi."), []);
+});
+
+// --- Firmy: formy prawne w każdej wielkości liter i pełnym brzmieniu ---
+
+const firmyWykryte = (t) => detect(t).entities.filter((e) => e.type === "FIRMA").map((e) => e.raw);
+
+test("forma prawna małymi literami, wersalikami i pełnym brzmieniem", () => {
+    assert.deepEqual(firmyWykryte("Dostawca: Termika Wschód sp. z o.o. z siedzibą w Lublinie."), ["Termika Wschód sp. z o.o."]);
+    assert.deepEqual(firmyWykryte("ORLIK TRANSPORT SP. Z O.O. wezwał dłużnika."), ["ORLIK TRANSPORT SP. Z O.O."]);
+    assert.deepEqual(firmyWykryte("Zawarta z Baltic Freight Solutions spółką z ograniczoną odpowiedzialnością."), ["Baltic Freight Solutions spółką z ograniczoną odpowiedzialnością"]);
+    assert.deepEqual(firmyWykryte("Kancelaria Nowicki Zawadzka Adwokaci spółka partnerska."), ["Kancelaria Nowicki Zawadzka Adwokaci spółka partnerska"]);
+    assert.deepEqual(firmyWykryte("Hurtownia „Cegiełka” Dudek i Syn s.c. wystawiła fakturę."), ["Hurtownia „Cegiełka” Dudek i Syn s.c."]);
+    assert.deepEqual(firmyWykryte("AGROMEX-BIS sp. z o.o. sp.k. jest wierzycielem."), ["AGROMEX-BIS sp. z o.o. sp.k."]);
+});
+
+test("firma: tytuł w linii wyżej i słowo strony nie wchodzą do nazwy", () => {
+    assert.deepEqual(firmyWykryte("ZESTAWIENIE WIERZYTELNOŚCI\nprzysługujących Zielony Młyn S.A."), ["Zielony Młyn S.A."]);
+    assert.deepEqual(firmyWykryte("Pozwana Termika Wschód sp. z o.o. wniosła odpowiedź."), ["Termika Wschód sp. z o.o."]);
+    assert.deepEqual(firmyWykryte("Spółka z ograniczoną odpowiedzialnością jest formą prawną."), []);
+});
+
+test("firma: tytuł dokumentu z formą prawną to nie firma", () => {
+    assert.deepEqual(firmyWykryte("UMOWA SPÓŁKI Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ"), []);
+    assert.deepEqual(firmyWykryte("Statut spółki akcyjnej oraz uchwała spółki jawnej."), []);
+});
+
+test("firma: dalsze wystąpienia nazwy bez formy prawnej, także w odmianie", () => {
+    const f = firmyWykryte("Termika Wschód sp. z o.o. wezwała dłużnika. Termika żąda zapłaty, a pełnomocnik Termiki odpowie. TERMIKA WSCHÓD też.");
+    for (const x of ["Termika", "Termiki", "TERMIKA WSCHÓD"]) assert.ok(f.includes(x), x);
+    const g = firmyWykryte("SoftPol Systems S.A. i Agrolux sp. j. Umowa z SoftPolem i dostawa od Agroluxu.");
+    for (const x of ["SoftPolem", "Agroluxu"]) assert.ok(g.includes(x), x);
+});
+
+test("firma: forma mieszana i organizacje bez formy prawnej", () => {
+    assert.ok(firmyWykryte("Centrum Logistyczne Wola spółka z o.o. wynajmuje.").includes("Centrum Logistyczne Wola spółka z o.o."));
+    assert.ok(firmyWykryte("Darczyńcą jest Fundacja Rozwoju Przedsiębiorczości „Kompas”.").some((x) => x.startsWith("Fundacja Rozwoju")));
+    assert.ok(firmyWykryte("Członkiem jest Stowarzyszenie Kupców Rynku Jeżyckiego.").includes("Stowarzyszenie Kupców Rynku Jeżyckiego"));
+});
+
+test("firma: rzeczownik ogólny z nazwy spółki nie jest maskowany wszędzie", () => {
+    const f = firmyWykryte("Centrum Logistyczne Wola sp. z o.o. Centrum miasta jest zakorkowane.");
+    assert.ok(!f.includes("Centrum"));
+    assert.deepEqual(firmyWykryte("Fundacja to forma prawna. Stowarzyszenie ma członków."), []);
+});

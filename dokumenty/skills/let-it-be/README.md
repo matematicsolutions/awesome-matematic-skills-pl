@@ -22,7 +22,7 @@ Wymaga Node 20+. Zero zależności - nic do `npm install`.
 ```bash
 git clone https://github.com/matematicsolutions/matematic-anonimizacja-pl
 cd matematic-anonimizacja-pl
-node --test          # 32 testy, powinny przejść
+node --test          # testy, powinny przejść
 ```
 
 Jako skill Claude Code: skopiuj katalog do `~/.claude/skills/let-it-be/`.
@@ -41,7 +41,9 @@ node bin/cli.mjs pseudonimizuj pismo.txt --map mapa.json --audit audit.log --out
 node bin/cli.mjs odwroc odpowiedz.txt --map mapa.json
 ```
 
-Wejście `-` lub brak argumentu = stdin. Po podmianie obie komendy uruchamiają **bramkę "no PII leaves"**: jeśli jakiś oryginał przetrwał (np. fleksja nazwiska), operacja jest przerywana z kodem 2.
+Wejście `-` lub brak argumentu = stdin. Po podmianie obie komendy uruchamiają bramkę "no PII leaves": jeśli któryś z wykrytych oryginałów przetrwał w wyniku, operacja jest przerywana z kodem 2.
+
+> **Zakres bramki.** Listę oryginałów buduje ten sam detektor, który przetworzył tekst. Bramka sprawdza więc tylko to, co detektor wykrył. Kod wyjścia 0 znaczy "nie znalazłem śladu tego, co wykryłem" - nie znaczy "w tekście nie ma PII". Odmiana nazwiska, której detektor nie zobaczył, przechodzi bez zatrzymania. Pomiar z 2026-09-24 (v0.3.0, nowy zestaw ślepy, 80 fragmentów): bramka **nie zatrzymała żadnego**, a 52,5% fragmentów wyszło z co najmniej jednym niezamaskowanym PII. Metodologia i pełne liczby: [`ewaluacja/`](ewaluacja/README.md).
 
 ## Paczka dokumentów - odwracalna redakcja z jednolitą numeracją
 
@@ -132,13 +134,16 @@ await new AuditLog("audit.log").append({ event: "anonimizacja-applied", entities
 | Typ | Metoda | Confidence |
 |---|---|---|
 | PESEL, NIP, REGON | checksuma urzędowa | 1.0 |
+| PESEL, NIP, REGON po etykiecie ("PESEL:", "NIP PL"), suma błędna | etykieta + liczba cyfr | 0.9 |
 | IBAN / NRB | checksuma mod-97 (ISO 13616) | 1.0 |
 | KRS | format 10 cyfr + prefiks | 0.95 |
 | e-mail | regex | 0.9 |
 | dowód osobisty | checksuma (3 litery + 6 cyfr) | 0.9 |
 | telefon (z/bez +48) | regex + 9 cyfr krajowych | 0.85 |
-| imię i nazwisko | gazetteer imion + heurystyka | 0.85 |
-| firma z formą prawną | regex (Sp. z o.o., S.A. ...) | 0.75 |
+| imię i nazwisko (odmiana, dwa imiona) | słownik imion z odmianą + heurystyka | 0.85 |
+| osoba wersalikami, "Nazwisko Imię" w tabeli | słownik imion + kontekst tabeli | 0.8 |
+| dalsze wystąpienia nazwiska wykrytej osoby | rdzeń nazwiska + polskie końcówki | 0.8 |
+| firma z formą prawną | regex (każdy zapis formy: sp. z o.o., S.A., spółka jawna ...) | 0.75 |
 | adres (ulica + numer) | regex (ul./al./pl./os.) | 0.7 |
 | adres (kod pocztowy NN-NNN) | regex | 0.6 |
 | sygnatury SN/NSA/WSA/KIO/TK, CELEX, ELI | regex | 0.6-1.0 (domyślnie **nie** podmieniane - to nie PII) |
@@ -149,8 +154,10 @@ Próg czułości regulujesz flagą `--min-confidence <n>` (np. `--min-confidence
 
 ## Ograniczenia
 
-- **Fleksja**: imiona i nazwiska w odmianie ("Kowalskiego") nie zawsze są łapane poza pierwszym wystąpieniem. Bramka residual to wykryje i zatrzyma - zweryfikuj dokument.
-- **Gazetteer imion**: ~120 najczęstszych. Rzadkie lub obce imiona mogą umknąć.
+- **Odmiana**: gdy detektor rozpozna osobę (imię i nazwisko, także w odmianie: "powódki Anny Zielińskiej"), jej nazwisko jest maskowane także w dalszych wystąpieniach: w przypadkach liczby pojedynczej, wersalikami i bez ogonków. Umyka nazwisko osoby, która ani razu nie pojawia się przy imieniu, samo imię bez nazwiska oraz formy liczby mnogiej ("Kowalscy"). Każda forma dostaje własny token, więc model widzi "Zielińska" i "Zielińskiej" jako dwa różne tokeny.
+- **Osoby**: wersaliki z komparycji ("JAN KOWALCZYK") i kolejność "Nazwisko Imię" są wykrywane, ta druga tylko przed separatorem tabeli lub listy (`|`, przecinek, średnik, koniec linii) i tylko z imieniem w mianowniku. Umykają inicjały, zdrobnienia i samo imię.
+- **Spółki**: nazwa z formą prawną jest wykrywana w typowych zapisach formy, w dowolnej wielkości liter ("sp. z o.o.", "SP. Z O.O.", "spółka z ograniczoną odpowiedzialnością", "s.c.", formy łączone). Dalsze wystąpienie nazwy bez formy ("Termika", "Termiki", "TERMIKA WSCHÓD") jest maskowane, a jej pierwszy człon także sam - chyba że to rzeczownik ogólny ("Centrum", "Apteka"). Fundacje, stowarzyszenia i spółdzielnie są wykrywane po rzeczowniku i członach nazwy. Umyka jednoosobowa działalność bez formy i nazwa bez formy, która ani razu nie pojawiła się z formą. Na zestawie dokumentów B2B recall FIRMA wynosi 0,600. Zmierzony recall: [`ewaluacja/`](ewaluacja/README.md).
+- **Słownik imion**: około 200 imion wraz z odmianą. Rzadkie lub obce imiona mogą umknąć, a wtedy razem z nimi dalsze wystąpienia nazwiska.
 - **Daty urodzenia, paszport, prawo jazdy, PWZ**: poza zakresem v0.2.0.
 - **`.docx` z tracked changes**: roadmap v2 - dziś silnik jest tekstowy.
 - **Adres**: łapane `ul./al./pl./os. Nazwa numer` i kod pocztowy; adres bez prefiksu ulicy może umknąć.

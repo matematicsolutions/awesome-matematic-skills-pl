@@ -1,0 +1,80 @@
+{{NIE|UMOWA DOSTAWY}} nr 14/2025 zawarta w Poznaniu w dniu 3 marca 2025 r. pomiędzy {{FIRMA|Termika sp. z o.o.}} z siedzibą w Poznaniu, {{ADRES|ul. Składowa 9, 61-897 Poznań}}, KRS {{KRS|0000082890}}, NIP {{NIP|745-785-57-83}}, REGON {{REGON|310434017}},
+reprezentowaną przez {{OSOBA|Tomasza Wierzbickiego}} - Prezesa Zarządu oraz {{OSOBA|Ewę Sadowską-Mróz}} - Członka Zarządu, zwaną dalej „Dostawcą”,
+a {{FIRMA|AGROLUX SPÓŁKA AKCYJNA}} z siedzibą w Kaliszu, {{ADRES|ul. Wrocławska 212, 62-800 Kalisz}}, wpisaną do rejestru przedsiębiorców {{NIE|Krajowego Rejestru Sądowego}} pod numerem {{KRS|0000957514}}, reprezentowaną przez prokurenta {{OSOBA|Grzegorza Pawlaka}}.
+§ 3. 1. {{FIRMA|Termika}} zobowiązuje się dostarczać do magazynu {{FIRMA|Agroluxu}} wymienniki ciepła zgodnie z harmonogramem stanowiącym Załącznik nr 2.
+2. {{NIE|Spółka}} zastrzega sobie prawo wstrzymania dostaw w razie opóźnienia w zapłacie przekraczającego 30 dni, o czym zawiadomi {{FIRMA|Agrolux}} na adres {{EMAIL|zakupy@agrolux-kalisz.pl}}.
+{{NIE|UMOWA O ROBOTY BUDOWLANE}} zawarta pomiędzy {{FIRMA|Centrum Logistyczne Wola Sp. z o.o.}}, zwaną dalej „{{NIE|Zamawiającym}}”, a {{FIRMA|BUDMAX 24 SP. Z O.O. SP.K.}}, zwaną dalej „{{NIE|Wykonawcą}}”.
+{{NIE|Wykonawca}} oświadcza, że {{FIRMA|Budmax 24}} posiada ubezpieczenie OC na sumę nie niższą niż 2 000 000,00 zł, a kierownikiem budowy będzie inż. {{OSOBA|Rafał Ostrowski}}.
+W imieniu {{FIRMA|Centrum Logistycznego Wola}} umowę podpisuje {{OSOBA|Magdalena Trzaskowska}}, prokurent łączny, działająca łącznie z członkiem zarządu {{OSOBA|Krzysztofem Nowickim}}.
+Licencjodawca: {{FIRMA|SoftPol Systems S.A.}}, {{ADRES|al. Jerozolimskie 181B, 02-222 Warszawa}}, NIP {{NIP|8389777679}}; Licencjobiorca: {{FIRMA|Kancelaria Radców Prawnych Zielińska i Wspólnicy spółka partnerska}}, NIP {{NIP|508-286-96-16}}, reprezentowana przez adwokat {{OSOBA|Dorotę Zielińską}}.
+Osobą do kontaktu po stronie {{FIRMA|SoftPolu}} jest {{OSOBA|Łukasz Bednarek}}, tel. {{PHONE|884 278 968}}, e-mail {{EMAIL|l.bednarek@softpol-systems.pl}}.
+Wynajmującym jest {{FIRMA|Galeria Warta P.S.A.}} z siedzibą w Gorzowie Wielkopolskim, a Najemcą {{FIRMA|Kwiaciarnia „Stokrotka” Anna Mikołajczyk}}, NIP {{NIP|410-739-46-18}}, REGON {{REGON|177200463}}. Wynajmującego reprezentuje {{OSOBA|Wiktor Sobczak}}.
+Czynsz najmu wynosi 4 800,00 zł netto miesięcznie i płatny jest na rachunek {{FIRMA|Galerii Warta}} nr {{IBAN|PL03 1146 8954 9737 3508 4690 1937}}.
+Agentem jest {{FIRMA|Jan Nowak Usługi Remontowe}}, {{ADRES|ul. Lipowa 3/7, 43-300 Bielsko-Biała}}, NIP {{NIP|665-802-40-19}}, PESEL {{PESEL|74051949313}}, wpisany do {{NIE|Centralnej Ewidencji i Informacji o Działalności Gospodarczej}}.
+Pan {{OSOBA|Jan Nowak}} oświadcza, że prowadzi działalność osobiście i nie zatrudnia pracowników.
+{{NIE|FAKTURA VAT}} nr FV/0317/03/2025. Sprzedawca: {{FIRMA|Eko-Trans Logistyka sp. z o.o.}}, {{ADRES|ul. Portowa 44, 70-653 Szczecin}}, NIP {{NIP|920-980-45-19}}. Nabywca: {{FIRMA|STALPROFIL S.A.}}, {{ADRES|ul. Hutnicza 2, 41-503 Chorzów}}, NIP {{NIP|181-39-48-312}}. Odbiorca: {{OSOBA|Piotr Nawrocki}}.
+Do zapłaty: 18 204,57 zł. Termin płatności: 14 dni. Rachunek: {{IBAN|PL49105890814057617666572706}}. Wystawił: {{OSOBA|Karolina Węgrzyn}}.
+{{NIE|NOTA OBCIĄŻENIOWA}} nr 12/NO/2025 wystawiona przez {{FIRMA|Chłodnie Mazowsza sp. j.}} dla {{FIRMA|Mroźny Szlak s.c.}} tytułem rekompensaty, o której mowa w {{NIE|art. 10 ust. 1 ustawy o przeciwdziałaniu nadmiernym opóźnieniom w transakcjach handlowych}}. Podpisał: {{OSOBA|Andrzej Chmiel}}.
+Wspólnikami {{FIRMA|Mroźny Szlak s.c.}} są {{OSOBA|Henryk Dudek}}, PESEL {{PESEL|61110253458}}, oraz {{OSOBA|Zofia Dudek}}, PESEL {{PESEL|65032817204}}.
+Faktura korygująca KOR/08/2025 do faktury wystawionej przez {{FIRMA|PHU „ALMET” Marek Szulc}} na rzecz {{FIRMA|Zakłady Mięsne Nadbrzeże Spółka Akcyjna}} zmniejsza wartość netto o 1 230,00 zł.
+Proszę o przelew różnicy na rachunek {{IBAN|55 1097 9912 4694 4652 0090 2993}} prowadzony dla {{FIRMA|ALMET}}. Kontakt: {{EMAIL|biuro@almet-szulc.pl}}, {{PHONE|+48 539 566 460}}.
+{{FIRMA|Fundacja Rozwoju Przedsiębiorczości „Kompas”}}, KRS {{KRS|0000233537}}, REGON {{REGON|53893163815538}}, wystawia rachunek za szkolenie dla pracowników {{FIRMA|Drukarnia Offsetowa Litera sp. z o.o.}}; w imieniu fundacji podpisała {{OSOBA|Ksenia Wolska}}.
+Szkolenie poprowadzi dr {{OSOBA|Iwona Kalinowska}}, a po stronie {{FIRMA|Litery}} koordynatorem jest {{OSOBA|Paweł Sroka}}.
+Lp. 1; Kontrahent: {{FIRMA|INTERMEDIA GROUP S.K.A.}}; NIP: {{NIP|297-56-57-338}}; Kwota: 7 380,00 zł; Status: zapłacona
+Lp. 2; Kontrahent: {{FIRMA|Dom Mody Olimpia s.a.}}; NIP: {{NIP|4818160895}}; Kwota: 12 915,40 zł; Status: przeterminowana 47 dni
+{{NIE|WEZWANIE DO ZAPŁATY}}. Działając w imieniu {{FIRMA|Termika sp. z o.o.}}, wzywam {{FIRMA|AGROLUX S.A.}} do zapłaty kwoty 86 412,00 zł w terminie 7 dni od dnia doręczenia niniejszego wezwania.
+Należność wynika z faktur wymienionych w załączonym zestawieniu, a {{FIRMA|Agrolux}} nie zgłosił dotąd żadnych zastrzeżeń co do ich treści.
+Wpłaty prosimy dokonać na rachunek {{IBAN|PL07 1167 0256 7605 8289 1186 0162}}. W razie pytań prosimy o kontakt z {{OSOBA|Martą Zawadzką}} z działu windykacji, tel. {{PHONE|(12) 597 86 72}}.
+Pełnomocnik wierzyciela: radca prawny {{OSOBA|Adam Fijałkowski}}, {{FIRMA|Fijałkowski i Partnerzy Kancelaria Prawna sp. p.}}, {{ADRES|ul. Mickiewicza 21 lok. 4, 60-833 Poznań}}.
+{{NIE|OSTATECZNE PRZEDSĄDOWE WEZWANIE DO ZAPŁATY}}. {{FIRMA|Hurtownia Elektryczna VOLTEX Jacek Rogalski}}, NIP {{NIP|902-876-54-19}}, wzywa {{FIRMA|Instalbud Południe spółka jawna}} do uregulowania zaległości. Sprawę prowadzi {{OSOBA|Oskar Pietrzyk}}.
+Brak zapłaty spowoduje skierowanie sprawy na drogę sądową oraz obciążenie {{FIRMA|Instalbudu Południe}} kosztami, w tym odsetkami za opóźnienie w transakcjach handlowych.
+Wspólnicy {{FIRMA|Instalbud Południe sp. j.}} - {{OSOBA|Stanisław Kubiak}} i {{OSOBA|Roman Kubiak}} - odpowiadają za zobowiązania spółki subsydiarnie, zgodnie z {{NIE|art. 31 § 1 Kodeksu spółek handlowych}}.
+Od: {{EMAIL|windykacja@voltex-hurt.pl}}; Do: {{EMAIL|ksiegowosc@instalbud-poludnie.pl}}; Temat: zaległe faktury - {{FIRMA|VOLTEX}}
+Szanowny Panie, w nawiązaniu do rozmowy z dnia 12 maja potwierdzam, że {{FIRMA|Voltex}} wyrazi zgodę na rozłożenie długu na trzy raty. Z poważaniem, {{OSOBA|Jacek Rogalski}}.
+{{FIRMA|Stowarzyszenie Kupców Rynku Jeżyckiego}} wzywa {{FIRMA|Piekarnia Złoty Kłos Adam Wójtowicz}} do zapłaty zaległych składek członkowskich w kwocie 1 440,00 zł.
+Z upoważnienia zarządu {{NIE|Stowarzyszenia}} podpisała {{OSOBA|Helena Frąckowiak}}, skarbnik.
+W odpowiedzi na wezwanie {{FIRMA|ZŁOTY KŁOS}} oświadcza, że zobowiązanie wygasło wskutek potrącenia (wiadomość z adresu {{EMAIL|a.wojtowicz@zlotyklos-piekarnia.pl}}).
+{{NIE|Sąd Rejonowy Poznań-Stare Miasto w Poznaniu, IX Wydział Gospodarczy}}. Powód: {{FIRMA|Termika spółka z ograniczoną odpowiedzialnością}} w Poznaniu. Pozwany: {{FIRMA|AGROLUX Spółka Akcyjna}} w Kaliszu.
+{{NIE|POZEW O ZAPŁATĘ}} w postępowaniu upominawczym. Powód wnosi o zasądzenie od {{FIRMA|Agroluxu}} na rzecz {{FIRMA|Termiki}} kwoty 86 412,00 zł wraz z odsetkami.
+Powoda reprezentuje radca prawny {{OSOBA|Adam Fijałkowski}}; w załączeniu odpis z rejestru {{FIRMA|Termiki}} (KRS {{KRS|0000082890}}).
+Sygn. akt XIII GC 1187/25. {{NIE|Sąd Okręgowy w Katowicach}} po rozpoznaniu sprawy z powództwa {{FIRMA|Stalprofil Spółka Akcyjna}} przeciwko {{FIRMA|Eko-Trans Logistyka Sp. z o.o.}} o zapłatę
+zasądza od {{FIRMA|Eko-Transu}} na rzecz {{FIRMA|Stalprofilu}} kwotę 241 900,00 zł z ustawowymi odsetkami.
+Pozwana {{FIRMA|Eko-Trans Logistyka}} podniosła zarzut przedawnienia, powołując się na art. 118 Kodeksu cywilnego, i wniosła o przesłuchanie świadka {{OSOBA|Dariusza Lewandowskiego}}, zam. {{ADRES|ul. Kasztanowa 8, 72-010 Police}}.
+Pozwana: {{FIRMA|Wróbel Transport spółka komandytowa}} z siedzibą w Łodzi, {{ADRES|ul. Rokicińska 150, 92-412 Łódź}}; komplementariusz: {{FIRMA|Wróbel Zarządzanie sp. z o.o.}}.
+Powód kieruje żądanie również przeciwko komandytariuszce {{OSOBA|Beacie Wróbel}} do wysokości sumy komandytowej.
+Powód {{FIRMA|Kredyt Faktoring Plus S.A.}}, nabywca wierzytelności od {{FIRMA|Telkom Sieć Sp. z o.o.}}, wnosi o zasądzenie od pozwanego {{OSOBA|Wojciecha Majewskiego}} (PESEL {{PESEL|88120333938}}), prowadzącego działalność pod firmą {{FIRMA|WM-KOMPUTERY Wojciech Majewski}}, NIP {{NIP|165-850-15-40}}, kwoty 3 912,18 zł.
+Pozwany {{FIRMA|WM-Komputery}} nie złożył sprzeciwu od nakazu zapłaty wydanego w sprawie o sygn. {{NIE|VI GNc 4410/24}}.
+Wnioskodawca {{FIRMA|BIO-FARM POLSKA sp. z o.o.}}, reprezentowany przez prezesa zarządu {{OSOBA|Konrada Wilczyńskiego}}, wnosi o zabezpieczenie roszczenia przez zajęcie rachunku bankowego obowiązanej {{FIRMA|Apteka Pod Lipami s.c.}} nr {{IBAN|83 1031 7134 7413 5210 4720 2606}}.
+Obowiązana {{FIRMA|Apteka Pod Lipami}} - wspólnicy {{OSOBA|Joanna Sikora}} i {{OSOBA|Piotr Sikora}} - prowadzi działalność pod adresem {{ADRES|Rynek 17, 58-500 Jelenia Góra}}.
+{{NIE|ODPIS AKTUALNY Z REJESTRU PRZEDSIĘBIORCÓW}}. Numer KRS: {{KRS|0000082890}}. Firma, pod którą spółka działa: {{FIRMA|TERMIKA SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ}}.
+Oznaczenie podmiotu: REGON: {{REGON|310434017}}, NIP: {{NIP|7457855783}}. Siedziba: kraj POLSKA, woj. WIELKOPOLSKIE, powiat POZNAŃ. Adres: {{ADRES|ul. SKŁADOWA, nr 9, miejsc. POZNAŃ, kod 61-897, poczta POZNAŃ}}.
+Organ uprawniony do reprezentacji: ZARZĄD. 1. {{OSOBA|WIERZBICKI TOMASZ ANDRZEJ}}, numer PESEL {{PESEL|79020769455}}, funkcja: PREZES ZARZĄDU; 2. {{OSOBA|SADOWSKA-MRÓZ EWA}}, funkcja: CZŁONEK ZARZĄDU.
+Prokurenci: {{OSOBA|LIS MONIKA}}, rodzaj prokury: PROKURA SAMOISTNA. Wspólnicy: {{FIRMA|TERMIKA HOLDING S.A.}}, posiada 100 udziałów o łącznej wysokości 5 000,00 zł.
+Sąd: {{NIE|SĄD REJONOWY POZNAŃ - NOWE MIASTO I WILDA W POZNANIU, VIII WYDZIAŁ GOSPODARCZY KRAJOWEGO REJESTRU SĄDOWEGO}}. Data ostatniego wpisu: 11.02.2025.
+{{NIE|WYDRUK Z CENTRALNEJ EWIDENCJI I INFORMACJI O DZIAŁALNOŚCI GOSPODARCZEJ}}. Firma przedsiębiorcy: {{FIRMA|Usługi Transportowe TRANS-KOS Kazimierz Kosiński}}. Imię i nazwisko: {{OSOBA|Kazimierz Kosiński}}.
+NIP: {{NIP|8171050658}}; REGON: {{REGON|317026592}}; Adres głównego miejsca wykonywania działalności: {{ADRES|Stara Wieś 41, 26-600 Radom}}; Adres do doręczeń: {{ADRES|ul. Żeromskiego 53, 26-600 Radom}}; Status: aktywny.
+Dane kontaktowe: telefon {{PHONE|668 592 024}}, e-mail {{EMAIL|transkos@poczta-radom.pl}}; pełnomocnik: {{OSOBA|Agnieszka Kosińska}}.
+Fundacja: {{FIRMA|FUNDACJA ZIELONY MOST}}, KRS {{KRS|0000504232}}, cel: wspieranie przedsiębiorczości społecznej. Zarząd: {{OSOBA|NOWAKOWSKA RENATA}} - Prezes Zarządu, {{OSOBA|SZYMAŃSKI JAKUB}} - Członek Zarządu.
+Firma: {{FIRMA|DATAWIR PROSTA SPÓŁKA AKCYJNA}}; kapitał akcyjny: 1,00 zł; rada dyrektorów: {{OSOBA|Michał Grabowski}}, {{OSOBA|Oliwia Czarnecka}}.
+Firma: {{FIRMA|Kowalewski Nieruchomości spółka z ograniczoną odpowiedzialnością spółka komandytowo-akcyjna}}; komplementariusz: {{FIRMA|Kowalewski Nieruchomości sp. z o.o.}}, KRS {{KRS|0000497777}}.
+Wzmianka o złożeniu sprawozdania finansowego {{FIRMA|Kowalewski Nieruchomości S.K.A.}} za rok obrotowy 2024 - złożono dnia 30.06.2025 r.
+{{NIE|UCHWAŁA NR 3/2025 NADZWYCZAJNEGO ZGROMADZENIA WSPÓLNIKÓW}} spółki pod firmą {{FIRMA|Centrum Logistyczne Wola spółka z o.o.}} z dnia 15 kwietnia 2025 r. w sprawie powołania członka zarządu.
+Nadzwyczajne Zgromadzenie Wspólników powołuje {{OSOBA|Annę Marię Leszczyńską}}, PESEL {{PESEL|83081454625}}, zamieszkałą {{ADRES|ul. Bursztynowa 5, 05-500 Piaseczno}}, na stanowisko Członka Zarządu.
+Uchwała zapadła jednogłośnie; głosowali: {{FIRMA|Wola Invest S.A.}} (reprezentowana przez {{OSOBA|Jerzego Kamińskiego}}) oraz {{OSOBA|Teresa Olszewska}}, łącznie 400 głosów.
+Uchwała nr 12 Zwyczajnego Walnego Zgromadzenia {{FIRMA|SOFTPOL SYSTEMS SPÓŁKA AKCYJNA}} w sprawie podziału zysku za rok obrotowy 2024. Walne otworzyła {{OSOBA|Grażyna Sowa}}.
+Zysk netto w kwocie 3 412 887,15 zł przeznacza się w całości na kapitał zapasowy {{FIRMA|SoftPol Systems}}. Przewodniczący: {{OSOBA|Bogdan Czerwiński}}, protokołowała notariusz {{OSOBA|Elżbieta Maj}}.
+Wspólnicy {{FIRMA|P.P.H.U. „RADEX” Zieliński, Gawron spółka jawna}}, tj. {{OSOBA|Ryszard Zieliński}} i {{OSOBA|Cezary Gawron}}, postanawiają przekształcić spółkę w spółkę z ograniczoną odpowiedzialnością pod firmą {{FIRMA|RADEX sp. z o.o.}}.
+Przekształcenie następuje w trybie art. 551 § 1 Kodeksu spółek handlowych; plan przekształcenia zbadała biegła rewident {{OSOBA|Sylwia Pietrzak}} z {{FIRMA|Audyt-Rewident 7 sp. z o.o.}}.
+{{FIRMA|Spółdzielnia Pracy „Metalowiec”}} w Gnieźnie uchwałą nr 7/2025 udziela pełnomocnictwa {{OSOBA|Leszkowi Borkowskiemu}} do zawarcia umowy z {{FIRMA|Radex}}.
+Dzień dobry, w imieniu {{FIRMA|Drukarni Offsetowej Litera}} przesyłam ofertę na druk katalogów dla {{FIRMA|Domu Mody Olimpia}}. Pozdrawiam, {{OSOBA|Paweł Sroka}}, {{PHONE|+48 12 300 49 37}}, {{EMAIL|pawel.sroka@drukarnia-litera.pl}}
+Dziękujemy za ofertę. Zanim {{FIRMA|Olimpia}} podejmie decyzję, prosimy o próbny wydruk. {{OSOBA|Natalia Wiśniewska}}, Dział Marketingu {{FIRMA|DOM MODY OLIMPIA S.A.}}
+Uprzejmie informuję, że z dniem 1 lipca {{FIRMA|Eko-Trans}} zmienia adres siedziby na {{ADRES|ul. Bytomska 3, 70-603 Szczecin}} oraz numer rachunku na {{IBAN|PL31 1024 6854 0532 5734 5406 9452}}. {{OSOBA|Jolanta Ptak}}, Dyrektor Finansowy.
+Potwierdzenie salda: {{FIRMA|Stalprofil S.A.}} potwierdza, że na dzień 31.12.2024 r. saldo rozrachunków z {{FIRMA|Eko-Trans Logistyka Sp. z o.o.}} wynosi 0,00 zł. Główna księgowa: {{OSOBA|Irena Malinowska}}.
+Zgłoszenie reklamacyjne nr R/77/25 dotyczy dostawy od {{FIRMA|Hydro-Instal Serwis spółka z ograniczoną odpowiedzialnością}}; kontakt w sprawie: {{OSOBA|Marcin Adamczyk}}, {{EMAIL|m.adamczyk@hydroinstal-serwis.pl}}, tel. {{PHONE|+48 530 189 676}}.
+Uprzejmie prosimy o wystawienie noty na {{FIRMA|Galeria Warta P.S.A.}}, {{ADRES|ul. Sikorskiego 102, 66-400 Gorzów Wielkopolski}}, NIP {{NIP|689-198-18-23}}.
+Informujemy, że {{FIRMA|SoftPol}} powierza przetwarzanie danych {{FIRMA|CloudNet Hosting sp. z o.o.}} na podstawie umowy, o której mowa w {{NIE|art. 28 ust. 3 RODO}}; inspektor ochrony danych: {{OSOBA|Kamil Jabłoński}}, {{EMAIL|iod@softpol-systems.pl}}.
+W załączeniu przesyłam pełnomocnictwo udzielone przez {{FIRMA|Wróbel Transport sp.k.}} dla {{OSOBA|Beaty Wróbel}} do reprezentowania spółki przed {{NIE|Naczelnikiem Urzędu Skarbowego Łódź-Bałuty}}.
+{{NIE|ZESTAWIENIE WIERZYTELNOŚCI}} (stan na 30.06.2025): 1. {{FIRMA|Agrolux S.A.}} - 86 412,00 zł; 2. {{FIRMA|Instalbud Południe sp. j.}} - 9 870,00 zł; 3. {{FIRMA|Apteka Pod Lipami s.c.}} - 2 115,30 zł.
+Kontrahent: {{FIRMA|MEBLOTECH „DĄB” SP. Z O.O.}}; NIP: {{NIP|172-537-69-45}}; REGON: {{REGON|399710956}}; KRS: {{KRS|0000821738}}; limit kupiecki: 50 000 zł; opiekun: {{OSOBA|Sebastian Kaczmarek}}, zastępca: {{OSOBA|Weronika Kołodziej}}.
+Kontrahent: {{FIRMA|Pracownia Architektoniczna Linia Joanna Urbańska}}; NIP: {{NIP|323-74-42-901}}; adres: {{ADRES|os. Stefana Batorego 12/40, 60-687 Poznań}}; tel.: {{PHONE|532 627 794}}; e-mail: {{EMAIL|biuro@linia-architekci.pl}}.
+Kontrahent: {{FIRMA|4Media sp. z o.o. sp.k.}}; NIP: {{NIP|812-244-09-39}}; rachunek: {{IBAN|PL56 2498 5578 2496 3654 9228 8246}}; forma płatności: przelew 30 dni; osoba decyzyjna: {{OSOBA|Filip Wasilewski}}, prokurent: {{OSOBA|Eryk Domański}}.

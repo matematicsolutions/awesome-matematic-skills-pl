@@ -5,6 +5,22 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.10b] - 2026-10-10
+
+### Changed
+
+- `let-it-be` 0.7.0 (`dokumenty` 1.11.0): kopia w hubie zsynchronizowana z kanonem
+  [matematicsolutions/matematic-anonimizacja-pl](https://github.com/matematicsolutions/matematic-anonimizacja-pl)
+  (commit `cb72fd2`). Hub mial 0.2.0 z dopisana dzis lokalnie poprawka pod numerem "0.2.1",
+  ktory w kanonie oznacza inna zmiane; teraz historia wersji jest jedna. Wchodza wersje 0.2.1-0.7.0:
+  osoba z polska litera na granicy wyrazu ("Łukasz Nowak", "Jan Łoś"), tekst NFD z PDF, nazwisko
+  wykrytej osoby maskowane w calym tekscie i w odmianie, imiona w odmianie, wersaliki i
+  "Nazwisko Imie" z tabel, dwa imiona, forma prawna spolki w kazdym zapisie, dalsze wystapienia
+  nazwy spolki bez formy, fundacje i stowarzyszenia, PESEL/NIP/REGON z etykieta i bledna suma
+  kontrolna, NIP w zapisie 123-45-67-890, katalog `ewaluacja/` z piecioma zestawami pisanymi na
+  slepo. Szczegoly i pomiary: CHANGELOG skilla. SKILL.md mowi, czego bramka "no PII leaves" nie widzi, i nazywa zmierzone
+  ograniczenia. README huba: wersja skilla 0.7.0 (bylo 1.0.0 - takiej wersji nie bylo).
+
 ## [2026.10.10] - 2026-10-10
 
 ### Fixed

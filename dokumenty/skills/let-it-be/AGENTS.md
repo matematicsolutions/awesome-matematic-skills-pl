@@ -1,41 +1,41 @@
 # AGENTS.md - Let It Be (matematic-anonimizacja-pl)
 
-Plik standardu [agents.md](https://agents.md) (Linux Foundation / Agentic AI Foundation) - kanoniczne instrukcje dla agentów AI pracujących z tym repozytorium.
+An [agents.md](https://agents.md) standard file (Linux Foundation / Agentic AI Foundation) - canonical instructions for AI agents working with this repository.
 
-## Cel projektu
+## Project goal
 
-Samodzielny silnik anonimizacji i pseudonimizacji polskich danych osobowych w tekście. RODO-safe, offline, zero zależności (`node:*` only). Trzy interfejsy: skill Claude Code ([SKILL.md](SKILL.md)), CLI ([bin/cli.mjs](bin/cli.mjs)), biblioteka ([src/index.mjs](src/index.mjs)).
+A standalone engine for anonymization and pseudonymization of Polish personal data in text. GDPR-safe, offline, zero dependencies (`node:*` only). Three interfaces: a Claude Code skill ([SKILL.md](SKILL.md)), a CLI ([bin/cli.mjs](bin/cli.mjs)), a library ([src/index.mjs](src/index.mjs)).
 
-## Kontekst MateMatic (twarde ograniczenia)
+## MateMatic context (hard constraints)
 
-Repo prowadzi [MateMatic Solutions](https://matematicsolutions.com). Obowiązuje [governance/CONSTITUTION.md](governance/CONSTITUTION.md) - 7 artykułów. Najważniejsze:
+The repo is maintained by [MateMatic Solutions](https://matematicsolutions.com). [governance/CONSTITUTION.md](governance/CONSTITUTION.md) applies - 7 articles. The most important:
 
-- **Lokalność** - nie dodawaj zależności od żadnego API/modelu. Detekcja zostaje deterministyczna (regex + checksuma + gazetteer).
-- **Dwa tryby** - nie łącz anonimizacji z pseudonimizacją. Tryb anonimizacji NIE może zwracać mapy ani surowych wartości.
-- **Bramka residual** - nie usuwaj sprawdzenia "no PII leaves". Komunikaty błędów nie zawierają wartości PII.
+- **Locality** - do not add a dependency on any API/model. Detection stays deterministic (regex + checksum + gazetteer).
+- **Two modes** - do not combine anonymization with pseudonymization. Anonymization mode MUST NOT return a map or raw values.
+- **Residual gate** - do not remove the "no PII leaves" check. Error messages do not contain PII values.
 
-## Build i test
+## Build and test
 
 ```bash
-node --test          # 36 testów, zero zależności, brak kroku budowania
+node --test          # zero dependencies, no build step
 node bin/cli.mjs --help
 ```
 
-Nie commituj jeśli testy fail. Konwencja organizacji: **bez polskich znaków w commit messages** (a->a, e->e, l->l, o->o, s->s, n->n, c->c, z->z) i **myślnik to zawsze hyphen "-"**, nigdy em-dash.
+Do not commit if tests fail. Organization convention: **no Polish characters in commit messages** (a->a, e->e, l->l, o->o, s->s, n->n, c->c, z->z) and **the dash is always a hyphen "-"**, never an em-dash. Enforced by `.githooks/commit-msg`; after cloning run `git config core.hooksPath .githooks`.
 
-## Zasady kodu
+## Code rules
 
-- Czysty ESM (`.mjs`), Node >=20, tylko `node:*`. Bez build stepu, bez `node_modules`.
-- Każda nowa reguła detekcji = test w `test/silnik.test.mjs`.
-- Wartości testowe muszą być syntetyczne i poprawne checksumowo (nie czyjeś realne dane).
+- Pure ESM (`.mjs`), Node >=20, `node:*` only. No build step, no `node_modules`.
+- Every new detection rule = a test in `test/silnik.test.mjs`.
+- Test values must be synthetic and checksum-valid (not someone's real data).
 
-## Źródła prawdy (kolejność czytania)
+## Sources of truth (reading order)
 
 1. [README.md](README.md)
 2. [governance/CONSTITUTION.md](governance/CONSTITUTION.md)
 3. [THIRD_PARTY_INSPIRATIONS.md](THIRD_PARTY_INSPIRATIONS.md)
 4. [SKILL.md](SKILL.md)
 
-## Licencja
+## License
 
-Apache-2.0. Pattern operacyjny cherry-pick z gregmos/PII-Shield (MIT). Patrz [LICENSE](LICENSE).
+Apache-2.0. Operational pattern cherry-picked from gregmos/PII-Shield (MIT). See [LICENSE](LICENSE).

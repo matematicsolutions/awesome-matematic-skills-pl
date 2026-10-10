@@ -1,0 +1,92 @@
+# zestaw_ukryty_1.txt - zaslepiony zestaw ewaluacyjny PII dla polskich dokumentow prawnych
+# W PELNI FIKCYJNY. Zadna osoba, spolka, sygnatura ani rachunek nie jest prawdziwy.
+# Format: jeden fragment na linie; zlote spany {{ETYKIETA|dokladny tekst}}; linie z # to komentarze.
+# Etykiety PII: OSOBA FIRMA PESEL NIP REGON KRS PHONE EMAIL IBAN ADRES DATA_UR
+# Etykieta NIE = KONTROLA NEGATYWNA: tego zamaskowac NIE WOLNO (sygnatury, przepisy, sady, kwoty, terminy).
+# Napisany PRZED przeczytaniem src/ silnika - zaslepienie na poziomie regul detekcji.
+#
+# --- 1. Komparycje pism procesowych: forma podstawowa ---
+Powod: {{OSOBA|Marek Wiśniewski}}, PESEL {{PESEL|85071202931}}, zamieszkały {{ADRES|ul. Kwiatowa 14/3, 30-062 Kraków}}.
+Pozwany: {{FIRMA|Termika Wschód sp. z o.o.}} z siedzibą w Lublinie, KRS {{KRS|0000412877}}, NIP {{NIP|8131657302}}.
+W imieniu powódki {{OSOBA|Anny Zielińskiej}} wnoszę o zasądzenie kwoty {{NIE|42 800,00 zł}} wraz z odsetkami.
+Strona pozwana {{FIRMA|Grupa Bielawska S.A.}}, REGON {{REGON|140237185}}, reprezentowana przez zarząd.
+# --- 2. Fleksja polska: to samo nazwisko w roznych przypadkach ---
+Roszczenie wobec {{OSOBA|Wiśniewskiego}} wygasło z upływem terminu przedawnienia.
+Sąd doręczył odpis pozwu {{OSOBA|Markowi Wiśniewskiemu}} w dniu 14 marca.
+Pełnomocnik {{OSOBA|Zielińskiej}} nie stawił się na rozprawie.
+Zeznania {{OSOBA|Anny Zielińskiej}} zostały odebrane w trybie zdalnym.
+Wezwano {{OSOBA|Krzysztofa Adamczyka}} do osobistego stawiennictwa.
+Przesłuchanie {{OSOBA|Adamczyka}} odroczono do czasu uzupełnienia dokumentacji.
+O czynności zawiadomiono {{OSOBA|Adamczykowi}} listem poleconym.
+# --- 3. Nazwiska dwuczlonowe i zenskie formy ---
+Biegła {{OSOBA|Katarzyna Nowak-Zielińska}} sporządziła opinię w zakresie wyceny.
+Opinia {{OSOBA|Nowak-Zielińskiej}} została zakwestionowana przez stronę pozwaną.
+Notariusz {{OSOBA|Elżbieta Dąbrowska-Kot}} sporządziła akt w formie aktu notarialnego.
+Powódka {{OSOBA|Joanna Szczepańska}} oraz jej małżonek {{OSOBA|Tomasz Szczepański}} pozostają we wspólności majątkowej.
+# --- 4. Samo nazwisko, bez imienia ---
+Świadek {{OSOBA|Lewandowski}} potwierdził okoliczności zawarcia umowy.
+Wniosek {{OSOBA|Kaczmarek}} o zwolnienie od kosztów sądowych został oddalony.
+Zarzuty podniesione przez {{OSOBA|Pawlaka}} okazały się bezzasadne.
+# --- 5. Inicjaly i skroty (anonimizacja czesciowa w zrodle) ---
+Skarżący {{OSOBA|M.W.}} zarzucił naruszenie prawa materialnego.
+W protokole wskazano obecność {{OSOBA|K. Adamczyka}} oraz {{OSOBA|A.Z.}}.
+# --- 6. WIELKIE LITERY - typowe w komparycji i naglowkach ---
+POWÓD: {{OSOBA|JAN KOWALCZYK}}, zamieszkały {{ADRES|ul. Polna 8, 61-114 Poznań}}
+POZWANY: {{FIRMA|ZAKŁADY MIĘSNE OSTROWIA SPÓŁKA AKCYJNA}}
+UCZESTNIK POSTĘPOWANIA: {{OSOBA|MARIA JASTRZĘBSKA}}, PESEL {{PESEL|68022507316}}
+# --- 7. Tekst po OCR: bez polskich znakow diakrytycznych ---
+Wnioskodawca {{OSOBA|Lukasz Zolcinski}} zlozyl wniosek o stwierdzenie nabycia spadku.
+Pelnomocnik {{OSOBA|Malgorzata Wrobel}} dzialajaca w imieniu {{FIRMA|Przetworstwo Rolne Zalesie sp. z o.o.}}
+Adres do doreczen: {{ADRES|ul. Swietokrzyska 22 lok. 5, 00-108 Warszawa}}
+# --- 8. Identyfikatory: warianty formatowania ---
+NIP nabywcy: {{NIP|699-112-45-09}}, REGON: {{REGON|360512942}}.
+Sprzedawca legitymuje się numerem NIP {{NIP|7771023416}} oraz wpisem do KRS pod numerem {{KRS|0000098231}}.
+Numer identyfikacyjny REGON czternastoznakowy: {{REGON|14023718000120}}.
+PESEL wnioskodawcy: {{PESEL|91113018475}}, data urodzenia {{DATA_UR|30 listopada 1991 r.}}
+Rachunek do wpłat: {{IBAN|PL61109010140000071219812874}}
+Przelew na rachunek {{IBAN|PL 68 1240 1053 0000 4502 7201 1138}} w terminie 14 dni.
+KRS z zerami wiodącymi: {{KRS|0000012345}}.
+# --- 9. Kontakt ---
+Telefon kontaktowy: {{PHONE|+48 601 234 567}}, e-mail: {{EMAIL|m.wisniewski@kancelaria-wschod.pl}}
+Proszę o kontakt pod numerem {{PHONE|22 458 19 03}} w godzinach pracy sekretariatu.
+Korespondencja elektroniczna: {{EMAIL|sekretariat@termika-wschod.com.pl}} oraz {{EMAIL|k.adamczyk@wp.pl}}
+Numer komórkowy świadka: {{PHONE|503-118-442}}.
+Zgłoszenie przyjęto telefonicznie pod {{PHONE|(61) 842-11-90}}.
+# --- 10. Nazwy spolek: rozne formy prawne i warianty skrocone ---
+Umowa zawarta pomiędzy {{FIRMA|Instalbud Serwis sp. z o.o.}} a {{FIRMA|Hydromax Polska S.A.}}
+W dalszej części umowy {{FIRMA|Instalbud}} określany jest jako Wykonawca.
+Spółka {{FIRMA|Kancelaria Doradztwa Gospodarczego Wektor spółka jawna}} wystawiła fakturę.
+{{FIRMA|Przedsiębiorstwo Usług Komunalnych Zielona Dolina Sp. z o.o.}} nie uregulowało należności.
+Komplementariuszem jest {{FIRMA|Rawicki Invest spółka z ograniczoną odpowiedzialnością spółka komandytowa}}.
+# --- 11. Adresy: warianty ---
+Siedziba: {{ADRES|al. Jerozolimskie 142 lok. 27, 02-305 Warszawa}}
+Nieruchomość położona {{ADRES|os. Piastowskie 44/12, 61-156 Poznań}}
+Doręczenie na adres {{ADRES|ul. gen. Władysława Sikorskiego 3B, 35-304 Rzeszów}}
+Miejsce zamieszkania pozwanego: {{ADRES|Zalesie Górne 17, 05-540 Zalesie Górne}}
+# --- 12. KONTROLA NEGATYWNA: tego maskowac NIE WOLNO ---
+Zgodnie z wyrokiem Sądu Najwyższego z dnia 12 kwietnia 2019 r., sygn. {{NIE|II CSK 123/18}}, roszczenie jest wymagalne.
+Podstawa prawna: {{NIE|art. 415 k.c.}} w związku z {{NIE|art. 361 § 2 k.c.}}
+Sprawa toczy się przed {{NIE|Sądem Okręgowym w Krakowie}}, Wydział {{NIE|I Cywilny}}.
+Sygnatura akt: {{NIE|I C 884/23}}, termin rozprawy wyznaczono na {{NIE|18 czerwca 2026 r.}}
+Wartość przedmiotu sporu: {{NIE|128 400,00 zł}}.
+Wyrok {{NIE|Naczelnego Sądu Administracyjnego}} z dnia 3 lutego 2021 r., {{NIE|II FSK 991/20}}.
+Termin zawity wynosi {{NIE|14 dni}} od dnia doręczenia odpisu orzeczenia.
+Zastosowanie znajduje {{NIE|ustawa z dnia 23 kwietnia 1964 r. - Kodeks cywilny}}.
+Odsetki ustawowe za opóźnienie liczone od dnia {{NIE|1 marca 2024 r.}}
+Postanowienie {{NIE|Trybunału Konstytucyjnego}} w sprawie {{NIE|SK 12/19}} nie ma tu zastosowania.
+# --- 13. Mieszane: realistyczne zdania z kilkoma bytami ---
+{{OSOBA|Piotr Grabowski}} (PESEL {{PESEL|85071202931}}) działający w imieniu {{FIRMA|Agro-Trans Kujawy sp. z o.o.}}, NIP {{NIP|5252120404}}, wniósł sprzeciw.
+Wezwanie doręczono na adres {{ADRES|ul. Lipowa 9, 87-100 Toruń}}; potwierdzenie odbioru podpisała {{OSOBA|Halina Grabowska}}.
+W dniu rozprawy stawili się: {{OSOBA|Marek Wiśniewski}}, {{OSOBA|Anna Zielińska}} oraz pełnomocnik {{OSOBA|adw. Robert Mazurkiewicz}}.
+Faktura VAT wystawiona przez {{FIRMA|Hydromax Polska S.A.}} na kwotę {{NIE|9 840,00 zł}} nie została zapłacona.
+Dane kontaktowe biegłego: {{OSOBA|dr inż. Stefan Wójcik}}, tel. {{PHONE|698 004 213}}, {{EMAIL|s.wojcik@biegli-krakow.pl}}
+Nabywca {{FIRMA|Dom Handlowy Continental sp. z o.o.}}, {{ADRES|ul. Targowa 55, 03-729 Warszawa}}, NIP {{NIP|1189200701}}.
+# --- 14. Przypadki trudne: nazwisko = slowo pospolite, nazwa firmy = nazwisko ---
+Świadek {{OSOBA|Barbara Mucha}} zeznała, że nie była obecna przy podpisaniu.
+Powód {{OSOBA|Jan Zamek}} nabył nieruchomość w drodze zasiedzenia.
+Spółka {{FIRMA|Kowalski i Wspólnicy sp.k.}} prowadzi obsługę prawną pozwanego.
+Pozwany {{OSOBA|Andrzej Sowa}} zatrudniony był w {{FIRMA|Sowa Nieruchomości sp. z o.o.}}
+# --- 15. Dane w tabelach i listach (typowe w zalacznikach) ---
+1. {{OSOBA|Kowalczyk Jan}} | {{PESEL|85071202931}} | {{PHONE|601234567}}
+2. {{OSOBA|Jastrzębska Maria}} | {{PESEL|68022507316}} | {{EMAIL|m.jastrzebska@onet.pl}}
+Lp. 3 - {{FIRMA|Termika Wschód sp. z o.o.}} - {{NIP|8131657302}} - {{REGON|140237185}}

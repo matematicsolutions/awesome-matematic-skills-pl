@@ -35,7 +35,51 @@ export const POLISH_FIRST_NAMES = new Set([
     "Marzena", "Monika", "Natalia", "Oliwia", "Patrycja", "Paulina", "Renata",
     "Sandra", "Sylwia", "Teresa", "Urszula", "Weronika", "Wiktoria", "Wioletta",
     "Zofia", "Zuzanna",
+    // uzupelnienie 2026-09-24 (czeste imiona spoza pierwotnej listy)
+    "Albert", "Aleksy", "Alfred", "Boguslaw", "Boleslaw", "Borys", "Bronislaw",
+    "Czeslaw", "Edmund", "Edward", "Ernest", "Eugeniusz", "Feliks", "Gerard",
+    "Hieronim", "Ignacy", "Julian", "Kajetan", "Kornel", "Leon", "Leonard",
+    "Lucjan", "Ludwik", "Maksymilian", "Marian", "Mieczyslaw", "Milosz",
+    "Olaf", "Oliwer", "Patryk", "Radoslaw", "Remigiusz", "Sylwester", "Tymon",
+    "Tymoteusz", "Waclaw", "Wieslaw", "Witold", "Wladyslaw", "Zenon",
+    "Aldona", "Celina", "Czeslawa", "Dagmara", "Daria", "Diana", "Dominika",
+    "Ewelina", "Honorata", "Jagoda", "Janina", "Kamila", "Karina", "Kornelia",
+    "Laura", "Lucja", "Lucyna", "Maja", "Marianna", "Marlena", "Milena",
+    "Nikola", "Olga", "Regina", "Roksana", "Sabina", "Stanislawa", "Stefania",
+    "Tamara", "Wanda", "Zaneta", "Genowefa", "Wieslawa", "Bogumila",
 ]);
+
+/** Mianowniki imion malymi literami - do kolejnosci "Nazwisko Imie" z tabel. */
+export const FIRST_NAMES_NOM = new Set([...POLISH_FIRST_NAMES].map((n) => n.toLowerCase()));
+
+/**
+ * Wszystkie formy odmiany imion z POLISH_FIRST_NAMES, malymi literami i bez
+ * ogonkow. W pismie osoba rzadko stoi w mianowniku: "powodki Anny Zielinskiej",
+ * "pozwanemu Janowi Kowalskiemu", "z Pawlem Nowakiem". Lista mianownikow
+ * gubila kazda taka osobe - a razem z nia wszystkie dalsze wystapienia nazwiska.
+ */
+export const FIRST_NAME_FORMS = (() => {
+    const out = new Set();
+    const dodaj = (rdzen, koncowki) => { for (const k of koncowki) out.add(rdzen + k); };
+    for (const imie of POLISH_FIRST_NAMES) {
+        const n = imie.toLowerCase();
+        out.add(n);
+        if (n.endsWith("a")) {
+            dodaj(n.slice(0, -1), ["a", "y", "i", "ie", "e", "o"]);
+        } else if (n.endsWith("y")) {
+            dodaj(n.slice(0, -1), ["ego", "emu", "ym"]);
+        } else if (n.endsWith("i")) {
+            dodaj(n, ["ego", "emu", "m"]);
+        } else {
+            const meskie = ["a", "owi", "em", "ie", "u", "e"];
+            dodaj(n, meskie);
+            // e ruchome: Marek -> Marka, Pawel -> Pawla, Zbigniew bez zmian.
+            const ruchome = n.match(/^(.*)e([klc])$/);
+            if (ruchome) dodaj(ruchome[1] + ruchome[2], meskie);
+        }
+    }
+    return out;
+})();
 
 /** Skroty miast w sygnaturach WSA (np. "II SA/Wa 1234/24" -> Warszawa). */
 export const WSA_CITY_PREFIXES = {
