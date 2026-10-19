@@ -183,3 +183,9 @@ Sprawdzono 2026-10-19 (rozporzadzenie (UE) 2026/1744 "Digital Omnibus on AI" zmi
 - art. 27 ust. 4 - ok - FRIA moze odsylac do DPIA z art. 35 RODO albo art. 27 dyrektywy (UE) 2016/680 lub przejac jej czesci (A pkt 13 lit. a).
 - art. 35 - ok - art. 35 RODO (DPIA), wskazany w nowym art. 27 ust. 4 (A pkt 13 lit. a).
 - art. 60a - ok - wymieniony w art. 2 ust. 2 jako stosowany do aktow z sekcji B (K art. 2 ust. 2); skill tylko go wymienia, bez twierdzen o tresci.
+
+## nis2-ksc-pl
+
+Sprawdzono 2026-10-19 (tylko fakty Kroku 0 o transpozycji; reszta skilla bez zmian w tym przebiegu).
+
+- art. 49 - ok - ustawa z dnia 23 stycznia 2026 r. o zmianie ustawy o KSC oraz niektorych innych ustaw (Dz.U. 2026 poz. 252), art. 49: "Ustawa wchodzi w zycie po uplywie miesiaca od dnia ogloszenia"; status: obowiazuje. Przeczytane w Repertorium `eli:DU/2026/252` (zrodlo Sejm ELI), offset 320000-321500, 2026-10-19. Dokladnego dnia wejscia w zycie celowo nie podajemy. Dyrektywa 2022/2555 bez aktu zmieniajacego w Cellar (SPARQL, 2026-10-19); projekt KE 52026PC0013 z 2026-01-20 to projekt.

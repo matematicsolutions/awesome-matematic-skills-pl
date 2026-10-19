@@ -23,7 +23,7 @@ attribution:
     compliance; treść napisana od zera na tekście dyrektywy (UE) 2022/2555.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.0.0
+  version: 1.0.1
   companion_skills: rodo-naruszenie-72h-pl, matematic-konstytucja-ai, sejm-eli-mcp, mcp-eu-compliance
   parity: nis2-compliance-triage-en
 ---
@@ -68,11 +68,15 @@ Zegar RODO prowadzi `rodo-naruszenie-72h-pl`. Jedno zgłoszenie nie zastępuje d
 ### Krok 0 - stan transpozycji PL (OBOWIĄZKOWY, przed jakąkolwiek poradą)
 
 Termin transpozycji NIS2 minął 17 października 2024 r. (art. 41 dyrektywy). Transpozycją polską
-jest **nowelizacja ustawy z 5 lipca 2018 r. o krajowym systemie cyberbezpieczeństwa (KSC)** -
-status: **[DO SPRAWDZENIA w ISAP przez konektor sejm-eli-mcp na dzień użycia]**.
+jest **ustawa z dnia 23 stycznia 2026 r. o zmianie ustawy o krajowym systemie
+cyberbezpieczeństwa oraz niektórych innych ustaw (Dz.U. 2026 poz. 252)**, nowelizująca ustawę
+z 5 lipca 2018 r. o KSC. Wchodzi w życie po upływie miesiąca od dnia ogłoszenia (jej art. 49);
+w ISAP ma status „obowiązuje” (sprawdzone 2026-10-19). Na poziomie UE dyrektywy 2022/2555 nie
+zmienił do 2026-10-19 żaden przyjęty akt; projekt Komisji COM(2026) 13 z 20 stycznia 2026 r.
+(„simplification measures”) był wtedy projektem.
 
-1. Sprawdź w ISAP (sejm-eli-mcp) aktualny tekst ustawy o KSC i status nowelizacji wdrażającej
-   NIS2: uchwalona? opublikowana w Dzienniku Ustaw? jaka vacatio legis?
+1. Sprawdź w ISAP (sejm-eli-mcp) aktualny tekst jednolity ustawy o KSC i ewentualne późniejsze
+   zmiany - nowelizacja z 2026 r. obowiązuje, ale tekst mógł się od tego czasu zmienić.
 2. Zapisz wynik w karcie (pole "Stan transpozycji") z datą sprawdzenia.
 3. Dobierz reżim analizy: (a) nowelizacja obowiązuje -> analizuj na tekście ustawy; (b) nie
    obowiązuje -> analizuj na dyrektywie jako mapie NADCHODZĄCYCH obowiązków, a równolegle oznacz,

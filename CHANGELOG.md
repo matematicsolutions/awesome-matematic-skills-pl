@@ -5,6 +5,16 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.19d] - 2026-10-19
+
+### Changed
+
+- `nis2-ksc-pl` 1.0.1 (`ochrona-danych`): Krok 0 podaje sprawdzony stan transpozycji - ustawa
+  z dnia 23 stycznia 2026 r. o zmianie ustawy o KSC oraz niektorych innych ustaw (Dz.U. 2026
+  poz. 252), wg ISAP obowiazuje, wchodzi w zycie po uplywie miesiaca od ogloszenia (jej art. 49) -
+  zamiast „[DO SPRAWDZENIA]"; dyrektywa 2022/2555 bez przyjetego aktu zmieniajacego do 2026-10-19
+  (projekt KE COM(2026) 13 w toku). Regula sprawdzenia tekstu jednolitego na dzien uzycia zostaje.
+
 ## [2026.10.19c] - 2026-10-19
 
 ### Fixed
