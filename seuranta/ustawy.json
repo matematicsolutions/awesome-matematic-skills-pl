@@ -12,6 +12,10 @@
     {
       "dzu": "2025/1157",
       "powod": "nowela UKSC z 25.07.2025 (limit oplaty stosunkowej 100 000 zl) - skonsumowana, tresc w UKSC (DU/2005/1398); data graniczna 23.09.2025 cytowana w kalkulatory-procesowe-pl"
+    },
+    {
+      "dzu": "2026/252",
+      "powod": "nowela KSC z 23.01.2026 (wdrozenie NIS2, w zyciu od 3.04.2026) - skonsumowana, tresc w KSC (DU/2018/1560); cytowana w nis2-ksc-pl jako zrodlo brzmienia przepisow"
     }
   ],
   "ustawy": [
@@ -98,6 +102,12 @@
       "skrot": "PPSA",
       "nazwa": "Prawo o postępowaniu przed sądami administracyjnymi",
       "uzycie": "orzecznictwo-zrodla (NSA/WSA), dokumenty/terminy-procesowe-pl"
+    },
+    {
+      "eli": "DU/2026/1003",
+      "skrot": "UoSSI",
+      "nazwa": "o systemach sztucznej inteligencji",
+      "uzycie": "governance-kancelarii/ai-act-triage-pl (references/rodo_ai_act_styk.md - KRiBSI, polska ustawa wdrozeniowa AI Act)"
     }
   ]
 }

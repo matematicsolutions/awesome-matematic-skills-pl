@@ -1,0 +1,104 @@
+{
+  "opis": "Rejestr aktow zrodlowych skilli dla scripts/wachta-zmian-aktow.mjs. Akt UE (celex): alarm, gdy w Cellar pojawi sie akt zmieniajacy spoza 'znane_zmiany'. Ustawa PL (eli): alarm, gdy w ISAP pojawi sie akt zmieniajacy z data po 'baseline'. 'wzorce' wiaza akt ze skillami (SKILL.md + references/*.md, bez wielkosci liter). Po przegladzie tresci skilli wobec nowej zmiany: dopisz ja do znane_zmiany albo podnies baseline - z data i krotkim powodem w 'przeglady'. Stan poczatkowy 2026-10-19: znane_zmiany i baseline odpowiadaja temu, co tego dnia sprawdzono w Cellar/ISAP; zmian sprzed baseline wachta nie ocenia.",
+  "akty": [
+    {
+      "celex": "32024R1689",
+      "nazwa": "AI Act (rozporzadzenie (UE) 2024/1689)",
+      "wzorce": [
+        "2024/1689",
+        "akt w sprawie sztucznej inteligencji",
+        "ai-act-triage"
+      ],
+      "znane_zmiany": [
+        "32026R1744"
+      ],
+      "przeglady": [
+        "2026-10-19: 32026R1744 (Digital Omnibus on AI) - ai-act-triage-pl 1.2.0, rejestr legal-accuracy"
+      ]
+    },
+    {
+      "celex": "32022L2555",
+      "nazwa": "NIS2 (dyrektywa (UE) 2022/2555)",
+      "wzorce": [
+        "2022/2555",
+        "nis2",
+        "nis 2"
+      ],
+      "znane_zmiany": [],
+      "przeglady": [
+        "2026-10-19: brak aktow zmieniajacych w Cellar; projekt COM(2026) 13 w toku"
+      ]
+    },
+    {
+      "celex": "32016R0679",
+      "nazwa": "RODO (rozporzadzenie (UE) 2016/679)",
+      "wzorce": [
+        "2016/679",
+        " rodo ",
+        "(rodo)",
+        "rodo-",
+        "gdpr"
+      ],
+      "znane_zmiany": [],
+      "przeglady": [
+        "2026-10-19: brak aktow zmieniajacych w Cellar; czesc RODO pakietu Digital Omnibus (52025PC0837) to projekt"
+      ]
+    },
+    {
+      "celex": "32022R2554",
+      "nazwa": "DORA (rozporzadzenie (UE) 2022/2554)",
+      "wzorce": [
+        "2022/2554",
+        "dora "
+      ],
+      "znane_zmiany": [],
+      "przeglady": [
+        "2026-10-19: dopisany do wachty; stan zmian ustala pierwszy przebieg"
+      ]
+    },
+    {
+      "celex": "32022L2557",
+      "nazwa": "CER (dyrektywa (UE) 2022/2557)",
+      "wzorce": [
+        "2022/2557",
+        "dyrektywa cer",
+        "dyrektywy cer"
+      ],
+      "znane_zmiany": [],
+      "przeglady": [
+        "2026-10-19: dopisany do wachty; stan zmian ustala pierwszy przebieg"
+      ]
+    },
+    {
+      "eli": "DU/2018/1560",
+      "nazwa": "ustawa o krajowym systemie cyberbezpieczenstwa",
+      "wzorce": [
+        "krajowym systemie cyberbezpieczeństwa",
+        " ksc"
+      ],
+      "baseline": "2026-10-19",
+      "znane_zmiany": [
+        "DU/2026/1003",
+        "DU/2026/1206"
+      ],
+      "przeglady": [
+        "2026-10-19: nowelizacja Dz.U. 2026 poz. 252 (w zyciu od 2026-04-03) przejrzana - nis2-ksc-pl 1.1.0",
+        "2026-10-19: DU/2026/815 (od 2026-07-04) zmienia art. 15 ust. 7, art. 26, dodaje art. 46 ust. 1b - bez wplywu na skill",
+        "2026-10-19: DU/2026/1003 art. 124 (od 2026-10-28) dodaje art. 26 ust. 3 pkt 24 - bez wplywu; DU/2026/1206 art. 35 (od 2027-01-11) zmienia nazwe oddzialu banku w zal. nr 1 - bez wplywu"
+      ]
+    },
+    {
+      "eli": "DU/2026/1003",
+      "nazwa": "ustawa o systemach sztucznej inteligencji",
+      "wzorce": [
+        "o systemach sztucznej inteligencji",
+        "2026 poz. 1003",
+        "kribsi"
+      ],
+      "baseline": "2026-10-19",
+      "przeglady": [
+        "2026-10-19: obowiazuje (ISAP), bez zmian - ai-act-triage-pl references"
+      ]
+    }
+  ]
+}

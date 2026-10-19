@@ -23,7 +23,7 @@ attribution:
     compliance; treść napisana od zera na tekście dyrektywy (UE) 2022/2555.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.1.0
+  version: 1.1.1
   companion_skills: rodo-naruszenie-72h-pl, matematic-konstytucja-ai, sejm-eli-mcp, mcp-eu-compliance
   parity: nis2-compliance-triage-en
 ---
@@ -70,7 +70,8 @@ Zegar RODO prowadzi `rodo-naruszenie-72h-pl`. Jedno zgłoszenie nie zastępuje d
 Termin transpozycji NIS2 minął 17 października 2024 r. (art. 41 dyrektywy). Transpozycją polską
 jest **ustawa z dnia 23 stycznia 2026 r. o zmianie ustawy o krajowym systemie
 cyberbezpieczeństwa oraz niektórych innych ustaw (Dz.U. 2026 poz. 252)**, nowelizująca ustawę
-z 5 lipca 2018 r. o KSC. Wchodzi w życie po upływie miesiąca od dnia ogłoszenia (jej art. 49);
+z 5 lipca 2018 r. o KSC. Weszła w życie po upływie miesiąca od dnia ogłoszenia (jej art. 49),
+według ISAP 3 kwietnia 2026 r.;
 w ISAP ma status „obowiązuje” (sprawdzone 2026-10-19). Na poziomie UE dyrektywy 2022/2555 nie
 zmienił do 2026-10-19 żaden przyjęty akt; projekt Komisji COM(2026) 13 z 20 stycznia 2026 r.
 („simplification measures”) był wtedy projektem.

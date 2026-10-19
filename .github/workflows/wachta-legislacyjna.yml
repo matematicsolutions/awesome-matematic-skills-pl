@@ -34,3 +34,11 @@ jobs:
       - name: Sprawdz parametry kalkulatorow procesowych
         if: always()
         run: node scripts/wachta-parametrow-kalkulatorow.mjs
+
+      # Trzecia warstwa: NOWE akty zmieniajace akty zrodlowe skilli - UE w Cellar,
+      # PL w ISAP (seuranta/akty-zrodlowe.json). Geneza: rozporzadzenie (UE)
+      # 2026/1744 przesunelo terminy AI Act, a skille przez trzy miesiace podawaly
+      # stare - pierwsze dwie warstwy zmian aktow UE nie widza.
+      - name: Sprawdz nowe zmiany aktow zrodlowych
+        if: always()
+        run: node scripts/wachta-zmian-aktow.mjs

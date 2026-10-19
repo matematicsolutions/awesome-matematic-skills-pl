@@ -5,6 +5,24 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.19f] - 2026-10-19
+
+### Added
+
+- `scripts/wachta-zmian-aktow.mjs` + `seuranta/akty-zrodlowe.json`, trzeci krok workflow
+  `wachta-legislacyjna.yml`: wachta NOWYCH aktow zmieniajacych akty zrodlowe skilli - akty UE
+  w Cellar (SPARQL Urzedu Publikacji), ustawy PL w ISAP („Akty zmieniajace" po baseline). Nowa
+  zmiana = blad z lista skilli cytujacych akt. Geneza: rozporzadzenie (UE) 2026/1744 przesunelo
+  terminy AI Act w lipcu 2026, a skille AI Act przez trzy miesiace podawaly stare - dotychczasowe
+  wachty pilnowaly tylko istnienia ustaw PL. Na start 7 aktow (AI Act, NIS2, RODO, DORA, CER,
+  ustawa o KSC, ustawa o systemach SI); kontrola na czerwono: stan sprzed lipca wykrywa 32026R1744
+  i nowelizacje KSC z 2026 r.; pusty rejestr = blad. Zmiany ustawy o KSC, ktore wejda w zycie
+  28.10.2026 i 11.01.2027, przejrzane z wyprzedzeniem (bez wplywu na skill) - `znane_zmiany`.
+
+### Changed
+
+- `nis2-ksc-pl` 1.1.1: nowelizacja ustawy o KSC weszla w zycie 3 kwietnia 2026 r. (ISAP).
+
 ## [2026.10.19e] - 2026-10-19
 
 ### Changed
