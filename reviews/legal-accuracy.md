@@ -159,3 +159,27 @@ Przeglad 2026-10-10 (przejscie gotowosci: wszystkie jednostki redakcyjne skilla 
 - art. 36 ust. 3 - ok - zawartosc wniosku lit. a-f, powolana tylko jako "zakres z art. 36 ust. 3". EUR-Lex CELEX:32016R0679, wersja PL (HTML pobrany 2026-10-10, komplet 99 artykulow).
 - WP248 - POPRAWIONE, potem ok - dziewiec kryteriow potwierdzone; regula "In most cases ... meeting two criteria would require a DPIA" oraz "in some cases ... only one". Poprawione: skill przypisywal WP248 EROD (to dokument Grupy Roboczej Art. 29); regula ">=2" ma teraz "w wiekszosci przypadkow"; przyklady kryterium 8 sa z WP248 (odciski palcow z rozpoznawaniem twarzy, Internet rzeczy) zamiast dopisanego "AI". Logika werdyktu skryptu (1 kryterium = zalecane, 2+ = wymagane) zgodna. WP29 WP248 rev.01 (przyjete 4.04.2017, zmienione 4.10.2017), PDF z ec.europa.eu, pelny tekst przeczytany 2026-10-10.
 - Art. 29 - ok - nie jednostka przepisu: "Grupa Robocza Art. 29", autor WP248 (strona tytulowa WP248 rev.01). WP29 WP248 rev.01 (przyjete 4.04.2017, zmienione 4.10.2017), PDF z ec.europa.eu, pelny tekst przeczytany 2026-10-10.
+
+## ai-act-triage-pl
+
+Sprawdzono 2026-10-19 (rozporzadzenie (UE) 2026/1744 "Digital Omnibus on AI" zmieniajace rozporzadzenie (UE) 2024/1689; kazda jednostka ze zmienionych linii przeczytana w akcie zmieniajacym i w tekscie skonsolidowanym). Zrodla: A = CELEX 32026R1744, EN XHTML z Cellar, pobrane 2026-10-19 (art. 1 pkt 1-43); K = tekst skonsolidowany CELEX 02024R1689-20260727, EN XHTML z Cellar, pobrany 2026-10-19. Cellar wskazuje 32026R1744 jako jedyny akt zmieniajacy 32024R1689 (SPARQL, cdm:resource_legal_amends_resource_legal, 2026-10-19). Polska ustawa: Repertorium `eli:DU/2026/1003` (Sejm ELI), 2026-10-19.
+
+- art. 113 - POPRAWIONE, potem ok - ogolna data 2 sierpnia 2026; lit. a: rozdz. I i II od 2 lutego 2025, z wyjatkiem art. 5 ust. 1 lit. ba i bb oraz ust. 1a i 1b od 2 grudnia 2026; lit. c: tytul III sekcje 1-3 (bez art. 6 ust. 5) od 2 grudnia 2027 (art. 6 ust. 2, zal. III) i od 2 sierpnia 2028 (art. 6 ust. 1, zal. I); lit. d: art. 102-110 od 27 lipca 2026 (A pkt 40; K art. 113). Skill i skrypt `tracker_obowiazkow.py` mialy zal. III od 2.8.2026 i zal. I do 2.8.2027.
+- art. 102 - ok - "art. 102-110 od 27.7.2026" (A pkt 40 lit. c, nowa lit. d).
+- Art. 4 - POPRAWIONE, potem ok - nowe brzmienie: dostawcy i podmioty stosujace "take measures to support the development of AI literacy"; "does not require ... to guarantee any specific level" (A pkt 5). Nadal od 2.2.2025 (rozdz. I).
+- art. 5 - ok - zakazy z rozdz. II od 2.2.2025, nowe litery od 2.12.2026 (K art. 113 lit. a).
+- art. 5 ust. 1 lit. b - ok - jednostka wyciagnieta z "lit. ba" i "lit. bb": lit. ba intymne wizerunki rozpoznawalnej osoby bez wyraznej zgody, lit. bb materialy w rozumieniu art. 2 lit. c i e dyrektywy 2011/93/UE (A pkt 7 lit. a).
+- art. 5 ust. 1a - ok - wprowadzanie do obrotu zakazane tylko, gdy taki wynik jest przeznaczeniem albo przewidywalnym i powtarzalnym rezultatem bez odpowiednich zabezpieczen; stosowanie - tylko gdy podmiot stosujacy uzywa systemu w tym celu; ust. 1b wylacza manipulacje, ktora nie zwieksza ekspozycji (A pkt 7 lit. b).
+- art. 3 - POPRAWIONE, potem ok - art. 3 pkt 14: nowa definicja "safety component" (A pkt 4 lit. a).
+- art. 6 ust. 1 - ok - sciezka A; ustep bez zmian, przeczytany w K.
+- art. 6 ust. 1a - ok - wsparcie uzytkownika, optymalizacja, wydajnosc, automatyzacja, wygoda, kontrola jakosci to nie safety component; ust. 1b - chyba ze awaria zagraza zdrowiu i bezpieczenstwu (A pkt 8).
+- art. 6 ust. 1c - ok - ocena strony trzeciej wymagana wylacznie z powodow innych niz zdrowie i bezpieczenstwo nie spelnia art. 6 ust. 1 lit. b (A pkt 8).
+- art. 6 ust. 2 - ok - sciezka B / zal. III w harmonogramie; zgodne z art. 113 lit. c pkt i (K).
+- art. 2 ust. 2 - POPRAWIONE, potem ok - zal. I sekcja B: "only Article 6(1), Article 60a and Articles 102 to 112 shall apply"; art. 57-59 tylko w zakresie zintegrowanych wymogow (K art. 2 ust. 2, znacznik M1). Bylo [DO SPRAWDZENIA].
+- art. 50 - ok - rozdz. IV, poza wyjatkami z art. 113, wiec od ogolnej daty 2.8.2026 (K art. 113). Skrypt `tracker_obowiazkow.py` przypisywal art. 50 ust. 1 i 4 do 2.8.2025 - poprawione, test terminow 7/7 (przed poprawka 4 bledy).
+- art. 50 ust. 2 - ok - przepis przejsciowy: systemy tresci syntetycznych wprowadzone przed 2.8.2026 maja czas do 2.12.2026 (A pkt 39 lit. b, nowy art. 111 ust. 4).
+- art. 111 ust. 2 - ok - systemy wysokiego ryzyka dla organow publicznych wprowadzone przed data z tytulu III: do 2.8.2030 (A pkt 39 lit. a).
+- art. 111 ust. 4 - ok - zob. art. 50 ust. 2 (A pkt 39 lit. b).
+- art. 27 ust. 4 - ok - FRIA moze odsylac do DPIA z art. 35 RODO albo art. 27 dyrektywy (UE) 2016/680 lub przejac jej czesci (A pkt 13 lit. a).
+- art. 35 - ok - art. 35 RODO (DPIA), wskazany w nowym art. 27 ust. 4 (A pkt 13 lit. a).
+- art. 60a - ok - wymieniony w art. 2 ust. 2 jako stosowany do aktow z sekcji B (K art. 2 ust. 2); skill tylko go wymienia, bez twierdzen o tresci.

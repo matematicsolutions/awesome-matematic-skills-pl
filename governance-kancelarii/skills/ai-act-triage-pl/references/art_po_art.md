@@ -45,15 +45,19 @@ Referencja do decyzji 2 i 3. Cytuj artykul + ustep; nie parafrazuj bez cytatu.
 - **art. 73** - zglaszanie powaznych incydentow (15 dni; 2 dni dla infrastruktury krytycznej).
 - **art. 79** - systemy stwarzajace ryzyko - procedura na poziomie krajowym.
 
-## Fazowanie (art. 113)
+## Fazowanie (art. 113 w brzmieniu rozporzadzenia (UE) 2026/1744, sprawdzone 2026-10-19)
 
-| Data | Co wchodzi w zycie |
+| Data | Od kiedy sie stosuje |
 |---|---|
 | 2025-02-02 | zakazy z art. 5 + kompetencje AI z art. 4 |
 | 2025-08-02 | GPAI (art. 51-55) + zarzadzanie + kary |
-| 2026-08-02 | tytul III - wysokie ryzyko (ogolne, zalacznik III) |
-| 2027-08-02 | zalacznik I - sektorowe wysokie ryzyko |
+| 2026-07-27 | art. 102-110 |
+| 2026-08-02 | ogolna data stosowania, w tym art. 50 |
+| 2026-12-02 | nowe zakazy z art. 5 ust. 1 lit. ba i bb; art. 50 ust. 2 dla systemow wprowadzonych przed 2026-08-02 (art. 111 ust. 4) |
+| 2027-12-02 | tytul III sekcje 1-3 - wysokie ryzyko z zalacznika III (przed zmiana: 2026-08-02) |
+| 2028-08-02 | tytul III sekcje 1-3 - wysokie ryzyko z zalacznika I, sektorowe (przed zmiana: 2027-08-02) |
+| 2030-08-02 | systemy wysokiego ryzyka uzywane przez organy publiczne, wprowadzone przed data z tytulu III (art. 111 ust. 2) |
 
 ## Kompetencje AI (przekrojowe)
 
-- **art. 4** - kompetencje w zakresie AI (AI literacy) personelu majacego do czynienia z systemami AI. Obowiazuje od 2025-02-02, dotyczy KAZDEJ roli.
+- **art. 4** - kompetencje w zakresie AI (AI literacy) personelu majacego do czynienia z systemami AI. Obowiazuje od 2025-02-02, dotyczy KAZDEJ roli. Od rozporzadzenia (UE) 2026/1744 dostawcy i podmioty stosujace „podejmuja srodki wspierajace" kompetencje personelu; przepis wprost nie wymaga zapewnienia okreslonego poziomu kompetencji.

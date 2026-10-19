@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 """tracker_obowiazkow.py - macierz obowiazkow AI Act wg roli.
 
-Fork MIT z alirezarezvani/claude-skills@eu-ai-act-specialist (autor: Alireza Rezvani).
-Logika zachowana 1:1; output, obowiazki i cytaty na polska terminologie. Tylko stdlib.
+Fork MIT z alirezarezvani/claude-skills@eu-ai-act-specialist (autor: Alireza Rezvani;
+licencja: LICENSE-alirezarezvani-claude-skills obok tego pliku). Logika zachowana; output,
+obowiazki i cytaty na polska terminologie. Zmiana 2026-10-19: terminy fazowania wg art. 113
+po rozporzadzeniu (UE) 2026/1744, art. 50 przypisany do ogolnej daty stosowania. Tylko stdlib.
 
 Dla roli/rol organizacji wg art. 25 (dostawca, podmiot stosujacy, importer,
 dystrybutor, upowazniony przedstawiciel) oraz poziomu/-ow systemu produkuje
 macierz obowiazkow posortowana wg terminow, powiazana z fazowym stosowaniem aktu:
   - 2 lut 2025: zakazy z art. 5 + kompetencje AI z art. 4
   - 2 sie 2025: GPAI art. 51-55 + zarzadzanie + kary
-  - 2 sie 2026: obowiazki wysokiego ryzyka z tytulu III
-  - 2 sie 2027: obowiazki wysokiego ryzyka wg zalacznika I (sektorowe)
+  - 2 sie 2026: ogolna data stosowania, w tym art. 50
+  - 2 gru 2026: nowe zakazy z art. 5 ust. 1 lit. ba i bb
+  - 2 gru 2027: obowiazki wysokiego ryzyka z tytulu III (zalacznik III)
+  - 2 sie 2028: obowiazki wysokiego ryzyka wg zalacznika I (sektorowe)
+Terminy wysokiego ryzyka przesunelo rozporzadzenie (UE) 2026/1744.
 
 Deterministyczna logika odwolujaca sie do art. 16, 22, 23, 24, 25, 26, 27, 50,
 51-55, 72, 73 + fazowanie wg art. 113.
@@ -60,14 +65,18 @@ SAMPLE: Dict[str, Any] = {
 }
 
 
-# Fazowanie (wg art. 113)
+# Fazowanie wg art. 113 akapit trzeci w brzmieniu rozporzadzenia (UE) 2026/1744 (Digital Omnibus on AI,
+# CELEX 32026R1744, sprawdzone w tekscie aktu 2026-10-19). Wysokie ryzyko "ogolne" = zalacznik III
+# (art. 6 ust. 2); skrypt nie rozroznia sciezki z zalacznika I - dla produktow sektorowych termin 2028-08-02.
 PHASE_DATES = {
     "zakazy_art_5": "2025-02-02",
     "kompetencje_ai_art_4": "2025-02-02",
     "gpai_art_51_55": "2025-08-02",
     "zarzadzanie_kary": "2025-08-02",
-    "tytul_iii_wysokie_ryzyko_ogolne": "2026-08-02",
-    "tytul_iii_zalacznik_i_sektorowe": "2027-08-02",
+    "ogolna_data_stosowania": "2026-08-02",
+    "zakazy_art_5_lit_ba_bb": "2026-12-02",
+    "tytul_iii_wysokie_ryzyko_ogolne": "2027-12-02",
+    "tytul_iii_zalacznik_i_sektorowe": "2028-08-02",
 }
 
 
@@ -98,7 +107,7 @@ DEPLOYER_HIGH_RISK = [
     ("art. 26 ust. 5 - przechowywanie automatycznie generowanych rejestrow (art. 12) przez >= 6 miesiecy", "tytul_iii_wysokie_ryzyko_ogolne"),
     ("art. 26 ust. 7 - poinformowanie pracownikow + ich przedstawicieli przed wdrozeniem systemu w miejscu pracy", "tytul_iii_wysokie_ryzyko_ogolne"),
     ("art. 26 ust. 8 - wspolpraca z wlasciwymi organami krajowymi + Urzedem ds. AI", "tytul_iii_wysokie_ryzyko_ogolne"),
-    ("art. 50 - poinformowanie osob fizycznych podlegajacych decyzjom AI (transparentnosc)", "tytul_iii_wysokie_ryzyko_ogolne"),
+    ("art. 50 - poinformowanie osob fizycznych podlegajacych decyzjom AI (transparentnosc)", "ogolna_data_stosowania"),
     ("art. 86 - prawo do wyjasnienia indywidualnej decyzji", "tytul_iii_wysokie_ryzyko_ogolne"),
 ]
 
@@ -107,8 +116,8 @@ DEPLOYER_PUBLIC_SECTOR = [
 ]
 
 DEPLOYER_LIMITED_RISK = [
-    ("art. 50 ust. 1 - poinformowanie osob fizycznych, ze wchodza w interakcje z systemem AI", "zarzadzanie_kary"),
-    ("art. 50 ust. 4 - oznaczenie deepfake (obraz, audio, wideo) jako wygenerowanych przez AI; oznaczenie maszynowo-odczytywalne", "zarzadzanie_kary"),
+    ("art. 50 ust. 1 - poinformowanie osob fizycznych, ze wchodza w interakcje z systemem AI", "ogolna_data_stosowania"),
+    ("art. 50 ust. 4 - oznaczenie deepfake (obraz, audio, wideo) jako wygenerowanych przez AI; oznaczenie maszynowo-odczytywalne", "ogolna_data_stosowania"),
 ]
 
 IMPORTER = [
@@ -238,11 +247,13 @@ def render_text(r: Dict[str, Any], source: str) -> str:
         lines.append(f"     [{o['role']:30s}] {o['obligation']}")
     lines.append("")
     lines.append("-" * 72)
-    lines.append("FAZOWANIE (art. 113):")
+    lines.append("FAZOWANIE (art. 113 po rozporzadzeniu (UE) 2026/1744):")
     lines.append("  2025-02-02: zakazy z art. 5 + kompetencje AI z art. 4")
     lines.append("  2025-08-02: GPAI (art. 51-55) + zarzadzanie + kary")
-    lines.append("  2026-08-02: tytul III wysokie ryzyko (ogolne)")
-    lines.append("  2027-08-02: zalacznik I sektorowe wysokie ryzyko")
+    lines.append("  2026-08-02: ogolna data stosowania, w tym art. 50")
+    lines.append("  2026-12-02: nowe zakazy z art. 5 ust. 1 lit. ba i bb")
+    lines.append("  2027-12-02: tytul III sekcje 1-3 - wysokie ryzyko z zalacznika III")
+    lines.append("  2028-08-02: tytul III sekcje 1-3 - wysokie ryzyko z zalacznika I (sektorowe)")
     lines.append("")
     lines.append("-" * 72)
     lines.append(BANNER)

@@ -5,6 +5,30 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.19c] - 2026-10-19
+
+### Fixed
+
+- `ai-act-triage-pl` 1.2.0 (`governance-kancelarii`): aktualizacja do rozporzadzenia (UE) 2026/1744
+  z 8 lipca 2026 r. („Digital Omnibus on AI"), ktore zmienilo AI Act. Skill i skrypt
+  `tracker_obowiazkow.py` podawaly obowiazki wysokiego ryzyka z zal. III od 2.8.2026, a z zal. I do
+  2.8.2027; art. 113 w nowym brzmieniu przesuwa je na 2.12.2027 i 2.8.2028. Skrypt przypisywal tez
+  art. 50 ust. 1 i 4 do 2.8.2025 (blad z forka) - art. 50 stosuje sie od 2.8.2026. Do skilla weszly
+  ponadto: nowe zakazy z art. 5 ust. 1 lit. ba i bb (od 2.12.2026), nowe brzmienie art. 4, wezszy
+  „safety component" (art. 3 pkt 14, art. 6 ust. 1a-1c), przeniesienie maszyn do zal. I sekcja B
+  z rezimem art. 2 ust. 2, przepisy przejsciowe (art. 111 ust. 2 i 4) i odwolanie FRIA do DPIA
+  (art. 27 ust. 4). Kazda jednostka sprawdzona w akcie zmieniajacym i tekscie skonsolidowanym
+  (`reviews/legal-accuracy.md`).
+- `ai-act-triage-pl`, `references/rodo_ai_act_styk.md`: polska ustawa nie jest juz projektem -
+  ustawa z dnia 3 lipca 2026 r. o systemach sztucznej inteligencji (Dz.U. 2026 poz. 1003)
+  obowiazuje; Przewodniczacy KRiBSI powolany (M.P. 2026 poz. 945 i 946).
+
+### Added
+
+- `ai-act-triage-pl`: pola aktualnosci (`last_verified`, `freshness_window: 6 months`,
+  `freshness_category: regulatory`, `verified_against`); w `scripts/` licencja MIT forka
+  alirezarezvani/claude-skills (MIT wymaga dolaczenia noty i tekstu licencji, a jej nie bylo).
+
 ## [2026.10.19b] - 2026-10-19
 
 ### Fixed

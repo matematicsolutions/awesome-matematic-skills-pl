@@ -22,31 +22,36 @@ nie alternatywa.
 moga byc prowadzone jako jeden skoordynowany proces - motyw 96 AI Act wprost na
 to pozwala. Nie rob ich dwa razy od zera; zmapuj wspolne elementy.
 
-## Polska ustawa wdrozeniowa (stan do WERYFIKACJI)
+## Polska ustawa wdrozeniowa (stan na 2026-10-19)
 
 AI Act jest rozporzadzeniem UE - obowiazuje bezposrednio, ale wymaga krajowego
 wyznaczenia organow nadzoru i przepisow proceduralnych.
 
-- **Projekt ustawy o systemach sztucznej inteligencji** przygotowany przez
-  Ministerstwo Cyfryzacji, przyjety przez Rade Ministrow **31 marca 2026**.
-  Na dzien budowy tego skilla (2026-07-21) jest w procesie legislacyjnym -
-  **zweryfikuj aktualny status i tekst przed cytowaniem w memo dla klienta.**
+- **Ustawa z dnia 3 lipca 2026 r. o systemach sztucznej inteligencji
+  (Dz.U. 2026 poz. 1003)** - uchwalona (druk sejmowy 2443), opublikowana, status
+  w ISAP: obowiazuje. Sprawdzone w Repertorium (`eli:DU/2026/1003`) 2026-10-19.
+  Przed cytowaniem przepisu w memo dla klienta pobierz jego tekst; termin
+  wejscia w zycie poszczegolnych przepisow sprawdz w przepisach koncowych ustawy.
 - Ustawa ustanawia **Komisje Rozwoju i Bezpieczenstwa Sztucznej Inteligencji
-  (KRiBSI)** jako krajowy organ nadzoru rynku dla systemow AI i pojedynczy punkt
-  kontaktowy wobec instytucji UE.
-- Sklad KRiBSI ma obejmowac przedstawicieli **UOKiK, KNF, KRRiT i UKE**.
-- Zadania: kontrola zgodnosci, wydawanie decyzji i nakazow, rejestr skarg,
-  indywidualne opinie i wyjasnienia, piaskownice regulacyjne (regulatory
-  sandboxes), dzialalnosc informacyjno-edukacyjna.
-- Termin krajowy na ramy organow: **2 sierpnia 2026** (zgodnie z art. 113 AI Act
-  dla obowiazkow wysokiego ryzyka z tytulu III).
+  (KRiBSI)** jako krajowy organ nadzoru rynku dla systemow AI. Przewodniczacy
+  KRiBSI powolany uchwala Sejmu z 18 wrzesnia 2026 r. za zgoda Senatu z 24 wrzesnia
+  2026 r. (M.P. 2026 poz. 945 i 946).
+- Sklad i zadania KRiBSI (wg projektu: przedstawiciele UOKiK, KNF, KRRiT i UKE;
+  kontrola zgodnosci, decyzje i nakazy, skargi, opinie, piaskownice regulacyjne,
+  edukacja) - [DO SPRAWDZENIA w tekscie uchwalonej ustawy].
+- Terminy AI Act dla wysokiego ryzyka przesunelo rozporzadzenie (UE) 2026/1744:
+  zalacznik III od 2 grudnia 2027 r., zalacznik I od 2 sierpnia 2028 r.
+  (art. 113 akapit trzeci lit. c AI Act w nowym brzmieniu).
 
 **Governance MateMatic:** organ krajowy jest sparametryzowany, nie zaszyty w
-kodzie skryptow - gdy ustawa wejdzie w zycie, zaktualizuj TE referencje (nie kod).
-Nie podawaj klientowi statusu "obowiazuje" dopoki nie potwierdzisz publikacji w
-Dzienniku Ustaw.
+kodzie skryptow - przy zmianie ustawy zaktualizuj TE referencje (nie kod).
 
-## Zrodla (stan na 2026-07-21)
+## Zrodla (stan na 2026-10-19)
+
+- [Ustawa o systemach sztucznej inteligencji, Dz.U. 2026 poz. 1003 (Sejm ELI)](https://api.sejm.gov.pl/eli/acts/DU/2026/1003)
+- [Rozporzadzenie (UE) 2026/1744 (EUR-Lex)](https://eur-lex.europa.eu/eli/reg/2026/1744/oj)
+
+Zrodla z etapu projektu (stan na 2026-07-21):
 
 - [Ministerstwo Cyfryzacji - projekt ustawy przyjety przez RM](https://www.gov.pl/web/cyfryzacja/koniec-ery-nieuchwytnych-algorytmow--projekt-ustawy-o-systemach-sztucznej-inteligencji-przyjety-przez-rade-ministrow)
 - [KPRM - projekt ustawy o systemach sztucznej inteligencji](https://www.gov.pl/web/premier/projekt-ustawy-o-systemach-sztucznej-inteligencji)

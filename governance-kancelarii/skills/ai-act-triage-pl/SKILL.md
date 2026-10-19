@@ -17,6 +17,13 @@ allowed-tools: [Read, Bash]
 data-residency: local
 requires-human-approval: true
 pii-egress: none
+last_verified: 2026-10-19
+freshness_window: 6 months
+freshness_category: regulatory
+verified_against:
+  - https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+  - https://eur-lex.europa.eu/eli/reg/2026/1744/oj
+  - https://api.sejm.gov.pl/eli/acts/DU/2026/1003
 attribution:
   relationship: original
   note: >
@@ -25,7 +32,7 @@ attribution:
     rozporządzenia (UE) 2024/1689.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.1.0
+  version: 1.2.0
   companion_skills: matematic-konstytucja-ai, legal-ai-audit-bundle, rodo-dpia-pl, konektor mcp-eu-compliance
 ---
 
@@ -71,7 +78,11 @@ organizacji i decyzją, czy sprawa idzie do człowieka i pełnej analizy.
 Żaden numer artykułu ani treść przepisu nie wchodzi do karty z pamięci modelu.
 Przed wpisaniem podstawy prawnej pobierz aktualny tekst rozporządzenia (UE)
 2024/1689 z EUR-Lex (CELEX 32024R1689) albo przez konektor `mcp-eu-compliance`
-i porównaj brzmienie. Zanotuj w karcie datę pobrania i źródło. Przepis, którego
+i porównaj brzmienie. Bierz tekst SKONSOLIDOWANY, nie pierwotny z 2024 r.:
+rozporządzenie (UE) 2026/1744 z 8 lipca 2026 r. (CELEX 32026R1744, „Digital
+Omnibus on AI”) zmieniło m.in. art. 3, 4, 5, 6, 25, 27, 50, 111 i 113 oraz
+zał. I; wersja skonsolidowana 02024R1689-20260727. Sprawdź w EUR-Lex, czy nie
+ma późniejszych zmian. Zanotuj w karcie datę pobrania i źródło. Przepis, którego
 nie dało się zweryfikować w sesji, dostaje tag `[sprawdź w EUR-Lex]` i nie może
 być podstawą rozstrzygnięcia "NIE dotyczy".
 
@@ -110,9 +121,20 @@ Odhacz każdą literę, nie "ogólne wrażenie":
       przynależność związkowa, religia, życie seksualne, orientacja)
 - [ ] zdalna identyfikacja biometryczna w czasie rzeczywistym w przestrzeni
       publicznej do celów ścigania (wąskie wyjątki)
+- [ ] generowanie lub manipulowanie realistycznych obrazów, wideo lub audio
+      intymnych części ciała albo czynności seksualnych rozpoznawalnej osoby bez jej
+      wyraźnej zgody (art. 5 ust. 1 lit. ba)
+- [ ] generowanie lub manipulowanie materiałów wykorzystywania seksualnego dzieci
+      w rozumieniu dyrektywy 2011/93/UE (art. 5 ust. 1 lit. bb)
+
+Litery ba i bb dodało rozporządzenie (UE) 2026/1744; stosuje się je od 2.12.2026.
+Przy wprowadzaniu do obrotu zakaz dotyczy systemu, którego przeznaczeniem jest taki
+wynik albo dla którego jest on przewidywalny i powtarzalny bez odpowiednich
+zabezpieczeń; przy stosowaniu - tylko gdy podmiot stosujący używa systemu w tym celu
+(art. 5 ust. 1a i 1b).
 
 Pomocniczo: wytyczne KE w sprawie praktyk zakazanych (numer dokumentu
-[DO SPRAWDZENIA]). Zakazy obowiązują od 2.2.2025 - to stan prawny, nie prognoza.
+[DO SPRAWDZENIA]). Pozostałe zakazy obowiązują od 2.2.2025 - to stan prawny, nie prognoza.
 PODEJRZENIE choćby jednej litery = STOP, natychmiast bramka człowieka.
 
 ### Krok 3 - wysokie ryzyko (art. 6 + załącznik I + załącznik III)
@@ -121,7 +143,22 @@ Dwie ścieżki kwalifikacji:
 - **Ścieżka A (art. 6 ust. 1, zał. I):** system jest produktem albo związanym z
   bezpieczeństwem elementem produktu objętego unijnym prawodawstwem
   harmonizacyjnym z zał. I i podlega ocenie zgodności strony trzeciej
-  (maszyny, wyroby medyczne, zabawki, dźwigi, lotnictwo, pojazdy itd.).
+  (wyroby medyczne, zabawki, dźwigi, lotnictwo, pojazdy itd.). Od rozporządzenia
+  (UE) 2026/1744:
+  - „związany z bezpieczeństwem element” jest węższy (art. 3 pkt 14): element,
+    który pełni funkcję bezpieczeństwa albo którego awaria zagraża zdrowiu
+    i bezpieczeństwu osób lub mieniu; systemy służące wyłącznie wsparciu
+    użytkownika, optymalizacji, wydajności, automatyzacji, wygodzie albo kontroli
+    jakości nie są takim elementem, chyba że ich awaria zagraża zdrowiu
+    i bezpieczeństwu (art. 6 ust. 1a i 1b);
+  - ocena strony trzeciej wymagana wyłącznie z powodów innych niż zdrowie
+    i bezpieczeństwo (np. widmo radiowe) nie spełnia warunku z art. 6 ust. 1
+    lit. b (art. 6 ust. 1c);
+  - maszyny: dyrektywa 2006/42/WE wypadła z zał. I sekcja A, a rozporządzenie
+    (UE) 2023/1230 weszło do sekcji B. Do systemów wysokiego ryzyka z aktów
+    sekcji B stosuje się tylko art. 6 ust. 1, art. 60a i art. 102-112, a art. 57-59
+    tylko w zakresie, w jakim wymogi wysokiego ryzyka włączono do tego
+    prawodawstwa sektorowego (art. 2 ust. 2).
 - **Ścieżka B (art. 6 ust. 2, zał. III):** use-case z obszarów: biometria;
   infrastruktura krytyczna; edukacja i szkolenie zawodowe; zatrudnienie i
   zarządzanie pracownikami; dostęp do usług zasadniczych (m.in. scoring
@@ -166,8 +203,11 @@ nie dostawca modelu. Ale patrz krok 6 - rekwalifikacja.
 - Tekst publikowany w celu informowania o sprawach interesu publicznego: ujawnij
   udział AI, chyba że treść przeszła kontrolę redakcyjną człowieka.
 
-Te obowiązki wchodzą ze stosowaniem zasadniczego korpusu (termin z art. 113 -
-krok 7). Numery ustępów art. 50 przypisz do wierszy karty po weryfikacji w kroku 0.
+Te obowiązki stosuje się od 2.8.2026, ogólnej daty stosowania (art. 113 -
+krok 7). Przepis przejściowy: dostawcy systemów generujących syntetyczne audio,
+obraz, wideo lub tekst, wprowadzonych do obrotu przed 2.8.2026, mają czas na
+art. 50 ust. 2 do 2.12.2026 (art. 111 ust. 4, dodany rozporządzeniem (UE)
+2026/1744). Numery ustępów art. 50 przypisz do wierszy karty po weryfikacji w kroku 0.
 
 ### Krok 6 - rola podmiotu (+ rekwalifikacja z art. 25)
 
@@ -185,13 +225,23 @@ powiesz cokolwiek o obowiązkach.
 
 ### Krok 7 - mapa obowiązków, harmonogram, sygnalizacja FRIA
 
-Stan prawny względem daty triage (terminy z art. 113 - zweryfikuj w kroku 0):
-- od 2.2.2025: zakazy (art. 5) i kompetencje w zakresie AI (art. 4) - OBOWIĄZUJĄ,
+Stan prawny względem daty triage (terminy z art. 113 w brzmieniu rozporządzenia
+(UE) 2026/1744 - zweryfikuj w kroku 0 i porównaj datę triage z każdą datą
+poniżej, zamiast przepisywać z tej listy „obowiązuje”):
+- od 2.2.2025: zakazy (art. 5) i kompetencje w zakresie AI (art. 4) - OBOWIĄZUJĄ.
+  Art. 4 w nowym brzmieniu: dostawcy i podmioty stosujące podejmują środki
+  wspierające kompetencje personelu; nie muszą zapewnić określonego poziomu,
 - od 2.8.2025: GPAI, governance, kary - OBOWIĄZUJĄ,
-- od 2.8.2026: zasadniczy korpus, w tym wysokie ryzyko z zał. III i art. 50 -
-  termin wynikający z rozporządzenia,
-- do 2.8.2027: systemy wysokiego ryzyka ścieżki A (produkty z zał. I) - dłuższy
-  okres z rozporządzenia.
+- od 27.7.2026: art. 102-110,
+- od 2.8.2026: ogólna data stosowania, w tym art. 50,
+- od 2.12.2026: nowe zakazy z art. 5 ust. 1 lit. ba i bb; art. 50 ust. 2 dla
+  systemów treści syntetycznych wprowadzonych przed 2.8.2026,
+- od 2.12.2027: tytuł III sekcje 1-3 dla systemów wysokiego ryzyka z zał. III
+  (art. 6 ust. 2) - przesunięte z 2.8.2026,
+- od 2.8.2028: tytuł III sekcje 1-3 dla systemów wysokiego ryzyka z zał. I
+  (art. 6 ust. 1) - przesunięte z 2.8.2027,
+- do 2.8.2030: systemy wysokiego ryzyka przeznaczone dla organów publicznych,
+  wprowadzone przed datą z tytułu III (art. 111 ust. 2).
 
 Zbuduj mapę: rola x klasyfikacja -> zastosowalne rozdziały i artykuły -> od kiedy.
 
@@ -199,8 +249,10 @@ Zbuduj mapę: rola x klasyfikacja -> zastosowalne rozdziały i artykuły -> od k
 wdrożeniem jest wymagana od podmiotów stosujących będących podmiotami prawa
 publicznego lub prywatnymi świadczącymi usługi publiczne oraz od stosujących
 systemy scoringu kredytowego i wyceny ubezpieczeń na życie i zdrowotnych
-(zał. III pkt 5, litery [DO SPRAWDZENIA]). Skill sygnalizuje wymóg i odsyła do
-`rodo-dpia-pl` w części pokrywającej się z DPIA - nie wykonuje FRIA.
+(zał. III pkt 5, litery [DO SPRAWDZENIA]). Gdy DPIA z art. 35 RODO pokrywa już
+część FRIA, podmiot stosujący może się do niej odwołać albo przejąć jej części
+(art. 27 ust. 4 w brzmieniu rozporządzenia (UE) 2026/1744). Skill sygnalizuje wymóg
+i odsyła do `rodo-dpia-pl` w części pokrywającej się z DPIA - nie wykonuje FRIA.
 
 ### Krok 8 - raport: karta triage
 
