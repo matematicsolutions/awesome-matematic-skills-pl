@@ -5,6 +5,20 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.19e] - 2026-10-19
+
+### Changed
+
+- `nis2-ksc-pl` 1.1.0 (`ochrona-danych`): znaczniki „[DO SPRAWDZENIA]” o polskiej ustawie zastapione
+  przepisami ustawy o KSC w brzmieniu z nowelizacji z 23 stycznia 2026 r. (Dz.U. 2026 poz. 252),
+  przeczytanymi w jej tekscie: podzial na podmioty kluczowe i wazne (art. 5), zgloszenia do
+  wlasciwego CSIRT sektorowego 24 h / 72 h / miesiac przez system z art. 46 (art. 11, za podmiot
+  publiczny jednostka wyznaczona - art. 16h), odpowiedzialnosc, obowiazki i coroczne szkolenie
+  kierownika (art. 8c-8e), kary dla podmiotu (art. 73 ust. 3-5: 10 mln EUR / 2%, 7 mln EUR / 1,4%,
+  do 100 mln zl) i kierownika (art. 73a: do 300% wynagrodzenia, w podmiocie publicznym 100%) oraz
+  zakaz pelnienia funkcji zarzadczych w podmiocie kluczowym (art. 53 ust. 9 pkt 6). Rejestr
+  `reviews/legal-accuracy.md` 15/15.
+
 ## [2026.10.19d] - 2026-10-19
 
 ### Changed
