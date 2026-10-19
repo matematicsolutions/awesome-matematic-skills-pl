@@ -1,14 +1,13 @@
 ---
 name: eu-sparql-search
 description: >
-  Search EU legislation, publications and CJEU case law using the Publications Office
-  SPARQL endpoint and Cellar knowledge graph (CDM ontology). Use this skill whenever
-  the user wants to find EU acts (regulations, directives, decisions), search EUR-Lex
-  by CELEX number, date or subject, retrieve CJEU rulings, download EU documents in
-  specific languages or formats, or build SPARQL queries against
-  https://publications.europa.eu/webapi/rdf/sparql. Also trigger when the user asks
-  about EU law programmatically, wants to query Cellar metadata, or mentions CDM
-  ontology, EUR-Lex, EU publications, or SPARQL + EU/legislation. Unlike the
+  Use when you need EU legislation, publications or CJEU case law found by CELEX number,
+  date, subject or document type, or a SPARQL query written for the Publications Office
+  endpoint (https://publications.europa.eu/webapi/rdf/sparql) and the Cellar knowledge
+  graph (CDM ontology): finding regulations, directives and decisions, searching EUR-Lex,
+  retrieving CJEU judgments, orders and Advocate General opinions, downloading a document
+  in a given language or format, querying Cellar metadata. Not for checking whether a
+  quoted passage or citation is accurate, and not for national law. Unlike the
   verification and drafting skills, this one reaches out: your query goes to the EU
   Publications Office endpoint, so phrase it in terms of the law, not of your matter.
 license: Apache-2.0
@@ -16,6 +15,14 @@ allowed-tools: [WebFetch, Read]
 data-residency: local
 requires-human-approval: false
 pii-egress: none
+last_verified: 2026-10-19
+freshness_window: 12 months
+freshness_category: procedural
+verified_against:
+  - https://publications.europa.eu/webapi/rdf/sparql
+metadata:
+  author: "Wiesław Mazur / MateMatic"
+  version: "1.1.0"
 ---
 
 # EU SPARQL Search - Cellar / EUR-Lex
@@ -79,13 +86,15 @@ DEC        -> Decision
 RECO       -> Recommendation
 OPIN       -> Opinion
 JUDG       -> Judgment (CJEU)
-ORDER_CJEU -> Order (CJEU)
-CASELAW    -> Case law (generic)
+ORDER      -> Order (CJEU)
+OPIN_AG    -> Opinion of the Advocate General
 ```
 
 Full URI pattern: `<http://publications.europa.eu/resource/authority/resource-type/REG>`
 
-For the complete list, see `references/resource-types.md`.
+For case law as a whole use the CDM class `cdm:case-law`, not a resource type. A code that is not in
+the authority table returns an empty result, not an error - never treat "no results" as "no such
+documents" until the code is checked. Verified list and lookup query: `references/resource-types.md`.
 
 ## Language Codes
 

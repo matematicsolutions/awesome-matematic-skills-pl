@@ -5,6 +5,23 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.19b] - 2026-10-19
+
+### Fixed
+
+- `eu-sparql-search` 1.1.0 (`orzecznictwo-zrodla`): 10 z 24 kodow typu dokumentu w
+  `references/resource-types.md` nie istnialo w tabeli autorytetow Urzedu Publikacji UE, w tym
+  `ORDER_CJEU` i `CASELAW`, ktore SKILL.md podawal jako „najczestsze". Zapytanie z nieistniejacym
+  kodem zwraca pusty wynik, nie blad, wiec model mogl uznac, ze takich dokumentow nie ma. Kazdy
+  kod sprawdzony na zywym endpoincie SPARQL (2026-10-19); bledne zastapione (`ORDER`, `OPIN_AG`,
+  `DEC_FRAMW`, `PROP_REG` ...) albo usuniete; plik podaje zapytanie do sprawdzenia kodu spoza listy.
+
+### Added
+
+- `eu-sparql-search`: pola aktualnosci (`last_verified`, `freshness_window`,
+  `freshness_category`, `verified_against`) i wersja; opis zaczyna sie od tego, kiedy uzyc skilla,
+  i mowi, do czego nie sluzy (jak w hubie EN).
+
 ## [2026.10.19] - 2026-10-19
 
 ### Changed
