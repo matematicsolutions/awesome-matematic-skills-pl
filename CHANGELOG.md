@@ -5,6 +5,17 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.10.19] - 2026-10-19
+
+### Changed
+
+- `marko-pl-content` 1.3.0 (`jakosc-tresci`): opis zaczyna sie od tego, kiedy go uzyc (typowe
+  prosby: „sprawdz moj post", „czy to nadaje sie do publikacji"), mowi, co zwraca, i czego nie
+  robi (przeglad kodu, sama korekta, tlumaczenie). Dotad opieral sie na wolaczu „marko?",
+  ktorego nowy uzytkownik nie zna - wpis w katalogu Claude mial instalacje bez uzyc. Kolejnosc
+  zrodel tekstu: najpierw tekst wklejony, potem wskazany plik, dopiero potem `git diff HEAD` -
+  wczesniej wklejony tekst przegrywal z niezwiazanymi zmianami w repozytorium.
+
 ## [2026.10.13e] - 2026-10-13
 
 ### Added
