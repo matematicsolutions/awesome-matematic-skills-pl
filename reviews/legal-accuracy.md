@@ -207,3 +207,23 @@ Sprawdzono 2026-10-19, drugi przebieg (Kroki 2, 5, 6, 7 i karta): kazda jednostk
 - art. 73 ust. 5 - ok - naruszenie powodujace bezposrednie i powazne cyberzagrozenie dla obronnosci, bezpieczenstwa panstwa, bezpieczenstwa i porzadku publicznego lub zycia i zdrowia ludzi albo zagrozenie powaznej szkody majatkowej lub powaznych utrudnien w swiadczeniu uslug - kara "do 100 000 000 zl".
 - art. 73a - ok - art. 1 pkt 83 nowelizacji (art. 73a-73c): kara dla kierownika; ust. 4 "nie wiekszej niz 300 % otrzymywanego przez ukaranego wynagrodzenia obliczanego wedlug zasad ... ekwiwalentu pienieznego za urlop"; ust. 5 w podmiocie publicznym "nie wiekszej niz 100 %".
 - art. 53 ust. 9 - ok - art. 53 w nowym brzmieniu (art. 1 pkt 63): gdy podmiot kluczowy nie zastosowal sie do nakazu (ust. 5 pkt 1) lub decyzji (ust. 5 pkt 2-8), organ moze m.in. "6) zakazac pelnienia w podmiocie kluczowym funkcji zarzadczych przez kierownika podmiotu do czasu usuniecia uchybien lub zaprzestania naruszen, o ile nie doprowadzi to do uniemozliwienia funkcjonowania podmiotu".
+
+## memo-z-repertorium-pl
+
+Sprawdzono 2026-11-03 (nowy skill, pelny mianownik jednostek). Skill nie stawia tez o tresci przepisow - jednostki to przyklady procedury i zakres narzedzia.
+
+- art. 394 - ok - art. 394 par. 1-3 k.c. przeczytany w Repertorium `eli:DU/2026/795` (t.j. Dz.U. 2026 poz. 795, zrodlo Sejm ELI), offset 155150-156050, 2026-11-03. W skillu tylko jako przyklad zapytania i skali kosztu testu, bez tezy prawnej.
+- § 3 - ok - art. 394 par. 3 k.c. w tym samym odczycie: "W razie rozwiazania umowy zadatek powinien byc zwrocony (...) albo za ktore ponosza odpowiedzialnosc obie strony". W skillu jako przyklad parametru `provision` dla `get_citations`; wywolanie wykonane na konektorze 2026-11-03 (12 pozycji, `completeness.floor: true`).
+- Article 394 - ok - przyklad blednej (angielskiej) formy zapytania do korpusu PL, bez tezy prawnej.
+- art. 85 - ok - "art. 85-92a Kodeksu karnego" to zakres narzedzia `provision_text_at` wedlug `MAPA_NARZEDZI` w `src/mcp.ts` repertorium-cf-spike (commit 2031f00, na produkcji 2026-11-03). Teza o narzedziu, nie o tresci przepisu.
+
+## repertorium-zasady-pl
+
+Sprawdzono 2026-11-03 (nowy skill, pelny mianownik jednostek). Kopia instrukcji serwera Repertorium; jednostki to przyklady form zapytania i zakres narzedzi.
+
+- art. 236 - ok - przyklad `art. 236 k.p.k.` z `MAPA_NARZEDZI` (`search_law`) w `src/mcp.ts` @2031f00; forma zapytania, bez tezy o tresci.
+- art. 415 - ok - przyklad poprawnej polskiej formy zapytania z instrukcji serwera (sekcja JEZYK ZAPYTAN, `src/mcp.ts` @2031f00); bez tezy o tresci.
+- Article 415 - ok - przyklad blednej angielskiej formy z tej samej instrukcji; bez tezy.
+- art. 394 - ok - jak w memo-z-repertorium-pl: przeczytany w `eli:DU/2026/795`, offset 155150-156050, 2026-11-03; w skillu przyklad parametru `provision`.
+- § 3 - ok - jak wyzej; przyklad `provision: "art. 394 § 3"`, wywolanie wykonane na konektorze 2026-11-03.
+- art. 85 - ok - zakres `provision_text_at` (art. 85-92a k.k.) wedlug `MAPA_NARZEDZI` @2031f00, z data stanu w tabeli skilla.

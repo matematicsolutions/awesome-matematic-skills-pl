@@ -5,6 +5,18 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.11.03] - 2026-11-03
+
+### Added
+
+- `memo-z-repertorium-pl` 1.0.0 i `repertorium-zasady-pl` 1.0.0 (`orzecznictwo-zrodla` 2.1.0): praca z
+  konektorem Repertorium. Zasady - mapa „pytanie -> narzedzie” dla 10 narzedzi, czytanie pol wyniku,
+  pytanie do korpusu po polsku, oszczedzanie limitu dokumentow; kopia instrukcji serwera ze stanem na
+  3.11.2026 (przy roznicy wygrywa serwer). Memo - procedura granice -> przepis -> orzecznictwo -> sila
+  linii -> `verify_citations`, przypis pod kazdym akapitem, klasy tez Zweryfikowane / Do sprawdzenia /
+  Nie uzywac. Przetestowane na konektorze 3.11.2026 (7 wywolan, 2 dokumenty). Konektora Repertorium
+  wtyczka NIE deklaruje w `.mcp.json` - podlacza sie go osobno.
+
 ## [2026.10.19f] - 2026-10-19
 
 ### Added

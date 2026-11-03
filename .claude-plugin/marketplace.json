@@ -23,8 +23,8 @@
     },
     {
       "name": "orzecznictwo-zrodla",
-      "description": "Wyszukiwanie i pobieranie zrodel prawa PL/UE (7 skilli): SAOS, EUR-Lex, katalog zrodel krajowych, hierarchia zrodel (routing autorytetu przed odpowiedzia), struktura wyroku (streszczenie ekstraktywne), grounding cytatu decyzji UODO (uodo-grounding-pl), webwright (orzeczenia spoza MCP przez Playwright). Niesie konektory MCP saos/krs/eu-sparql (read-only, publiczne API). Wymaga node/npx.",
-      "version": "2.0.1",
+      "description": "Wyszukiwanie i pobieranie zrodel prawa PL/UE (9 skilli): SAOS, EUR-Lex, katalog zrodel krajowych, hierarchia zrodel (routing autorytetu przed odpowiedzia), struktura wyroku (streszczenie ekstraktywne), grounding cytatu decyzji UODO (uodo-grounding-pl), webwright (orzeczenia spoza MCP przez Playwright), praca z konektorem Repertorium: zasady (repertorium-zasady-pl) i memo z przypisami ze zrodel (memo-z-repertorium-pl; konektor Repertorium podlacza sie osobno). Niesie konektory MCP saos/krs/eu-sparql (read-only, publiczne API). Wymaga node/npx.",
+      "version": "2.1.0",
       "author": {
         "name": "Wieslaw Mazur / MateMatic"
       },

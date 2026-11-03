@@ -94,6 +94,8 @@ Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, 
 | [<img src="./assets/badge-hierarchia-zrodel-pl.svg" alt="Hierarchia zrodel" width="200" height="60">](./orzecznictwo-zrodla/skills/hierarchia-zrodel-pl) | Routing autorytetu przed odpowiedzia: ktora warstwa zrodel rzadzi pytaniem (Konstytucja / UE / ustawa / orzecznictwo / soft law), w jakiej kolejnosci weryfikowac i ktorym konektorem. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-struktura-wyroku-pl.svg" alt="Struktura Wyroku" width="200" height="60">](./orzecznictwo-zrodla/skills/struktura-wyroku-pl) | Rozklada orzeczenie na role retoryczne (stan faktyczny, zarzuty, podstawa prawna, rozwazania, sentencja, teza) i streszcza ekstraktywnie - cytuje zdania sadu, nie parafrazuje. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-uodo-grounding-pl.svg" alt="UODO Grounding" width="200" height="60">](./orzecznictwo-zrodla/skills/uodo-grounding-pl) | Mechaniczny weryfikator cytatu dla decyzji Prezesa UODO - gradient ISTNIENIE/TRESC/FRAGMENT, silnik wspoldzielony z citation-grounding-pl. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-repertorium-zasady-pl.svg" alt="Repertorium - zasady" width="200" height="60">](./orzecznictwo-zrodla/skills/repertorium-zasady-pl) | Zasady pracy z konektorem Repertorium: ktore z 10 narzedzi na jakie pytanie, jak czytac pola wyniku (podloga powolan, data zmiany korpusu, odmowa limitu), pytanie do korpusu po polsku, oszczedzanie limitu. Konektor Repertorium podlacza sie osobno. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-memo-z-repertorium-pl.svg" alt="Memo z Repertorium" width="200" height="60">](./orzecznictwo-zrodla/skills/memo-z-repertorium-pl) | Memo robocze z przypisem pod kazdym akapitem: przepis z brzmieniem, orzecznictwo z identyfikatorem i linkiem, sila linii z grafu powolan, nazwane granice zrodel i sprawdzenie wszystkich powolan przed oddaniem. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `dokumenty` (konwersja, redline, anonimizacja)
 
@@ -200,7 +202,7 @@ Pakiet wyzej to warstwa walidacji outputu i narzedzia konwersji. Pelny ekosystem
 
 Trzy drogi. **A** (`npx skills`) dziala w **dowolnym agencie** wspierajacym format Agent Skills (Cursor, OpenAI Codex, Windsurf, Gemini CLI, Claude Code) i instaluje pojedyncze skille. **B** to natywny marketplace Claude Code - instaluje calymi bundlami, z zachowaniem granic pluginu. Wspolne reguly kazdej wtyczki (`SHARED-RULES.md`) sa skopiowane na koniec kazdego `SKILL.md` skryptem `scripts/shared-rules-sync.py`, wiec dzialaja na kazdej drodze, takze przy pojedynczym skillu. Wyjatek: `multi-jurysdykcja-ue` nie ma skilli, tylko konektory. **C** to reczny symlink jednego skilla.
 
-**Co zainstalowac.** Kancelaria zaczyna od `fundament-weryfikacyjny` (rdzen walidacji) i `orzecznictwo-zrodla` (zrodla PL/UE), a `dokumenty`, `governance-kancelarii`, `jakosc-tresci` i `ochrona-danych` dobiera wedlug potrzeb. Bundle `dev-mcp` to warsztat dla deweloperow - pomin go, jesli nie budujesz skilli ani serwerow MCP. Caly hub jedna komenda (`npx skills add ...` bez `--skill`) wciaga wszystkie 46 skilli naraz; wiekszosc kancelarii woli `--skill` albo `/plugin install` wybranych bundli.
+**Co zainstalowac.** Kancelaria zaczyna od `fundament-weryfikacyjny` (rdzen walidacji) i `orzecznictwo-zrodla` (zrodla PL/UE), a `dokumenty`, `governance-kancelarii`, `jakosc-tresci` i `ochrona-danych` dobiera wedlug potrzeb. Bundle `dev-mcp` to warsztat dla deweloperow - pomin go, jesli nie budujesz skilli ani serwerow MCP. Caly hub jedna komenda (`npx skills add ...` bez `--skill`) wciaga wszystkie 49 skilli naraz; wiekszosc kancelarii woli `--skill` albo `/plugin install` wybranych bundli.
 
 ### A. Dowolny agent - `npx skills` (cross-agent)
 
@@ -231,7 +233,7 @@ npx skills add matematicsolutions/awesome-matematic-skills-pl --skill citation-g
 /plugin install dev-mcp@matematic-skills-pl                      # narzedzia deweloperskie (advanced)
 ```
 
-Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 48 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
+Fundament dziala bez zadnych konektorow i niczego nie wysyla na zewnatrz. Plugin `orzecznictwo-zrodla` uruchamia konektory MCP przez `npx`, wiec wymaga `node` w srodowisku. Wszystkie 49 umiejetnosci sa w bundlach - nic nie lezy juz pojedynczo.
 
 ### C. Pojedynczy skill jako symlink do ~/.claude/skills/
 
