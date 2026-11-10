@@ -8,6 +8,9 @@
 - **`scripts/smoke_adeu.py`** zastepuje reczny smoke test: dluga syntetyczna umowa,
   zmiana w ostatnim paragrafie, extract / apply / extract / sanitize, trojstan i kod
   wyjscia. Kontrola pozytywna `--bez-page-all` daje BLOKADE.
+- **Scenariusz formatowania w smoke tescie**: tabela, numeracja automatyczna, sledzone
+  zmiany drugiej strony, tekst rozbity pogrubieniem. Kontrola `--kontrola-formatu`.
+  Nowe ograniczenie w SKILL.md: `extract` oddaje kazdy punkt listy jako `1.`.
 
 ## bez zmiany wersji - 2026-09-16
 

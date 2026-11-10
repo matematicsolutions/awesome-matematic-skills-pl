@@ -59,7 +59,8 @@ Cala praca lokalnie (uvx, brak chmury). Silnik testowany na polskim .docx 2026-0
 >
 > **Podniesienie pinu = swiadoma decyzja**, nie efekt uboczny. Stan 2026-11-10: adeu 3.2.1
 > deklaruje `fastmcp[apps]<4,>=3.4.7` (metadane PyPI), wiec bariera bety wyglada na zdjeta.
-> Tej wersji jeszcze nie uruchamialismy. Warunek podniesienia: `scripts/smoke_adeu.py` i decyzja WM.
+> Smoke 2026-11-10 na 3.2.1: 27/27, ten sam wynik co 1.30.0. Pin zostaje, bo workflow nie potrzebuje
+> nowszej wersji, a 3.2.1 ma kilka godzin. Warunek podniesienia: konkretna potrzeba, `scripts/smoke_adeu.py` i decyzja WM.
 > Powierzchnia CLI 1.30.0 (zweryfikowana): `extract`, `init`, `diff`, `apply`,
 > `accept-all`, `markup`, `sanitize`, `help`.
 
@@ -281,6 +282,9 @@ Dwie rozne warstwy wycieku, obie trzeba domknac.
 
 - Live MS Word tylko Windows + zainstalowany Word (backend Python).
 - `target_text` na dopasowaniu tekstu - przy duplikatach trzeba kontekstu.
+- Numeracja automatyczna Worda nie przechodzi do Markdown: kazdy punkt listy dostaje `1.`
+  (zmierzone 2026-11-10 na syntetycznej liscie, 1.30.0 i 3.2.1). Nie wskazuj postanowien po
+  numerze z `extract` i nie sprawdzaj nim odeslan typu "ust. 2". `apply` numeracje zachowuje.
 - adeu to narzedzie wspomagajace, NIE zastepuje weryfikacji przez prawnika.
 - Silnik zewnetrzny (adeu, Dealfluence) - przy kazdej zmianie wersji uruchom
   `python scripts/smoke_adeu.py --wersja X.Y.Z` (dluga syntetyczna umowa, zmiana w ostatnim
