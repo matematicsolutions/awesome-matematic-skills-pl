@@ -1,5 +1,14 @@
 # Changelog - redline-docx-pl
 
+## bez zmiany wersji - 2026-11-10
+
+- **Naprawa: `extract` z `--page all`.** Bez tej flagi `extract -o` zapisuje tylko
+  syntetyczna strone 1 i konczy sie kodem 0 (1.30.0: 39 z 600 paragrafow), wiec na
+  dlugich umowach krok 1 oddawal poczatek dokumentu. Zgloszenie: zespol Adeu.
+- **`scripts/smoke_adeu.py`** zastepuje reczny smoke test: dluga syntetyczna umowa,
+  zmiana w ostatnim paragrafie, extract / apply / extract / sanitize, trojstan i kod
+  wyjscia. Kontrola pozytywna `--bez-page-all` daje BLOKADE.
+
 ## bez zmiany wersji - 2026-09-16
 
 Parytet z kopia robocza (wprowadzone tam 2026-08-27).

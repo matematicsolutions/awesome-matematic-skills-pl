@@ -57,8 +57,9 @@ Cala praca lokalnie (uvx, brak chmury). Silnik testowany na polskim .docx 2026-0
 > To klasa cichej awarii - narzedzie konczy sie sukcesem, a uruchamia co innego, niz
 > deklaruje dokumentacja. Ta sama regula pinu obowiazuje przy `@firecrawl/anydoc`.
 >
-> **Podniesienie pinu = swiadoma decyzja**, nie efekt uboczny - i dzis oznacza wejscie
-> na bete FastMCP 4. Nie robimy tego przed freezem PATRON 2.0.0.
+> **Podniesienie pinu = swiadoma decyzja**, nie efekt uboczny. Stan 2026-11-10: adeu 3.2.1
+> deklaruje `fastmcp[apps]<4,>=3.4.7` (metadane PyPI), wiec bariera bety wyglada na zdjeta.
+> Tej wersji jeszcze nie uruchamialismy. Warunek podniesienia: `scripts/smoke_adeu.py` i decyzja WM.
 > Powierzchnia CLI 1.30.0 (zweryfikowana): `extract`, `init`, `diff`, `apply`,
 > `accept-all`, `markup`, `sanitize`, `help`.
 
@@ -107,8 +108,13 @@ konwersji nieodroznialny od propozycji merytorycznych.
 ### 1. Czytaj - .docx do Markdown dla LLM
 
 ```bash
-uvx --from adeu==1.30.0 adeu extract umowa.docx -o umowa.md
+uvx --from adeu==1.30.0 adeu extract umowa.docx --page all -o umowa.md
 ```
+
+> **`--page all` jest obowiazkowe.** Bez niego `extract -o` zapisuje tylko strone 1
+> (syntetyczna strona ok. 19 tys. znakow, nie strona Worda) i konczy sie kodem 0.
+> Zmierzone 2026-11-10 na 1.30.0: 39 z 600 paragrafow. Jedyny slad to baner
+> `Page 1 of N` na gorze pliku. Zgloszenie: zespol Adeu.
 
 Zwraca czysty Markdown (+ opcjonalny Semantic Appendix: defined terms, cross-references,
 typos). LLM pracuje na semantyce, nie na surowym OOXML - kilkukrotnie mniej tokenow
@@ -276,7 +282,9 @@ Dwie rozne warstwy wycieku, obie trzeba domknac.
 - Live MS Word tylko Windows + zainstalowany Word (backend Python).
 - `target_text` na dopasowaniu tekstu - przy duplikatach trzeba kontekstu.
 - adeu to narzedzie wspomagajace, NIE zastepuje weryfikacji przez prawnika.
-- Silnik zewnetrzny (adeu, Dealfluence) - przy aktualizacji wersji zrob ponowny smoke test.
+- Silnik zewnetrzny (adeu, Dealfluence) - przy kazdej zmianie wersji uruchom
+  `python scripts/smoke_adeu.py --wersja X.Y.Z` (dluga syntetyczna umowa, zmiana w ostatnim
+  paragrafie, kod 0 = OK, 20 = BLOKADA). Kontrola pozytywna: `--bez-page-all` musi dac BLOKADE.
 - W `vendor/docx-engine/` lezy DRUGI silnik (GenOffice, Apache-2.0), zweryfikowany
   pomiarowo, ale **NIE wpiety w zaden krok workflow**. Workflow stoi w calosci na adeu.
   Nie wolaj go z tego skilla, dopoki nie zapadnie decyzja opisana nizej.
