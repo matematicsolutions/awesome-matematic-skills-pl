@@ -1,5 +1,12 @@
 # Changelog - redline-docx-pl
 
+## bez zmiany wersji - 2026-11-13
+
+- **Smoke test po adeu 3.2.2**: trojstan OK / UWAGI / BLOKADA (kod 0/10/20). Trzy nowe
+  kontrole jako UWAGI: numery list w extract, `-o` bez `--page` oddaje caly dokument,
+  komunikat na stderr przy czesciowym wyniku. Warunek wstepny i kontrola uzywaja jawnie
+  `--page 1`, wiec dzialaja na kazdej wersji. 3.2.2: 30/30; 1.30.0: UWAGI 3. Pin bez zmian.
+
 ## bez zmiany wersji - 2026-11-10
 
 - **Naprawa: `extract` z `--page all`.** Bez tej flagi `extract -o` zapisuje tylko

@@ -59,8 +59,9 @@ Cala praca lokalnie (uvx, brak chmury). Silnik testowany na polskim .docx 2026-0
 >
 > **Podniesienie pinu = swiadoma decyzja**, nie efekt uboczny. Stan 2026-11-10: adeu 3.2.1
 > deklaruje `fastmcp[apps]<4,>=3.4.7` (metadane PyPI), wiec bariera bety wyglada na zdjeta.
-> Smoke 2026-11-10 na 3.2.1: 27/27, ten sam wynik co 1.30.0. Pin zostaje, bo workflow nie potrzebuje
-> nowszej wersji, a 3.2.1 ma kilka godzin. Warunek podniesienia: konkretna potrzeba, `scripts/smoke_adeu.py` i decyzja WM.
+> Smoke 2026-11-13 na 3.2.2: 30/30 OK; na 1.30.0: UWAGI 3 (numery list, `-o` bez `--page`, brak komunikatu
+> na stderr - wszystkie trzy poprawione w 3.2.2 po naszym zgloszeniu). Konkretna potrzeba podniesienia pinu
+> juz jest (numeracja postanowien); warunek: tydzien bez poprawek 3.2.x, `scripts/smoke_adeu.py` i decyzja WM.
 > Powierzchnia CLI 1.30.0 (zweryfikowana): `extract`, `init`, `diff`, `apply`,
 > `accept-all`, `markup`, `sanitize`, `help`.
 
@@ -283,12 +284,14 @@ Dwie rozne warstwy wycieku, obie trzeba domknac.
 - Live MS Word tylko Windows + zainstalowany Word (backend Python).
 - `target_text` na dopasowaniu tekstu - przy duplikatach trzeba kontekstu.
 - Numeracja automatyczna Worda nie przechodzi do Markdown: kazdy punkt listy dostaje `1.`
-  (zmierzone 2026-11-10 na syntetycznej liscie, 1.30.0 i 3.2.1). Nie wskazuj postanowien po
-  numerze z `extract` i nie sprawdzaj nim odeslan typu "ust. 2". `apply` numeracje zachowuje.
+  (zmierzone 2026-11-10 na syntetycznej liscie, 1.30.0 i 3.2.1; poprawione w 3.2.2). Dopoki pin
+  stoi na 1.30.0: nie wskazuj postanowien po numerze z `extract` i nie sprawdzaj nim odeslan typu
+  "ust. 2". `apply` numeracje zachowuje.
 - adeu to narzedzie wspomagajace, NIE zastepuje weryfikacji przez prawnika.
 - Silnik zewnetrzny (adeu, Dealfluence) - przy kazdej zmianie wersji uruchom
   `python scripts/smoke_adeu.py --wersja X.Y.Z` (dluga syntetyczna umowa, zmiana w ostatnim
-  paragrafie, kod 0 = OK, 20 = BLOKADA). Kontrola pozytywna: `--bez-page-all` musi dac BLOKADE.
+  paragrafie, kod 0 = OK, 10 = UWAGI, czyli znane ograniczenia wersji, 20 = BLOKADA).
+  Kontrola pozytywna: `--bez-page-all` wymusza `--page 1` i musi dac BLOKADE.
 - W `vendor/docx-engine/` lezy DRUGI silnik (GenOffice, Apache-2.0), zweryfikowany
   pomiarowo, ale **NIE wpiety w zaden krok workflow**. Workflow stoi w calosci na adeu.
   Nie wolaj go z tego skilla, dopoki nie zapadnie decyzja opisana nizej.
