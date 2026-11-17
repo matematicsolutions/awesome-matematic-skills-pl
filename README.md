@@ -83,7 +83,7 @@ Bundle instaluj-zawsze. Neutralny jurysdykcyjnie, bez konektorow, bez wlasnych p
 
 ### Plugin `orzecznictwo-zrodla` (Orzecznictwo PL / UE + konektory)
 
-Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, publiczne API; wymaga node/npx) plus `webwright-legal-pl` do serwisow niedostepnych przez MCP. Instalacja: `/plugin install orzecznictwo-zrodla@matematic-skills-pl`.
+Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, publiczne API; wymaga node/npx), zdalny konektor `repertorium` (przy pierwszym uzyciu logowanie adresem e-mail i kodem, konto bezplatne z limitem wywolan z regulaminu Repertorium) plus `webwright-legal-pl` do serwisow niedostepnych przez MCP. Instalacja: `/plugin install orzecznictwo-zrodla@matematic-skills-pl`.
 
 | Skill | Opis | Licencja | Wersja |
 |---|---|---|---|
@@ -94,7 +94,7 @@ Bundle ze zrodlami. Niesie konektory MCP `saos`, `krs`, `eu-sparql` (read-only, 
 | [<img src="./assets/badge-hierarchia-zrodel-pl.svg" alt="Hierarchia zrodel" width="200" height="60">](./orzecznictwo-zrodla/skills/hierarchia-zrodel-pl) | Routing autorytetu przed odpowiedzia: ktora warstwa zrodel rzadzi pytaniem (Konstytucja / UE / ustawa / orzecznictwo / soft law), w jakiej kolejnosci weryfikowac i ktorym konektorem. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-struktura-wyroku-pl.svg" alt="Struktura Wyroku" width="200" height="60">](./orzecznictwo-zrodla/skills/struktura-wyroku-pl) | Rozklada orzeczenie na role retoryczne (stan faktyczny, zarzuty, podstawa prawna, rozwazania, sentencja, teza) i streszcza ekstraktywnie - cytuje zdania sadu, nie parafrazuje. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-uodo-grounding-pl.svg" alt="UODO Grounding" width="200" height="60">](./orzecznictwo-zrodla/skills/uodo-grounding-pl) | Mechaniczny weryfikator cytatu dla decyzji Prezesa UODO - gradient ISTNIENIE/TRESC/FRAGMENT, silnik wspoldzielony z citation-grounding-pl. | Apache-2.0 | 1.0.0 |
-| [<img src="./assets/badge-repertorium-zasady-pl.svg" alt="Repertorium - zasady" width="200" height="60">](./orzecznictwo-zrodla/skills/repertorium-zasady-pl) | Zasady pracy z konektorem Repertorium: ktore z 10 narzedzi na jakie pytanie, jak czytac pola wyniku (podloga powolan, data zmiany korpusu, odmowa limitu), pytanie do korpusu po polsku, oszczedzanie limitu. Konektor Repertorium podlacza sie osobno. | Apache-2.0 | 1.0.0 |
+| [<img src="./assets/badge-repertorium-zasady-pl.svg" alt="Repertorium - zasady" width="200" height="60">](./orzecznictwo-zrodla/skills/repertorium-zasady-pl) | Zasady pracy z konektorem Repertorium: ktore z 10 narzedzi na jakie pytanie, jak czytac pola wyniku (podloga powolan, data zmiany korpusu, odmowa limitu), pytanie do korpusu po polsku, oszczedzanie limitu. Konektor Repertorium instaluje sie razem z pluginem. | Apache-2.0 | 1.0.0 |
 | [<img src="./assets/badge-memo-z-repertorium-pl.svg" alt="Memo z Repertorium" width="200" height="60">](./orzecznictwo-zrodla/skills/memo-z-repertorium-pl) | Memo robocze z przypisem pod kazdym akapitem: przepis z brzmieniem, orzecznictwo z identyfikatorem i linkiem, sila linii z grafu powolan, nazwane granice zrodel i sprawdzenie wszystkich powolan przed oddaniem. | Apache-2.0 | 1.0.0 |
 
 ### Plugin `dokumenty` (konwersja, redline, anonimizacja)

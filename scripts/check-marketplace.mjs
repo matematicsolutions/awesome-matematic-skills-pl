@@ -13,8 +13,10 @@
  *  1. source istnieje na dysku
  *  2. bundle: skills/ ma >=1 podkatalog, kazdy z SKILL.md + frontmatter (name, description)
  *     plaski: SKILL.md w korzeniu + frontmatter (name, description)
- *  3. jesli .mcp.json istnieje: poprawny JSON z obiektem `mcpServers`
- *  4. jesli .claude-plugin/plugin.json istnieje: poprawny JSON z polem `name`
+ *  3. jesli .mcp.json istnieje: poprawny JSON z obiektem `mcpServers`; serwer zdalny (type http/sse)
+ *     ma adres https, lokalny ma `command`
+ *  4. .claude-plugin/plugin.json istnieje (obowiazkowo): poprawny JSON, `name` i `version` jak we wpisie;
+ *     nazwa wpisu = nazwa katalogu source
  *  5. wpis ma niepuste description (>=10), version, license, author.name
  *  6. kazdy katalog w ./skills/ ma odpowiadajacy wpis (brak osieroconych plaskich skilli)
  *
@@ -111,13 +113,35 @@ for (const plugin of manifest.plugins) {
     issues.push(`NO_CONTENT: ${name} - brak skills/, SKILL.md i .mcp.json`);
   }
 
-  // 3. .mcp.json (opcjonalny)
+  // 3. .mcp.json (opcjonalny); serwer zdalny (type http/sse) musi miec adres https
   const mcp = join(src, '.mcp.json');
-  if (existsSync(mcp)) checkJson(mcp, `${name}/.mcp.json`, 'mcpServers');
+  if (existsSync(mcp)) {
+    const m = checkJson(mcp, `${name}/.mcp.json`, 'mcpServers');
+    for (const [srv, cfg] of Object.entries((m && m.mcpServers) || {})) {
+      if (cfg && (cfg.type === 'http' || cfg.type === 'sse') && !/^https:\/\/\S+$/.test(String(cfg.url || '')))
+        issues.push(`BAD_REMOTE_MCP: ${name}/.mcp.json - serwer "${srv}" typu ${cfg.type} bez adresu https`);
+      if (cfg && !cfg.type && !cfg.command)
+        issues.push(`BAD_MCP_SERVER: ${name}/.mcp.json - serwer "${srv}" bez "command" i bez "type"`);
+    }
+  }
 
-  // 4. plugin.json (opcjonalny)
+  // 4. plugin.json OBOWIAZKOWY (AGENTS.md "Consistency test"): name i version zgodne z wpisem,
+  // nazwa wpisu = nazwa katalogu. Do 17.11 plugin.json byl opcjonalny, a wersji nikt nie porownywal.
   const pj = join(src, '.claude-plugin', 'plugin.json');
-  if (existsSync(pj)) checkJson(pj, `${name}/.claude-plugin/plugin.json`, 'name');
+  const folder = plugin.source.replace(/\/+$/, '').split('/').pop();
+  if (folder !== plugin.name)
+    issues.push(`FOLDER_MISMATCH: ${name} - katalog "${folder}" inny niz nazwa wpisu`);
+  if (!existsSync(pj)) {
+    issues.push(`NO_PLUGIN_JSON: ${name} - brak ${plugin.source}/.claude-plugin/plugin.json`);
+  } else {
+    const p = checkJson(pj, `${name}/.claude-plugin/plugin.json`, 'name');
+    if (p && p.name && p.name !== plugin.name)
+      issues.push(`NAME_MISMATCH: ${name} - plugin.json ma name "${p.name}"`);
+    if (p && !p.version)
+      issues.push(`NO_PLUGIN_VERSION: ${name} - plugin.json bez "version"`);
+    else if (p && plugin.version && p.version !== plugin.version)
+      issues.push(`VERSION_MISMATCH: ${name} - marketplace.json ${plugin.version}, plugin.json ${p.version}`);
+  }
 }
 
 // 6. osierocone plaskie skille w ./skills/

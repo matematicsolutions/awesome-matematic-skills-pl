@@ -14,7 +14,7 @@ Samo istnienie sygnatury nie wystarcza - sprawdź treść orzeczenia, czy rozstr
 
 ### Konektory w tym pluginie
 
-Plik `.mcp.json` deklaruje konektory polskich i unijnych źródeł (SAOS, KRS, EUR-Lex). Działają read-only na publicznych danych. Wymagają `node`/`npx` w środowisku. Dane sprawy objęte tajemnicą lub wrażliwe - oceń osobno, czy w ogóle wnosić je do narzędzia; przy wątpliwości nie przekazuj.
+Plik `.mcp.json` deklaruje konektory polskich i unijnych źródeł. SAOS, KRS i EUR-Lex działają lokalnie przez `node`/`npx`, read-only na publicznych danych. Repertorium to konektor zdalny (`https://repertorium.matematicsolutions.com/connector`): przy pierwszym użyciu poprosi o adres e-mail i kod z wiadomości. Konto jest bezpłatne, z limitem wywołań opisanym w regulaminie Repertorium. Dane sprawy objęte tajemnicą lub wrażliwe - oceń osobno, czy w ogóle wnosić je do narzędzia; przy wątpliwości nie przekazuj. Do Repertorium wysyłaj pytania o prawo, bez nazwisk i danych klienta.
 
 ### Bramka człowieka
 

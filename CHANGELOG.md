@@ -5,6 +5,22 @@ Wszystkie istotne zmiany w hubie sa odnotowywane w tym pliku.
 Format zgodny z [Keep a Changelog 1.1.0](https://keepachangelog.com/pl/1.1.0/).
 Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
 
+## [2026.11.17] - 2026-11-17
+
+### Changed
+
+- `orzecznictwo-zrodla` 2.2.0: `.mcp.json` deklaruje zdalny konektor `repertorium`
+  (`https://repertorium.matematicsolutions.com/connector`, OAuth). Instalacja pluginu podlacza Repertorium;
+  przy pierwszym uzyciu konektor prosi o adres e-mail i kod. Do tej pory (2.1.0) konektor trzeba bylo
+  dodac osobno. Wspolne reguly pluginu (`SHARED-RULES.md`, wklejone do skilli) mowia, ktore konektory
+  sa lokalne, a ktory zdalny, i ze do Repertorium idzie pytanie o prawo bez danych klienta. Konto jest
+  bezplatne, z limitem wywolan z regulaminu Repertorium. Kto dodal Repertorium wczesniej recznie, moze
+  widziec dwa wpisy z tym samym adresem - wystarczy zostawic jeden.
+- `scripts/check-marketplace.mjs`: sprawdza to, co obiecuje AGENTS.md - `plugin.json` jest obowiazkowy,
+  jego `name` i `version` zgadzaja sie z wpisem w `marketplace.json`, nazwa wpisu = nazwa katalogu;
+  zdalny serwer MCP (`type` http/sse) musi miec adres https. Do tej pory bramka sprawdzala tylko,
+  czy wersja jest wpisana.
+
 ## [2026.11.03] - 2026-11-03
 
 ### Added

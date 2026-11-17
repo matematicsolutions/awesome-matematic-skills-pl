@@ -11,6 +11,10 @@
     "eu-sparql": {
       "command": "npx",
       "args": ["-y", "@matematicsolutions/mcp-eu-sparql"]
+    },
+    "repertorium": {
+      "type": "http",
+      "url": "https://repertorium.matematicsolutions.com/connector"
     }
   }
 }
