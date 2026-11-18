@@ -15,7 +15,9 @@ Wersjonowanie: CalVer dla calego hubu (`YYYY.MM.DD`), SemVer per-skill.
   dodac osobno. Wspolne reguly pluginu (`SHARED-RULES.md`, wklejone do skilli) mowia, ktore konektory
   sa lokalne, a ktory zdalny, i ze do Repertorium idzie pytanie o prawo bez danych klienta. Konto jest
   bezplatne, z limitem wywolan z regulaminu Repertorium. Kto dodal Repertorium wczesniej recznie, moze
-  widziec dwa wpisy z tym samym adresem - wystarczy zostawic jeden.
+  widziec dwa wpisy z tym samym adresem - wystarczy zostawic jeden. Wpis wysyla naglowek
+  `X-Repertorium-Zrodlo: wtyczka-orzecznictwo-zrodla`. Dzieki niemu Repertorium rozpoznaje polaczenia z tej
+  wtyczki i liczy, ile kont powstaje przez nia. Naglowek nie niesie danych osobowych ani tresci pytan.
 - `scripts/check-marketplace.mjs`: sprawdza to, co obiecuje AGENTS.md - `plugin.json` jest obowiazkowy,
   jego `name` i `version` zgadzaja sie z wpisem w `marketplace.json`, nazwa wpisu = nazwa katalogu;
   zdalny serwer MCP (`type` http/sse) musi miec adres https. Do tej pory bramka sprawdzala tylko,

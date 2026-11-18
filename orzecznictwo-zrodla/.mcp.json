@@ -14,7 +14,8 @@
     },
     "repertorium": {
       "type": "http",
-      "url": "https://repertorium.matematicsolutions.com/connector"
+      "url": "https://repertorium.matematicsolutions.com/connector",
+      "headers": { "X-Repertorium-Zrodlo": "wtyczka-orzecznictwo-zrodla" }
     }
   }
 }
