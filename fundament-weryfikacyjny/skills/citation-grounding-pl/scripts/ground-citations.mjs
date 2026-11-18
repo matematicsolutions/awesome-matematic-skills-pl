@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// citation-grounding-pl v2.5 - mechaniczny weryfikator cytatu z GRADIENTEM weryfikacji (zero-dep ESM).
+// citation-grounding-pl v3.0 - mechaniczny weryfikator cytatu z GRADIENTEM weryfikacji (zero-dep ESM).
 // Usage: node ground-citations.mjs <task.json>
 //
 // Gradient (adaptacja Existence/Content/Paragraph z jeannesulzer/international-criminal-tribunals-skills, CC BY 4.0):
@@ -15,6 +15,7 @@
 
 import { readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
+import { porownajSlowa, tokeny as tokenySlow, twardy } from "./porownanie-slow.mjs";
 
 // --- Normalizacja: JEDEN DOM reguly ------------------------------------------
 // Tablica prawdy (kontrakt): doc-intel-contract-pl/contract/normalizacja.cases.json
@@ -381,14 +382,59 @@ function bestApprox(segment, source) {
 
 // --- POZIOM FRAGMENT: string-match cytatu (rdzen v1) ---
 // `mapa` = normalizeWithMap(source_text): zakresy wracaja w ORYGINALE, nie w tekscie znormalizowanym.
+// v3: najpierw porownanie NA SLOWACH (porownanie-slow.mjs). Rozstrzyga ono wszystko, co da sie rozstrzygnac
+// slowami: zmieniona tresc i istotne opuszczenie to twarda odmowa, typografia nie jest roznica. Dopasowanie
+// znakowe ponizej zostaje dla cytatow krotszych niz 3 slowa i dla przypadkow, w ktorych slowa sie nie
+// skladaja (np. tekst z OCR posklejany albo porozbijany inaczej niz w cytacie).
 function sprawdzFragment(quote, mapa) {
   const src = mapa.norm;
-  const segments = splitGaps(normalize(quote));
+  const normQuote = normalize(quote);
+  const slowa = porownajSlowa(normQuote, src);
+  const naOrg = (z) => naOryginal(mapa, z.a, z.b);
+  if (slowa.stan === "DOKLADNY" || slowa.stan === "DOKLADNY_Z_OPUSZCZENIEM") {
+    const zakres = naOrg(slowa.zakres);
+    return { dopasowanie: "dokladne", offset: zakres.start, zakres, segmenty: slowa.segmenty.map(naOrg),
+      ...(slowa.opuszczone ? { opuszczone: slowa.opuszczone, opuszczono_slow: slowa.opuszczono_slow } : {}),
+      ...(slowa.odnosniki_pominiete ? { odnosniki_pominiete: slowa.odnosniki_pominiete } : {}),
+      ...(slowa.wtracenia ? { wtracenia: slowa.wtracenia } : {}) };
+  }
+  if (slowa.stan === "ROZJAZD") {
+    return { dopasowanie: slowa.tylko_diakrytyki ? "diakrytyki" : "zmieniona_tresc", offset: -1, roznice: slowa.roznice,
+      twardy: slowa.twardy, zakres: slowa.zakres ? naOrg(slowa.zakres) : null };
+  }
+  if (slowa.stan === "OPUSZCZENIE_ISTOTNE" || slowa.stan === "OPUSZCZENIE_ZA_SZEROKIE") {
+    return { dopasowanie: slowa.stan === "OPUSZCZENIE_ISTOTNE" ? "opuszczenie_istotne" : "opuszczenie_za_szerokie", offset: -1,
+      opuszczone: slowa.opuszczone || [], opuszczone_istotne: slowa.opuszczone_istotne || [], opuszczono_slow: slowa.opuszczono_slow,
+      zakres: slowa.zakres ? naOrg(slowa.zakres) : null };
+  }
+  if (slowa.stan === "WTRACENIE_ISTOTNE") {
+    return { dopasowanie: "wtracenie_istotne", offset: -1, wtracenia: slowa.wtracenia, wtracenia_istotne: slowa.wtracenia_istotne };
+  }
+  // Cytat z opuszczeniem, ktorego segment jest za krotki, NIE wraca do dopasowania znakowego: tam "A [...] B"
+  // przechodzilo jako dokladne bez wzgledu na to, co wycieto.
+  const segments = splitGaps(normQuote.replace(/\(\s*\.\.\.\s*\)/g, "[...]"));
+  if (segments.length > 1) return { dopasowanie: "opuszczenie_niesprawdzalne", offset: -1, powod: slowa.powod || "segmentow cytatu nie da sie umiejscowic w zrodle" };
   if (segments.length === 0) return { dopasowanie: "brak", offset: -1 };
+  // Cytat z co najmniej 3 slow, ktorego slow nie da sie odnalezc w zrodle, to BRAK. Dopasowanie znakowe z progiem
+  // 15% robilo z niego "drobne roznice" takze wtedy, gdy zmieniono liczbe (pomiar 2026-11-18).
+  if (slowa.stan !== "ZA_KROTKI") return { dopasowanie: "brak", offset: -1, detail: [] };
+  // Cytat krotszy niz 3 slowa: dopasowanie znakowe, ale z liczba w cytacie tylko DOKLADNE ("art. 57" przy
+  // zrodlowym "art. 56" to jedna litera roznicy i inny przepis).
+  // To samo dla slowa twardego (spojnik, przeczenie): "wniosek i" przy zrodlowym "wniosek lub" to nie literowka.
+  const krotkiZLiczba = /\p{N}/u.test(normQuote);
+  const krotkiTwardy = krotkiZLiczba || tokenySlow(normQuote).some((x) => twardy(x.t));
+  // Dopasowanie znakowe na GRANICACH slow: "art. 5" nie moze trafic w srodek "art. 56".
+  const naGranicy = (seg, od) => {
+    for (let idx = src.indexOf(seg, od); idx !== -1; idx = src.indexOf(seg, idx + 1)) {
+      const przed = idx > 0 ? src[idx - 1] : " ", po = idx + seg.length < src.length ? src[idx + seg.length] : " ";
+      if (!/[\p{L}\p{N}]/u.test(przed) && !/[\p{L}\p{N}]/u.test(po)) return idx;
+    }
+    return -1;
+  };
   let cursor = 0, exact = true;
   const zakresy = [];
   for (const seg of segments) {
-    const idx = src.indexOf(seg, cursor);
+    const idx = naGranicy(seg, cursor);
     if (idx === -1) { exact = false; break; }
     zakresy.push(naOryginal(mapa, idx, idx + seg.length));
     cursor = idx + seg.length;
@@ -405,6 +451,7 @@ function sprawdzFragment(quote, mapa) {
     worstRatio = Math.max(worstRatio, ratio);
     detail.push({ seg: seg.slice(0, 60), dist, zakres: at >= 0 ? naOryginal(mapa, at, Math.min(at + seg.length, src.length)) : null });
   }
+  if (krotkiTwardy) return { dopasowanie: "krotki_niezgodny", offset: -1, detail };
   if (worstRatio <= 0.15) return { dopasowanie: "przyblizone", offset: -1, detail };
   return { dopasowanie: "brak", offset: -1, detail };
 }
@@ -529,7 +576,7 @@ export function verify(item) {
   if (ist.stan === "rozbiezna") osiagniety = -1;
   if (tresc && tresc.pokrycie >= 0.7) osiagniety = Math.max(osiagniety, POZIOM.TRESC);
   if (frag && frag.dopasowanie === "dokladne") osiagniety = Math.max(osiagniety, POZIOM.FRAGMENT);
-  if (frag && frag.dopasowanie === "przyblizone") osiagniety = Math.max(osiagniety, POZIOM.TRESC);
+  if (frag && (frag.dopasowanie === "przyblizone" || frag.dopasowanie === "diakrytyki")) osiagniety = Math.max(osiagniety, POZIOM.TRESC);
 
   out.osiagniety_poziom = osiagniety >= 0 ? POZIOM_NAZWA[osiagniety] : "BRAK";
 
@@ -558,10 +605,64 @@ export function verify(item) {
       out.status = "ZWERYFIKOWANY"; out.offset = frag.offset; out.zakres = frag.zakres;
       if (frag.segmenty.length > 1) out.segmenty = frag.segmenty;
       out.fragment_zrodla = fragmentZrodla(oryginal, frag.zakres);
+      // v3: cytat z opuszczeniem jest zgodny co do slowa, ale czlowiek ma ZOBACZYC, co wycieto.
+      if (frag.opuszczone) {
+        out.opuszczone = frag.opuszczone; out.opuszczono_slow = frag.opuszczono_slow;
+        out.note = `slowa zgodne; cytat pomija ${frag.opuszczono_slow} slow zrodla - sprawdz, czy wyciecie nie zmienia sensu: ` +
+          frag.opuszczone.map((x) => `"${x}"`).join(", ");
+      }
+      if (frag.odnosniki_pominiete) out.odnosniki_pominiete = frag.odnosniki_pominiete;
+      if (frag.wtracenia) {
+        out.wtracenia = frag.wtracenia;
+        out.note = (out.note ? out.note + "; " : "") + "cytat zawiera wtracenie cytujacego w nawiasie kwadratowym (pominiete przy porownaniu): " +
+          frag.wtracenia.map((x) => `"${x}"`).join(", ");
+      }
+      return out;
+    }
+    // v3: zmieniona tresc i istotne opuszczenie to twarda odmowa z NAZWANA roznica - nie "drobne roznice".
+    if (frag && frag.dopasowanie === "zmieniona_tresc") {
+      out.status = "NIEZWERYFIKOWANY"; out.powod_kod = "zmieniona_tresc"; out.roznice = frag.roznice;
+      const pary = frag.roznice.map((r) => `"${r.cytat || "(brak)"}" zamiast "${r.zrodlo || "(brak)"}"`).join("; ");
+      out.note = `cytat rozni sie od zrodla co do slowa: ${pary}` + (frag.twardy ? " - roznica dotyczy liczby, przeczenia albo spojnika (BLOKADA)" : " (BLOKADA)");
+      if (frag.zakres) out.fragment_zrodla = fragmentZrodla(oryginal, frag.zakres);
+      return out;
+    }
+    if (frag && (frag.dopasowanie === "opuszczenie_istotne" || frag.dopasowanie === "opuszczenie_za_szerokie" || frag.dopasowanie === "opuszczenie_niesprawdzalne")) {
+      out.status = "NIEZWERYFIKOWANY"; out.powod_kod = frag.dopasowanie;
+      if (frag.opuszczone) out.opuszczone = frag.opuszczone;
+      if (frag.opuszczone_istotne) out.opuszczone_istotne = frag.opuszczone_istotne;
+      out.note = frag.dopasowanie === "opuszczenie_istotne"
+        ? `cytat wycina ze zrodla slowa, ktore moga zmieniac sens (${frag.opuszczone_istotne.join(", ")}): ` + frag.opuszczone.map((x) => `"${x}"`).join(", ") + " (BLOKADA)"
+        : frag.dopasowanie === "opuszczenie_za_szerokie"
+          ? `segmenty cytatu stoja w zrodle ponad 40 slow od siebie (${frag.opuszczono_slow}) - to dwa rozne miejsca, nie jeden cytat (BLOKADA)`
+          : `cytatu z opuszczeniem nie da sie sprawdzic: ${frag.powod} (BLOKADA)`;
+      if (frag.zakres) out.fragment_zrodla = fragmentZrodla(oryginal, frag.zakres);
+      return out;
+    }
+    if (frag && frag.dopasowanie === "wtracenie_istotne") {
+      out.status = "NIEZWERYFIKOWANY"; out.powod_kod = "wtracenie_istotne";
+      out.wtracenia = frag.wtracenia; out.wtracenia_istotne = frag.wtracenia_istotne;
+      out.note = `cytat dopisuje w nawiasie kwadratowym slowo, ktore zmienia sens (${frag.wtracenia_istotne.join(", ")}) - to nie objasnienie, tylko zmiana tresci (BLOKADA)`;
+      return out;
+    }
+    if (frag && frag.dopasowanie === "krotki_niezgodny") {
+      out.status = "NIEZWERYFIKOWANY"; out.powod_kod = "krotki_cytat_niezgodny";
+      out.note = "cytat krotszy niz 3 slowa z liczba, przeczeniem albo spojnikiem nie stoi w zrodle doslownie (BLOKADA)";
+      out.detail = frag.detail;
+      out.fragmenty_zrodla = frag.detail.map((d) => fragmentZrodla(oryginal, d.zakres));
+      return out;
+    }
+    if (frag && frag.dopasowanie === "diakrytyki") {
+      out.status = "ZMODYFIKOWANY"; out.powod_kod = "diakrytyki"; out.roznice = frag.roznice;
+      out.note = "slowa roznia sie wylacznie znakami diakrytycznymi (typowy slad OCR albo klawiatury): " +
+        frag.roznice.map((r) => `"${r.cytat}" / "${r.zrodlo}"`).join("; ");
+      if (frag.zakres) out.fragment_zrodla = fragmentZrodla(oryginal, frag.zakres);
       return out;
     }
     if (frag && frag.dopasowanie === "przyblizone") {
-      out.status = "ZMODYFIKOWANY"; out.note = "drobne roznice (interpunkcja/uciecie) - patrz diff"; out.detail = frag.detail;
+      out.status = "ZMODYFIKOWANY"; out.powod_kod = "znaki";
+      out.note = "roznice na poziomie znakow, ktorych porownanie na slowach nie rozstrzyga (cytat krotszy niz 3 slowa albo slowa inaczej posklejane niz w zrodle) - porownaj z fragmentem zrodla";
+      out.detail = frag.detail;
       // Najblizsze miejsce w zrodle dla kazdego segmentu - czlowiek porownuje z cytatem.
       out.fragmenty_zrodla = frag.detail.map((d) => fragmentZrodla(oryginal, d.zakres));
       return out;
@@ -651,6 +752,9 @@ function main() {
     kalibracja: liczba("KALIBRACJA"),
     niezweryfikowane: liczba("NIEZWERYFIKOWANY"),
     brak_zrodla: liczba("BRAK_ZRODLA"),
+    // v3: z ilu "niezweryfikowanych" wynika zmiana tresci albo opuszczenie (podzbior, nie osobna pula)
+    zmieniona_tresc: results.filter((r) => r.powod_kod === "zmieniona_tresc").length,
+    opuszczenie: results.filter((r) => String(r.powod_kod || "").startsWith("opuszczenie")).length,
   };
   // BLOKADA twarda: halucynacja lub brak zrodla. KALIBRACJA/WYMAGA_OSADU = decyzja czlowieka (miekka).
   // Pusta lista to tez BLOKADA: zero sprawdzonych cytatow nie jest dowodem, ze cytaty sa dobre.

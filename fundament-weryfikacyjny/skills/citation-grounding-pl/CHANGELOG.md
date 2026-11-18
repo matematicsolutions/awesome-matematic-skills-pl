@@ -2,6 +2,64 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/), wersjonowanie [SemVer](https://semver.org/).
 
+## [3.0.0] - 2026-11-18
+
+Wersja niezgodna wstecz: część cytatów, które do 2.6 wychodziły z żółtym statusem i kodem 0,
+teraz blokuje. Kto opiera automat na kodzie wyjścia, zobaczy więcej blokad.
+
+### Fixed
+- **Zmieniona treść cytatu przechodziła jako „drobne różnice".** Dopasowanie znak po znaku z
+  progiem 15% dawało status `ZMODYFIKOWANY` zarówno dla cudzysłowu wokół cytatu, jak i dla
+  „14 dni" zamienionego na „15 dni" albo dopisanego „nie". Ten status nie ustawiał blokady
+  i kończył się kodem 0. Na próbie zbudowanej z tekstów ośmiu kodeksów 76 z 77 cytatów ze
+  zmienioną treścią dostawało „drobne różnice", a 50 ze 120 wiernych cytatów po zwykłej
+  typografii - to samo. Status nie odróżniał jednych od drugich. Teraz każde inne słowo to
+  `NIEZWERYFIKOWANY` z `powod_kod: zmieniona_tresc` i parą „słowo z cytatu / słowo ze źródła".
+
+  Jak mierzono: zdania z tekstów jednolitych; w wariancie zmienionym jedna liczba, przeczenie
+  albo spójnik, w wariancie typograficznym cudzysłów, twarda spacja, miękki dywiz albo brak
+  kropki. Oba przypadki na krótkim tekście pokazują testy „v3" w `scripts/test-grounding.mjs`.
+- **Luka w cytacie mogła ukryć przeczenie.** `A [...] B` było zweryfikowane, gdy oba końce
+  stały w źródle po kolei - bez względu na to, co wycięto. Teraz luka wycinająca liczbę,
+  spójnik, przeczenie, wyjątek, słowo kierunku albo słowo z przedrostkiem „nie-"/„bez-" blokuje,
+  a wycięty tekst zawsze wraca w polu `opuszczone`.
+- **Luka zapisana jako `(...)` nie była rozpoznawana.** Skrypt znał tylko `[...]` i `...`.
+
+### Added
+- `scripts/porownanie-slow.mjs` - porównanie cytatu ze źródłem słowo po słowie (bez zależności).
+  Przecinki, nawiasy i cudzysłowy nie są treścią; kropka, średnik, dwukropek, `§`, `%`, liczby
+  z przecinkiem i cyfry w indeksie górnym są porównywane jak słowa.
+- Kody powodu w wyniku: `zmieniona_tresc`, `opuszczenie_istotne`, `opuszczenie_za_szerokie`,
+  `opuszczenie_niesprawdzalne`, `wtracenie_istotne`, `krotki_cytat_niezgodny`, `diakrytyki`, `znaki`. W podsumowaniu liczniki `zmieniona_tresc`
+  i `opuszczenie`.
+- Wyraz inaczej połamany przy kopiowaniu z PDF („napra- wienia") nie jest różnicą. Przy cyfrach
+  podział jest treścią („art. 5 6" to nie „art. 56"), z wyjątkiem poprawnego zapisu tysięcy.
+- Wtrącenie cytującego w nawiasie kwadratowym jest pomijane przy porównaniu i wraca w polu
+  `wtracenia`. Wtrącenie ze słowem zmieniającym sens blokuje.
+- Cytat krótszy niż 3 słowa trafia w źródło tylko na granicach słów („art. 5" nie pasuje do
+  „art. 56").
+- Odnośnik redakcyjny tekstu jednolitego przyklejony do słowa (`zdrowia.4)`): pominięty w
+  cytacie nie szkodzi, inny numer w cytacie jest różnicą.
+- Testy: 95 (było 36), w tym wywołanie skryptu z wiersza poleceń - „15 dni" zamiast „14 dni"
+  musi dać `blokada: true` i kod wyjścia różny od 0.
+
+### Changed
+- `ZMODYFIKOWANY` zostaje tylko w dwóch przypadkach: słowa różnią się wyłącznie znakami
+  diakrytycznymi (bez limitu liczby takich słów) albo cytat ma mniej niż 3 słowa, nie zawiera
+  liczby, przeczenia ani spójnika i różni się pojedynczymi znakami. Krótki cytat z liczbą,
+  przeczeniem albo spójnikiem musi zgadzać się dokładnie.
+- Cytat z luką ma dwa nowe progi (długość segmentu i odległość segmentów w źródle) - wartości
+  w tabeli kodów w SKILL.md.
+
+### Znane ograniczenia
+- Porównanie nie ocenia kompletności myśli: wierny fragment urwany przed wyjątkiem przechodzi.
+- Lista słów istotnych w luce jest listą form, nie analizą składni. Pokazuj człowiekowi pole
+  `opuszczone`, a nie sam status.
+- Cytat przechodzący przez nagłówek strony dziennika urzędowego (numer strony między kreskami
+  na końcu wiersza) dostaje fałszywą odmowę: reguła usuwania przeniesień skleja liczbę z
+  następnym słowem. W próbie dotyczyło to 6 z 600 losowych fragmentów. Poprawka wymaga
+  zmiany wspólnej tablicy normalizacji.
+
 ## [2.6.0] - 2026-10-10
 
 ### Fixed
