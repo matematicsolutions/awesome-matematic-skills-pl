@@ -240,7 +240,7 @@ blokuje. Reguły:
 - **Odnośnik redakcyjny tekstu jednolitego** przyklejony do słowa (`zdrowia.4)`) nie liczy się
   jako różnica, gdy cytat go pomija. Inny numer odnośnika w cytacie jest różnicą.
 - **Wyraz inaczej połamany to ten sam wyraz.** „napra- wienia" i „naprawienia" są zgodne. Przy
-  cyfrach podział jest treścią: „art. 5 6" to nie „art. 56". Wyjątek: poprawny zapis tysięcy
+  cyfrach podział jest treścią: „1 25 zł" to nie „125 zł". Wyjątek: poprawny zapis tysięcy
   („10 000" i „10000").
 - **Wtrącenie cytującego w nawiasie kwadratowym** („jeżeli [spółka] została zawarta") jest pomijane
   przy porównaniu i wraca w polu `wtracenia`. Wtrącenie ze słowem zmieniającym sens („[nie]",
@@ -293,9 +293,9 @@ którego przyczyną był błąd normalizacji. Ten sam fakt w dwóch domach rozje
 | C3 | III CZP 5/21  | cytat_doslowny   | FRAGMENT→ISTNIENIE | 🔴 NIEZWERYFIKOWANY| brak w źródle - BLOKADA                 |
 | C4 | I CSK 50/18   | cytat_doslowny   | FRAGMENT→TREŚĆ     | 🟠 KALIBRACJA     | złagodź do parafrazy lub oznacz prowizor.|
 | C5 | II CSK 999/19 | fakt_proceduralny| ISTNIENIE→BRAK     | 🔴 NIEZWERYFIKOWANY| rozbieżna sygnatura - możliwe falszerstwo|
-| C6 | art. 5 ustawy | cytat_doslowny   | FRAGMENT→BRAK      | 🔴 NIEZWERYFIKOWANY| zmieniona treść: „15" zamiast „14"       |
-| C7 | art. 9 ustawy | cytat_doslowny   | FRAGMENT→BRAK      | 🔴 NIEZWERYFIKOWANY| luka wycina: „nie może"                  |
-| C8 | art. 2 ustawy | cytat_doslowny   | FRAGMENT→FRAGMENT  | 🟢 ZWERYFIKOWANY  | luka pomija: „w szczególności"           |
+| C6 | I CSK 50/18   | cytat_doslowny   | FRAGMENT→BRAK      | 🔴 NIEZWERYFIKOWANY| zmieniona treść: „15" zamiast „14"       |
+| C7 | II CSK 123/19 | cytat_doslowny   | FRAGMENT→BRAK      | 🔴 NIEZWERYFIKOWANY| luka wycina: „nie może"                  |
+| C8 | III CZP 5/21  | cytat_doslowny   | FRAGMENT→FRAGMENT  | 🟢 ZWERYFIKOWANY  | luka pomija: „w szczególności"           |
 
 Wynik: 2/8 zweryfikowane. 4 blokady (C3, C5, C6, C7), 1 kalibracja (C4), 1 do osądu (C2).
 NIE publikuj dopóki C3, C5, C6 i C7 nie zostaną poprawione lub usunięte. C4 wymaga złagodzenia tezy.
