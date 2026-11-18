@@ -38,7 +38,7 @@ attribution:
       Guard STRONY oparty na niezgodności nazw metodą Jaccarda (v2.1). Stop-listy własne.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 2.6.0
+  version: 3.0.0
   companion_skills: saos-orzecznictwo, eu-sparql-search, legal-ai-audit-bundle, adversarial-legal-review-pl, deliverable-fidelity-pl, legal-request-router-pl
 ---
 
@@ -147,12 +147,15 @@ oznacz je `claim_type` i poddaj weryfikacji na właściwym poziomie. Bez cudzys�
 5. **Klasyfikuj wynik** (skrypt robi to automatycznie):
    - 🟢 `ZWERYFIKOWANY` - osiągnięty poziom ≥ wymagany. Dla FRAGMENT podaje `zakres` {start, end}
      w oryginalnym `source_text` (indeksy JS, koniec wyłączny), `offset` = `zakres.start`,
-     `segmenty` dla cytatu z luką `[...]` i `fragment_zrodla` - dosłowny wycinek źródła do wglądu
-   - 🟡 `ZMODYFIKOWANY` - cytat znaleziony z drobną różnicą (interpunkcja, diakrytyki) - diff;
-     `fragmenty_zrodla` pokazują najbliższe miejsce w źródle dla każdego segmentu
+     `segmenty` dla cytatu z luką i `fragment_zrodla` - dosłowny wycinek źródła do wglądu.
+     Przy cytacie z luką zawsze dochodzi pole `opuszczone` z wyciętym tekstem - pokaż je człowiekowi
+   - 🟡 `ZMODYFIKOWANY` - tylko dla `powod_kod: diakrytyki` i `powod_kod: znaki` (tabela kodów
+     niżej). Zmiana słowa nigdy tu nie trafia
    - 🟡 `WYMAGA_OSADU` - poziom TREŚĆ: terminy nośne obecne, substancję potwierdza człowiek / paraphrase-judge
    - 🟠 `KALIBRACJA` - osiągnięto niżej niż twierdzono (cytat dosłowny nieobecny, temat pokryty) - złagodź tezę
-   - 🔴 `NIEZWERYFIKOWANY` - brak trafienia / rozbieżna kotwica = potencjalna halucynacja, BLOKUJ
+   - 🔴 `NIEZWERYFIKOWANY` - brak trafienia / rozbieżna kotwica = potencjalna halucynacja, BLOKUJ.
+     Przy cytacie pole `powod_kod` mówi, co poszło nie tak - tabela kodów jest w sekcji
+     „Porównanie na słowach"
    - ⛔ `BRAK ŹRÓDŁA` - nie dostarczono dokumentu / nierozwiązana sygnatura tam, gdzie wymagana
 
 6. **Raport** - zwróć tabelę (niżej). 🔴 i ⛔ = **twarda blokada** (exit 1). 🟠 i 🟡 = **decyzja
@@ -213,11 +216,55 @@ Aby uniknąć fałszywych 🔴 z powodu kosmetyki, przed porównaniem skrypt:
   zerowa szerokość `U+200B`/`U+200C`/`U+200D`, BOM, word joiner
 - usuwa myślniki przenoszenia (`praw-\nnik` → `prawnik`), **miękki dywiz na łamaniu też**
   (renderuje się wyłącznie tam, więc tam znaczy przeniesienie)
-- traktuje `[...]` / `...` w cytacie jako dozwoloną lukę
+- traktuje `(...)`, `[...]` i `...` w cytacie jako lukę - sprawdzaną według reguł z sekcji niżej
 - przy kotwicy: rozwija skróty organów, normalizuje formaty dat, porównuje sygnatury bez kropek
 - przy TREŚCI: wyciąga terminy nośne (≥4 znaki, bez stopwords), liczy pokrycie w źródle (próg 0.7)
 
-Normalizacja NIE zmienia treści merytorycznej - jeśli słowo nośne jest inne, to nadal 🔴.
+Normalizacja NIE zmienia treści merytorycznej - jeśli słowo jest inne, to nadal 🔴.
+
+## Porównanie na słowach (od v3.0)
+
+Po normalizacji skrypt porównuje cytat ze źródłem słowo po słowie. Cudzysłów wokół cytatu i
+„14 dni" zamienione na „15 dni" to dla niego dwie różne sprawy: pierwsza nie jest różnicą, druga
+blokuje. Reguły:
+
+- **Każde inne słowo to zmieniona treść i blokada.** Nie ma progu „prawie pasuje". Wynik podaje
+  parę: słowo z cytatu i słowo ze źródła. Pole `twarda` mówi, czy różnica dotyczy liczby,
+  liczebnika, miesiąca, przeczenia albo spójnika.
+- **Przecinki, nawiasy i cudzysłowy nie są treścią.** Kropka, średnik, dwukropek, `§`, `%`, liczby
+  z przecinkiem (`2,5`) i cyfry w indeksie górnym są porównywane jak słowa.
+- **Luka w cytacie jest sprawdzana, nie przepuszczana.** Segmenty muszą stać w źródle po kolei.
+  Wycięty tekst zawsze wraca w polu `opuszczone`. Jeśli luka wycina liczbę, spójnik, przeczenie,
+  wyjątek, słowo kierunku („przed", „po", „mniej", „więcej") albo słowo z przedrostkiem
+  „nie-"/„bez-", wynik to blokada.
+- **Odnośnik redakcyjny tekstu jednolitego** przyklejony do słowa (`zdrowia.4)`) nie liczy się
+  jako różnica, gdy cytat go pomija. Inny numer odnośnika w cytacie jest różnicą.
+- **Wyraz inaczej połamany to ten sam wyraz.** „napra- wienia" i „naprawienia" są zgodne. Przy
+  cyfrach podział jest treścią: „art. 5 6" to nie „art. 56". Wyjątek: poprawny zapis tysięcy
+  („10 000" i „10000").
+- **Wtrącenie cytującego w nawiasie kwadratowym** („jeżeli [spółka] została zawarta") jest pomijane
+  przy porównaniu i wraca w polu `wtracenia`. Wtrącenie ze słowem zmieniającym sens („[nie]",
+  „[bez]", „[lub ...]") blokuje. `[...]` to luka, a `[1]` przy numerze jednostki to indeks.
+
+Kody powodu (`powod_kod`) i to, co niosą:
+
+| Kod | Status | Co się stało | Co pokazać człowiekowi |
+|---|---|---|---|
+| `zmieniona_tresc` | 🔴 | co najmniej jedno słowo cytatu jest inne niż w źródle | pary z `roznice`: słowo z cytatu i słowo ze źródła |
+| `opuszczenie_istotne` | 🔴 | luka wycina słowo, które może zmienić sens | `opuszczone` i `opuszczone_istotne` |
+| `opuszczenie_za_szerokie` | 🔴 | segmenty cytatu stoją w źródle ponad 40 słów od siebie | `fragment_zrodla` |
+| `opuszczenie_niesprawdzalne` | 🔴 | segment cytatu z luką ma mniej niż 3 słowa | sam cytat |
+| `wtracenie_istotne` | 🔴 | cytat dopisuje w nawiasie kwadratowym słowo zmieniające sens („Sąd [nie] może") | `wtracenia` i `wtracenia_istotne` |
+| `krotki_cytat_niezgodny` | 🔴 | cytat krótszy niż 3 słowa z liczbą, przeczeniem albo spójnikiem nie stoi w źródle dosłownie | `fragmenty_zrodla` |
+| `diakrytyki` | 🟡 | słowa różnią się wyłącznie znakami diakrytycznymi (ślad OCR) | pary z `roznice` |
+| `znaki` | 🟡 | cytat krótszy niż 3 słowa, bez liczby, przeczenia i spójnika, różni się pojedynczymi znakami | `fragmenty_zrodla` |
+
+Zweryfikowany cytat z luką nie ma kodu powodu, ale ma pole `opuszczone` - też je pokaż.
+
+Czego to porównanie nie ocenia: kompletności myśli. Wierny fragment urwany przed wyjątkiem
+(„kara wynosi 5 lat" przy źródłowym „..., chyba że sąd orzeknie inaczej") przechodzi, bo
+sprawdzane są słowa, które cytujący podał. Lista słów istotnych w luce jest listą form, a nie
+analizą składni. Dlatego przy każdej luce pokaż człowiekowi pole `opuszczone`, a nie sam status.
 
 ### Reguła normalizacji ma JEDEN DOM (od 2026-08-30)
 
@@ -246,9 +293,13 @@ którego przyczyną był błąd normalizacji. Ten sam fakt w dwóch domach rozje
 | C3 | III CZP 5/21  | cytat_doslowny   | FRAGMENT→ISTNIENIE | 🔴 NIEZWERYFIKOWANY| brak w źródle - BLOKADA                 |
 | C4 | I CSK 50/18   | cytat_doslowny   | FRAGMENT→TREŚĆ     | 🟠 KALIBRACJA     | złagodź do parafrazy lub oznacz prowizor.|
 | C5 | II CSK 999/19 | fakt_proceduralny| ISTNIENIE→BRAK     | 🔴 NIEZWERYFIKOWANY| rozbieżna sygnatura - możliwe falszerstwo|
+| C6 | art. 5 ustawy | cytat_doslowny   | FRAGMENT→BRAK      | 🔴 NIEZWERYFIKOWANY| zmieniona treść: „15" zamiast „14"       |
+| C7 | art. 9 ustawy | cytat_doslowny   | FRAGMENT→BRAK      | 🔴 NIEZWERYFIKOWANY| luka wycina: „nie może"                  |
+| C8 | art. 2 ustawy | cytat_doslowny   | FRAGMENT→FRAGMENT  | 🟢 ZWERYFIKOWANY  | luka pomija: „w szczególności"           |
 
-Wynik: 1/5 zweryfikowane. 2 blokady (C3, C5), 1 kalibracja (C4), 1 do osądu (C2).
-NIE publikuj dopóki C3 i C5 nie zostaną poprawione lub usunięte. C4 wymaga złagodzenia tezy.
+Wynik: 2/8 zweryfikowane. 4 blokady (C3, C5, C6, C7), 1 kalibracja (C4), 1 do osądu (C2).
+NIE publikuj dopóki C3, C5, C6 i C7 nie zostaną poprawione lub usunięte. C4 wymaga złagodzenia tezy.
+Przy C8 sprawdź, czy pominięte słowa nie zmieniają sensu.
 ```
 
 ## Ochrona danych (RODO)
@@ -298,6 +349,10 @@ do `legal-ai-audit-bundle` obok deliverable.
   znakowe (koreański: 1 znak = sylaba); tu TRIGRAMY dla polskiego alfabetu łacińskiego (zmierzone
   na fixture: bigram dawał szum 0.33 na rozproszeniu, trigram 0.15 przy parafrazie 0.45-0.78).
   Wyłącznie sygnał (uwaga dla człowieka), nigdy samodzielna blokada. Kod i progi od zera.
+- Porównanie na słowach (v3.0): pomysł, żeby różnice dzielić na twarde (liczba, przeczenie) i
+  pozostałe oraz żeby cytat rozbijać na segmenty w miejscach opuszczeń, pochodzi z
+  `altanziya/eu-ai-act-mcp` (Apache 2.0). Tam jest próg dopuszczalnych różnic; tu go nie ma -
+  każde inne słowo blokuje. Kod, polskie słowniki i reguły luki napisane od zera.
 - Gradient weryfikacji (v2): ISTNIENIE/TREŚĆ/FRAGMENT to adaptacja Existence/Content/Paragraph
   z `jeannesulzer/international-criminal-tribunals-skills` (CC BY 4.0, Jeanne Sulzer / Impact
   Litigation Lab, 2026). Zaadaptowano **ideę gradientu i regułę kalibracji**, nie kod ani treść -
