@@ -33,9 +33,17 @@ attribution:
       wymuszonej trójki. Podkategorie (NIEWYSTARCZAJĄCY_DOWÓD /
       DOKUMENT_NIEJEDNOZNACZNY), reguły decyzji i polska semantyka - od zera.
       Warstwa nieobecna w output-scoring-en, stąd rozjazd kredytów między bliźniakami.
+  - source: GoogleChrome/modern-web-guidance-src
+    url: https://github.com/GoogleChrome/modern-web-guidance-src
+    license: Apache-2.0
+    relationship: pattern-only
+    note: >
+      Wzorzec dodany w v1.3.0: zakaz w parze z pozytywnym sprawdzeniem obecności (tam: każde
+      MUST NOT w graderze sparowane z testem obecności). U nas: pełny mianownik warstwy 1,
+      0/0 = BRAK albo N/D z powodem, nigdy OK - od zera.
 metadata:
   author: Wiesław Mazur / MateMatic
-  version: 1.2.0
+  version: 1.3.0
   companion_skills: legal-request-router-pl, citation-grounding-pl, deliverable-fidelity-pl, adversarial-legal-review-pl
 ---
 
@@ -61,6 +69,28 @@ Deleguj do narzędzi, nie zgaduj:
 
 Wynik obiektywny jest binarny per pozycja: zgadza się / nie zgadza. Choćby jeden niezgodny cytat =
 output nie jest gotowy, niezależnie od oceny subiektywnej.
+
+### Zero sprawdzonych to nie OK - pełny mianownik
+
+„Nie ma niezgodnego cytatu” spełnia też output, który **nie powołuje ani jednego** przepisu - zakaz
+bez sprawdzenia obecności przechodzi na pustym. Dlatego każda pozycja warstwy 1 niesie mianownik:
+
+- **OK** tylko przy co najmniej jednej sprawdzonej pozycji: `cytaty 7/7`, `przepisy 3/3`.
+- **0/0** to nie OK, tylko jedno z dwóch, wpisane jawnie:
+  - **BRAK** - output stawia tezę prawną, a nie powołuje źródła tej kategorii. Dla cytatów i przepisów
+    to **kotwica** (sekcja niżej): teza bez normy to brak ugruntowania, nie czysta warstwa 1.
+  - **N/D** - kategoria nie dotyczy tego outputu, z jednozdaniowym powodem (np. „sygnatury N/D -
+    output nie powołuje orzecznictwa”; „przepisy N/D - streszczenie stanu faktycznego bez tezy prawnej”).
+- Liczba sprawdzonych pochodzi z narzędzia (ekstraktor-cytatow-pl, citation-grounding-pl), nie z
+  szacunku sędziego.
+- **W razie wątpliwości BRAK, nie N/D.** N/D dla cytatów i przepisów tylko wtedy, gdy output nie stawia
+  żadnej tezy prawnej - powód N/D mówi, czego output dotyczy. Granicę BRAK / N/D wyznacza osąd sędziego,
+  kontrola mechaniczna jej nie pilnuje - dlatego każde N/D stoi w karcie z powodem do przeczytania.
+- Kompletność liczy flagi RED z analizy: `kompletność 4/4` = cztery flagi RED, wszystkie obecne
+  w podsumowaniu.
+
+Wzorzec: zakaz zawsze w parze z pozytywnym sprawdzeniem obecności (GoogleChrome/modern-web-guidance-src,
+Apache-2.0, sama idea).
 
 ## Warstwa 2 - subiektywna (rubryka 1-5, LLM-as-judge)
 
@@ -97,11 +127,12 @@ To slogan "AI, która wie, czego nie wie" jako pole w karcie ocen, nie deklaracj
 
 ## Decyzja
 
-- **Wyślij** - warstwa 1 czysta, zero NIEPEWNYCH, średnia subiektywna ≥ 4, żaden wymiar < 3.
+- **Wyślij** - warstwa 1 czysta (każda pozycja OK z niezerowym mianownikiem albo N/D z powodem;
+  BRAK nigdy), zero NIEPEWNYCH, średnia subiektywna ≥ 4, żaden wymiar < 3.
 - **Popraw** - warstwa 1 czysta, ale któryś wymiar subiektywny 2-3 (wskaż który) albo
-  NIEPEWNE poza wymiarami krytycznymi.
-- **Pełna weryfikacja** - warstwa 1 ma niezgodność, wymiar = 1 albo NIEPEWNE w Poprawności
-  prawnej / Ugruntowaniu -> skieruj do legal-request-router-pl (grounding / adversarial /
+  NIEPEWNE poza wymiarami krytycznymi, albo BRAK w sygnaturach lub kompletności (wskaż, czego brakuje).
+- **Pełna weryfikacja** - warstwa 1 ma niezgodność albo BRAK w cytatach lub przepisach, wymiar = 1
+  albo NIEPEWNE w Poprawności prawnej / Ugruntowaniu -> skieruj do legal-request-router-pl (grounding / adversarial /
   paczka audytowa).
 
 ## Rewizja oceny - monotoniczność i kotwica
@@ -120,6 +151,7 @@ powyżej **Pełna weryfikacja**, niezależnie od średniej subiektywnej i niezal
 dobrze brzmi uzasadnienie:
 
 - cytat, przepis albo sygnatura niezgodne ze źródłem w warstwie 1,
+- BRAK w cytatach albo przepisach - teza prawna bez żadnego powołanego źródła (0/0),
 - flaga RED, która wypadła z podsumowania (`deliverable-fidelity-pl`),
 - NIEPEWNE w wymiarze Poprawność prawna albo Ugruntowanie.
 
@@ -133,7 +165,9 @@ i czym to uzasadnił" bywa cenniejszy od samej oceny.
 ## Format wyjścia
 
 ```
-WARSTWA 1 (obiektywna): cytaty OK/X | przepisy OK/X | sygnatury OK/X | kompletność OK/X
+WARSTWA 1 (obiektywna): cytaty 7/7 OK | przepisy 3/3 OK | sygnatury N/D (brak orzecznictwa
+  w outpucie) | kompletność 4/4 (flagi RED obecne w podsumowaniu)
+  (pozycja: zgodne/sprawdzone + OK / X / BRAK / N/D z powodem; 0/0 nigdy nie jest OK)
 WARSTWA 2 (rubryka 1-5):
   Poprawność prawna: 4 - <uzasadnienie>
   Kompletność: 3 - <...>
