@@ -2,6 +2,21 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/), wersjonowanie [SemVer](https://semver.org/).
 
+## [1.3.0] - 2026-11-20
+
+### Changed
+- **Pełny mianownik w warstwie 1.** Każda pozycja niesie liczbę sprawdzonych
+  (`cytaty 7/7`); 0/0 nigdy nie jest OK - to BRAK (teza prawna bez źródła tej
+  kategorii) albo N/D z jednozdaniowym powodem. BRAK w cytatach lub przepisach
+  jest kotwicą (decyzja co najwyżej Pełna weryfikacja). Wcześniej output bez
+  żadnego cytatu dostawał „cytaty OK”.
+- BRAK w sygnaturach lub kompletności -> decyzja co najwyżej Popraw; w razie
+  wątpliwości BRAK, nie N/D; zapis kompletności liczy flagi RED.
+
+### Attribution
+- Wzorzec „zakaz w parze z pozytywnym sprawdzeniem obecności” z
+  GoogleChrome/modern-web-guidance-src (Apache 2.0), wyłącznie idea.
+
 ## [1.1.0] - 2026-07-13
 
 ### Added
